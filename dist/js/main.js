@@ -6,7 +6,7 @@ const menuBranding = document.querySelector(".menu-branding");
 const navItems = document.querySelectorAll(".nav-item");
 
 //Set initial state of menu
-let showMenu= false;
+let showMenu = false;
 menuBtn.addEventListener("click", toggleMenu);
 
 function toggleMenu() {
@@ -27,6 +27,13 @@ function toggleMenu() {
         navItems.forEach(item => item.classList.remove("show"));
 
         //Set Menu State
-        showMenu = false;  
+        showMenu = false;
     }
 }
+
+// function onClick(element) {
+//     document.getElementById("img01").src = element.src;
+//     document.getElementById("modal01").style.display = "block";
+//     var captionText = document.getElementById("caption");
+//     captionText.innerHTML = element.alt;
+// }
