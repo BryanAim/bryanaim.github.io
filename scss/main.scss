@@ -2,7 +2,7 @@
 @import "menu";
 
 
-*{
+* {
     box-sizing: border-box;
 }
 
@@ -15,24 +15,31 @@ body {
     font-family: 'Nunito', sans-serif;
     line-height: 1.5;
 }
+
 //Headings
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     margin: 0;
     font-weight: 400;
+
     &.lg-heading {
-        font-size: 6rem;
+        font-size: 7rem;
+        margin-bottom: 0.2rem;
     }
+
     &.sm-heading {
-        margin-bottom: 2rem;
+        margin-bottom: 3rem;
         padding: 0.2rem 1rem;
         background: rgba(lighten($primary-color, 2), 0.5);
     }
 }
 
-a{
+a {
     color: #fff;
     text-decoration: none;
 }
+
 header {
     position: fixed;
     z-index: 2;
@@ -62,9 +69,11 @@ main {
     }
 
     &#home {
-        overflow: hidden;  //no scrollbars
+        text-align: center;
+        overflow: hidden; //no scrollbars
+
         h1 {
-            margin-top: 20vh; // vh is viewpoint heoght. assume height is 100 slices 
+            margin-top: 20vh; // vh is viewpoint height. assume height is 100 slices 
         }
     }
 }
@@ -74,39 +83,39 @@ main {
     display: grid;
     grid-gap: 30px;
     grid-template-areas:
-    "bioimage bio bio"
-    "job1 job2 job3";
+        "bioimage bio bio"
+        "job1 job2 job3";
     grid-template-columns: repeat(3, 1fr);
-    
-.bio-image {
-    grid-area: bioimage;
-    margin: auto;
-    border-radius: 50%;
-    border: $secondary-color 3px solid;
-}
 
-.bio {
-    grid-area: bio;
-    font-size: 1.5rem;
-}
+    .bio-image {
+        grid-area: bioimage;
+        margin: auto;
+        border-radius: 50%;
+        border: $secondary-color 3px solid;
+    }
 
-.job-1 {
-    grid-area: job1;
-}
+    .bio {
+        grid-area: bio;
+        font-size: 1.5rem;
+    }
 
-.job-2 {
-    grid-area: job2;
-}
+    .job-1 {
+        grid-area: job1;
+    }
 
-.job-3 {
-    grid-area: job3;
-}
+    .job-2 {
+        grid-area: job2;
+    }
 
-.jobs {
-    background: lighten($primary-color, 5);
-    padding: 0.5rem;
-    border-bottom: $secondary-color 5px solid;
-}
+    .job-3 {
+        grid-area: job3;
+    }
+
+    .jobs {
+        background: lighten($primary-color, 5);
+        padding: 0.5rem;
+        border-bottom: $secondary-color 5px solid;
+    }
 }
 
 //Work /Projects
@@ -145,11 +154,12 @@ main {
             padding: 0.5rem 1.5rem;
             background: $secondary-color;
             color: set-text-color($secondary-color);
+
             span {
                 color: set-text-color($secondary-color);
             }
         }
-        
+
     }
 }
 
@@ -159,10 +169,11 @@ main {
     padding: 0.5rem 1rem;
     border: 0;
     margin-bottom: 0.3rem;
+
     &:hover {
         background: $secondary-color;
         color: set-text-color($secondary-color);
-    } 
+    }
 }
 
 .btn-dark {
