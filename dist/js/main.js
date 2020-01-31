@@ -32,7 +32,7 @@ function toggleMenu() {
 }
 // Typed JS
 var typed = new Typed('.type', {
-    strings: ["FrontEnd Web Developer ", "Graphic Artist ", "Entrepreneur ", "Lifelong Learner.^1000 "],
+    strings: ["Web Developer ", "Graphic Artist ", "Entrepreneur ", "Lifelong Learner.^1000 "],
     typeSpeed: 80,
     loop: true,
     backDelay: 1100,
