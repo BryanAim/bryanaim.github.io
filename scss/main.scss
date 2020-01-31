@@ -35,6 +35,18 @@ h3 {
     }
 }
 
+// Typed JS Styles
+span.type {
+    font-size: 1.7em;
+    font-weight: 600;
+    color: $secondary-color;
+}
+
+/* Cursor */
+.typed-cursor {
+    font-size: 1.8em;
+}
+
 a {
     color: #fff;
     text-decoration: none;
@@ -49,8 +61,10 @@ header {
 .text-secondary {
     color: $secondary-color;
 }
+
 .quote {
     font-style: italic;
+    color: $secondary-color;
 }
 
 
@@ -170,6 +184,7 @@ main {
 
     }
 }
+
 
 // Button styles
 .btn {
