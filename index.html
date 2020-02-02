@@ -24,7 +24,51 @@
 
     <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"> -->
 
-    <link rel="stylesheet" href="dist/fonts/css/all.css" />
+    <!-- To optimize performance -->
+    <style type="text/css">
+        .fa,
+        .fas,
+        .far,
+        .fal,
+        .fab {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
+    
+        .fa-2x {
+            font-size: 2em;
+        }
+    
+        .fa-behance:before {
+            content: "\f1b4";
+        }
+    
+        .fa-twitter:before {
+            content: "\f099";
+        }
+    
+        .fa-github:before {
+            content: "\f09b";
+        }
+    
+        .fa-linkedin:before {
+            content: "\f08c";
+        }
+    
+        .fab {
+            font-family: 'Font Awesome 5 Brands';
+        }
+    </style>
+    <!-- Optimize performance end -->
+    <link rel="preload" href="dist/fonts/css/all.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="dist/fonts/css/all.css"></noscript>
+
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" />
     <link rel="icon" href="favicon.png" />
 
