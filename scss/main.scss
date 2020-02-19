@@ -213,6 +213,33 @@ main {
     color: #333;
 }
 
+// Progress Bars
+// progress[value]::-webkit-progress-bar {
+//     background-color: red;
+//     border-radius: 2px;
+//     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+// }
+progress {
+    /* style rules */
+    background-color: $secondary-color;
+}
+
+progress::-webkit-progress-bar {
+    /* style rules */
+    background-color: $primary-color;
+
+}
+
+progress::-webkit-progress-value {
+    /* style rules */
+    background-color: rgba(lighten($secondary-color, 2), 0.5)
+}
+
+progress::-moz-progress-bar {
+    /* style rules */
+    background-color: $secondary-color;
+}
+
 #main-footer {
     text-align: center;
     padding: 1rem;

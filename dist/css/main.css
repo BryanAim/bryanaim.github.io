@@ -249,6 +249,22 @@ main {
   background: #c4c4c4;
   color: #333; }
 
+progress {
+  /* style rules */
+  background-color: #b1db00; }
+
+progress::-webkit-progress-bar {
+  /* style rules */
+  background-color: #444; }
+
+progress::-webkit-progress-value {
+  /* style rules */
+  background-color: rgba(185, 229, 0, 0.5); }
+
+progress::-moz-progress-bar {
+  /* style rules */
+  background-color: #b1db00; }
+
 #main-footer {
   text-align: center;
   padding: 1rem;
