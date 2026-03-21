@@ -11,7 +11,8 @@
       "Bash(npm list:*)",
       "Bash(npm uninstall:*)",
       "WebFetch(domain:www.youtube.com)",
-      "WebFetch(domain:cardsstacking.framer.website)"
+      "WebFetch(domain:cardsstacking.framer.website)",
+      "Bash(npm i:*)"
     ]
   }
 }
