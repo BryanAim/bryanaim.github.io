@@ -59,7 +59,13 @@ export default function Work() {
       <h2 className="sm-heading text-secondary">
         Design Projects...
       </h2>
-      {/* Add design projects if available */}
+      <section>
+        <div className="projects">
+          <div className="item">
+            <img src="/img/bmx/design1.jpg" alt="Design project" />
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

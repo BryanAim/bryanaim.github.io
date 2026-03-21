@@ -54,12 +54,12 @@ const goals2026 = [
 ]
 
 const photos = [
-  { src: '/img/stickers/bike.jpg', caption: 'The weapon of choice', span: 'wide' },
-  { src: '/img/stickers/bike.jpg', caption: 'Manual session, Nakuru CBD' },
-  { src: '/img/stickers/bike.jpg', caption: 'Street spot hunt' },
-  { src: '/img/stickers/bike.jpg', caption: 'Early morning ride' },
-  { src: '/img/stickers/bike.jpg', caption: 'Session with the crew' },
-  { src: '/img/stickers/bike.jpg', caption: 'Finding spots' },
+  { src: '/img/bmx/bmx1.jpg', caption: 'The weapon of choice', span: 'wide' },
+  { src: '/img/bmx/bmx2.jpg', caption: 'Manual session, Nakuru CBD' },
+  { src: '/img/bmx/bmx3.jpg', caption: 'Street spot hunt' },
+  { src: '/img/bmx/bmx4.jpg', caption: 'Early morning ride' },
+  { src: '/img/bmx/bmx5.jpg', caption: 'Session with the crew' },
+  { src: '/img/bmx/bmx1.jpg', caption: 'Finding spots' },
 ]
 
 const clips = [
@@ -215,7 +215,7 @@ export default function BMX() {
         whileInView="show" viewport={{ once: true }}
       >
         <div className="bmx-intro-img">
-          <img src="/img/stickers/bike.jpg" alt="BMX bike" />
+          <img src="/img/bmx/bmx2.jpg" alt="BMX bike" />
         </div>
         <div className="bmx-intro-text">
           <h3>Why <span className="text-secondary">BMX?</span></h3>
@@ -274,10 +274,7 @@ export default function BMX() {
         <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <span className="text-secondary">—</span> Gallery
         </motion.div>
-        <motion.p className="bmx-gallery-note" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          Add your own photos to <code>/public/img/bmx/</code> — replace the placeholder tiles below.
-        </motion.p>
-        <motion.div
+<motion.div
           className="bmx-photo-grid"
           variants={stagger(0.07)} initial="hidden"
           whileInView="show" viewport={{ once: true, margin: '-40px' }}

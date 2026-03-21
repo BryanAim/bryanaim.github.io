@@ -48,10 +48,11 @@ const webProjects: Project[] = [
   { title: 'NaxTechmakers', img: '/img/projects/naxtechmakers.jpg', url: 'http://naxtechmakers.com/', github: 'https://github.com/NakuruTechMakers/techiesofnakuru' },
 ]
 const designProjects: Project[] = [
+  { title: 'Barbell Syndicate Logo', img: '/img/projects/design/barbell-syndicate-black.jpg', url: 'https://behance.net/isalebryan' },
   { title: 'Brand Identity', img: '/img/projects/design/brand.jpg', url: 'https://behance.net/isalebryan' },
-  { title: 'Credible Realtors', img: '/img/projects/design/credibleRealtors.jpg', url: 'https://behance.net/isalebryan' },
+  { title: 'Credible Realtors Logo', img: '/img/projects/design/credibleRealtors.jpg', url: 'https://behance.net/isalebryan' },
   { title: 'Plug Ink', img: '/img/projects/design/plugInk.jpg', url: 'https://behance.net/isalebryan' },
-  { title: 'Music Artwork', img: '/img/projects/design/enjoy-music.jpg', url: 'https://behance.net/isalebryan' },
+  { title: 'Music Artwork composition', img: '/img/projects/design/enjoy-music.jpg', url: 'https://behance.net/isalebryan' },
 ]
 
 const cards = [
@@ -76,7 +77,7 @@ const cards = [
     tagline: 'Where art meets technology',
     description: 'From childhood sketches to professional digital art — design is in my DNA. Visual identities, motion graphics, and illustrations that actually mean something.',
     skills: designSkills, projects: designProjects,
-    bgImage: '/img/projects/design/brand.jpg',
+    bgImage: '/img/bmx/design1-banner.jpg',
     tags: ['Brand Identity', 'Motion Graphics', 'UI/UX'],
     socials: [
       { icon: 'fab fa-behance', label: 'Behance', url: 'https://behance.net/isalebryan' },
@@ -105,7 +106,7 @@ const cards = [
     tagline: 'Streets are my playground',
     description: 'When the laptop closes, the bike comes out. BMX street riding is my reset button — learning new tricks, reading the city, proving real growth happens outside the comfort zone.',
     skills: null, projects: null,
-    bgImage: '/img/stickers/bike.jpg',
+    bgImage: '/img/bmx/bmx1-banner.jpg',
     tags: ['Street Riding', 'Trick Learning', 'Urban Explorer'],
     socials: [
       { icon: 'fab fa-instagram', label: 'Instagram', url: 'https://www.instagram.com/isalebryan/' },
