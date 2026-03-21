@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"console.log\\(require\\(''./node_modules/next/package.json''\\).version\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(DATABASE_URL=\"postgresql://neondb_owner:npg_7fZtGoixlUb2@ep-fragrant-hall-anbl6qoo-pooler.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require\" node -e \":*)",
+      "Bash(npx tsc:*)",
+      "Bash(find 'd:/Work/Personal Projects/Code/janja/bryanaim.github.io/public' -name *.pdf -o -name *cert* -o -name *scholar*)",
+      "Bash(npm list:*)",
+      "Bash(npm uninstall:*)",
+      "WebFetch(domain:www.youtube.com)",
+      "WebFetch(domain:cardsstacking.framer.website)"
+    ]
+  }
+}
