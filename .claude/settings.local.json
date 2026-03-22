@@ -12,7 +12,16 @@
       "Bash(npm uninstall:*)",
       "WebFetch(domain:www.youtube.com)",
       "WebFetch(domain:cardsstacking.framer.website)",
-      "Bash(npm i:*)"
+      "Bash(npm i:*)",
+      "Bash(curl -s \"https://api.github.com/users/BryanAim/repos?sort=updated&per_page=50\")",
+      "Bash(gh api:*)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(mv \"WhatsApp Image 2026-03-22 at 20.28.50 \\(1\\).jpeg\" \"speaking-at-event.jpeg\")",
+      "Bash(mv \"WhatsApp Image 2026-03-22 at 20.28.50.jpeg\" \"indoor-audience.jpeg\")",
+      "Bash(mv \"WhatsApp Image 2026-03-22 at 20.29.02.jpeg\" \"heroes-discussion.jpeg\")",
+      "Bash(mv \"WhatsApp Image 2026-03-22 at 20.29.03 \\(1\\).jpeg\" \"outdoor-group.jpeg\")",
+      "Bash(mv \"WhatsApp Image 2026-03-22 at 20.29.03.jpeg\" \"classroom-session.jpeg\")",
+      "Bash(find 'd:/Work/Personal Projects/Code/janja/bryanaim.github.io/src' -name *.css -o -name *.scss)"
     ]
   }
 }

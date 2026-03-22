@@ -988,6 +988,43 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   margin-bottom: 0.8rem;
 }
 
+/* Community photo grid in modal */
+.ms-community-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+.ms-community-thumb {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  cursor: default;
+}
+.ms-community-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.ms-community-thumb:hover img { transform: scale(1.06); }
+.ms-community-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.75));
+  color: #fff;
+  font-size: 0.72rem;
+  padding: 1rem 0.5rem 0.4rem;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  line-height: 1.3;
+}
+.ms-community-thumb:hover .ms-community-caption { opacity: 1; }
+.ms-community-grid--portrait .ms-community-thumb { aspect-ratio: 3/4; }
+
 /* Projects grid in modal */
 .ms-projects-grid {
   display: grid;
@@ -2783,6 +2820,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   .ms-panel-header { padding: 1rem 1.2rem; }
   .ms-panel-body { padding: 1rem 1.2rem; }
   .ms-projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .ms-community-grid { grid-template-columns: repeat(2, 1fr); }
   .ms-skills-grid { grid-template-columns: 1fr; }
 
   /* Contact section */

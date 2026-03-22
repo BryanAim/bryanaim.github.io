@@ -27,6 +27,7 @@ const stagger = (delay = 0.1) => ({
 /* ─── Types ─── */
 interface Skill { name: string; level: number }
 interface Project { title: string; img: string; url: string; github?: string }
+interface Photo { src: string; caption: string }
 
 /* ─── Data ─── */
 const webDevSkills: Skill[] = [
@@ -34,8 +35,15 @@ const webDevSkills: Skill[] = [
   { name: 'JavaScript (ES6+)', level: 70 },
   { name: 'TypeScript', level: 50 },
   { name: 'Next.js / React', level: 60 },
+  { name: 'Vue.js / Nuxt', level: 65 },
   { name: 'Tailwind CSS', level: 70 },
   { name: 'Node.js', level: 45 },
+  { name: 'Python / Django', level: 50 },
+  { name: 'WordPress', level: 75 },
+  { name: 'GCP', level: 45 },
+  { name: 'Git / GitHub', level: 80 },
+  { name: 'Mailchimp', level: 60 },
+  { name: 'AI Tools', level: 80 },
 ]
 const designSkills: Skill[] = [
   { name: 'Adobe Photoshop', level: 90 },
@@ -48,17 +56,49 @@ const webProjects: Project[] = [
   { title: 'Covid Tracker', img: '/img/projects/corona.jpg', url: 'https://isalebryan.me/everything-corona-virus/', github: 'https://github.com/BryanAim/everything-corona-virus' },
   { title: 'VueGram', img: '/img/projects/vuegram.jpg', url: 'https://aim-vuegram.herokuapp.com/', github: 'https://github.com/BryanAim/vuegram' },
   { title: 'NaxTechmakers', img: '/img/projects/naxtechmakers.jpg', url: 'http://naxtechmakers.com/', github: 'https://github.com/NakuruTechMakers/techiesofnakuru' },
+  { title: 'Personal Portfolio', img: '/img/projects/my-portfolio.jpg', url: 'https://isalebryan.me', github: 'https://github.com/BryanAim/bryanaim.github.io' },
+  { title: 'Personal Library', img: '/img/projects/project1.jpg', url: 'https://github.com/BryanAim/FCC-personal-library', github: 'https://github.com/BryanAim/FCC-personal-library' },
+  { title: 'GSAP Scroll Animation', img: '/img/projects/project2.jpg', url: 'https://github.com/BryanAim/gsap-scroll-animation', github: 'https://github.com/BryanAim/gsap-scroll-animation' },
 ]
+const bmxPhotos: Photo[] = [
+  { src: '/img/bmx/bmx1.jpg', caption: 'Night session — helmet on, ready to ride' },
+  { src: '/img/bmx/bmx2.jpg', caption: 'Locked in' },
+  { src: '/img/bmx/bmx3.jpg', caption: 'Suited up for the streets' },
+  { src: '/img/bmx/bmx4.jpg', caption: 'Street style' },
+  { src: '/img/bmx/bmx5.jpg', caption: 'City nights' },
+  { src: '/img/bmx/bmx6.jpg', caption: 'Moonlit ride' },
+  { src: '/img/bmx/bmx7.jpg', caption: 'Always thinking two tricks ahead' },
+  { src: '/img/bmx/bmx8.jpg', caption: 'Streets are my playground' },
+  { src: '/img/bmx/bmx9.jpg', caption: 'Daytime vibes' },
+  { src: '/img/bmx/bmx10.jpg', caption: 'Balanced' },
+  { src: '/img/bmx/bmx11.jpg', caption: 'Forward momentum' },
+]
+
+const communityPhotos: Photo[] = [
+  { src: '/img/projects/community/speaking-at-event.jpeg', caption: 'Speaking at a peer education event' },
+  { src: '/img/projects/community/indoor-audience.jpeg', caption: 'Engaged audience at an indoor session' },
+  { src: '/img/projects/community/heroes-discussion.jpeg', caption: 'Heroes for Change — group discussion' },
+  { src: '/img/projects/community/outdoor-group.jpeg', caption: 'Community outdoor gathering' },
+  { src: '/img/projects/community/classroom-session.jpeg', caption: 'Classroom education session' },
+  { src: '/img/projects/community/heroes-outreach.jpeg', caption: 'Heroes for Change — youth outreach' },
+  { src: '/img/projects/community/school-outreach-1.jpeg', caption: 'School outreach programme' },
+  { src: '/img/projects/community/school-outreach-2.jpeg', caption: 'Engaging students at school' },
+  { src: '/img/projects/community/heroes-school-address.jpeg', caption: 'Addressing students — Heroes for Change' },
+  { src: '/img/projects/community/heroes-school-presentation.jpeg', caption: 'School presentation with the team' },
+  { src: '/img/projects/community/heroes-school-assembly.jpeg', caption: 'School assembly address' },
+  { src: '/img/projects/community/school-outreach-3.jpeg', caption: 'Community school outreach' },
+]
+
 // Design projects now come from the shared data file (allDesignProjects)
 // and are rendered via DesignGalleryModal below
 
 const cards = [
   {
-    id: 'webdev', icon: '</>', title: 'Web Development',
+    id: 'webdev', icon: '</>', title: 'Tech & Development',
     color: '#00ddd7', glow: 'rgba(0,221,215,0.3)',
-    tagline: 'Building the web, one pixel at a time',
-    description: 'Started with a Google × Andela scholarship in 2018. I build modern, fast, accessible web experiences — from slick frontends to solid backends.',
-    skills: webDevSkills, projects: webProjects,
+    tagline: 'Building solutions across the full stack',
+    description: 'Started with a Google × Andela scholarship in 2018. From slick frontends to solid backends, cloud infrastructure, AI tools, and everything in between.',
+    skills: webDevSkills, projects: webProjects, photos: null,
     bgImage: '/img/stickers/laptop.jpg',
     tags: ['Full-Stack', 'Open Source', 'Google Scholar'],
     socials: [
@@ -73,7 +113,7 @@ const cards = [
     color: '#b1db00', glow: 'rgba(177,219,0,0.3)',
     tagline: 'Where art meets technology',
     description: 'From childhood sketches to professional digital art — design is in my DNA. Visual identities, motion graphics, and illustrations that actually mean something.',
-    skills: designSkills, projects: null,
+    skills: designSkills, projects: null, photos: null,
     bgImage: '/img/bmx/design1-banner.jpg',
     tags: ['Brand Identity', 'Motion Graphics', 'UI/UX'],
     socials: [
@@ -88,7 +128,7 @@ const cards = [
     color: '#ff8c42', glow: 'rgba(255,140,66,0.3)',
     tagline: 'Making a difference beyond the screen',
     description: "Peer educator with HIV SEERs Kenya — fighting stigma through education and research. Also part of Unilever's Heroes for Change, reaching 3,000+ youth across Nakuru.",
-    skills: null, projects: null,
+    skills: null, projects: null, photos: communityPhotos,
     bgImage: '/img/background.jpg',
     tags: ['HIV SEERs Kenya', 'Heroes for Change', '3,000+ Youth', 'Andela Mentor'],
     socials: [
@@ -102,7 +142,7 @@ const cards = [
     color: '#f472b6', glow: 'rgba(244,114,182,0.3)',
     tagline: 'Streets are my playground',
     description: 'When the laptop closes, the bike comes out. BMX street riding is my reset button — learning new tricks, reading the city, proving real growth happens outside the comfort zone.',
-    skills: null, projects: null,
+    skills: null, projects: null, photos: bmxPhotos,
     bgImage: '/img/bmx/bmx1-banner.jpg',
     tags: ['Street Riding', 'Trick Learning', 'Urban Explorer'],
     socials: [
@@ -403,6 +443,19 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
             <div className="ms-section">
               <h4 className="ms-section-title" style={{ color: card.color }}>— Portfolio</h4>
               <DesignGalleryModal color={card.color} />
+            </div>
+          )}
+          {card.photos && (
+            <div className="ms-section">
+              <h4 className="ms-section-title" style={{ color: card.color }}>— Photos</h4>
+              <div className={`ms-community-grid ${card.id === 'bmx' ? 'ms-community-grid--portrait' : ''}`}>
+                {card.photos.map((p: Photo) => (
+                  <div key={p.src} className="ms-community-thumb">
+                    <img src={p.src} alt={p.caption} />
+                    <div className="ms-community-caption">{p.caption}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           {card.id !== 'design' && card.projects && (
