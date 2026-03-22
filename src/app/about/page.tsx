@@ -129,7 +129,7 @@ const cards = [
     tagline: 'Making a difference beyond the screen',
     description: "Peer educator with HIV SEERs Kenya — fighting stigma through education and research. Also part of Unilever's Heroes for Change, reaching 3,000+ youth across Nakuru.",
     skills: null, projects: null, photos: communityPhotos,
-    bgImage: '/img/background.jpg',
+    bgImage: '/img/heroes-school-address.jpeg',
     tags: ['HIV SEERs Kenya', 'Heroes for Change', '3,000+ Youth', 'Andela Mentor'],
     socials: [
       { icon: 'fab fa-facebook', label: 'Facebook', url: 'https://facebook.com/BryanAim' },
