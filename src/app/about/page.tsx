@@ -79,7 +79,7 @@ const communityPhotos: Photo[] = [
   { src: '/img/projects/community/indoor-audience.jpeg', caption: 'Engaged audience at an indoor session' },
   { src: '/img/projects/community/heroes-discussion.jpeg', caption: 'Heroes for Change — group discussion' },
   { src: '/img/projects/community/outdoor-group.jpeg', caption: 'Community outdoor gathering' },
-  { src: '/img/projects/community/classroom-session.jpeg', caption: 'Classroom education session' },
+  { src: '/img/projects/community/classroom-session.jpeg', caption: 'Google Developer Group — Classroom education session' },
   { src: '/img/projects/community/heroes-outreach.jpeg', caption: 'Heroes for Change — youth outreach' },
   { src: '/img/projects/community/school-outreach-1.jpeg', caption: 'School outreach programme' },
   { src: '/img/projects/community/school-outreach-2.jpeg', caption: 'Engaging students at school' },

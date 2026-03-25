@@ -2,7 +2,22 @@ import { NextResponse } from 'next/server'
 import { createOrdersTable, createPendingOrder } from '@/lib/db'
 
 export async function POST(request: Request) {
-  const { phone, amount, customer_name, customer_email } = await request.json()
+  const body = await request.json()
+  const { phone, amount, customer_name, customer_email } = body
+
+  // Validate inputs
+  if (!phone || typeof phone !== 'string' || !/^\+?0?\d{9,12}$/.test(phone.trim())) {
+    return NextResponse.json({ error: 'Invalid phone number' }, { status: 400 })
+  }
+  if (!amount || typeof amount !== 'number' || amount < 1 || amount > 150000 || !isFinite(amount)) {
+    return NextResponse.json({ error: 'Invalid amount' }, { status: 400 })
+  }
+  if (customer_email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer_email)) {
+    return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
+  }
+  if (customer_name && (typeof customer_name !== 'string' || customer_name.length > 100)) {
+    return NextResponse.json({ error: 'Invalid name' }, { status: 400 })
+  }
 
   // 1. Get access token
   const auth = Buffer.from(
