@@ -423,7 +423,7 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
           {card.skills && (
             <div className="ms-section">
               <h4 className="ms-section-title" style={{ color: card.color }}>— Skills</h4>
-              <div className="ms-skills-grid">
+              <div className={`ms-skills-grid ${card.skills.length > 6 ? 'ms-skills-grid--two-col' : ''}`}>
                 {card.skills.map((s, i) => (
                   <SkillBar key={s.name} name={s.name} level={s.level} color={card.color} animate={animSkills} delay={i * 0.08} />
                 ))}

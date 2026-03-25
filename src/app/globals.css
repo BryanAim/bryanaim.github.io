@@ -1085,7 +1085,8 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 .ms-project-gh:hover { background: var(--ph-color, #b1db00); color: #000; }
 
 /* Skills in modal */
-.ms-skills-grid { display: flex; flex-direction: column; gap: 0.5rem; }
+.ms-skills-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+.ms-skills-grid--two-col { grid-template-columns: 1fr 1fr; column-gap: 1.5rem; }
 .ms-skill-label {
   display: flex;
   justify-content: space-between;
