@@ -33,8 +33,8 @@ export const designProjects: DesignProject[] = [
     tags: ['tech', 'brand-identity', 'startup', 'property'],
     primaryImage: '/img/projects/design/logos/nesthub-concept-2.jpg',
     images: [
-      { src: '/img/projects/design/logos/nesthub-concept-2.jpg', label: 'Chosen Concept', isChosen: true },
-      { src: '/img/projects/design/logos/nesthub-concept-1.jpg', label: 'Alternate Concept' },
+      { src: '/img/projects/design/logos/nesthub-concept-1.jpg', label: 'Chosen Concept', isChosen: true },
+      { src: '/img/projects/design/logos/nesthub-concept-2.jpg', label: 'Alternate Concept' },
     ],
     year: '2024',
     client: 'NestHub',
@@ -56,11 +56,11 @@ export const designProjects: DesignProject[] = [
       { src: '/img/projects/design/logos/starehe-white.jpg', label: 'Light Version' },
     ],
     year: '2024',
-    client: 'Starehe Entertainment',
+    client: 'Oldies and Soul / Starehe Entertainment',
     description:
-      'Logo for Starehe Entertainment — a Nairobi-based entertainment brand hosting events and managing talent. Delivered in both dark and light versions for versatility across digital and print contexts.',
+      'Logo for Starehe Entertainment — a Nakuru-based entertainment brand hosting the famous Oldies and Soul events and managing talent. Delivered in both dark and light versions for versatility across digital and print contexts.',
     concept:
-      'The mark draws on the energy and vibrancy of Nairobi\'s entertainment scene. Bold lettering with a graphic accent communicates confidence and culture. The two colourways ensure the identity works on stage screens, merchandise, and social media alike.',
+      'The mark draws on the energy and vibrancy of Nakuru\'s entertainment scene. Bold lettering with a graphic accent communicates confidence and culture. The two colourways ensure the identity works on stage screens, merchandise, and social media alike.',
     tools: ['Adobe Illustrator'],
     color: '#ffd700',
   },
@@ -90,16 +90,16 @@ export const designProjects: DesignProject[] = [
     tags: ['tech', 'network', 'brand-identity', 'startup'],
     primaryImage: '/img/projects/design/logos/dream-net-2.jpg',
     images: [
-      { src: '/img/projects/design/logos/dream-net-2.jpg', label: 'Chosen Concept', isChosen: true },
-      { src: '/img/projects/design/logos/dream-net-1.jpg', label: 'Alternate Concept' },
+      { src: '/img/projects/design/logos/dream-net-1.jpg', label: 'Chosen Concept', isChosen: true },
+      { src: '/img/projects/design/logos/dream-net-2.jpg', label: 'Logo Usage Concept' },
     ],
     year: '2024',
-    client: 'Dream Net',
+    client: 'Dream Net Innovation',
     description:
       'Logo concepts for a networking/tech startup. Two directions were explored — one more abstract and network-node inspired, the other more typographically grounded.',
     concept:
       'The chosen concept translates "dream" and "net" into a single connected mark — nodes and pathways forming a symbol that is both human and technical. The alternate concept leaned on typographic treatment alone, exploring how letterforms could carry the connectivity metaphor.',
-    tools: ['Adobe Illustrator'],
+    tools: ['Adobe Illustrator', 'Adobe Photoshop'],
     color: '#7c4dff',
   },
   {
@@ -284,7 +284,7 @@ export const designProjects: DesignProject[] = [
     year: '2024',
     client: 'CMN',
     description:
-      'Monthly event poster series for CMN — January and February editions. The challenge was creating a consistent visual language across editions while keeping each poster feeling fresh and date-specific.',
+      'Monthly event poster series for Critical Mass Nakuru — January and February editions. The challenge was creating a consistent visual language across editions while keeping each poster feeling fresh and date-specific.',
     concept:
       'A core layout template holds the series together: same grid, same typographic hierarchy, same colour accent system. What changes per edition is the featured imagery and supporting colour, giving each poster its own personality within a recognisable family.',
     tools: ['Adobe Photoshop', 'Adobe Illustrator'],
@@ -360,8 +360,8 @@ export const designProjects: DesignProject[] = [
     color: '#ff5722',
   },
   {
-    slug: 'leillah',
-    title: 'Leillah',
+    slug: 'stacey',
+    title: 'Stacey',
     category: 'composition',
     tags: ['portrait', 'photo-manipulation', 'fashion'],
     primaryImage: '/img/projects/design/compositions/leillah-1.jpg',
@@ -370,9 +370,9 @@ export const designProjects: DesignProject[] = [
       { src: '/img/projects/design/compositions/leillah-2.jpg', label: 'Version 2' },
     ],
     year: '2024',
-    client: 'Leillah',
+    client: 'Stacey',
     description:
-      'Portrait composition series for Leillah — two treatments exploring different moods and colour stories from the same session.',
+      'Portrait composition series for Stacey — two treatments exploring different moods and colour stories from the same session.',
     concept:
       'Each version interprets the same subject differently: one leans warmer and editorial, the other cooler and more dramatic. Presenting both lets the subject choose the energy that best represents them, or use them across different contexts.',
     tools: ['Adobe Photoshop', 'Lightroom'],
@@ -390,7 +390,7 @@ export const designProjects: DesignProject[] = [
       'An intimate photo composition built around connection and emotion. The title drives the visual narrative — everything in the frame points toward one subject.',
     concept:
       'Selective focus, deliberate framing, and a warm tonal grade create a sense of presence and significance. The composition makes the viewer feel they are looking at something deeply personal, as if glimpsed rather than staged.',
-    tools: ['Adobe Photoshop', 'Lightroom'],
+    tools: ['Adobe Photoshop', 'Adobe Illustrator'],
     color: '#f06292',
   },
   {
@@ -407,36 +407,6 @@ export const designProjects: DesignProject[] = [
       'Three selves, one truth. Each instance occupies a distinct visual zone with its own lighting and expression, yet they coexist in the same spatial reality. The result is both technically demanding and psychologically intriguing.',
     tools: ['Adobe Photoshop'],
     color: '#00ddd7',
-  },
-  {
-    slug: 'charlie',
-    title: 'Charlie',
-    category: 'composition',
-    tags: ['portrait', 'photo-manipulation', 'art'],
-    primaryImage: '/img/projects/design/compositions/charlie.jpg',
-    year: '2023',
-    client: 'Personal / Commission',
-    description:
-      'A stylised portrait composition for Charlie — blending photography with graphic design elements to create a distinct personal visual statement.',
-    concept:
-      'The treatment is bold yet personal. Graphic overlays and textured backgrounds frame the subject without overwhelming them, creating a piece that works as both a portrait and a designed artefact.',
-    tools: ['Adobe Photoshop'],
-    color: '#ab47bc',
-  },
-  {
-    slug: 'jannies',
-    title: 'Jannies',
-    category: 'composition',
-    tags: ['portrait', 'photo-manipulation', 'fashion'],
-    primaryImage: '/img/projects/design/compositions/jannies.jpg',
-    year: '2024',
-    client: 'Commission',
-    description:
-      'A fashion-forward portrait composition for Jannies — clean, editorial, and designed to live across social media and print contexts.',
-    concept:
-      'Strong posing meets deliberate post-production. The background was carefully constructed to complement without competing — giving the subject maximum visual weight while the environment adds story.',
-    tools: ['Adobe Photoshop', 'Lightroom'],
-    color: '#ff9800',
   },
   {
     slug: 'moshe',
@@ -524,7 +494,7 @@ export const designProjects: DesignProject[] = [
     description:
       'A high-energy photo manipulation from the "Explode" series — particle dispersion, double exposure, and directional light radiating from a single focal point.',
     concept:
-      'The "explosion" is a metaphor for creative potential. Each particle strand is manually placed to give the impression of energy erupting outward from the subject\'s eyes.',
+      'The "explosion" is a metaphor for creative potential. Each particle strand is manually placed to give the impression of energy erupting outward from the subject\'s mind.',
     tools: ['Adobe Photoshop'],
     color: '#ff5722',
   },
@@ -560,7 +530,7 @@ export const designProjects: DesignProject[] = [
   },
 
   /* ─────────────────────────────────────────
-     ILLUSTRATIONS
+     DIGITAL ART & ILLUSTRATION
   ───────────────────────────────────────── */
   {
     slug: 'no-sensei-series',
@@ -581,6 +551,36 @@ export const designProjects: DesignProject[] = [
       'Drawing on the iconic "red pill / blue pill" archetype and the yin-yang symbol of balance, the series places a sensei figure at the centre of each dilemma. The art style fuses anime-influenced line work with flat graphic elements — accessible yet layered with meaning.',
     tools: ['Adobe Illustrator', 'Adobe Photoshop'],
     color: '#ef5350',
+  },
+  {
+    slug: 'charlie',
+    title: 'Charlie',
+    category: 'illustration',
+    tags: ['portrait', 'digital-art', 'art'],
+    primaryImage: '/img/projects/design/illustrations/charlie.jpg',
+    year: '2023',
+    client: 'Personal / Commission',
+    description:
+      'A stylised portrait composition for Charlie — blending photography with graphic design elements to create a distinct personal visual statement.',
+    concept:
+      'The treatment is bold yet personal. Graphic overlays and textured backgrounds frame the subject without overwhelming them, creating a piece that works as both a portrait and a designed artefact.',
+    tools: ['Adobe Photoshop'],
+    color: '#ab47bc',
+  },
+  {
+    slug: 'jannies',
+    title: 'Jannies',
+    category: 'illustration',
+    tags: ['portrait', 'digital-art', 'fashion'],
+    primaryImage: '/img/projects/design/illustrations/jannies.jpg',
+    year: '2024',
+    client: 'Commission',
+    description:
+      'A portrait digital art for Jannies — clean, editorial, and designed to live across social media and print contexts.',
+    concept:
+      'Strong posing meets deliberate post-production. The background was carefully constructed to complement without competing — giving the subject maximum visual weight while the environment adds story.',
+    tools: ['Adobe Illustrator'],
+    color: '#ff9800',
   },
   {
     slug: 'world-of-perps',

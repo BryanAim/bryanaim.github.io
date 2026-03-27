@@ -1,0 +1,49 @@
+# Brian Isale — Portfolio
+
+> Full Stack Developer, Creative Designer, and Community Builder based in Nakuru, Kenya.
+
+Brian Isale (also known as BryanAim) is a software engineer and designer from Nakuru, Kenya.
+He is a Google Africa Scholar (Andela, 2019) with 6+ years of professional experience.
+
+## About
+
+- **Full name:** Brian Isale
+- **Known as:** BryanAim, Bryan Isale, Isale Brian
+- **Location:** Nakuru, Kenya
+- **Email:** isale.bryan@gmail.com
+- **Website:** https://isalebryan.dev
+
+## Professional Work
+
+### Development
+Brian builds modern web applications using Next.js, React, TypeScript, Node.js, Vue.js, Python/Django, WordPress, Tailwind CSS, and Google Cloud Platform. He has shipped 20+ projects and is an open-source contributor.
+
+### Design
+He creates brand identities, logos, motion graphics, UI/UX designs, and digital illustrations using Adobe Illustrator and Adobe Photoshop. His design portfolio is on Behance at https://behance.net/isalebryan
+
+### Community
+- Peer educator with HIV SEERs Kenya — fighting stigma through education and research
+- Part of Unilever's Heroes for Change programme — reached 3,000+ youth across Nakuru
+- Mentor to 20+ developers through Google Developer Groups and Andela alumni network
+
+## Awards & Education
+
+- Google Africa Scholarship — Mobile Web Specialist (Andela & Pluralsight, 2019)
+
+## Social Profiles
+
+- GitHub: https://github.com/BryanAim
+- LinkedIn: https://linkedin.com/in/brian-isale/
+- Behance: https://behance.net/isalebryan
+- Twitter/X: https://twitter.com/IsaleBryan
+- Dev.to: https://dev.to/bryanaim
+- Instagram: https://www.instagram.com/bryanisale/
+- YouTube: https://youtube.com/@bryanaim
+- Facebook: https://facebook.com/BryanAim
+
+## Pages
+
+- Home: https://isalebryan.dev
+- About: https://isalebryan.dev/about
+- Contact: https://isalebryan.dev/contact
+- Design portfolio: https://isalebryan.dev/about (open the Design card)

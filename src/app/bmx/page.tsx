@@ -3,18 +3,18 @@ import { AnimatePresence, motion, useMotionValue, useTransform, useInView, useSc
 import { useRef, useState, useEffect } from 'react'
 
 /* ─── Animation variants ─── */
-const ease = 'easeOut' as const
+const springEase = [0.16, 1, 0.3, 1] as const
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
+  hidden: { opacity: 0, y: 64, filter: 'blur(4px)' },
+  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.7, ease: springEase } },
 }
 const fadeLeft = {
-  hidden: { opacity: 0, x: -50 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease } },
+  hidden: { opacity: 0, x: -60, filter: 'blur(4px)' },
+  show:   { opacity: 1, x: 0,  filter: 'blur(0px)', transition: { duration: 0.7, ease: springEase } },
 }
 const fadeRight = {
-  hidden: { opacity: 0, x: 50 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease } },
+  hidden: { opacity: 0, x: 60, filter: 'blur(4px)' },
+  show:   { opacity: 1, x: 0,  filter: 'blur(0px)', transition: { duration: 0.7, ease: springEase } },
 }
 const stagger = (delay = 0.1) => ({
   hidden: {},
