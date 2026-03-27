@@ -30,7 +30,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://bryanaim.github.io/sitemap.xml',
-    host: 'https://bryanaim.github.io',
+    sitemap: 'https://isalebryan.dev/sitemap.xml',
+    host: 'https://isalebryan.dev',
   }
 }

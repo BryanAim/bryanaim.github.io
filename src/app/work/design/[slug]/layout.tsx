@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: `https://bryanaim.github.io/work/design/${project.slug}`,
+      url: `https://isalebryan.dev/work/design/${project.slug}`,
       images: [
         {
           url: project.primaryImage,
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ],
     },
     alternates: {
-      canonical: `https://bryanaim.github.io/work/design/${project.slug}`,
+      canonical: `https://isalebryan.dev/work/design/${project.slug}`,
     },
   }
 }

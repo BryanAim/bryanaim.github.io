@@ -11,7 +11,7 @@ He is a Google Africa Scholar (Andela, 2019) with 6+ years of professional exper
 - **Known as:** BryanAim, Bryan Isale, Isale Brian
 - **Location:** Nakuru, Kenya
 - **Email:** isale.bryan@gmail.com
-- **Website:** https://bryanaim.github.io
+- **Website:** https://isalebryan.dev
 
 ## Professional Work
 
@@ -43,7 +43,7 @@ He creates brand identities, logos, motion graphics, UI/UX designs, and digital 
 
 ## Pages
 
-- Home: https://bryanaim.github.io
-- About: https://bryanaim.github.io/about
-- Contact: https://bryanaim.github.io/contact
-- Design portfolio: https://bryanaim.github.io/about (open the Design card)
+- Home: https://isalebryan.dev
+- About: https://isalebryan.dev/about
+- Contact: https://isalebryan.dev/contact
+- Design portfolio: https://isalebryan.dev/about (open the Design card)

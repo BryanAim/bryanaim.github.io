@@ -3,9 +3,9 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Get in touch with Brian Isale — available for projects, collaborations, and conversations.',
-  alternates: { canonical: 'https://bryanaim.github.io/contact' },
+  alternates: { canonical: 'https://isalebryan.dev/contact' },
   openGraph: {
-    url: 'https://bryanaim.github.io/contact',
+    url: 'https://isalebryan.dev/contact',
   },
 }
 
@@ -13,8 +13,8 @@ const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bryanaim.github.io' },
-    { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://bryanaim.github.io/contact' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://isalebryan.dev' },
+    { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://isalebryan.dev/contact' },
   ],
 }
 

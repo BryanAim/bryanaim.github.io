@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 // ── SEO Metadata ─────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
-  metadataBase: new URL('https://bryanaim.github.io'),
+  metadataBase: new URL('https://isalebryan.dev'),
   title: {
     default: 'Brian Isale — Full Stack Developer & Creative Designer | Nakuru, Kenya',
     template: '%s | Brian Isale',
@@ -24,14 +24,14 @@ export const metadata: Metadata = {
     'brand identity designer Kenya', 'motion graphics Kenya', 'frontend developer Africa',
     'community builder Kenya', 'Andela scholar',
   ],
-  authors: [{ name: 'Brian Isale', url: 'https://bryanaim.github.io' }],
+  authors: [{ name: 'Brian Isale', url: 'https://isalebryan.dev' }],
   creator: 'Brian Isale',
   publisher: 'Brian Isale',
   category: 'Technology',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://bryanaim.github.io',
+    url: 'https://isalebryan.dev',
     siteName: 'Brian Isale Portfolio',
     title: 'Brian Isale — Full Stack Developer & Creative Designer | Nakuru, Kenya',
     description:
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  alternates: { canonical: 'https://bryanaim.github.io' },
+  alternates: { canonical: 'https://isalebryan.dev' },
 }
 
 // ── Structured Data (JSON-LD) ─────────────────────────────────────────────────
@@ -76,8 +76,8 @@ const personJsonLd = {
   '@type': 'Person',
   name: 'Brian Isale',
   alternateName: ['BryanAim', 'Bryan Isale', 'Isale Brian'],
-  url: 'https://bryanaim.github.io',
-  image: 'https://bryanaim.github.io/img/portrait.jpg',
+  url: 'https://isalebryan.dev',
+  image: 'https://isalebryan.dev/img/portrait.jpg',
   jobTitle: ['Full Stack Developer', 'Creative Designer', 'Community Builder'],
   description:
     'Brian Isale is a Full Stack Developer and Creative Designer based in Nakuru, Kenya. A Google Africa Scholar (Andela, 2019), he builds modern web applications with Next.js, React, and Node.js, and crafts brand identities, motion graphics, and UI/UX designs. He mentors developers, runs community outreach programmes with HIV SEERs Kenya and Unilever Heroes for Change, and has reached 3,000+ youth across Nakuru.',
@@ -124,13 +124,13 @@ const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Brian Isale Portfolio',
-  url: 'https://bryanaim.github.io',
+  url: 'https://isalebryan.dev',
   description:
     'Portfolio of Brian Isale — Full Stack Developer and Creative Designer based in Nakuru, Kenya.',
   author: {
     '@type': 'Person',
     name: 'Brian Isale',
-    url: 'https://bryanaim.github.io',
+    url: 'https://isalebryan.dev',
   },
   inLanguage: 'en-US',
 }
@@ -185,7 +185,7 @@ const faqJsonLd = {
       name: 'Is Brian Isale available for freelance or contract work?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes, Brian Isale is open to freelance projects, contract work, and collaborations. He can be reached at isale.bryan@gmail.com or through the contact page on his portfolio at bryanaim.github.io/contact.',
+        text: 'Yes, Brian Isale is open to freelance projects, contract work, and collaborations. He can be reached at isale.bryan@gmail.com or through the contact page on his portfolio at isalebryan.dev/contact.',
       },
     },
   ],
