@@ -345,6 +345,7 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
   const isPast = quarter.q < CURRENT_Q
   const status = isPast ? 'completed' : isActive ? 'active' : 'upcoming'
   const statusLabel = isPast ? 'Completed' : isActive ? 'Currently Learning' : 'Upcoming'
+  const [videosOpen, setVideosOpen] = useState(false)
 
   return (
     <motion.div
@@ -394,10 +395,20 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
               <span key={t} className="bmx-trick-tag" style={{ borderColor: `${quarter.color}88`, color: `${quarter.color}cc` }}>{t}</span>
             ))}
           </div>
+
+          {/* Mobile-only video toggle */}
+          <button
+            className="bmx-rs-videos-toggle"
+            style={{ borderColor: `${quarter.color}88`, color: quarter.color }}
+            onClick={() => setVideosOpen(v => !v)}
+          >
+            <i className={`fas fa-${videosOpen ? 'chevron-up' : 'film'}`} />
+            {videosOpen ? 'Hide clips' : 'Show clips'}
+          </button>
         </div>
 
-        {/* Right column — video clips */}
-        <div className="bmx-rs-videos">
+        {/* Right column — video clips (always visible on desktop, toggle on mobile) */}
+        <div className={`bmx-rs-videos${videosOpen ? ' bmx-rs-videos-open' : ''}`}>
           {quarter.videos.map((v, i) => (
             <VideoSlot key={i} clip={v} color={quarter.color} />
           ))}

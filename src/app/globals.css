@@ -2733,6 +2733,96 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   flex-shrink: 0;
 }
 
+.bmx-rs-videos-toggle {
+  display: none;
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .bmx-rs-card {
+    height: auto;
+    min-height: 70vh;
+  }
+  .bmx-rs-content {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 2rem 1.6rem;
+    gap: 1.2rem;
+    overflow-y: auto;
+  }
+  .bmx-rs-left {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  .bmx-rs-index { writing-mode: horizontal-tb; }
+  .bmx-rs-period { writing-mode: horizontal-tb; }
+  .bmx-rs-qnum { font-size: 2.6rem; }
+  .bmx-rs-trick { font-size: 2.4rem; }
+  .bmx-rs-note { font-size: 0.85rem; margin-bottom: 1rem; }
+  .bmx-rs-videos {
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .bmx-rs-videos .bmx-video-slot {
+    width: calc(33% - 0.4rem);
+    min-width: 120px;
+  }
+  .bmx-rs-videos-toggle { display: none; }
+}
+
+@media (max-width: 640px) {
+  .bmx-rs-card {
+    height: auto;
+    min-height: 60vh;
+  }
+  .bmx-rs-content {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.4rem 1.2rem 1.2rem;
+    gap: 0.8rem;
+    overflow-y: auto;
+  }
+  .bmx-rs-left {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .bmx-rs-index { writing-mode: horizontal-tb; }
+  .bmx-rs-period { writing-mode: horizontal-tb; }
+  .bmx-rs-qnum { font-size: 2.2rem; }
+  .bmx-rs-trick { font-size: 2rem; }
+  .bmx-rs-note { font-size: 0.82rem; margin-bottom: 0.8rem; }
+  .bmx-rs-videos {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+  .bmx-rs-videos.bmx-rs-videos-open {
+    display: flex;
+  }
+  .bmx-rs-videos .bmx-video-slot {
+    width: 100%;
+  }
+  .bmx-rs-videos-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 0.6rem;
+    font-family: 'Courier New', monospace;
+  }
+}
+
 /* ── Quarterly roadmap (legacy — kept for badge/video shared styles) ── */
 .bmx-quarter-card {
   background: rgba(255,255,255,0.03);
