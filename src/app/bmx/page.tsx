@@ -406,43 +406,90 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
   )
 }
 
-/* ─── Photo tile — Amsterdam cyclists scroll reveal ─── */
-function PhotoTile({ photo, index, isSelected, onClick }: {
-  photo: typeof photos[0]
-  index: number
-  isSelected: boolean
-  onClick: () => void
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'center center'],
-  })
-  const clipPath = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ['inset(0% 50% 0% 50%)', 'inset(0% 0% 0% 0%)']
-  )
+/* ─── Gallery X — draggable grid with 3D tilt per cell ─── */
+const CELL_W = 320
+const CELL_H = 240
+const CELL_GAP = 12
+const GRID_COLS = 8
+
+function GalXCell({ photo, onSelect, tileIndex }: { photo: typeof photos[0]; onSelect: (i: number) => void; tileIndex: number }) {
+  const mx = useMotionValue(0)
+  const my = useMotionValue(0)
+  const rotateX = useTransform(my, [-0.5, 0.5], [12, -12])
+  const rotateY = useTransform(mx, [-0.5, 0.5], [-12, 12])
+  // Curve: each column gets a base rotateY so the grid arcs like a cylinder
+  const col = tileIndex % GRID_COLS
+  const curveY = (col - (GRID_COLS - 1) / 2) * 4 // ±14deg across 8 cols
+
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect()
+    mx.set((e.clientX - r.left) / r.width - 0.5)
+    my.set((e.clientY - r.top) / r.height - 0.5)
+  }
+  function onMouseLeave() { mx.set(0); my.set(0) }
 
   return (
-    <div
-      ref={ref}
-      className="bmx-photo-reveal-wrap"
-      style={{ opacity: isSelected ? 0.35 : 1 }}
-      onClick={onClick}
+    <motion.div
+      className="bmx-galx-cell"
+      layoutId={`bmx-photo-${tileIndex % photos.length}`}
+      style={{ rotateX, rotateY: useTransform(rotateY, v => v + curveY), transformPerspective: 700 }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      onClick={() => onSelect(tileIndex % photos.length)}
+      whileHover={{ scale: 1.07, zIndex: 10 }}
+      transition={{ scale: { duration: 0.18 } }}
     >
+      <motion.img
+        layoutId={`bmx-photo-img-${tileIndex % photos.length}`}
+        src={photo.src}
+        alt={photo.caption}
+        draggable={false}
+      />
+      <div className="bmx-photo-overlay"><span>{photo.caption}</span></div>
+    </motion.div>
+  )
+}
+
+function GalleryX({ onSelect }: { onSelect: (i: number) => void }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [constraints, setConstraints] = useState({ left: 0, right: 0, top: 0, bottom: 0 })
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  useEffect(() => {
+    if (!containerRef.current) return
+    const cw = containerRef.current.offsetWidth
+    const ch = containerRef.current.offsetHeight
+    const tiles = [...photos, ...photos, ...photos, ...photos]
+    const rows = Math.ceil(tiles.length / GRID_COLS)
+    const gridW = GRID_COLS * (CELL_W + CELL_GAP) - CELL_GAP
+    const gridH = rows * (CELL_H + CELL_GAP) - CELL_GAP
+    const left = -(gridW - cw)
+    const top = -(gridH - ch)
+    setConstraints({ left, right: 0, top, bottom: 0 })
+    // Start centered
+    x.set(left / 2)
+    y.set(top / 2)
+  }, [x, y])
+
+  const tiles = [...photos, ...photos, ...photos, ...photos]
+
+  return (
+    <div ref={containerRef} className="bmx-galx-clip">
       <motion.div
-        className="bmx-photo-tile"
-        layoutId={`bmx-photo-${index}`}
-        style={{ clipPath }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ duration: 0.2 }}
+        className="bmx-galx-grid"
+        drag
+        dragConstraints={constraints}
+        dragTransition={{ power: 0.25, timeConstant: 380 }}
+        dragElastic={0.04}
+        whileDrag={{ cursor: 'grabbing' }}
+        style={{ cursor: 'grab', x, y }}
       >
-        <motion.img layoutId={`bmx-photo-img-${index}`} src={photo.src} alt={photo.caption} />
-        <div className="bmx-photo-overlay">
-          <span>{photo.caption}</span>
-        </div>
+        {tiles.map((p, i) => (
+          <GalXCell key={i} photo={p} tileIndex={i} onSelect={onSelect} />
+        ))}
       </motion.div>
+      <div className="bmx-galx-hint">drag to explore</div>
     </div>
   )
 }
@@ -643,17 +690,7 @@ export default function BMX() {
         <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <span className="text-secondary">—</span> Gallery
         </motion.div>
-        <div className="bmx-photo-reveal-col">
-          {photos.map((photo, i) => (
-            <PhotoTile
-              key={i}
-              photo={photo}
-              index={i}
-              isSelected={selectedPhoto === i}
-              onClick={() => setSelectedPhoto(i)}
-            />
-          ))}
-        </div>
+        <GalleryX onSelect={setSelectedPhoto} />
       </div>
 
       <AnimatePresence>

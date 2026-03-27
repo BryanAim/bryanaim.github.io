@@ -2902,32 +2902,49 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   font-size: 0.78rem;
 }
 
-/* Photo reveal column (Amsterdam cyclists style) */
-.bmx-photo-reveal-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6rem;
+/* Gallery X — draggable grid */
+.bmx-galx-clip {
+  position: relative;
+  height: 75vh;
+  overflow: hidden;
+  border-radius: 12px;
+  user-select: none;
+  perspective: 1200px;
 }
-.bmx-photo-reveal-wrap {
-  width: 62%;
-  cursor: zoom-in;
+.bmx-galx-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 320px);
+  grid-auto-rows: 240px;
+  gap: 12px;
+  width: max-content;
+  padding: 4px;
 }
-.bmx-photo-tile {
+.bmx-galx-cell {
   position: relative;
   border-radius: 10px;
   overflow: hidden;
+  will-change: transform;
   cursor: zoom-in;
-  will-change: clip-path;
 }
-.bmx-photo-tile img {
+.bmx-galx-cell img {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  display: block;
+  pointer-events: none;
 }
-.bmx-photo-tile:hover img { transform: scale(1.04); }
+.bmx-galx-hint {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
 .bmx-photo-overlay {
   position: absolute;
   inset: 0;
@@ -2937,6 +2954,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   padding: 0.9rem;
   opacity: 0;
 }
+.bmx-galx-cell:hover .bmx-photo-overlay { opacity: 1; transition: opacity 0.2s ease; }
 .bmx-photo-overlay span {
   font-size: 0.82rem;
   color: #fff;
