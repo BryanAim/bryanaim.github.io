@@ -2347,7 +2347,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 .ct-behance-tags span {
   background: rgba(23, 105, 255, 0.12);
   border: 1px solid rgba(23, 105, 255, 0.3);
-  color: #7aa4ff;
+  color: #fff;
   padding: 0.2rem 0.65rem;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -2358,7 +2358,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   gap: 0.5rem;
   font-size: 0.85rem;
   font-weight: 700;
-  color: #1769ff;
+  color: #fff;
   letter-spacing: 0.5px;
 }
 

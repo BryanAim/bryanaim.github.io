@@ -99,7 +99,7 @@ const cards = [
     tagline: 'Building solutions across the full stack',
     description: 'Started with a Google × Andela scholarship in 2018. From slick frontends to solid backends, cloud infrastructure, AI tools, and everything in between.',
     skills: webDevSkills, projects: webProjects, photos: null,
-    bgImage: '/img/stickers/laptop.jpg',
+    bgImage: '/img/projects/design/enjoy-music.jpg',
     tags: ['Full-Stack', 'Open Source', 'Google Scholar'],
     socials: [
       { icon: 'fab fa-github', label: 'GitHub', url: 'https://github.com/BryanAim' },
@@ -757,7 +757,7 @@ export default function About() {
           ))}
         </motion.div>
 
-        <div className="ct-embeds-row">
+        <div className="ct-embeds-row pt-12">
           <motion.div
             className="ct-embed-col"
             variants={fadeLeft} initial="hidden"
