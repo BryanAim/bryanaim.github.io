@@ -259,6 +259,48 @@ function SkillsTimeline() {
   )
 }
 
+/* ─── Gear Ticker ─── */
+function GearTicker() {
+  const { scrollY } = useScroll()
+  // Row 1 drifts left, row 2 drifts right as page scrolls
+  const x1 = useTransform(scrollY, (v) => (-v * 0.35) % 800)
+  const x2 = useTransform(scrollY, (v) => (v * 0.35) % 800)
+  const smooth1 = useSpring(x1, { damping: 40, stiffness: 200, mass: 0.5 })
+  const smooth2 = useSpring(x2, { damping: 40, stiffness: 200, mass: 0.5 })
+
+  // Repeat enough to always fill the screen at any scroll
+  const repeated = [...gear, ...gear, ...gear, ...gear]
+
+  const renderRow = (items: typeof gear) =>
+    items.map((g, i) => (
+      <span key={i} className="bmx-ticker-item">
+        <span className="bmx-ticker-icon">{g.icon}</span>
+        <span className="bmx-ticker-label">{g.label}</span>
+        <span className="bmx-ticker-sep">—</span>
+        <span className="bmx-ticker-value">{g.value}</span>
+        <span className="bmx-ticker-dot">·</span>
+      </span>
+    ))
+
+  return (
+    <div className="bmx-ticker-wrap">
+      <div className="bmx-ticker-heading">
+        <span className="text-secondary">—</span> The Setup
+      </div>
+      <div className="bmx-ticker-row-clip">
+        <motion.div className="bmx-ticker-row" style={{ x: smooth1 }}>
+          {renderRow(repeated)}
+        </motion.div>
+      </div>
+      <div className="bmx-ticker-row-clip">
+        <motion.div className="bmx-ticker-row bmx-ticker-row-muted" style={{ x: smooth2 }}>
+          {renderRow(repeated)}
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── Video Snippet Slot ─── */
 function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
   return (
@@ -531,6 +573,9 @@ export default function BMX() {
         </div>
       </motion.div>
 
+      {/* ── The Setup (gear ticker) ── */}
+      <GearTicker />
+
       {/* ── Skills Progression ── */}
       <div className="bmx-section">
         <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
@@ -633,28 +678,6 @@ export default function BMX() {
               </div>
               <i className="fas fa-arrow-right bmx-clip-arrow" style={{ color: c.color }} />
             </motion.a>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* ── Gear ── */}
-      <div className="bmx-section">
-        <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary">—</span> The Setup
-        </motion.div>
-        <motion.div
-          className="bmx-gear-grid"
-          variants={stagger(0.08)} initial="hidden"
-          whileInView="show" viewport={{ once: true, margin: '-40px' }}
-        >
-          {gear.map(g => (
-            <motion.div key={g.label} className="bmx-gear-item" variants={fadeUp}>
-              <span className="bmx-gear-icon">{g.icon}</span>
-              <div>
-                <p className="bmx-gear-label">{g.label}</p>
-                <p className="bmx-gear-value">{g.value}</p>
-              </div>
-            </motion.div>
           ))}
         </motion.div>
       </div>

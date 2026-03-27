@@ -2952,37 +2952,65 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   opacity: 0.5;
 }
 
-/* Gear */
-.bmx-gear-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.8rem;
+/* Gear Ticker */
+.bmx-ticker-wrap {
+  padding: 3.5rem 0 4rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  overflow: hidden;
 }
-.bmx-gear-item {
+.bmx-ticker-heading {
+  padding: 0 var(--page-pad, 2rem);
+  font-size: 0.78rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.bmx-ticker-row-clip {
+  overflow: hidden;
+  width: 100%;
+}
+.bmx-ticker-row {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 10px;
-  padding: 1rem 1.2rem;
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
 }
-.bmx-gear-icon {
+.bmx-ticker-row-muted {
+  opacity: 0.35;
+}
+.bmx-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 2rem;
+}
+.bmx-ticker-icon {
   font-size: 1.5rem;
-  line-height: 1;
-  flex-shrink: 0;
 }
-.bmx-gear-label {
-  font-size: 0.72rem;
-  letter-spacing: 1px;
+.bmx-ticker-label {
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-  margin-bottom: 0.2rem;
+  color: rgba(255,255,255,0.38);
 }
-.bmx-gear-value {
-  font-size: 0.9rem;
+.bmx-ticker-sep {
+  color: rgba(255,255,255,0.2);
+  font-size: 1.1rem;
+}
+.bmx-ticker-value {
   font-weight: 700;
-  color: #e0e0e0;
+  color: #e8e8e8;
+  font-size: 1.15rem;
+}
+.bmx-ticker-dot {
+  color: rgba(255,255,255,0.15);
+  font-size: 1.4rem;
+  margin-left: 0.5rem;
 }
 
 /* Follow */
@@ -3105,7 +3133,6 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   .bmx-photo-tile.wide { grid-column: span 2; }
   .bmx-goals-grid { grid-template-columns: 1fr; }
   .bmx-clips-grid { grid-template-columns: 1fr; }
-  .bmx-gear-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* =====================
