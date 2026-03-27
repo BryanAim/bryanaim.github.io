@@ -706,39 +706,6 @@ export default function BMX() {
         )}
       </AnimatePresence>
 
-      {/* ── Clips ── */}
-      <div className="bmx-section">
-        <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary">—</span> Clips & Videos
-        </motion.div>
-        <motion.div
-          className="bmx-clips-grid"
-          variants={stagger(0.1)} initial="hidden"
-          whileInView="show" viewport={{ once: true, margin: '-40px' }}
-        >
-          {clips.map(c => (
-            <motion.a
-              key={c.label}
-              href={c.url} target="_blank" rel="noopener noreferrer"
-              className="bmx-clip-card"
-              style={{ '--clip-color': c.color } as React.CSSProperties}
-              variants={fadeUp}
-              whileHover={{ y: -6, boxShadow: `0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px ${c.color}` }}
-            >
-              <div className="bmx-clip-icon" style={{ color: c.color }}>
-                <i className={c.icon} />
-              </div>
-              <div className="bmx-clip-body">
-                <p className="bmx-clip-label" style={{ color: c.color }}>{c.label}</p>
-                <p className="bmx-clip-sub">{c.sub}</p>
-                <p className="bmx-clip-note">{c.note}</p>
-              </div>
-              <i className="fas fa-arrow-right bmx-clip-arrow" style={{ color: c.color }} />
-            </motion.a>
-          ))}
-        </motion.div>
-      </div>
-
       {/* ── Follow ── */}
       <motion.div
         className="bmx-follow"
