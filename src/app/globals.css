@@ -2606,13 +2606,134 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   margin-bottom: 1.5rem;
 }
 
-/* ── Quarterly roadmap ── */
-.bmx-quarters-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+/* ── Roadmap Stack Cards ── */
+.bmx-roadmap-stack {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 40vh;
+  overflow: visible;
 }
 
+.bmx-rs-card {
+  position: sticky;
+  height: calc(100vh - 120px);
+  border-radius: 14px;
+  overflow: hidden;
+  border-top: 3px solid var(--rs-color, #b1db00);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  margin-bottom: 1.5rem;
+  will-change: transform;
+  background: #0c0c0c;
+}
+.bmx-rs-completed { opacity: 0.75; }
+
+.bmx-rs-ghost {
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.15em;
+  font-size: 22rem;
+  font-weight: 900;
+  font-family: 'Courier New', monospace;
+  line-height: 1;
+  opacity: 0.04;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -4px;
+}
+
+.bmx-rs-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.bmx-rs-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 3rem 4rem;
+  gap: 3rem;
+  overflow: hidden;
+}
+
+.bmx-rs-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  flex-shrink: 0;
+}
+.bmx-rs-index {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.2);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  writing-mode: vertical-rl;
+}
+.bmx-rs-qnum {
+  font-size: 3.8rem;
+  font-weight: 900;
+  font-family: 'Courier New', monospace;
+  line-height: 1;
+  text-shadow: 0 0 40px var(--rs-color, #b1db00);
+}
+.bmx-rs-period {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 1.5px;
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+}
+
+.bmx-rs-middle { flex: 1; min-width: 0; }
+.bmx-rs-top-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+}
+.bmx-rs-counter {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0;
+}
+.bmx-rs-trick {
+  font-size: 3.2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 1;
+  margin-bottom: 0.8rem;
+}
+.bmx-rs-note {
+  font-size: 0.9rem;
+  line-height: 1.78;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1.2rem;
+  max-width: 420px;
+}
+.bmx-rs-also-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+.bmx-rs-videos {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  align-items: stretch;
+}
+.bmx-rs-videos .bmx-video-slot {
+  width: 140px;
+  flex-shrink: 0;
+}
+
+/* ── Quarterly roadmap (legacy — kept for badge/video shared styles) ── */
 .bmx-quarter-card {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.08);

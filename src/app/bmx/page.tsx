@@ -115,6 +115,19 @@ const quarters2026: Quarter[] = [
       { label: 'Footplant spot hunt' },
     ],
   },
+  {
+    q: 4,
+    range: 'Oct – Dec 2026',
+    color: '#fbbf24',
+    mainTrick: '180',
+    mainNote: 'The first real spin. Half a rotation — commit to it, spot the landing, roll out clean. Starting off small hops on flat ground, then curb drops.',
+    otherTricks: ['Fakie 180', '180 to Manual', 'Nose Manual'],
+    videos: [
+      { label: '180 flat ground attempts' },
+      { label: 'Fakie 180 entry drills' },
+      { label: '180 to manual combos' },
+    ],
+  },
 ]
 
 const photos = [
@@ -324,70 +337,71 @@ function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
   )
 }
 
-/* ─── Quarter Card ─── */
-function QuarterCard({ quarter }: { quarter: Quarter }) {
-  const ref = useRef<HTMLDivElement>(null)
+/* ─── Roadmap Stack Card (sticky stacked, mirrors about page pattern) ─── */
+function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: number; total: number }) {
+  const stickyTop = 80 + index * 20
   const isActive = quarter.q === CURRENT_Q
   const isPast = quarter.q < CURRENT_Q
-
   const status = isPast ? 'completed' : isActive ? 'active' : 'upcoming'
   const statusLabel = isPast ? 'Completed' : isActive ? 'Currently Learning' : 'Upcoming'
 
   return (
     <motion.div
-      ref={ref}
-      className={`bmx-quarter-card bmx-quarter-${status}`}
-      style={{ '--q-color': quarter.color } as React.CSSProperties}
-      variants={fadeUp}
-      whileInView="show"
-      viewport={{ once: true, margin: '-40px' }}
+      className={`bmx-rs-card bmx-rs-${status}`}
+      style={{
+        top: stickyTop,
+        zIndex: index + 1,
+        '--rs-color': quarter.color,
+        borderTopColor: quarter.color,
+      } as React.CSSProperties}
+      whileHover={{
+        boxShadow: `0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px ${quarter.color}, 0 0 50px ${quarter.color}22`,
+        transition: { duration: 0.2 },
+      }}
     >
-      {/* Quarter header */}
-      <div className="bmx-quarter-head">
-        <div className="bmx-quarter-id" style={{ color: quarter.color }}>Q{quarter.q}</div>
-        <div className="bmx-quarter-range">{quarter.range}</div>
-        <div className={`bmx-quarter-badge bmx-badge-${status}`} style={isActive ? { background: quarter.color, color: '#0a0a0a' } : {}}>
-          {isActive && <span className="bmx-badge-pulse" style={{ background: quarter.color }} />}
-          {statusLabel}
+      {/* Ghost Q number background texture */}
+      <div className="bmx-rs-ghost" style={{ color: quarter.color }}>Q{quarter.q}</div>
+      {/* Overlay */}
+      <div className="bmx-rs-overlay" style={{ background: `linear-gradient(115deg, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.85) 55%, ${quarter.color}12 100%)` }} />
+
+      <div className="bmx-rs-content">
+        {/* Left column — Q number + period */}
+        <div className="bmx-rs-left">
+          <span className="bmx-rs-index">{String(index + 1).padStart(2, '0')}</span>
+          <span className="bmx-rs-qnum" style={{ color: quarter.color }}>Q{quarter.q}</span>
+          <span className="bmx-rs-period">{quarter.range}</span>
         </div>
-      </div>
 
-      {/* Main trick */}
-      <div className="bmx-quarter-main">
-        <span className="bmx-quarter-main-label">Main trick</span>
-        <span className="bmx-quarter-main-trick" style={{ color: quarter.color }}>{quarter.mainTrick}</span>
-      </div>
-      <p className="bmx-quarter-note">{quarter.mainNote}</p>
-
-      {/* Other tricks */}
-      <div className="bmx-quarter-others">
-        <span className="bmx-quarter-others-label">Also working on</span>
-        <div className="bmx-tricks-wrap">
-          {quarter.otherTricks.map(t => (
-            <span
-              key={t}
-              className="bmx-trick-tag"
-              style={{ borderColor: `${quarter.color}88`, color: `${quarter.color}cc` }}
+        {/* Middle column — trick info */}
+        <div className="bmx-rs-middle">
+          <div className="bmx-rs-top-row">
+            <p className="bmx-rs-counter">{index + 1} / {total}</p>
+            <div
+              className={`bmx-quarter-badge bmx-badge-${status}`}
+              style={isActive ? { background: quarter.color, color: '#0a0a0a' } : {}}
             >
-              {t}
-            </span>
+              {isActive && <span className="bmx-badge-pulse" style={{ background: quarter.color }} />}
+              {statusLabel}
+            </div>
+          </div>
+          <h3 className="bmx-rs-trick" style={{ color: quarter.color }}>{quarter.mainTrick}</h3>
+          <p className="bmx-rs-note">{quarter.mainNote}</p>
+
+          <p className="bmx-rs-also-label">Also working on</p>
+          <div className="bmx-tricks-wrap">
+            {quarter.otherTricks.map(t => (
+              <span key={t} className="bmx-trick-tag" style={{ borderColor: `${quarter.color}88`, color: `${quarter.color}cc` }}>{t}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Right column — video clips */}
+        <div className="bmx-rs-videos">
+          {quarter.videos.map((v, i) => (
+            <VideoSlot key={i} clip={v} color={quarter.color} />
           ))}
         </div>
       </div>
-
-      {/* Video snippets */}
-      <div className="bmx-quarter-videos-label">Practice clips</div>
-      <motion.div
-        className="bmx-quarter-videos"
-        variants={stagger(0.08)}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-      >
-        {quarter.videos.map((v, i) => (
-          <VideoSlot key={i} clip={v} color={quarter.color} />
-        ))}
-      </motion.div>
     </motion.div>
   )
 }
@@ -601,17 +615,11 @@ export default function BMX() {
         >
           Quarter by quarter — one main trick, supporting tricks, and clips as I go
         </motion.p>
-        <motion.div
-          className="bmx-quarters-grid"
-          variants={stagger(0.15)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-40px' }}
-        >
-          {quarters2026.map(q => (
-            <QuarterCard key={q.q} quarter={q} />
+        <div className="bmx-roadmap-stack">
+          {quarters2026.map((q, i) => (
+            <RoadmapStackCard key={q.q} quarter={q} index={i} total={quarters2026.length} />
           ))}
-        </motion.div>
+        </div>
       </div>
 
       {/* ── Photo Gallery ── */}
