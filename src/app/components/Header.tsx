@@ -8,7 +8,7 @@ const navLinks = [
   { href: '/about', label: 'About Me' },
   { href: '/about#contact', label: 'Contact' },
   { href: '/shop', label: 'Shop' },
-  { href: 'https://blog.isalebryan.me/', label: 'My Blog' },
+  { href: 'https://blog.isalebryan.dev/', label: 'My Blog' },
   { href: '/bmx', label: 'BMX Life' },
 ]
 

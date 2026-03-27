@@ -53,10 +53,10 @@ const designSkills: Skill[] = [
 ]
 const webProjects: Project[] = [
   { title: 'WeatherNow', img: '/img/projects/weather.jpg', url: 'https://weathernow-afb00.web.app/', github: 'https://github.com/BryanAim/weather-app' },
-  { title: 'Covid Tracker', img: '/img/projects/corona.jpg', url: 'https://isalebryan.me/everything-corona-virus/', github: 'https://github.com/BryanAim/everything-corona-virus' },
+  { title: 'Covid Tracker', img: '/img/projects/corona.jpg', url: 'https://isalebryan.dev/everything-corona-virus/', github: 'https://github.com/BryanAim/everything-corona-virus' },
   { title: 'VueGram', img: '/img/projects/vuegram.jpg', url: 'https://aim-vuegram.herokuapp.com/', github: 'https://github.com/BryanAim/vuegram' },
   { title: 'NaxTechmakers', img: '/img/projects/naxtechmakers.jpg', url: 'http://naxtechmakers.com/', github: 'https://github.com/NakuruTechMakers/techiesofnakuru' },
-  { title: 'Personal Portfolio', img: '/img/projects/my-portfolio.jpg', url: 'https://isalebryan.me', github: 'https://github.com/BryanAim/bryanaim.github.io' },
+  { title: 'Personal Portfolio', img: '/img/projects/my-portfolio.jpg', url: 'https://isalebryan.dev', github: 'https://github.com/BryanAim/bryanaim.github.io' },
   { title: 'Personal Library', img: '/img/projects/project1.jpg', url: 'https://github.com/BryanAim/FCC-personal-library', github: 'https://github.com/BryanAim/FCC-personal-library' },
   { title: 'GSAP Scroll Animation', img: '/img/projects/project2.jpg', url: 'https://github.com/BryanAim/gsap-scroll-animation', github: 'https://github.com/BryanAim/gsap-scroll-animation' },
 ]
