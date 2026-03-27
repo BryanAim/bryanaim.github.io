@@ -406,28 +406,44 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
   )
 }
 
-/* ─── Photo tile ─── */
+/* ─── Photo tile — Amsterdam cyclists scroll reveal ─── */
 function PhotoTile({ photo, index, isSelected, onClick }: {
   photo: typeof photos[0]
   index: number
   isSelected: boolean
   onClick: () => void
 }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'center center'],
+  })
+  const clipPath = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ['inset(0% 50% 0% 50%)', 'inset(0% 0% 0% 0%)']
+  )
+
   return (
-    <motion.div
-      className={`bmx-photo-tile${photo.span === 'wide' ? ' wide' : ''}`}
-      layoutId={`bmx-photo-${index}`}
-      variants={fadeUp}
-      style={{ opacity: isSelected ? 0.35 : 1, cursor: 'zoom-in' }}
+    <div
+      ref={ref}
+      className="bmx-photo-reveal-wrap"
+      style={{ opacity: isSelected ? 0.35 : 1 }}
       onClick={onClick}
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.2 }}
     >
-      <motion.img layoutId={`bmx-photo-img-${index}`} src={photo.src} alt={photo.caption} />
-      <div className="bmx-photo-overlay">
-        <span>{photo.caption}</span>
-      </div>
-    </motion.div>
+      <motion.div
+        className="bmx-photo-tile"
+        layoutId={`bmx-photo-${index}`}
+        style={{ clipPath }}
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.2 }}
+      >
+        <motion.img layoutId={`bmx-photo-img-${index}`} src={photo.src} alt={photo.caption} />
+        <div className="bmx-photo-overlay">
+          <span>{photo.caption}</span>
+        </div>
+      </motion.div>
+    </div>
   )
 }
 
@@ -627,11 +643,7 @@ export default function BMX() {
         <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <span className="text-secondary">—</span> Gallery
         </motion.div>
-        <motion.div
-          className="bmx-photo-grid"
-          variants={stagger(0.07)} initial="hidden"
-          whileInView="show" viewport={{ once: true, margin: '-40px' }}
-        >
+        <div className="bmx-photo-reveal-col">
           {photos.map((photo, i) => (
             <PhotoTile
               key={i}
@@ -641,7 +653,7 @@ export default function BMX() {
               onClick={() => setSelectedPhoto(i)}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
 
       <AnimatePresence>
