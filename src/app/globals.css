@@ -2900,6 +2900,24 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 }
 
 /* =====================
+   Breadcrumb
+   ===================== */
+.breadcrumb {
+  margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+  color: #888;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.breadcrumb a:hover {
+  color: #b1db00;
+}
+
+/* =====================
    Checkout & Receipt
    ===================== */
 .checkout-form {

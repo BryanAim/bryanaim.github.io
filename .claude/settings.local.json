@@ -21,7 +21,10 @@
       "Bash(mv \"WhatsApp Image 2026-03-22 at 20.29.02.jpeg\" \"heroes-discussion.jpeg\")",
       "Bash(mv \"WhatsApp Image 2026-03-22 at 20.29.03 \\(1\\).jpeg\" \"outdoor-group.jpeg\")",
       "Bash(mv \"WhatsApp Image 2026-03-22 at 20.29.03.jpeg\" \"classroom-session.jpeg\")",
-      "Bash(find 'd:/Work/Personal Projects/Code/janja/bryanaim.github.io/src' -name *.css -o -name *.scss)"
+      "Bash(find 'd:/Work/Personal Projects/Code/janja/bryanaim.github.io/src' -name *.css -o -name *.scss)",
+      "Bash(find 'd:/Work/Personal Projects/Code/janja/bryanaim.github.io/public' -type f -name *.jpg -o -name *.png -o -name *.gif -o -name *.svg -o -name *.webp)",
+      "Bash(find 'd:/Work/Personal Projects/Code/janja/bryanaim.github.io/public/img' -type f \\\\\\(-name *.jpg -o -name *.jpeg -o -name *.png -o -name *.gif -o -name *.svg -o -name *.webp \\\\\\))",
+      "Bash(grep -r \"progression\\\\|goals2026\\\\|photos\\\\|clips\\\\|gear\" 'd:\\\\Work\\\\Personal Projects\\\\Code\\\\janja\\\\bryanaim.github.io\\\\src' --include=*.ts --include=*.tsx --include=*.js --include=*.json)"
     ]
   }
 }
