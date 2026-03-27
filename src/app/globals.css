@@ -2495,7 +2495,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: #777;
+  color: #b1db00;
   margin-bottom: 0.2rem;
 }
 .ct-info-value {

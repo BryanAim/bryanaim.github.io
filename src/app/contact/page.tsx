@@ -24,24 +24,26 @@ const socials = [
 
 /* ─── Animation helpers ─── */
 
+const SPRING = [0.16, 1, 0.3, 1] as const
+
 // Curtain-lift: text emerges from below an invisible clip mask
 const curtain = (delay = 0) => ({
   hidden:  { clipPath: 'inset(0 0 100% 0)', y: 24, opacity: 0 },
   show:    { clipPath: 'inset(0 0 0% 0)',   y: 0,  opacity: 1,
-    transition: { duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] } },
+    transition: { duration: 0.65, delay, ease: SPRING } },
 })
 
 // Slide-up with spring + blur
 const riseUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 56, filter: 'blur(6px)' },
   show:   { opacity: 1, y: 0,  filter: 'blur(0px)',
-    transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] } },
+    transition: { duration: 0.7, delay, ease: SPRING } },
 })
 
 // Wipe-right: element reveals by a horizontal mask sweep
 const wipeRight = {
   hidden: { scaleX: 0, originX: 0 },
-  show:   { scaleX: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  show:   { scaleX: 1, transition: { duration: 0.6, ease: SPRING } },
 }
 
 /* ─── Animated draw-line divider ─── */

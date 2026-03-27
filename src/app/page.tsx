@@ -164,7 +164,7 @@ export default function Home() {
             <a href="/about" className="home-cta-primary">
               Explore my work <i className="fas fa-arrow-right" />
             </a>
-            <a href="/about#contact" className="home-cta-ghost">
+            <a href="/contact" className="home-cta-ghost">
               Get in touch
             </a>
           </motion.div>
