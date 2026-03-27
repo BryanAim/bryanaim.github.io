@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { motion } from 'framer-motion'
 import styles from './shop.module.css'
 import {
   TshirtColor, CartItem, TSHIRT_COLORS, TSHIRT_SIZES, TSHIRT_SIZE_PRICES,
@@ -288,12 +289,22 @@ export default function ShopPage() {
 
   return (
     <main id="shop">
-      <h1 className="lg-heading">
+      <motion.h1
+        className="lg-heading"
+        initial={{ opacity: 0, y: -50, filter: 'blur(4px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      >
         Bryan&apos;s <span className="text-secondary">Shop</span>
-      </h1>
-      <h2 className="sm-heading">
+      </motion.h1>
+      <motion.h2
+        className="sm-heading"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+      >
         Stickers &amp; T-Shirts — for devs, designers, riders &amp; everyone
-      </h2>
+      </motion.h2>
 
       {/* Filter bar */}
       <div className={styles.filterBar}>

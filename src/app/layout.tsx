@@ -34,13 +34,16 @@ export default function RootLayout({
           }}
         />
         <link rel="icon" href="/favicon.png" />
+        <link rel="stylesheet" href="/fonts/css/all.min.css" />
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <Header />
-        <PageTransition>{children}</PageTransition>
+        <div id="content-wrap">
+          <PageTransition>{children}</PageTransition>
+          <Footer />
+        </div>
         <SpeedInsights />
         <Analytics />
-        <Footer />
       </body>
     </html>
   )

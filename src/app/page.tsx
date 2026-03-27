@@ -23,8 +23,8 @@ const BG_IMAGES = [
 ]
 
 const SOCIALS = [
-  { icon: 'fab fa-github',    url: 'https://github.com/BryanAim',             label: 'GitHub',    color: '#e0e0e0' },
-  { icon: 'fab fa-linkedin',  url: 'https://linkedin.com/in/brian-isale/',     label: 'LinkedIn',  color: '#0a66c2' },
+  { icon: 'fab fa-github',    url: 'https://github.com/BryanAim',             label: 'GitHub',    color: '#b1db00' },
+  { icon: 'fab fa-linkedin',  url: 'https://linkedin.com/in/brian-isale/',     label: 'LinkedIn',  color: '#b1db00' },
   { icon: 'fab fa-behance',   url: 'https://behance.net/isalebryan',           label: 'Behance',   color: '#1769ff' },
   { icon: 'fab fa-instagram', url: 'https://www.instagram.com/bryanisale/',    label: 'Instagram', color: '#e1306c' },
   { icon: 'fab fa-twitter',   url: 'https://twitter.com/IsaleBryan',           label: 'Twitter',   color: '#1d9bf0' },
@@ -136,7 +136,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.7 }}
           >
             <span className="home-role-cursor" aria-hidden="true">›</span>
-            <span ref={typeRef} className="home-role" />
+            <span ref={typeRef} className="home-role" aria-live="polite" aria-atomic="true" />
           </motion.div>
 
           {/* Bio — synced to Typed.js string completion */}

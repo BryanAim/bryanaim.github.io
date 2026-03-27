@@ -8,16 +8,16 @@ import { designProjects as allDesignProjects, Category } from '../work/designPro
 const ease = 'easeOut' as const
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
+  hidden: { opacity: 0, y: 64, filter: 'blur(4px)' },
+  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 }
 const fadeLeft = {
-  hidden: { opacity: 0, x: -40 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease } },
+  hidden: { opacity: 0, x: -60, filter: 'blur(4px)' },
+  show: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 }
 const fadeRight = {
-  hidden: { opacity: 0, x: 40 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease } },
+  hidden: { opacity: 0, x: 60, filter: 'blur(4px)' },
+  show: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 }
 const stagger = (delay = 0.1) => ({
   hidden: {},
@@ -32,23 +32,23 @@ interface Photo { src: string; caption: string }
 /* ─── Data ─── */
 const webDevSkills: Skill[] = [
   { name: 'HTML5 / CSS3', level: 85 },
-  { name: 'JavaScript (ES6+)', level: 70 },
-  { name: 'TypeScript', level: 50 },
-  { name: 'Next.js / React', level: 60 },
-  { name: 'Vue.js / Nuxt', level: 65 },
+  { name: 'JavaScript (ES6+)', level: 80 },
+  { name: 'TypeScript', level: 60 },
+  { name: 'Next.js / React', level: 65 },
+  { name: 'Vue.js / Nuxt', level: 55 },
   { name: 'Tailwind CSS', level: 70 },
-  { name: 'Node.js', level: 45 },
-  { name: 'Python / Django', level: 50 },
-  { name: 'WordPress', level: 75 },
-  { name: 'GCP', level: 45 },
+  { name: 'Node.js', level: 75 },
+  { name: 'Python / Django', level: 55 },
+  { name: 'WordPress', level: 80 },
+  { name: 'GCP', level: 55 },
   { name: 'Git / GitHub', level: 80 },
-  { name: 'Mailchimp', level: 60 },
+  { name: 'Mailchimp', level: 70 },
   { name: 'AI Tools', level: 80 },
 ]
 const designSkills: Skill[] = [
-  { name: 'Adobe Photoshop', level: 90 },
-  { name: 'Adobe Illustrator', level: 80 },
-  { name: 'UI/UX Design', level: 75 },
+  { name: 'Adobe Photoshop', level: 80 },
+  { name: 'Adobe Illustrator', level: 90 },
+  { name: 'UI/UX Design', level: 80 },
   { name: 'Motion Graphics', level: 65 },
 ]
 const webProjects: Project[] = [
@@ -89,7 +89,7 @@ const communityPhotos: Photo[] = [
   { src: '/img/projects/community/school-outreach-3.jpeg', caption: 'Community school outreach' },
 ]
 
-// Design projects now come from the shared data file (allDesignProjects)
+// Design projects come from the shared data file (allDesignProjects)
 // and are rendered via DesignGalleryModal below
 
 const cards = [
@@ -112,7 +112,7 @@ const cards = [
     id: 'design', icon: '✦', title: 'Creative Design',
     color: '#b1db00', glow: 'rgba(177,219,0,0.3)',
     tagline: 'Where art meets technology',
-    description: 'From childhood sketches to professional digital art — design is in my DNA. Visual identities, motion graphics, and illustrations that actually mean something.',
+    description: 'From childhood sketches to professional digital art, design is in my DNA. Visual identities, motion graphics, and illustrations that actually mean something.',
     skills: designSkills, projects: null, photos: null,
     bgImage: '/img/bmx/design1-banner.jpg',
     tags: ['Brand Identity', 'Motion Graphics', 'UI/UX'],
@@ -161,23 +161,6 @@ const stats = [
   { value: 3000, suffix: '+', label: 'Youth Reached' },
 ]
 
-const contactInfo = [
-  { icon: 'fas fa-envelope', label: 'Email', value: 'isale.bryan@gmail.com', href: 'mailto:isale.bryan@gmail.com', color: '#00ddd7' },
-  { icon: 'fas fa-phone', label: 'Phone', value: '+254 728 822 142', href: 'tel:+254728822142', color: '#b1db00' },
-  { icon: 'fas fa-map-marker-alt', label: 'Location', value: 'Nakuru, Kenya', href: 'https://maps.google.com/?q=Nakuru,Kenya', color: '#ff8c42' },
-]
-
-const socials = [
-  { icon: 'fab fa-linkedin', label: 'LinkedIn', sub: 'brian-isale', url: 'https://linkedin.com/in/brian-isale/', color: '#0a66c2' },
-  { icon: 'fab fa-github', label: 'GitHub', sub: 'BryanAim', url: 'https://github.com/BryanAim', color: '#e0e0e0' },
-  { icon: 'fab fa-behance', label: 'Behance', sub: 'isalebryan', url: 'https://behance.net/isalebryan', color: '#1769ff' },
-  { icon: 'fab fa-instagram', label: 'Instagram', sub: '@isalebryan', url: 'https://www.instagram.com/isalebryan/', color: '#e1306c' },
-  { icon: 'fab fa-dev', label: 'Dev.to', sub: 'bryanaim', url: 'https://dev.to/bryanaim', color: '#e0e0e0' },
-  { icon: 'fab fa-twitter', label: 'Twitter / X', sub: '@IsaleBryan', url: 'https://twitter.com/IsaleBryan', color: '#1d9bf0' },
-  { icon: 'fab fa-tiktok', label: 'TikTok', sub: '@bmxbrian', url: 'https://tiktok.com/@bmxbrian', color: '#e0e0e0' },
-  { icon: 'fab fa-youtube', label: 'YouTube', sub: '@bryanaim', url: 'https://youtube.com/@bryanaim', color: '#ff0000' },
-  { icon: 'fab fa-facebook', label: 'Facebook', sub: 'BryanAim', url: 'https://facebook.com/BryanAim', color: '#1877f2' },
-]
 
 /* ─── Skill Bar ─── */
 function SkillBar({ name, level, color, animate, delay }: { name: string; level: number; color: string; animate: boolean; delay: number }) {
@@ -682,122 +665,6 @@ export default function About() {
         {openCard && <CardModal card={openCard} onClose={() => setOpenCard(null)} />}
       </AnimatePresence>
 
-      {/* ══════════════════════════════════
-          CONTACT SECTION
-      ══════════════════════════════════ */}
-      <section id="contact" className="contact-section">
-        <motion.h2
-          className="lg-heading"
-          variants={fadeUp} initial="hidden"
-          whileInView="show" viewport={{ once: true, margin: '-80px' }}
-        >
-          Contact <span className="text-secondary">Me</span>
-        </motion.h2>
-        <motion.p
-          className="sm-heading"
-          variants={fadeUp} initial="hidden"
-          whileInView="show" viewport={{ once: true }}
-        >
-          Let&apos;s build something great together — reach out anytime
-        </motion.p>
-
-        <motion.div
-          className="ct-info-row"
-          variants={stagger(0.12)} initial="hidden"
-          whileInView="show" viewport={{ once: true, margin: '-60px' }}
-        >
-          {contactInfo.map(c => (
-            <motion.a
-              key={c.label}
-              href={c.href}
-              target={c.href.startsWith('http') ? '_blank' : undefined}
-              rel="noopener noreferrer"
-              className="ct-info-card"
-              style={{ '--ct-color': c.color } as React.CSSProperties}
-              variants={fadeUp}
-              whileHover={{ y: -4, boxShadow: `0 10px 30px rgba(0,0,0,0.3), 0 0 0 1px ${c.color}` }}
-            >
-              <div className="ct-info-icon"><i className={c.icon} /></div>
-              <div>
-                <p className="ct-info-label">{c.label}</p>
-                <p className="ct-info-value">{c.value}</p>
-              </div>
-            </motion.a>
-          ))}
-        </motion.div>
-
-        <motion.h3
-          className="ct-section-heading"
-          variants={fadeUp} initial="hidden"
-          whileInView="show" viewport={{ once: true }}
-        >
-          Find me <span className="text-secondary">online</span>
-        </motion.h3>
-        <motion.div
-          className="ct-socials-grid"
-          variants={stagger(0.06)} initial="hidden"
-          whileInView="show" viewport={{ once: true, margin: '-40px' }}
-        >
-          {socials.map(s => (
-            <motion.a
-              key={s.label}
-              href={s.url} target="_blank" rel="noopener noreferrer"
-              className="ct-social-card"
-              style={{ '--sc-color': s.color } as React.CSSProperties}
-              variants={fadeUp}
-              whileHover={{ x: 5, backgroundColor: 'rgba(255,255,255,0.08)' }}
-            >
-              <i className={`${s.icon} ct-social-icon`} style={{ color: s.color }} />
-              <div className="ct-social-text">
-                <span className="ct-social-name">{s.label}</span>
-                <span className="ct-social-sub">{s.sub}</span>
-              </div>
-              <i className="fas fa-arrow-right ct-social-arrow" />
-            </motion.a>
-          ))}
-        </motion.div>
-
-        <div className="ct-embeds-row pt-12">
-          <motion.div
-            className="ct-embed-col"
-            variants={fadeLeft} initial="hidden"
-            whileInView="show" viewport={{ once: true, margin: '-60px' }}
-          >
-            <h3 className="ct-section-heading">LinkedIn <span className="text-secondary">Profile</span></h3>
-            <div className="ct-embed-wrap">
-              <div className="LI-profile-badge" data-version="v1" data-size="large"
-                data-locale="en_US" data-type="horizontal" data-theme="dark" data-vanity="brian-isale">
-                <a className="LI-simple-link" href="https://ke.linkedin.com/in/brian-isale?trk=profile-badge">Brian Isale</a>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="ct-embed-col"
-            variants={fadeRight} initial="hidden"
-            whileInView="show" viewport={{ once: true, margin: '-60px' }}
-          >
-            <h3 className="ct-section-heading">Behance <span className="text-secondary">Portfolio</span></h3>
-            <a href="https://behance.net/isalebryan" target="_blank" rel="noopener noreferrer" className="ct-behance-card">
-              <div className="ct-behance-header">
-                <div className="ct-behance-logo"><i className="fab fa-behance" /></div>
-                <div>
-                  <p className="ct-behance-name">Isale Bryan</p>
-                  <p className="ct-behance-handle">behance.net/isalebryan</p>
-                </div>
-              </div>
-              <p className="ct-behance-desc">
-                Creative designer crafting brand identities, motion graphics, and digital illustrations. View the full portfolio on Behance.
-              </p>
-              <div className="ct-behance-tags">
-                <span>Brand Identity</span><span>Motion Graphics</span>
-                <span>UI/UX</span><span>Illustration</span>
-              </div>
-              <div className="ct-behance-cta">View Portfolio <i className="fas fa-arrow-right" /></div>
-            </a>
-          </motion.div>
-        </div>
-      </section>
     </main>
   )
 }
