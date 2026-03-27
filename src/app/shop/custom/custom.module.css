@@ -1,0 +1,296 @@
+/* ── Product type selector ─────────────────────────────────────── */
+.typeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 500px) { .typeGrid { grid-template-columns: 1fr } }
+
+.typeCard {
+  border: 2px solid #555;
+  background: #515151;
+  padding: 1.5rem;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+  border-radius: 2px;
+}
+
+.typeCard:hover { border-color: #00ddd7; background: #5a5a5a }
+.typeCardActive { border-color: #b1db00 !important; background: #5a5a5a }
+
+.typeIcon { font-size: 2.5rem; margin-bottom: 0.5rem }
+.typeName { color: #b1db00; font-size: 1rem; font-weight: 700; margin: 0 0 0.3rem }
+.typeDesc { color: #aaa; font-size: 0.8rem; margin: 0; line-height: 1.4 }
+
+/* ── Builder layout ────────────────────────────────────────────── */
+.builder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 700px) { .builder { grid-template-columns: 1fr } }
+
+/* ── Upload zone ───────────────────────────────────────────────── */
+.uploadZone {
+  border: 2px dashed #555;
+  background: #444;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.uploadZone:hover,
+.uploadZoneDrag { border-color: #b1db00; background: #4a4a3a }
+
+.uploadZoneHasFile { border-style: solid; border-color: #b1db00 }
+
+.uploadInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.uploadPrompt { text-align: center; padding: 1.5rem; pointer-events: none }
+.uploadIcon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block }
+.uploadPrompt p { color: #aaa; font-size: 0.85rem; margin: 0.25rem 0 0 }
+.uploadPrompt strong { color: #fff; font-size: 0.95rem }
+
+.uploadPreview { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; display: block; background: #333 }
+
+.uploadMeta { padding: 0.5rem 0.75rem; background: rgba(0,0,0,0.3); width: 100%; display: flex; justify-content: space-between; align-items: center }
+.uploadFileName { color: #aaa; font-size: 0.78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1 }
+.uploadClear { background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 0.8rem; flex-shrink: 0; margin-left: 0.5rem }
+.uploadClear:hover { text-decoration: underline }
+
+.uploadError { color: #ff6b6b; font-size: 0.82rem; text-align: center; padding: 0.5rem }
+
+/* ── Controls panel ────────────────────────────────────────────── */
+.controls { display: flex; flex-direction: column; gap: 1.25rem }
+
+.fieldLabel {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #aaa;
+  margin: 0 0 0.4rem;
+}
+
+/* ── Sliders ───────────────────────────────────────────────────── */
+.sliderRow { display: flex; align-items: center; gap: 0.75rem }
+
+.slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: #555;
+  border-radius: 2px;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #b1db00;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #b1db00;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.sliderVal {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  min-width: 52px;
+  text-align: right;
+}
+
+/* ── Size visualizer ───────────────────────────────────────────── */
+.sizeViz {
+  border: 1px solid #555;
+  background: #3a3a3a;
+  padding: 1rem;
+  border-radius: 2px;
+}
+
+.sizeVizLabel { color: #aaa; font-size: 0.78rem; margin-bottom: 0.75rem }
+
+.sizeVizArea {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sizeVizBox {
+  background: rgba(177,219,0,0.15);
+  border: 2px solid #b1db00;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  min-height: 20px;
+  overflow: hidden;
+}
+
+.sizeVizImg { width: 100%; height: 100%; object-fit: cover }
+
+.sizeVizPlaceholder { color: #b1db00; font-size: 0.7rem; text-align: center; padding: 0.25rem }
+
+.sizeVizDims { color: #ccc; font-size: 0.85rem }
+.sizeVizDims strong { color: #b1db00 }
+
+/* ── Color picker ──────────────────────────────────────────────── */
+.colorPicker { display: flex; gap: 0.6rem; flex-wrap: wrap }
+
+.colorSwatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: border-color 0.15s, transform 0.15s;
+  flex-shrink: 0;
+}
+
+.colorSwatch:hover { transform: scale(1.15) }
+.colorSwatchActive { border-color: #b1db00 !important; transform: scale(1.15) }
+.colorName { color: #ccc; font-size: 0.8rem; margin-top: 0.3rem }
+
+/* ── Size picker ───────────────────────────────────────────────── */
+.sizePicker { display: flex; gap: 0.4rem; flex-wrap: wrap }
+
+.sizeBtn {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid #666;
+  background: transparent;
+  color: #ccc;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  border-radius: 2px;
+}
+
+.sizeBtn:hover { border-color: #b1db00; color: #fff }
+.sizeBtnActive { border-color: #b1db00; background: #b1db00; color: #1a1a1a; font-weight: 700 }
+
+/* ── Quantity ──────────────────────────────────────────────────── */
+.qtyRow { display: flex; align-items: center; gap: 0.75rem }
+
+.qtyBtn {
+  background: #555;
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.qtyBtn:hover { background: #b1db00; color: #1a1a1a }
+.qtyNum { color: #fff; font-size: 1.1rem; font-weight: 700; min-width: 28px; text-align: center }
+
+/* ── Notes ─────────────────────────────────────────────────────── */
+.textarea {
+  width: 100%;
+  background: #444;
+  border: 1px solid #555;
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  padding: 0.75rem;
+  resize: vertical;
+  min-height: 80px;
+  max-height: 200px;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.textarea:focus { outline: none; border-color: #b1db00 }
+.charCount { color: #666; font-size: 0.75rem; text-align: right; margin-top: 0.2rem }
+
+/* ── Price summary ─────────────────────────────────────────────── */
+.priceBox {
+  background: #3a3a3a;
+  border-left: 4px solid #b1db00;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.priceLabel { color: #ccc; font-size: 0.9rem }
+.priceVal { color: #b1db00; font-size: 1.6rem; font-weight: 700 }
+.priceSubtext { color: #888; font-size: 0.75rem; margin-top: 0.1rem }
+
+/* ── CTA ───────────────────────────────────────────────────────── */
+.addBtn {
+  background: #b1db00;
+  color: #1a1a1a;
+  border: none;
+  padding: 1rem;
+  width: 100%;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 2px;
+}
+
+.addBtn:hover { background: #c8f500 }
+.addBtn:disabled { background: #555; color: #888; cursor: not-allowed }
+
+.successMsg { color: #b1db00; text-align: center; font-size: 0.9rem; animation: fadeUp 0.3s ease }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(4px) }
+  to { opacity: 1; transform: translateY(0) }
+}
+
+/* ── Upload progress ───────────────────────────────────────────── */
+.uploadingMsg { color: #aaa; text-align: center; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem }
+.dot { display: inline-block; animation: blink 1s step-start infinite }
+.dot:nth-child(2) { animation-delay: 0.2s }
+.dot:nth-child(3) { animation-delay: 0.4s }
+@keyframes blink { 50% { opacity: 0 } }
+
+/* ── Pricing guide ─────────────────────────────────────────────── */
+.pricingGuide { background: #3a3a3a; padding: 1rem; border-radius: 2px }
+.pricingGuide h4 { color: #b1db00; margin: 0 0 0.6rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em }
+.pricingRow { display: flex; justify-content: space-between; font-size: 0.8rem; color: #ccc; padding: 0.15rem 0; border-bottom: 1px solid #444 }
+.pricingRow:last-child { border-bottom: none }
+.pricingRow strong { color: #fff }

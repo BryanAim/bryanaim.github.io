@@ -79,7 +79,7 @@ const communityPhotos: Photo[] = [
   { src: '/img/projects/community/indoor-audience.jpeg', caption: 'Engaged audience at an indoor session' },
   { src: '/img/projects/community/heroes-discussion.jpeg', caption: 'Heroes for Change — group discussion' },
   { src: '/img/projects/community/outdoor-group.jpeg', caption: 'Community outdoor gathering' },
-  { src: '/img/projects/community/classroom-session.jpeg', caption: 'Classroom education session' },
+  { src: '/img/projects/community/classroom-session.jpeg', caption: 'Google Developer Group — Classroom education session' },
   { src: '/img/projects/community/heroes-outreach.jpeg', caption: 'Heroes for Change — youth outreach' },
   { src: '/img/projects/community/school-outreach-1.jpeg', caption: 'School outreach programme' },
   { src: '/img/projects/community/school-outreach-2.jpeg', caption: 'Engaging students at school' },
@@ -99,7 +99,7 @@ const cards = [
     tagline: 'Building solutions across the full stack',
     description: 'Started with a Google × Andela scholarship in 2018. From slick frontends to solid backends, cloud infrastructure, AI tools, and everything in between.',
     skills: webDevSkills, projects: webProjects, photos: null,
-    bgImage: '/img/stickers/laptop.jpg',
+    bgImage: '/img/projects/design/enjoy-music.jpg',
     tags: ['Full-Stack', 'Open Source', 'Google Scholar'],
     socials: [
       { icon: 'fab fa-github', label: 'GitHub', url: 'https://github.com/BryanAim' },
@@ -423,7 +423,7 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
           {card.skills && (
             <div className="ms-section">
               <h4 className="ms-section-title" style={{ color: card.color }}>— Skills</h4>
-              <div className="ms-skills-grid">
+              <div className={`ms-skills-grid ${card.skills.length > 6 ? 'ms-skills-grid--two-col' : ''}`}>
                 {card.skills.map((s, i) => (
                   <SkillBar key={s.name} name={s.name} level={s.level} color={card.color} animate={animSkills} delay={i * 0.08} />
                 ))}
@@ -757,7 +757,7 @@ export default function About() {
           ))}
         </motion.div>
 
-        <div className="ct-embeds-row">
+        <div className="ct-embeds-row pt-12">
           <motion.div
             className="ct-embed-col"
             variants={fadeLeft} initial="hidden"

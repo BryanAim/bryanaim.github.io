@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from './components/Header'
+import PageTransition from './components/PageTransition'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 
@@ -36,7 +37,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <Header />
-        {children}
+        <PageTransition>{children}</PageTransition>
         <SpeedInsights />
         <Analytics />
         <Footer />

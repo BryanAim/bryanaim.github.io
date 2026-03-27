@@ -1085,7 +1085,8 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 .ms-project-gh:hover { background: var(--ph-color, #b1db00); color: #000; }
 
 /* Skills in modal */
-.ms-skills-grid { display: flex; flex-direction: column; gap: 0.5rem; }
+.ms-skills-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+.ms-skills-grid--two-col { grid-template-columns: 1fr 1fr; column-gap: 1.5rem; }
 .ms-skill-label {
   display: flex;
   justify-content: space-between;
@@ -2258,7 +2259,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 }
 .ct-social-sub {
   font-size: 0.75rem;
-  color: #666;
+  color: #b1db00;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2346,7 +2347,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 .ct-behance-tags span {
   background: rgba(23, 105, 255, 0.12);
   border: 1px solid rgba(23, 105, 255, 0.3);
-  color: #7aa4ff;
+  color: #fff;
   padding: 0.2rem 0.65rem;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -2357,7 +2358,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   gap: 0.5rem;
   font-size: 0.85rem;
   font-weight: 700;
-  color: #1769ff;
+  color: #fff;
   letter-spacing: 0.5px;
 }
 
@@ -2437,7 +2438,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 .bmx-intro-text p {
   font-size: 0.95rem;
   line-height: 1.8;
-  color: rgba(255,255,255,0.65);
+  color: #fff;
   margin-bottom: 0.9rem;
 }
 .bmx-intro-tags {
@@ -2460,71 +2461,129 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   margin-bottom: 4rem;
 }
 .bmx-section-label {
-  font-size: 0.8rem;
+  font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
+  color: #ffffff;
   margin-bottom: 2rem;
 }
 .bmx-section-label .text-secondary { margin-right: 0.5rem; }
 
-/* Timeline */
-.bmx-timeline {
+/* ── Horizontal Timeline (scroll-driven) ── */
+.bmx-htl-section {
   position: relative;
+}
+.bmx-htl-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  justify-content: center;
+  padding: 0;
 }
-.bmx-timeline-line {
-  display: none; /* decorative — shown on wider screens */
-}
-.bmx-phase {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 1.5rem;
-  align-items: start;
-}
-.bmx-phase-year {
-  font-size: 0.75rem;
-  font-family: 'Courier New', monospace;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding-top: 1.1rem;
-  text-align: right;
-}
-.bmx-phase-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-left: 3px solid;
-  border-radius: 10px;
-  padding: 1.2rem 1.4rem;
-  transition: background 0.25s ease;
-}
-.bmx-phase-card:hover { background: rgba(255,255,255,0.06); }
-.bmx-phase-header {
+.bmx-htl-scroll-hint {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  margin-bottom: 0.6rem;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #b1db00;
+  padding: 0 60px;
+  margin-bottom: 2.5rem;
 }
-.bmx-phase-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+.bmx-htl-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  /* Centers the first and last card in the viewport */
+  padding: 0 calc(50vw - 210px) 52px;
+  width: max-content;
+  position: relative;
+  will-change: transform;
+}
+.bmx-htl-spine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 38px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.1) 3%,
+    rgba(255,255,255,0.1) 97%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+.bmx-htl-phase {
+  width: 420px;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.bmx-phase-title {
-  font-size: 1.1rem;
+.bmx-htl-card {
+  width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-top: 3px solid;
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 14px;
+  transition: background 0.25s ease;
+}
+.bmx-htl-card:hover { background: rgba(255,255,255,0.07); }
+.bmx-htl-card-top { margin-bottom: 0.5rem; }
+.bmx-htl-phase-name {
+  font-size: 0.82rem;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
-.bmx-phase-note {
-  font-size: 0.88rem;
-  line-height: 1.75;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 1rem;
+.bmx-htl-note {
+  font-size: 0.79rem;
+  line-height: 1.7;
+  color: #fff;
+  margin-bottom: 0.8rem;
+}
+.bmx-htl-connector {
+  width: 2px;
+  height: 14px;
+  flex-shrink: 0;
+  transform-origin: top;
+}
+.bmx-htl-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+.bmx-htl-year {
+  margin-top: 8px;
+  font-size: 0.67rem;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+  text-align: center;
+  white-space: nowrap;
+}
+.bmx-htl-progress-bg {
+  height: 2px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 1.5rem 60px 0;
+}
+.bmx-htl-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #b1db00, #00ddd7, #f472b6, #ff8c42);
+  border-radius: 2px;
 }
 .bmx-tricks-wrap {
   display: flex;
@@ -2540,54 +2599,383 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   letter-spacing: 0.3px;
 }
 
-/* Goals */
+/* Goals / Roadmap sub-heading */
 .bmx-goals-sub {
   font-size: 0.88rem;
-  color: rgba(255,255,255,0.4);
+  color: #fff;
   margin-bottom: 1.5rem;
 }
-.bmx-goals-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-.bmx-goal-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 10px;
-  padding: 1.2rem 1.4rem;
-}
-.bmx-goal-header {
+
+/* ── Roadmap Stack Cards ── */
+.bmx-roadmap-stack {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  padding-bottom: 40vh;
+  overflow: visible;
 }
-.bmx-goal-trick {
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+
+.bmx-rs-card {
+  position: sticky;
+  height: calc(100vh - 120px);
+  border-radius: 14px;
+  overflow: hidden;
+  border-top: 3px solid var(--rs-color, #b1db00);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  margin-bottom: 1.5rem;
+  will-change: transform;
+  background: #0c0c0c;
 }
-.bmx-goal-pct {
-  font-size: 1.4rem;
-  font-weight: 800;
+.bmx-rs-completed { opacity: 0.75; }
+
+.bmx-rs-ghost {
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.15em;
+  font-size: 22rem;
+  font-weight: 900;
   font-family: 'Courier New', monospace;
+  line-height: 1;
+  opacity: 0.04;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -4px;
 }
-.bmx-goal-note {
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.4);
-  line-height: 1.65;
-  margin-bottom: 1rem;
+
+.bmx-rs-overlay {
+  position: absolute;
+  inset: 0;
 }
-.bmx-goal-track {
-  height: 5px;
-  background: rgba(255,255,255,0.07);
-  border-radius: 10px;
+
+.bmx-rs-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 3rem 4rem;
+  gap: 3rem;
   overflow: hidden;
 }
-.bmx-goal-fill {
-  height: 100%;
-  border-radius: 10px;
+
+.bmx-rs-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  flex-shrink: 0;
+}
+.bmx-rs-index {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.2);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  writing-mode: vertical-rl;
+}
+.bmx-rs-qnum {
+  font-size: 3.8rem;
+  font-weight: 900;
+  font-family: 'Courier New', monospace;
+  line-height: 1;
+  text-shadow: 0 0 40px var(--rs-color, #b1db00);
+}
+.bmx-rs-period {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 1.5px;
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+}
+
+.bmx-rs-middle { flex: 1; min-width: 0; }
+.bmx-rs-top-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+}
+.bmx-rs-counter {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0;
+}
+.bmx-rs-trick {
+  font-size: 3.2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 1;
+  margin-bottom: 0.8rem;
+}
+.bmx-rs-note {
+  font-size: 0.9rem;
+  line-height: 1.78;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1.2rem;
+  max-width: 420px;
+}
+.bmx-rs-also-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+.bmx-rs-videos {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  align-items: stretch;
+}
+.bmx-rs-videos .bmx-video-slot {
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.bmx-rs-videos-toggle {
+  display: none;
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .bmx-rs-card {
+    height: auto;
+    min-height: 70vh;
+  }
+  .bmx-rs-content {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 2rem 1.6rem;
+    gap: 1.2rem;
+    overflow-y: auto;
+  }
+  .bmx-rs-left {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  .bmx-rs-index { writing-mode: horizontal-tb; }
+  .bmx-rs-period { writing-mode: horizontal-tb; }
+  .bmx-rs-qnum { font-size: 2.6rem; }
+  .bmx-rs-trick { font-size: 2.4rem; }
+  .bmx-rs-note { font-size: 0.85rem; margin-bottom: 1rem; }
+  .bmx-rs-videos {
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .bmx-rs-videos .bmx-video-slot {
+    width: calc(33% - 0.4rem);
+    min-width: 120px;
+  }
+  .bmx-rs-videos-toggle { display: none; }
+}
+
+@media (max-width: 640px) {
+  .bmx-rs-card {
+    height: auto;
+    min-height: 60vh;
+  }
+  .bmx-rs-content {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.4rem 1.2rem 1.2rem;
+    gap: 0.8rem;
+    overflow-y: auto;
+  }
+  .bmx-rs-left {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .bmx-rs-index { writing-mode: horizontal-tb; }
+  .bmx-rs-period { writing-mode: horizontal-tb; }
+  .bmx-rs-qnum { font-size: 2.2rem; }
+  .bmx-rs-trick { font-size: 2rem; }
+  .bmx-rs-note { font-size: 0.82rem; margin-bottom: 0.8rem; }
+  .bmx-rs-videos {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+  .bmx-rs-videos.bmx-rs-videos-open {
+    display: flex;
+  }
+  .bmx-rs-videos .bmx-video-slot {
+    width: 100%;
+  }
+  .bmx-rs-videos-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 0.6rem;
+    font-family: 'Courier New', monospace;
+  }
+}
+
+/* ── Quarterly roadmap (legacy — kept for badge/video shared styles) ── */
+.bmx-quarter-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: border-color 0.3s ease;
+}
+.bmx-quarter-active {
+  border-color: var(--q-color) !important;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.bmx-quarter-completed {
+  opacity: 0.65;
+}
+
+.bmx-quarter-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+.bmx-quarter-id {
+  font-size: 1.5rem;
+  font-weight: 900;
+  font-family: 'Courier New', monospace;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.bmx-quarter-range {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  flex: 1;
+}
+.bmx-quarter-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+}
+.bmx-badge-active {
+  color: #0a0a0a;
+}
+.bmx-badge-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: badgePulse 1.4s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+.bmx-quarter-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+.bmx-quarter-main-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.bmx-quarter-main-trick {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.bmx-quarter-note {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.bmx-quarter-others {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.bmx-quarter-others-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bmx-quarter-videos-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: -0.4rem;
+}
+.bmx-quarter-videos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+/* Video slot */
+.bmx-video-slot {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.bmx-video-player {
+  width: 100%;
+  aspect-ratio: 9/16;
+  object-fit: cover;
+  background: #000;
+  display: block;
+}
+.bmx-video-placeholder {
+  aspect-ratio: 9/16;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  background: rgba(255,255,255,0.02);
+  gap: 0.2rem;
+}
+.bmx-video-label {
+  font-size: 0.62rem;
+  padding: 0.25rem 0.4rem;
+  line-height: 1.4;
+  margin: 0;
+  font-weight: 600;
 }
 
 /* Gallery note */
@@ -2604,31 +2992,49 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   font-size: 0.78rem;
 }
 
-/* Photo grid */
-.bmx-photo-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.8rem;
+/* Gallery X — draggable grid */
+.bmx-galx-clip {
+  position: relative;
+  height: 75vh;
+  overflow: hidden;
+  border-radius: 12px;
+  user-select: none;
+  perspective: 1200px;
 }
-.bmx-photo-tile {
+.bmx-galx-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 320px);
+  grid-auto-rows: 240px;
+  gap: 12px;
+  width: max-content;
+  padding: 4px;
+}
+.bmx-galx-cell {
   position: relative;
   border-radius: 10px;
   overflow: hidden;
-  aspect-ratio: 4/3;
-  cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.06);
+  will-change: transform;
+  cursor: zoom-in;
 }
-.bmx-photo-tile.wide {
-  grid-column: span 2;
-  aspect-ratio: 16/7;
-}
-.bmx-photo-tile img {
+.bmx-galx-cell img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  display: block;
+  pointer-events: none;
 }
-.bmx-photo-tile:hover img { transform: scale(1.06); }
+.bmx-galx-hint {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  color: #b1db00;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
 .bmx-photo-overlay {
   position: absolute;
   inset: 0;
@@ -2638,10 +3044,96 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   padding: 0.9rem;
   opacity: 0;
 }
+.bmx-galx-cell:hover .bmx-photo-overlay { opacity: 1; transition: opacity 0.2s ease; }
 .bmx-photo-overlay span {
   font-size: 0.82rem;
   color: #fff;
   font-weight: 600;
+}
+
+/* ── Photo Lightbox ── */
+.bmx-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bmx-lightbox-frame {
+  position: relative;
+  max-width: min(90vw, 900px);
+  max-height: 90vh;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.7);
+}
+.bmx-lightbox-img {
+  display: block;
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+}
+.bmx-lightbox-caption {
+  padding: 0.9rem 1.2rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  background: rgba(0,0,0,0.4);
+  margin: 0;
+}
+.bmx-lightbox-close {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: background 0.2s;
+}
+.bmx-lightbox-close:hover { background: rgba(255,255,255,0.2); }
+.bmx-lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  width: 48px;
+  height: 64px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.bmx-lightbox-nav:hover { background: rgba(255,255,255,0.16); }
+.bmx-lightbox-prev { left: 1rem; }
+.bmx-lightbox-next { right: 1rem; }
+.bmx-lightbox-counter {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.4);
+  z-index: 1000;
 }
 
 /* Clips */
@@ -2690,37 +3182,65 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   opacity: 0.5;
 }
 
-/* Gear */
-.bmx-gear-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.8rem;
+/* Gear Ticker */
+.bmx-ticker-wrap {
+  padding: 3.5rem 0 4rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  overflow: hidden;
 }
-.bmx-gear-item {
+.bmx-ticker-heading {
+  padding: 0 var(--page-pad, 2rem);
+  font-size: 0.78rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.bmx-ticker-row-clip {
+  overflow: hidden;
+  width: 100%;
+}
+.bmx-ticker-row {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 10px;
-  padding: 1rem 1.2rem;
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
 }
-.bmx-gear-icon {
+.bmx-ticker-row-muted {
+  opacity: 0.35;
+}
+.bmx-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 2rem;
+}
+.bmx-ticker-icon {
   font-size: 1.5rem;
-  line-height: 1;
-  flex-shrink: 0;
 }
-.bmx-gear-label {
-  font-size: 0.72rem;
-  letter-spacing: 1px;
+.bmx-ticker-label {
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-  margin-bottom: 0.2rem;
+  color: rgba(255,255,255,0.38);
 }
-.bmx-gear-value {
-  font-size: 0.9rem;
+.bmx-ticker-sep {
+  color: rgba(255,255,255,0.2);
+  font-size: 1.1rem;
+}
+.bmx-ticker-value {
   font-weight: 700;
-  color: #e0e0e0;
+  color: #e8e8e8;
+  font-size: 1.15rem;
+}
+.bmx-ticker-dot {
+  color: rgba(255,255,255,0.15);
+  font-size: 1.4rem;
+  margin-left: 0.5rem;
 }
 
 /* Follow */
@@ -2835,12 +3355,14 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 /* BMX page — mobile */
 @media (max-width: 768px) {
   .bmx-intro { grid-template-columns: 1fr; gap: 1.5rem; }
-  .bmx-phase { grid-template-columns: 56px 1fr; }
+  .bmx-htl-phase { width: 240px; }
+  .bmx-htl-track { padding: 0 20px 52px; gap: 20px; }
+  .bmx-htl-progress-bg { margin: 0 20px; }
   .bmx-photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .bmx-lightbox-nav { display: none; }
   .bmx-photo-tile.wide { grid-column: span 2; }
   .bmx-goals-grid { grid-template-columns: 1fr; }
   .bmx-clips-grid { grid-template-columns: 1fr; }
-  .bmx-gear-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* =====================
@@ -2896,6 +3418,24 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 .inspirations .item h3 {
   color: #b1db00;
   margin-bottom: 0.5rem;
+}
+
+/* =====================
+   Breadcrumb
+   ===================== */
+.breadcrumb {
+  margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+  color: #888;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.breadcrumb a:hover {
+  color: #b1db00;
 }
 
 /* =====================

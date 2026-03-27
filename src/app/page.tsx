@@ -16,10 +16,10 @@ const TYPED_BIOS = [
 ]
 
 const BG_IMAGES = [
-  '/img/stickers/laptop.jpg',
-  '/img/projects/design/brand.jpg',
   '/img/background.jpg',
-  '/img/stickers/bike.jpg',
+  '/img/projects/design/avril-music.jpg',
+  '/img/projects/design/compositions/mike-explode.jpg',
+  '/img/bmx/bmx23-bg.jpg',
 ]
 
 const SOCIALS = [
