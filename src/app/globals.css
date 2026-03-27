@@ -2438,7 +2438,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 .bmx-intro-text p {
   font-size: 0.95rem;
   line-height: 1.8;
-  color: rgba(255,255,255,0.65);
+  color: #fff;
   margin-bottom: 0.9rem;
 }
 .bmx-intro-tags {
@@ -2461,11 +2461,11 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   margin-bottom: 4rem;
 }
 .bmx-section-label {
-  font-size: 0.8rem;
+  font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
+  color: #ffffff;
   margin-bottom: 2rem;
 }
 .bmx-section-label .text-secondary { margin-right: 0.5rem; }
@@ -2491,7 +2491,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   font-size: 0.7rem;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.28);
+  color: #b1db00;
   padding: 0 60px;
   margin-bottom: 2.5rem;
 }
@@ -2548,7 +2548,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 .bmx-htl-note {
   font-size: 0.79rem;
   line-height: 1.7;
-  color: rgba(255,255,255,0.48);
+  color: #fff;
   margin-bottom: 0.8rem;
 }
 .bmx-htl-connector {
@@ -2602,7 +2602,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 /* Goals / Roadmap sub-heading */
 .bmx-goals-sub {
   font-size: 0.88rem;
-  color: rgba(255,255,255,0.4);
+  color: #fff;
   margin-bottom: 1.5rem;
 }
 
@@ -2939,7 +2939,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.3);
+  color: #b1db00;
   letter-spacing: 2px;
   text-transform: uppercase;
   pointer-events: none;

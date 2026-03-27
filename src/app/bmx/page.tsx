@@ -283,6 +283,7 @@ function GearTicker() {
 
   // Repeat enough to always fill the screen at any scroll
   const repeated = [...gear, ...gear, ...gear, ...gear]
+  const reversedRepeated = [...[...gear].reverse(), ...[...gear].reverse(), ...[...gear].reverse(), ...[...gear].reverse()]
 
   const renderRow = (items: typeof gear) =>
     items.map((g, i) => (
@@ -297,9 +298,9 @@ function GearTicker() {
 
   return (
     <div className="bmx-ticker-wrap">
-      <div className="bmx-ticker-heading">
-        <span className="text-secondary">—</span> The Setup
-      </div>
+      <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <span className="text-secondary">—</span> The Setup
+        </motion.div>
       <div className="bmx-ticker-row-clip">
         <motion.div className="bmx-ticker-row" style={{ x: smooth1 }}>
           {renderRow(repeated)}
@@ -307,7 +308,7 @@ function GearTicker() {
       </div>
       <div className="bmx-ticker-row-clip">
         <motion.div className="bmx-ticker-row bmx-ticker-row-muted" style={{ x: smooth2 }}>
-          {renderRow(repeated)}
+          {renderRow(reversedRepeated)}
         </motion.div>
       </div>
     </div>
@@ -712,7 +713,7 @@ export default function BMX() {
         variants={fadeUp} initial="hidden"
         whileInView="show" viewport={{ once: true }}
       >
-        <p>Follow the sessions</p>
+        <p >Follow the sessions</p>
         <div className="bmx-follow-links">
           <a href="https://www.instagram.com/isalebryan/" target="_blank" rel="noopener noreferrer"
             className="bmx-follow-btn" style={{ '--fb-color': '#e1306c' } as React.CSSProperties}>
