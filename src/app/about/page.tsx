@@ -6,18 +6,19 @@ import { designProjects as allDesignProjects, Category } from '../work/designPro
 
 /* ─── Animation variants ─── */
 const ease = 'easeOut' as const
+const SPRING = [0.16, 1, 0.3, 1] as const
 
 const fadeUp = {
   hidden: { opacity: 0, y: 64, filter: 'blur(4px)' },
-  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: SPRING } },
 }
 const fadeLeft = {
   hidden: { opacity: 0, x: -60, filter: 'blur(4px)' },
-  show: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+  show: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: SPRING } },
 }
 const fadeRight = {
   hidden: { opacity: 0, x: 60, filter: 'blur(4px)' },
-  show: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+  show: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: SPRING } },
 }
 const stagger = (delay = 0.1) => ({
   hidden: {},

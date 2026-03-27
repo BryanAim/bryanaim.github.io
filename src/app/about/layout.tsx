@@ -1,0 +1,31 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About',
+  description: "Brian Isale's story — from Google Africa Scholar to full-stack developer and designer in Nakuru, Kenya.",
+  alternates: { canonical: 'https://bryanaim.github.io/about' },
+  openGraph: {
+    url: 'https://bryanaim.github.io/about',
+  },
+}
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bryanaim.github.io' },
+    { '@type': 'ListItem', position: 2, name: 'About', item: 'https://bryanaim.github.io/about' },
+  ],
+}
+
+export default function AboutLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      {children}
+    </>
+  )
+}
