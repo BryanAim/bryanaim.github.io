@@ -90,7 +90,7 @@ export default function Contact() {
           {/* "Let's" curtain-lifts first */}
           <div className="ct-hero-overflow">
             <motion.h1
-              className="ct-hero-h1"
+              className="ct-hero-h1 ct-hero-h1--default"
               variants={curtain(0)}
               initial="hidden"
               animate="show"
@@ -110,9 +110,30 @@ export default function Contact() {
             </motion.h1>
           </div>
 
+          {/* Role tags — animated stagger */}
+          <motion.div
+            className="ct-role-tags"
+            initial="hidden"
+            animate="show"
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.35 } } }}
+          >
+            {['Developer', 'Designer', 'Community Builder', 'BMX Rider'].map((tag) => (
+              <motion.span
+                key={tag}
+                className="ct-role-tag"
+                variants={{
+                  hidden: { opacity: 0, y: 16, filter: 'blur(4px)' },
+                  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.55, ease: SPRING } },
+                }}
+              >
+                {tag}
+              </motion.span>
+            ))}
+          </motion.div>
+
           <motion.p
             className="ct-hero-sub"
-            variants={riseUp(0.45)}
+            variants={riseUp(0.75)}
             initial="hidden"
             animate="show"
           >
