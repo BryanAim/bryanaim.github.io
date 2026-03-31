@@ -1,20 +1,34 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(4px) }
+  to   { opacity: 1; transform: translateY(0) }
+}
+@utility animate-fadeUp {
+  animation: fadeUp 0.3s ease;
+}
+
+@theme {
+  /* Brand colors — available as text-teal, bg-lime, border-orange, etc. */
+  --color-teal:     #00ddd7;
+  --color-lime:     #b1db00;
+  --color-orange:   #ff8c42;
+  --color-pink:     #ff3d6b;
+  --color-bg:       #111111;
+  --color-bg-dark:  #0a0a0a;
+
+  /* Typography */
+  --font-family-sans: var(--font-inter), system-ui, sans-serif;
+
+  /* Radius */
+  --radius: 0.5rem;
+}
 
 /* =====================
-   Design Tokens
+   Design Tokens (non-utility vars)
    ===================== */
 :root {
-  /* Brand colors */
-  --color-teal:       #00ddd7;
-  --color-lime:       #b1db00;
-  --color-orange:     #ff8c42;
-  --color-pink:       #f472b6;
-
   /* Surface / background */
-  --color-bg:         #444444;
-  --color-bg-dark:    #1a1a1a;
   --color-bg-nav:     rgba(18, 18, 18, 0.88);
   --color-overlay:    rgba(68, 68, 68, 0.8);
 
@@ -421,12 +435,7 @@ main > * {
   z-index: 1;
 }
 
-/* Inner pages — consistent max-width so content never goes too wide */
-main:not(#home) {
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-}
+/* .main:not(#home) max-width — removed, was causing side gaps */
 
 /* =====================
    Homepage
