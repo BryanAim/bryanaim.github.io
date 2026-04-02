@@ -41,7 +41,7 @@ const isProductNew = (p: CatalogProduct) =>
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function ShopPage() {
-  const [shuffledProducts] = useState<CatalogProduct[]>(() => [...PRODUCTS].sort(() => Math.random() - 0.5))
+  const [shuffledProducts, setShuffledProducts] = useState<CatalogProduct[]>(PRODUCTS)
   const [tab, setTab] = useState<FilterTab>('all')
   const [stickerFilter, setStickerFilter] = useState<StickerFilter>('all')
   const [search, setSearch] = useState('')
@@ -56,7 +56,11 @@ export default function ShopPage() {
   const [addedFeedback, setAddedFeedback] = useState(false)
   const [modalImage, setModalImage] = useState<string>('')
 
-  useEffect(() => { setMounted(true); setCart(loadCart()) }, [])
+  useEffect(() => {
+    setMounted(true)
+    setCart(loadCart())
+    setShuffledProducts([...PRODUCTS].sort(() => Math.random() - 0.5))
+  }, [])
 
   const updateCart = useCallback((next: CartItem[]) => { setCart(next); saveCart(next) }, [])
 
