@@ -181,7 +181,7 @@ export default function ShopPage() {
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
-        Bryan&apos;s <span className="text-lime">Shop</span>
+        Janja&apos;s <span className="text-lime">Shop</span>
       </motion.h1>
       <motion.h2
         className="mb-12 px-4 py-[0.2rem] bg-[rgba(73,73,73,0.5)] text-center"
