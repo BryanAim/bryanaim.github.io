@@ -9,179 +9,46 @@ import {
   StickerPreset, STICKER_PRESETS, catalogStickerPrice,
   loadCart, saveCart,
 } from '@/lib/shopTypes'
+import {
+  PRODUCTS, CatalogProduct, StickerProduct, TshirtProduct, StickerCategory,
+} from '@/lib/products'
 
 // ─── Re-export CartItem so checkout can import it from here ──────────────────
 export type { CartItem, TshirtColor }
 
 // ─── Internal types ──────────────────────────────────────────────────────────
 
-type CatalogProductType = 'sticker' | 'tshirt'
-type StickerCategory = 'developer' | 'designer' | 'bmx' | 'cycling' | 'pop-culture'
 type FilterTab = 'all' | 'sticker' | 'tshirt' | 'custom'
 type StickerFilter = 'all' | StickerCategory
 
 const PAGE_SIZE = 12
 
-interface BaseProduct { id: string; type: CatalogProductType; name: string; price: number; image: string; description: string }
-interface StickerProduct extends BaseProduct { type: 'sticker'; category: StickerCategory; canUseOn: string[] }
-interface TshirtProduct extends BaseProduct { type: 'tshirt'; colors: TshirtColor[]; sizes: string[] }
-type Product = StickerProduct | TshirtProduct
-
 const CATEGORY_LABELS: Record<StickerCategory, string> = {
-  developer: 'Developer', designer: 'Designer', bmx: 'BMX',
-  cycling: 'Cycling', 'pop-culture': 'Pop Culture',
+  developer: 'Developer',
+  designer: 'Designer',
+  bmx: 'BMX',
+  cycling: 'Cycling',
+  'pop-culture': 'Pop Culture',
+  street: 'Street',
+  humour: 'Humour',
 }
-
-// ─── Catalogue ───────────────────────────────────────────────────────────────
-
-const PRODUCTS: Product[] = [
-  // Stickers: Developer
-  { id: 's-dev-1', type: 'sticker', category: 'developer', name: 'Hello World Sticker', price: 150,
-    image: '/img/projects/project1.jpg',
-    description: 'Classic dev starter. For your laptop, phone, or mug.',
-    canUseOn: ['Laptop', 'Phone', 'Water bottle', 'Notebook'] },
-  { id: 's-dev-2', type: 'sticker', category: 'developer', name: '#!/usr/bin/env Sticker', price: 150,
-    image: '/img/projects/my-portfolio.jpg',
-    description: 'For those who live in the terminal. Represent your shell.',
-    canUseOn: ['Laptop', 'Desktop', 'Server rack'] },
-  { id: 's-dev-3', type: 'sticker', category: 'developer', name: 'NaxTechMakers Sticker', price: 250,
-    image: '/img/projects/naxtechmakers.jpg',
-    description: 'Nakuru tech community pride. Rep the local dev scene.',
-    canUseOn: ['Laptop', 'Phone', 'Bike', 'Car'] },
-  { id: 's-dev-4', type: 'sticker', category: 'developer', name: 'Coffee & Code Pack (3 pcs)', price: 400,
-    image: '/img/projects/project2.jpg',
-    description: 'Three-piece sticker pack — coffee, keyboard, and code vibes.',
-    canUseOn: ['Laptop', 'Flask / Mug', 'Phone'] },
-  { id: 's-dev-5', type: 'sticker', category: 'developer', name: 'git push --force Sticker', price: 150,
-    image: '/img/projects/project3.jpg',
-    description: 'For the brave devs who yolo the main branch.',
-    canUseOn: ['Laptop', 'Phone', 'Notebook'] },
-
-  // Stickers: Designer
-  { id: 's-des-1', type: 'sticker', category: 'designer', name: 'Enjoy Music Art Sticker', price: 200,
-    image: '/img/projects/design/enjoy-music.jpg',
-    description: 'Original artwork sticker. Music is life.',
-    canUseOn: ['Laptop', 'Phone', 'Speaker', 'Guitar case'] },
-  { id: 's-des-2', type: 'sticker', category: 'designer', name: 'Ying Yang No Sensei', price: 200,
-    image: '/img/projects/design/ying-yang-no-sensei.jpg',
-    description: 'Balance & wisdom. Original illustration sticker.',
-    canUseOn: ['Laptop', 'Phone', 'Bike', 'Skateboard'] },
-  { id: 's-des-3', type: 'sticker', category: 'designer', name: 'World of Perps Sticker', price: 200,
-    image: '/img/projects/design/illustrations/world-of-perps.jpg',
-    description: 'Bold original illustration. Eye-catching anywhere.',
-    canUseOn: ['Laptop', 'Notebook', 'Phone'] },
-  { id: 's-des-4', type: 'sticker', category: 'designer', name: 'Mike Explode Art Sticker', price: 200,
-    image: '/img/projects/design/mike-explode.jpg',
-    description: 'Explosive original artwork. A real statement piece.',
-    canUseOn: ['Laptop', 'Phone', 'Helmet', 'Bike'] },
-  { id: 's-des-5', type: 'sticker', category: 'designer', name: 'Sensei Wisdom Sticker', price: 150,
-    image: '/img/projects/design/illustrations/sensei-no-pills.jpg',
-    description: 'Choose your path. Clean original illustration.',
-    canUseOn: ['Laptop', 'Phone', 'Notebook'] },
-  { id: 's-des-6', type: 'sticker', category: 'designer', name: 'Christmas 2024 Sticker', price: 150,
-    image: '/img/projects/design/illustrations/christmas-2024.jpg',
-    description: 'Festive original illustration. Gift it or keep it.',
-    canUseOn: ['Phone', 'Laptop', 'Gift box', 'Notebook'] },
-
-  // Stickers: BMX
-  { id: 's-bmx-1', type: 'sticker', category: 'bmx', name: 'BMX Life Sticker', price: 200,
-    image: '/img/bmx/bmx1.jpg',
-    description: 'For the riders. Slap it on your frame, helmet, or phone.',
-    canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Laptop'] },
-  { id: 's-bmx-2', type: 'sticker', category: 'bmx', name: 'Street BMX Sticker', price: 200,
-    image: '/img/bmx/bmx3.jpg',
-    description: 'Streets are yours. Rep your style everywhere.',
-    canUseOn: ['Bike frame', 'Helmet', 'Skateboard', 'Phone'] },
-  { id: 's-bmx-3', type: 'sticker', category: 'bmx', name: 'Air Time BMX Sticker', price: 200,
-    image: '/img/bmx/bmx5.jpg',
-    description: 'Catch that air. For riders who fly.',
-    canUseOn: ['Bike frame', 'Helmet', 'Ramp', 'Gear bag'] },
-  { id: 's-bmx-4', type: 'sticker', category: 'bmx', name: 'BMX Nakuru Sticker', price: 250,
-    image: '/img/bmx/bmx2.jpg',
-    description: 'Nakuru BMX scene. Local pride on your bike or beyond.',
-    canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Car'] },
-  { id: 's-bmx-5', type: 'sticker', category: 'bmx', name: 'Barspin Sticker', price: 200,
-    image: '/img/bmx/bmx6.jpg',
-    description: 'Spin the bars, spin the world.',
-    canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Laptop'] },
-
-  // Stickers: Cycling
-  { id: 's-cyc-1', type: 'sticker', category: 'cycling', name: 'Ride or Die Sticker', price: 200,
-    image: '/img/bmx/bmx7.jpg',
-    description: "The cyclist's motto. For all two-wheel lovers.",
-    canUseOn: ['Bike frame', 'Helmet', 'Water bottle', 'Phone'] },
-  { id: 's-cyc-2', type: 'sticker', category: 'cycling', name: 'Two Wheels Sticker', price: 200,
-    image: '/img/bmx/bmx9.jpg',
-    description: 'Life is better on two wheels.',
-    canUseOn: ['Bike frame', 'Helmet', 'Water bottle', 'Laptop'] },
-  { id: 's-cyc-3', type: 'sticker', category: 'cycling', name: 'Bike Gang Sticker', price: 150,
-    image: '/img/bmx/bmx4.jpg',
-    description: 'Ride together, vibe together.',
-    canUseOn: ['Bike frame', 'Phone', 'Water bottle'] },
-  { id: 's-cyc-4', type: 'sticker', category: 'cycling', name: 'Kenyan Roads Sticker', price: 200,
-    image: '/img/bmx/bmx10.jpg',
-    description: 'Tarmac, murram, or anything in between. Kenyan cyclist pride.',
-    canUseOn: ['Bike frame', 'Helmet', 'Car', 'Phone'] },
-
-  // Stickers: Pop Culture
-  { id: 's-pop-1', type: 'sticker', category: 'pop-culture', name: 'SpongeBob Vibes Sticker', price: 200,
-    image: '/img/projects/design/illustrations/sensei-red-pill.jpg',
-    description: 'Are you ready kids? SpongeBob-inspired sticker. [Placeholder — real art coming soon]',
-    canUseOn: ['Phone', 'Laptop', 'Water bottle', 'Notebook'] },
-  { id: 's-pop-2', type: 'sticker', category: 'pop-culture', name: "Krabby Patty Secret Sticker", price: 150,
-    image: '/img/projects/corona.jpg',
-    description: 'The formula is yours. SpongeBob-themed sticker. [Placeholder]',
-    canUseOn: ['Phone', 'Laptop', 'Fridge', 'Water bottle'] },
-  { id: 's-pop-3', type: 'sticker', category: 'pop-culture', name: 'Rick & Morty Forever Sticker', price: 200,
-    image: '/img/projects/design/compositions/mike-explode.jpg',
-    description: 'Wubba lubba dub dub! Rick & Morty fan sticker. [Placeholder]',
-    canUseOn: ['Laptop', 'Phone', 'Car', 'Notebook'] },
-  { id: 's-pop-4', type: 'sticker', category: 'pop-culture', name: 'Get Schwifty Sticker', price: 200,
-    image: '/img/background.jpg',
-    description: 'You gotta get schwifty! Show your Rick & Morty love. [Placeholder]',
-    canUseOn: ['Phone', 'Laptop', 'Guitar case', 'Helmet'] },
-
-  // T-Shirts
-  { id: 't-1', type: 'tshirt', name: 'Nakuru Rides Tee', price: 1200,
-    image: '/img/bmx/bmx1-banner.jpg',
-    description: 'Nakuru BMX & cycling culture on a quality cotton tee. Lightweight, breathable, built to ride in.',
-    colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES },
-  { id: 't-2', type: 'tshirt', name: 'Code & Create Tee', price: 1200,
-    image: '/img/bmx/design1-banner.jpg',
-    description: 'For developers and designers who build things. Minimal design, maximum statement.',
-    colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES },
-  { id: 't-3', type: 'tshirt', name: 'Street Art Graphic Tee', price: 1300,
-    image: '/img/projects/design/design1.jpg',
-    description: 'Original graphic design on a premium cotton tee. Wear your art.',
-    colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES },
-  { id: 't-4', type: 'tshirt', name: 'Bike Life Tee', price: 1200,
-    image: '/img/bmx/bmx8.jpg',
-    description: 'For cyclists and BMX riders who live on two wheels. Comfortable fit for trail or street.',
-    colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES },
-  { id: 't-5', type: 'tshirt', name: 'Wubba Lubba Tee', price: 1300,
-    image: '/img/projects/design/illustrations/world-of-perps.jpg',
-    description: 'Rick & Morty vibes on a quality tee. For fans of the multiverse.',
-    colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES },
-  { id: 't-6', type: 'tshirt', name: 'Classic Signature Tee', price: 1000,
-    image: '/img/portrait.jpg',
-    description: 'Clean, minimal signature tee. A wardrobe staple in 5 colours.',
-    colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES },
-]
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function ShopPage() {
   const [tab, setTab] = useState<FilterTab>('all')
   const [stickerFilter, setStickerFilter] = useState<StickerFilter>('all')
+  const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [mounted, setMounted] = useState(false)
   const [cart, setCart] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [selectedProduct, setSelectedProduct] = useState<CatalogProduct | null>(null)
   const [selectedColor, setSelectedColor] = useState<TshirtColor>(TSHIRT_COLORS[0])
   const [selectedSize, setSelectedSize] = useState<string>('')
   const [selectedStickerPreset, setSelectedStickerPreset] = useState<StickerPreset>(STICKER_PRESETS[0])
   const [addedFeedback, setAddedFeedback] = useState(false)
+  const [modalImage, setModalImage] = useState<string>('')
 
   useEffect(() => { setMounted(true); setCart(loadCart()) }, [])
 
@@ -193,6 +60,7 @@ export default function ShopPage() {
     setSelectedSize('')
     setSelectedStickerPreset(STICKER_PRESETS[0])
     setAddedFeedback(false)
+    setModalImage(selectedProduct.image)
   }, [selectedProduct])
 
   const modalPrice = !selectedProduct
@@ -203,11 +71,25 @@ export default function ShopPage() {
         ? TSHIRT_SIZE_PRICES[selectedSize]
         : selectedProduct.price
 
+  const searchLower = search.toLowerCase()
+
   const filtered = tab === 'custom' ? [] : PRODUCTS.filter(p => {
     if (tab === 'sticker' && p.type !== 'sticker') return false
     if (tab === 'tshirt' && p.type !== 'tshirt') return false
     if (tab !== 'tshirt' && p.type === 'sticker' && stickerFilter !== 'all') {
-      return (p as StickerProduct).category === stickerFilter
+      if ((p as StickerProduct).category !== stickerFilter) return false
+    }
+    if (searchLower) {
+      const s = p as StickerProduct
+      const t = p as TshirtProduct
+      const inName = p.name.toLowerCase().includes(searchLower)
+      const inDesc = p.description.toLowerCase().includes(searchLower)
+      const inTags = (p.type === 'sticker' ? s.tags ?? [] : t.tags ?? [])
+        .some((tag: string) => tag.toLowerCase().includes(searchLower))
+      const inCategory = p.type === 'sticker'
+        ? CATEGORY_LABELS[s.category].toLowerCase().includes(searchLower)
+        : false
+      if (!inName && !inDesc && !inTags && !inCategory) return false
     }
     return true
   })
@@ -223,7 +105,7 @@ export default function ShopPage() {
 
   const changeTab = (t: FilterTab) => {
     if (t === 'custom') { window.location.href = '/shop/custom'; return }
-    setTab(t); setStickerFilter('all'); setPage(1)
+    setTab(t); setStickerFilter('all'); setPage(1); setSearch('')
   }
 
   const addToCart = () => {
@@ -240,7 +122,7 @@ export default function ShopPage() {
       ? cart.map(i => i.cartId === cartId ? { ...i, quantity: i.quantity + 1 } : i)
       : [...cart, {
           cartId, productId: selectedProduct.id, name: itemName, price: modalPrice,
-          image: selectedProduct.image, quantity: 1, type: selectedProduct.type,
+          image: modalImage || selectedProduct.image, quantity: 1, type: selectedProduct.type,
           ...(selectedProduct.type === 'tshirt' && { color: selectedColor, size: selectedSize }),
           ...(selectedProduct.type === 'sticker' && {
             widthCm: selectedStickerPreset.widthCm, heightCm: selectedStickerPreset.heightCm,
@@ -263,8 +145,12 @@ export default function ShopPage() {
   const canAdd = selectedProduct
     ? selectedProduct.type === 'sticker' || (selectedProduct.type === 'tshirt' && !!selectedSize)
     : false
-  const categoryLabel = (p: Product) =>
+  const categoryLabel = (p: CatalogProduct) =>
     p.type === 'tshirt' ? 'T-Shirt' : CATEGORY_LABELS[(p as StickerProduct).category]
+
+  const stickerVariants = selectedProduct?.type === 'sticker'
+    ? (selectedProduct as StickerProduct).variants
+    : undefined
 
   return (
     <main id="shop">
@@ -285,6 +171,24 @@ export default function ShopPage() {
         Stickers &amp; T-Shirts — for devs, designers, riders &amp; everyone
       </motion.h2>
 
+      {/* Search bar */}
+      <div className="relative mb-6 max-w-[480px]">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#888] text-[0.95rem] pointer-events-none">🔍</span>
+        <input
+          type="text"
+          placeholder="Search products…"
+          value={search}
+          onChange={e => { setSearch(e.target.value); setPage(1) }}
+          className="w-full bg-[#3a3a3a] border border-[#555] text-white placeholder-[#666] text-[0.9rem] pl-9 pr-4 py-[0.6rem] rounded-sm focus:outline-none focus:border-lime transition-[border-color] duration-150"
+        />
+        {search && (
+          <button
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#888] hover:text-white text-[0.85rem] leading-none"
+            onClick={() => { setSearch(''); setPage(1) }}
+          >✕</button>
+        )}
+      </div>
+
       {/* Filter bar */}
       <div className="flex flex-col gap-3 mb-8">
         <div className="flex gap-2 flex-wrap">
@@ -301,7 +205,7 @@ export default function ShopPage() {
 
         {tab !== 'tshirt' && tab !== 'custom' && (
           <div className="flex gap-2 flex-wrap">
-            {(['all', 'developer', 'designer', 'bmx', 'cycling', 'pop-culture'] as StickerFilter[]).map(c => (
+            {(['all', 'developer', 'designer', 'bmx', 'cycling', 'pop-culture', 'street', 'humour'] as StickerFilter[]).map(c => (
               <button
                 key={c}
                 className={`px-4 py-[0.3rem] border border-teal text-[0.85rem] cursor-pointer rounded-sm transition-[background,color] duration-200 ${stickerFilter === c ? 'bg-teal text-[#1a1a1a] font-bold' : 'bg-transparent text-teal hover:bg-[rgba(0,221,215,0.15)]'}`}
@@ -311,6 +215,12 @@ export default function ShopPage() {
               </button>
             ))}
           </div>
+        )}
+
+        {search && (
+          <p className="text-[#888] text-[0.82rem]">
+            {filtered.length} result{filtered.length !== 1 ? 's' : ''} for &ldquo;{search}&rdquo;
+          </p>
         )}
       </div>
 
@@ -325,7 +235,16 @@ export default function ShopPage() {
             className="bg-[#515151] border-b-4 border-lime cursor-pointer relative overflow-hidden transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
             onClick={() => setSelectedProduct(product)}
           >
-            <img src={product.image} alt={product.name} className="w-full aspect-square object-cover block border-b-2 border-[#333]" />
+            {/* Image wrapper prevents right-click save */}
+            <div className="relative select-none">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full aspect-square object-cover block border-b-2 border-[#333] pointer-events-none"
+                draggable={false}
+                onContextMenu={e => e.preventDefault()}
+              />
+            </div>
             <Badge className="absolute top-[0.6rem] right-[0.6rem]">
               {product.type === 'tshirt' ? 'T-Shirt' : 'Sticker'}
             </Badge>
@@ -348,6 +267,11 @@ export default function ShopPage() {
                     />
                   ))}
                 </div>
+              )}
+              {product.type === 'sticker' && (product as StickerProduct).variants && (product as StickerProduct).variants!.length > 1 && (
+                <p className="text-[#888] text-[0.72rem] mt-[0.3rem]">
+                  {(product as StickerProduct).variants!.length} colour variants
+                </p>
               )}
             </div>
           </div>
@@ -402,7 +326,42 @@ export default function ShopPage() {
               className="absolute top-3 right-3 bg-black/50 text-white border-none w-8 h-8 rounded-full text-[1.1rem] cursor-pointer flex items-center justify-center z-10 transition-[background,color] duration-150 hover:bg-lime hover:text-[#1a1a1a]"
               onClick={() => setSelectedProduct(null)}
             >✕</button>
-            <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full aspect-square object-cover block" />
+
+            {/* Left column: image + variant strip */}
+            <div className="flex flex-col">
+              <div className="relative select-none">
+                <img
+                  src={modalImage || selectedProduct.image}
+                  alt={selectedProduct.name}
+                  className="w-full aspect-square object-cover block pointer-events-none"
+                  draggable={false}
+                  onContextMenu={e => e.preventDefault()}
+                />
+              </div>
+
+              {/* Colour variant strip */}
+              {stickerVariants && stickerVariants.length > 1 && (
+                <div className="flex gap-2 flex-wrap px-3 py-[0.6rem] bg-[#444] border-t border-[#3a3a3a]">
+                  {stickerVariants.map(v => (
+                    <button
+                      key={v.color}
+                      title={v.colorLabel}
+                      onClick={() => setModalImage(v.image)}
+                      className={`w-10 h-10 rounded overflow-hidden border-2 cursor-pointer shrink-0 transition-[border-color,transform] duration-150 hover:scale-110 ${(modalImage || selectedProduct.image) === v.image ? 'border-lime scale-110' : 'border-[#555]'}`}
+                    >
+                      <img
+                        src={v.image}
+                        alt={v.colorLabel}
+                        className="w-full h-full object-cover pointer-events-none"
+                        draggable={false}
+                        onContextMenu={e => e.preventDefault()}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="p-6 flex flex-col gap-4">
               <p className="text-[0.75rem] uppercase tracking-[0.1em] text-teal">{categoryLabel(selectedProduct)}</p>
               <h2 className="text-lime text-[1.4rem] font-bold leading-[1.2]">{selectedProduct.name}</h2>
@@ -411,6 +370,15 @@ export default function ShopPage() {
 
               {selectedProduct.type === 'sticker' && (
                 <>
+                  {stickerVariants && stickerVariants.length > 1 && (
+                    <div>
+                      <p className="text-[0.8rem] text-[#aaa] uppercase tracking-[0.08em] mb-[0.3rem]">
+                        Colour — <span className="text-white normal-case">
+                          {stickerVariants.find(v => v.image === (modalImage || selectedProduct.image))?.colorLabel ?? stickerVariants[0].colorLabel}
+                        </span>
+                      </p>
+                    </div>
+                  )}
                   <div>
                     <p className="text-[0.8rem] text-[#aaa] uppercase tracking-[0.08em] mb-[0.4rem]">Size</p>
                     <div className="flex gap-2 flex-wrap">
@@ -538,7 +506,7 @@ export default function ShopPage() {
             ? <p className="text-[#888] text-[0.95rem] text-center mt-8">Your cart is empty.</p>
             : cart.map(item => (
               <div key={item.cartId} className="flex gap-3 items-start bg-[#444] p-3 rounded-sm">
-                <img src={item.image} alt={item.name} className="w-[60px] h-[60px] object-cover shrink-0 border border-[#555]" />
+                <img src={item.image} alt={item.name} className="w-[60px] h-[60px] object-cover shrink-0 border border-[#555] pointer-events-none" draggable={false} onContextMenu={e => e.preventDefault()} />
                 <div className="flex-1 min-w-0">
                   <p className="text-lime text-[0.85rem] font-bold mb-1 truncate">{item.name}</p>
                   {item.type === 'tshirt' && item.color && item.size && (
