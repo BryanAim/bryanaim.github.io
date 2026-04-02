@@ -10,7 +10,7 @@ import {
   loadCart, saveCart,
 } from '@/lib/shopTypes'
 import {
-  PRODUCTS, CatalogProduct, StickerProduct, TshirtProduct, StickerCategory,
+  PRODUCTS, CatalogProduct, StickerProduct, TshirtProduct, StickerCategory, TshirtTag,
 } from '@/lib/products'
 
 // ─── Re-export CartItem so checkout can import it from here ──────────────────
@@ -33,9 +33,15 @@ const CATEGORY_LABELS: Record<StickerCategory, string> = {
   humour: 'Humour',
 }
 
+/** Products from /img/products/ are auto-tagged new; explicit isNew overrides. */
+const isProductNew = (p: CatalogProduct) =>
+  (p as StickerProduct).isNew !== false &&
+  ((p as StickerProduct).isNew === true || p.image.startsWith('/img/products/'))
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function ShopPage() {
+  const [shuffledProducts] = useState<CatalogProduct[]>(() => [...PRODUCTS].sort(() => Math.random() - 0.5))
   const [tab, setTab] = useState<FilterTab>('all')
   const [stickerFilter, setStickerFilter] = useState<StickerFilter>('all')
   const [search, setSearch] = useState('')
@@ -73,11 +79,15 @@ export default function ShopPage() {
 
   const searchLower = search.toLowerCase()
 
-  const filtered = tab === 'custom' ? [] : PRODUCTS.filter(p => {
+  const filtered = tab === 'custom' ? [] : shuffledProducts.filter(p => {
     if (tab === 'sticker' && p.type !== 'sticker') return false
     if (tab === 'tshirt' && p.type !== 'tshirt') return false
-    if (tab !== 'tshirt' && p.type === 'sticker' && stickerFilter !== 'all') {
-      if ((p as StickerProduct).category !== stickerFilter) return false
+    if (stickerFilter !== 'all') {
+      if (p.type === 'sticker') {
+        if ((p as StickerProduct).category !== stickerFilter) return false
+      } else if (p.type === 'tshirt') {
+        if (!(p as TshirtProduct).tags.includes(stickerFilter as TshirtTag)) return false
+      }
     }
     if (searchLower) {
       const s = p as StickerProduct
@@ -105,7 +115,7 @@ export default function ShopPage() {
 
   const changeTab = (t: FilterTab) => {
     if (t === 'custom') { window.location.href = '/shop/custom'; return }
-    setTab(t); setStickerFilter('all'); setPage(1); setSearch('')
+    setTab(t); setStickerFilter('all'); setPage(1)
   }
 
   const addToCart = () => {
@@ -145,8 +155,15 @@ export default function ShopPage() {
   const canAdd = selectedProduct
     ? selectedProduct.type === 'sticker' || (selectedProduct.type === 'tshirt' && !!selectedSize)
     : false
-  const categoryLabel = (p: CatalogProduct) =>
-    p.type === 'tshirt' ? 'T-Shirt' : CATEGORY_LABELS[(p as StickerProduct).category]
+  const categoryLabel = (p: CatalogProduct) => {
+    if (p.type === 'tshirt') {
+      const tags = (p as TshirtProduct).tags
+      return tags.length > 0
+        ? tags.map(t => CATEGORY_LABELS[t as StickerCategory] ?? t).join(' · ')
+        : 'T-Shirt'
+    }
+    return CATEGORY_LABELS[(p as StickerProduct).category]
+  }
 
   const stickerVariants = selectedProduct?.type === 'sticker'
     ? (selectedProduct as StickerProduct).variants
@@ -203,7 +220,7 @@ export default function ShopPage() {
           ))}
         </div>
 
-        {tab !== 'tshirt' && tab !== 'custom' && (
+        {tab !== 'custom' && (
           <div className="flex gap-2 flex-wrap">
             {(['all', 'developer', 'designer', 'bmx', 'cycling', 'pop-culture', 'street', 'humour'] as StickerFilter[]).map(c => (
               <button
@@ -211,7 +228,9 @@ export default function ShopPage() {
                 className={`px-4 py-[0.3rem] border border-teal text-[0.85rem] cursor-pointer rounded-sm transition-[background,color] duration-200 ${stickerFilter === c ? 'bg-teal text-[#1a1a1a] font-bold' : 'bg-transparent text-teal hover:bg-[rgba(0,221,215,0.15)]'}`}
                 onClick={() => { setStickerFilter(c); setPage(1) }}
               >
-                {c === 'all' ? 'All Stickers' : CATEGORY_LABELS[c as StickerCategory]}
+                {c === 'all'
+                  ? (tab === 'tshirt' ? 'All T-Shirts' : 'All Stickers')
+                  : CATEGORY_LABELS[c as StickerCategory]}
               </button>
             ))}
           </div>
@@ -245,9 +264,17 @@ export default function ShopPage() {
                 onContextMenu={e => e.preventDefault()}
               />
             </div>
-            <Badge className="absolute top-[0.6rem] right-[0.6rem]">
-              {product.type === 'tshirt' ? 'T-Shirt' : 'Sticker'}
-            </Badge>
+            {/* Type badge — only shown on "All" tab; redundant when filtered by type */}
+            {tab === 'all' && (
+              <Badge className="absolute top-[0.6rem] right-[0.6rem]">
+                {product.type === 'tshirt' ? 'T-Shirt' : 'Sticker'}
+              </Badge>
+            )}
+            {isProductNew(product) && (
+              <span className="absolute top-[0.6rem] left-[0.6rem] bg-[#00c896] text-[#1a1a1a] text-[0.65rem] font-bold px-[0.45rem] py-[0.15rem] rounded-sm uppercase tracking-wide">
+                New
+              </span>
+            )}
             <div className="px-4 py-[0.85rem]">
               <p className="text-[0.7rem] uppercase tracking-[0.08em] text-teal mb-[0.3rem]">{categoryLabel(product)}</p>
               <h3 className="text-lime text-[0.95rem] font-bold mb-[0.4rem] leading-[1.3]">{product.name}</h3>

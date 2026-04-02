@@ -34,6 +34,7 @@ export interface StickerProduct {
   tags?: string[]
   variants?: StickerVariant[]
   defaultColor?: string
+  isNew?: boolean
 }
 
 export interface TshirtProduct {
@@ -46,6 +47,7 @@ export interface TshirtProduct {
   colors: TshirtColor[]
   sizes: string[]
   tags: TshirtTag[]
+  isNew?: boolean
 }
 
 export type CatalogProduct = StickerProduct | TshirtProduct
