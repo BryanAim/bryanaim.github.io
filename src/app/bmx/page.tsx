@@ -63,7 +63,7 @@ const progression = [
   },
 ]
 
-type VideoClip = { src?: string; label: string }
+type VideoClip = { src?: string; youtubeId?: string; label: string }
 
 type Quarter = {
   q: number
@@ -84,9 +84,9 @@ const quarters2026: Quarter[] = [
     mainNote: 'The balance point is everything — front end up, find the sweet spot, hold it. Working this daily on flat ground before adding distance.',
     otherTricks: ['Chicken Barspins', 'Footjams'],
     videos: [
-      { label: 'Manual attempt — flat ground' },
-      { label: 'Chicken barspin practice' },
-      { label: 'Footjam exploration' },
+      { youtubeId: 'QbgRtB4eHG4', label: 'Manual practice — flat ground' },
+      { youtubeId: 'RjamX-ao0A4', label: 'Pull-up bar tricks on BMX' },
+      { youtubeId: 'PALoD0ijUsM', label: 'Bunny hop practice' },
     ],
   },
   {
@@ -97,9 +97,9 @@ const quarters2026: Quarter[] = [
     mainNote: 'The scary one. Building up to it off low hops first — hands need to trust letting go. Street style, so flat-ground and curb setups.',
     otherTricks: ['Crankflips', 'X-Up', 'Pick Up Barspins'],
     videos: [
-      { label: 'Barspin low hop attempts' },
-      { label: 'Crankflip foot coord drills' },
-      { label: 'X-Up stretch practice' },
+      { youtubeId: 'DU2M_j67068', label: 'Barspin drills' },
+      { youtubeId: 'huO3YAudhJM', label: 'Crankflip attempts' },
+      { youtubeId: 'fvvah3dR48o', label: 'Bunny hops — building height' },
     ],
   },
   {
@@ -110,8 +110,8 @@ const quarters2026: Quarter[] = [
     mainNote: 'Getting comfortable rolling backwards into and out of them. Already ride backwards, so this is about controlled entries and clean exits.',
     otherTricks: ['Halfcabs', 'Footplants'],
     videos: [
-      { label: 'Fakie roll-in attempts' },
-      { label: 'Halfcab rotation drills' },
+      { youtubeId: 'ndzq0-ooRzE', label: 'Trying fakies' },
+      { youtubeId: 'AB_rQSClML8', label: 'Riding backwards — fakie foundation' },
       { label: 'Footplant spot hunt' },
     ],
   },
@@ -349,7 +349,17 @@ function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
       whileHover={{ borderColor: color, scale: 1.02 }}
       transition={{ duration: 0.2 }}
     >
-      {clip.src ? (
+      {clip.youtubeId ? (
+        <div className="bmx-video-yt-wrap">
+          <iframe
+            src={`https://www.youtube.com/embed/${clip.youtubeId}`}
+            title={clip.label}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="bmx-video-yt-frame"
+          />
+        </div>
+      ) : clip.src ? (
         <video src={clip.src} controls playsInline className="bmx-video-player" />
       ) : (
         <div className="bmx-video-placeholder" style={{ color: `${color}66` }}>
