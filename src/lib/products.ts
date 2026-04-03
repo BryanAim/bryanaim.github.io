@@ -34,6 +34,7 @@ export interface StickerProduct {
   variants?: StickerVariant[]
   defaultColor?: string
   isNew?: boolean
+  addedAt?: string  // ISO date YYYY-MM-DD, used to auto-expire the NEW badge after 60 days
 }
 
 export interface TshirtColorVariant {
@@ -57,6 +58,7 @@ export interface TshirtProduct {
   defaultColor?: string
   mockupCredit?: string
   isNew?: boolean
+  addedAt?: string  // ISO date YYYY-MM-DD, used to auto-expire the NEW badge after 60 days
 }
 
 export type CatalogProduct = StickerProduct | TshirtProduct
@@ -65,50 +67,10 @@ export type CatalogProduct = StickerProduct | TshirtProduct
 
 export const PRODUCTS: CatalogProduct[] = [
   // ── Stickers: Developer ──────────────────────────────────────────────────
-  // {
-  //   id: 's-dev-1', type: 'sticker', category: 'developer',
-  //   name: 'Hello World Sticker', price: 150,
-  //   image: '/img/projects/project1.jpg',
-  //   description: 'Classic dev starter. For your laptop, phone, or mug.',
-  //   canUseOn: ['Laptop', 'Phone', 'Water bottle', 'Notebook'],
-  // },
-  // {
-  //   id: 's-dev-2', type: 'sticker', category: 'developer',
-  //   name: '#!/usr/bin/env Sticker', price: 150,
-  //   image: '/img/projects/my-portfolio.jpg',
-  //   description: 'For those who live in the terminal. Represent your shell.',
-  //   canUseOn: ['Laptop', 'Desktop', 'Server rack'],
-  // },
-  // {
-  //   id: 's-dev-3', type: 'sticker', category: 'developer',
-  //   name: 'NaxTechMakers Sticker', price: 250,
-  //   image: '/img/projects/naxtechmakers.jpg',
-  //   description: 'Nakuru tech community pride. Rep the local dev scene.',
-  //   canUseOn: ['Laptop', 'Phone', 'Bike', 'Car'],
-  // },
-  // {
-  //   id: 's-dev-4', type: 'sticker', category: 'developer',
-  //   name: 'Coffee & Code Pack (3 pcs)', price: 400,
-  //   image: '/img/projects/project2.jpg',
-  //   description: 'Three-piece sticker pack — coffee, keyboard, and code vibes.',
-  //   canUseOn: ['Laptop', 'Flask / Mug', 'Phone'],
-  // },
-  // {
-  //   id: 's-dev-5', type: 'sticker', category: 'developer',
-  //   name: 'git push --force Sticker', price: 150,
-  //   image: '/img/projects/project3.jpg',
-  //   description: 'For the brave devs who yolo the main branch.',
-  //   canUseOn: ['Laptop', 'Phone', 'Notebook'],
-  // },
+
 
   // ── Stickers: Designer ───────────────────────────────────────────────────
-  // {
-  //   id: 's-des-1', type: 'sticker', category: 'designer',
-  //   name: 'Enjoy Music Art Sticker', price: 200,
-  //   image: '/img/projects/design/enjoy-music.jpg',
-  //   description: 'Original artwork sticker. Music is life.',
-  //   canUseOn: ['Laptop', 'Phone', 'Speaker', 'Guitar case'],
-  // },
+
   {
     id: 's-des-2', type: 'sticker', category: 'designer',
     name: 'Ying Yang No Sensei', price: 200,
@@ -123,13 +85,6 @@ export const PRODUCTS: CatalogProduct[] = [
     description: 'Bold original illustration. Eye-catching anywhere.',
     canUseOn: ['Laptop', 'Notebook', 'Phone'],
   },
-  // {
-  //   id: 's-des-4', type: 'sticker', category: 'designer',
-  //   name: 'Mike Explode Art Sticker', price: 200,
-  //   image: '/img/projects/design/mike-explode.jpg',
-  //   description: 'Explosive original artwork. A real statement piece.',
-  //   canUseOn: ['Laptop', 'Phone', 'Helmet', 'Bike'],
-  // },
   {
     id: 's-des-5', type: 'sticker', category: 'designer',
     name: 'Sensei Wisdom Sticker', price: 150,
@@ -137,80 +92,12 @@ export const PRODUCTS: CatalogProduct[] = [
     description: 'Choose your path. Clean original illustration.',
     canUseOn: ['Laptop', 'Phone', 'Notebook'],
   },
-  // {
-  //   id: 's-des-6', type: 'sticker', category: 'designer',
-  //   name: 'Christmas 2024 Sticker', price: 150,
-  //   image: '/img/projects/design/illustrations/christmas-2024.jpg',
-  //   description: 'Festive original illustration. Gift it or keep it.',
-  //   canUseOn: ['Phone', 'Laptop', 'Gift box', 'Notebook'],
-  // },
 
   // ── Stickers: BMX ────────────────────────────────────────────────────────
-  // {
-  //   id: 's-bmx-1', type: 'sticker', category: 'bmx',
-  //   name: 'BMX Life Sticker', price: 200,
-  //   image: '/img/bmx/bmx1.jpg',
-  //   description: 'For the riders. Slap it on your frame, helmet, or phone.',
-  //   canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Laptop'],
-  // },
-  // {
-  //   id: 's-bmx-2', type: 'sticker', category: 'bmx',
-  //   name: 'Street BMX Sticker', price: 200,
-  //   image: '/img/bmx/bmx3.jpg',
-  //   description: 'Streets are yours. Rep your style everywhere.',
-  //   canUseOn: ['Bike frame', 'Helmet', 'Skateboard', 'Phone'],
-  // },
-  // {
-  //   id: 's-bmx-3', type: 'sticker', category: 'bmx',
-  //   name: 'Air Time BMX Sticker', price: 200,
-  //   image: '/img/bmx/bmx5.jpg',
-  //   description: 'Catch that air. For riders who fly.',
-  //   canUseOn: ['Bike frame', 'Helmet', 'Ramp', 'Gear bag'],
-  // },
-  // {
-  //   id: 's-bmx-4', type: 'sticker', category: 'bmx',
-  //   name: 'BMX Nakuru Sticker', price: 250,
-  //   image: '/img/bmx/bmx2.jpg',
-  //   description: 'Nakuru BMX scene. Local pride on your bike or beyond.',
-  //   canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Car'],
-  // },
-  // {
-  //   id: 's-bmx-5', type: 'sticker', category: 'bmx',
-  //   name: 'Barspin Sticker', price: 200,
-  //   image: '/img/bmx/bmx6.jpg',
-  //   description: 'Spin the bars, spin the world.',
-  //   canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Laptop'],
-  // },
+ 
 
   // // ── Stickers: Cycling ────────────────────────────────────────────────────
-  // {
-  //   id: 's-cyc-1', type: 'sticker', category: 'cycling',
-  //   name: 'Ride or Die Sticker', price: 200,
-  //   image: '/img/bmx/bmx7.jpg',
-  //   description: "The cyclist's motto. For all two-wheel lovers.",
-  //   canUseOn: ['Bike frame', 'Helmet', 'Water bottle', 'Phone'],
-  // },
-  // {
-  //   id: 's-cyc-2', type: 'sticker', category: 'cycling',
-  //   name: 'Two Wheels Sticker', price: 200,
-  //   image: '/img/bmx/bmx9.jpg',
-  //   description: 'Life is better on two wheels.',
-  //   canUseOn: ['Bike frame', 'Helmet', 'Water bottle', 'Laptop'],
-  // },
-  // {
-  //   id: 's-cyc-3', type: 'sticker', category: 'cycling',
-  //   name: 'Bike Gang Sticker', price: 150,
-  //   image: '/img/bmx/bmx4.jpg',
-  //   description: 'Ride together, vibe together.',
-  //   canUseOn: ['Bike frame', 'Phone', 'Water bottle'],
-  // },
-  // {
-  //   id: 's-cyc-4', type: 'sticker', category: 'cycling',
-  //   name: 'Kenyan Roads Sticker', price: 200,
-  //   image: '/img/bmx/bmx10.jpg',
-  //   description: 'Tarmac, murram, or anything in between. Kenyan cyclist pride.',
-  //   canUseOn: ['Bike frame', 'Helmet', 'Car', 'Phone'],
-  // },
+ 
 
   // ── Stickers: Pop Culture ────────────────────────────────────────────────
   {
@@ -220,27 +107,6 @@ export const PRODUCTS: CatalogProduct[] = [
     description: 'Red Pill Sensei balancing a basketball. Original illustration sticker.',
     canUseOn: ['Phone', 'Laptop', 'Water bottle', 'Notebook'],
   },
-  // {
-  //   id: 's-pop-2', type: 'sticker', category: 'pop-culture',
-  //   name: "Krabby Patty Secret Sticker", price: 150,
-  //   image: '/img/projects/corona.jpg',
-  //   description: 'The formula is yours. SpongeBob-themed sticker. [Placeholder]',
-  //   canUseOn: ['Phone', 'Laptop', 'Fridge', 'Water bottle'],
-  // },
-  // {
-  //   id: 's-pop-3', type: 'sticker', category: 'pop-culture',
-  //   name: 'Rick & Morty Forever Sticker', price: 200,
-  //   image: '/img/projects/design/compositions/mike-explode.jpg',
-  //   description: 'Wubba lubba dub dub! Rick & Morty fan sticker. [Placeholder]',
-  //   canUseOn: ['Laptop', 'Phone', 'Car', 'Notebook'],
-  // },
-  // {
-  //   id: 's-pop-4', type: 'sticker', category: 'pop-culture',
-  //   name: 'Get Schwifty Sticker', price: 200,
-  //   image: '/img/background.jpg',
-  //   description: 'You gotta get schwifty! Show your Rick & Morty love. [Placeholder]',
-  //   canUseOn: ['Phone', 'Laptop', 'Guitar case', 'Helmet'],
-  // },
 
   // ── T-Shirts ─────────────────────────────────────────────────────────────
  

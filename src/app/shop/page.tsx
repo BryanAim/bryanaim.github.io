@@ -16,6 +16,15 @@ import {
 // ─── Re-export CartItem so checkout can import it from here ──────────────────
 export type { CartItem, TshirtColor }
 
+// ─── Colour hex lookup (covers all shirt colours used in colorVariants) ──────
+const COLOR_HEX: Record<string, string> = {
+  black: '#1a1a1a', white: '#e8e8e8', navy: '#1e3a5f', red: '#c0392b',
+  forest: '#2d6a4f', green: '#27ae60', teal: '#00897b', blue: '#2563eb',
+  yellow: '#f1c40f', orange: '#e67e22', pink: '#e91e8c', purple: '#7c3aed',
+  grey: '#888888', gray: '#888888', brown: '#795548', gold: '#f59e0b',
+  silver: '#9e9e9e', violet: '#6d28d9', maroon: '#7f1d1d', cyan: '#06b6d4',
+}
+
 // ─── Internal types ──────────────────────────────────────────────────────────
 
 type FilterTab = 'all' | 'sticker' | 'tshirt' | 'custom'
@@ -34,10 +43,19 @@ const CATEGORY_LABELS: Record<ProductCategory, string> = {
   football: 'Football',
 }
 
-/** Products from /img/products/ are auto-tagged new; explicit isNew overrides. */
-const isProductNew = (p: CatalogProduct) =>
-  (p as StickerProduct).isNew !== false &&
-  ((p as StickerProduct).isNew === true || p.image.startsWith('/img/products/'))
+const NEW_BADGE_DAYS = 30
+
+/** Show NEW badge if: addedAt is within 60 days, or no addedAt but image is from /img/products/. isNew:false always suppresses it. */
+const isProductNew = (p: CatalogProduct) => {
+  const sp = p as StickerProduct
+  if (sp.isNew === false) return false
+  if (sp.isNew === true) return true
+  if (sp.addedAt) {
+    const msAgo = Date.now() - new Date(sp.addedAt).getTime()
+    return msAgo < NEW_BADGE_DAYS * 24 * 60 * 60 * 1000
+  }
+  return p.image.startsWith('/img/products/')
+}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -84,12 +102,24 @@ export default function ShopPage() {
 
   useEffect(() => {
     if (!selectedProduct) return
-    setSelectedColor(TSHIRT_COLORS[0])
     setSelectedSize('')
     setSelectedStickerPreset(STICKER_PRESETS[0])
     setAddedFeedback(false)
-    setModalImage(selectedProduct.image)
-  }, [selectedProduct])
+    // For t-shirts, initialise to whichever variant was shown on the card
+    if (selectedProduct.type === 'tshirt') {
+      const cardImage = variantImages[selectedProduct.id] ?? selectedProduct.image
+      const tshirt = selectedProduct as TshirtProduct
+      const matchedVariant = tshirt.colorVariants?.find(v => v.image === cardImage)
+      const matchedColor = matchedVariant
+        ? TSHIRT_COLORS.find(c => c.name === matchedVariant.color) ?? TSHIRT_COLORS[0]
+        : TSHIRT_COLORS[0]
+      setSelectedColor(matchedColor)
+      setModalImage(cardImage)
+    } else {
+      setSelectedColor(TSHIRT_COLORS[0])
+      setModalImage(selectedProduct.image)
+    }
+  }, [selectedProduct, variantImages])
 
   const modalPrice = !selectedProduct
     ? 0
@@ -321,14 +351,14 @@ export default function ShopPage() {
                   ? `From KES ${Math.min(...product.sizes.map(s => TSHIRT_SIZE_PRICES[s])).toLocaleString()}`
                   : `From KES ${catalogStickerPrice(product.price, STICKER_PRESETS[0]).toLocaleString()}`}
               </p>
-              {product.type === 'tshirt' && (
+              {product.type === 'tshirt' && product.colorVariants && product.colorVariants.length > 0 && (
                 <div className="flex gap-[0.3rem] mt-2 flex-wrap">
-                  {product.colors.map(c => (
+                  {product.colorVariants.map(v => (
                     <span
-                      key={c.name}
-                      className="w-[14px] h-[14px] rounded-full border-2 border-[#666] shrink-0"
-                      style={{ background: c.hex, borderColor: c.name === 'white' ? '#999' : '#333' }}
-                      title={c.label}
+                      key={v.color}
+                      className="w-[14px] h-[14px] rounded-full border-2 shrink-0"
+                      style={{ background: COLOR_HEX[v.color] ?? '#888', borderColor: v.color === 'white' ? '#999' : '#333' }}
+                      title={v.colorLabel}
                     />
                   ))}
                 </div>
@@ -427,7 +457,10 @@ export default function ShopPage() {
                     <div key={v.color} className="flex flex-col gap-1 items-center">
                       <button
                         title={v.colorLabel}
-                        onClick={() => setModalImage(v.image)}
+                        onClick={() => {
+                          setModalImage(v.image)
+                          setSelectedColor({ name: v.color, hex: COLOR_HEX[v.color] ?? '#888', label: v.colorLabel })
+                        }}
                         className={`w-10 aspect-3/4 rounded overflow-hidden border-2 cursor-pointer shrink-0 transition-[border-color,transform] duration-150 hover:scale-110 ${activeTshirtVariant?.color === v.color ? 'border-lime scale-110' : 'border-[#555]'}`}
                       >
                         <img src={v.image} alt={v.colorLabel} className="w-full h-full object-cover pointer-events-none" draggable={false} onContextMenu={e => e.preventDefault()} />
@@ -498,20 +531,18 @@ export default function ShopPage() {
                       Colour <span className="text-[0.8rem] text-[#ccc]">— {selectedColor.label}</span>
                     </p>
                     <div className="flex gap-[0.6rem] flex-wrap">
-                      {(tshirtVariants
-                        ? selectedProduct.colors.filter(c => tshirtVariants.some(v => v.color === c.name))
-                        : selectedProduct.colors
-                      ).map(c => {
-                        const variant = tshirtVariants?.find(v => v.color === c.name)
+                      {(tshirtVariants ?? []).map(v => {
+                        const hex = COLOR_HEX[v.color] ?? '#888'
+                        const isActive = selectedColor.name === v.color
                         return (
                           <button
-                            key={c.name}
-                            className={`w-7.5 h-7.5 rounded-full cursor-pointer border-[3px] border-transparent shrink-0 transition-[border-color,transform] duration-150 hover:scale-[1.15] ${selectedColor.name === c.name ? 'border-lime! scale-[1.15]' : ''}`}
-                            style={{ background: c.hex, borderColor: c.name === 'white' ? '#888' : 'transparent' }}
-                            title={c.label}
+                            key={v.color}
+                            className={`w-7.5 h-7.5 rounded-full cursor-pointer border-[3px] shrink-0 transition-[border-color,transform] duration-150 hover:scale-[1.15] ${isActive ? 'border-lime! scale-[1.15]' : 'border-transparent'}`}
+                            style={{ background: hex, borderColor: v.color === 'white' ? (isActive ? undefined : '#888') : undefined }}
+                            title={v.colorLabel}
                             onClick={() => {
-                              setSelectedColor(c)
-                              if (variant) setModalImage(variant.image)
+                              setSelectedColor({ name: v.color, hex, label: v.colorLabel })
+                              setModalImage(v.image)
                             }}
                           />
                         )
