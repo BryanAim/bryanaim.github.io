@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
@@ -10,7 +10,7 @@ import {
   loadCart, saveCart,
 } from '@/lib/shopTypes'
 import {
-  PRODUCTS, CatalogProduct, StickerProduct, TshirtProduct, StickerCategory, TshirtTag,
+  PRODUCTS, CatalogProduct, StickerProduct, TshirtProduct, TshirtColorVariant, ProductCategory,
 } from '@/lib/products'
 
 // ─── Re-export CartItem so checkout can import it from here ──────────────────
@@ -19,11 +19,11 @@ export type { CartItem, TshirtColor }
 // ─── Internal types ──────────────────────────────────────────────────────────
 
 type FilterTab = 'all' | 'sticker' | 'tshirt' | 'custom'
-type StickerFilter = 'all' | StickerCategory
+type StickerFilter = 'all' | ProductCategory
 
 const PAGE_SIZE = 12
 
-const CATEGORY_LABELS: Record<StickerCategory, string> = {
+const CATEGORY_LABELS: Record<ProductCategory, string> = {
   developer: 'Developer',
   designer: 'Designer',
   bmx: 'BMX',
@@ -31,6 +31,7 @@ const CATEGORY_LABELS: Record<StickerCategory, string> = {
   'pop-culture': 'Pop Culture',
   street: 'Street',
   humour: 'Humour',
+  football: 'Football',
 }
 
 /** Products from /img/products/ are auto-tagged new; explicit isNew overrides. */
@@ -55,11 +56,28 @@ export default function ShopPage() {
   const [selectedStickerPreset, setSelectedStickerPreset] = useState<StickerPreset>(STICKER_PRESETS[0])
   const [addedFeedback, setAddedFeedback] = useState(false)
   const [modalImage, setModalImage] = useState<string>('')
+  const [variantImages, setVariantImages] = useState<Record<string, string>>({})
 
   useEffect(() => {
     setMounted(true)
     setCart(loadCart())
     setShuffledProducts([...PRODUCTS].sort(() => Math.random() - 0.5))
+    // Randomise which color variant is shown on the card for products with variants
+    const imgs: Record<string, string> = {}
+    for (const p of PRODUCTS) {
+      if (p.type === 'tshirt') {
+        const variants = (p as TshirtProduct).colorVariants
+        if (variants && variants.length > 1) {
+          imgs[p.id] = variants[Math.floor(Math.random() * variants.length)].image
+        }
+      } else if (p.type === 'sticker') {
+        const variants = (p as StickerProduct).variants
+        if (variants && variants.length > 1) {
+          imgs[p.id] = variants[Math.floor(Math.random() * variants.length)].image
+        }
+      }
+    }
+    setVariantImages(imgs)
   }, [])
 
   const updateCart = useCallback((next: CartItem[]) => { setCart(next); saveCart(next) }, [])
@@ -81,6 +99,16 @@ export default function ShopPage() {
         ? TSHIRT_SIZE_PRICES[selectedSize]
         : selectedProduct.price
 
+  const ALL_CATEGORY_ORDER: ProductCategory[] = ['developer', 'designer', 'bmx', 'cycling', 'pop-culture', 'street', 'humour', 'football']
+
+  const availableCategories = useMemo(() => {
+    const source = tab === 'sticker' ? PRODUCTS.filter(p => p.type === 'sticker')
+      : tab === 'tshirt' ? PRODUCTS.filter(p => p.type === 'tshirt')
+      : PRODUCTS
+    const cats = new Set(source.map(p => (p as StickerProduct | TshirtProduct).category))
+    return ALL_CATEGORY_ORDER.filter(c => cats.has(c))
+  }, [tab])
+
   const searchLower = search.toLowerCase()
 
   const filtered = tab === 'custom' ? [] : shuffledProducts.filter(p => {
@@ -90,19 +118,16 @@ export default function ShopPage() {
       if (p.type === 'sticker') {
         if ((p as StickerProduct).category !== stickerFilter) return false
       } else if (p.type === 'tshirt') {
-        if (!(p as TshirtProduct).tags.includes(stickerFilter as TshirtTag)) return false
+        if ((p as TshirtProduct).category !== stickerFilter) return false
       }
     }
     if (searchLower) {
       const s = p as StickerProduct
-      const t = p as TshirtProduct
       const inName = p.name.toLowerCase().includes(searchLower)
       const inDesc = p.description.toLowerCase().includes(searchLower)
-      const inTags = (p.type === 'sticker' ? s.tags ?? [] : t.tags ?? [])
-        .some((tag: string) => tag.toLowerCase().includes(searchLower))
-      const inCategory = p.type === 'sticker'
-        ? CATEGORY_LABELS[s.category].toLowerCase().includes(searchLower)
-        : false
+      const inTags = (s.tags ?? []).some((tag: string) => tag.toLowerCase().includes(searchLower))
+      const category = p.type === 'sticker' ? s.category : (p as TshirtProduct).category
+      const inCategory = CATEGORY_LABELS[category]?.toLowerCase().includes(searchLower) ?? false
       if (!inName && !inDesc && !inTags && !inCategory) return false
     }
     return true
@@ -159,18 +184,19 @@ export default function ShopPage() {
   const canAdd = selectedProduct
     ? selectedProduct.type === 'sticker' || (selectedProduct.type === 'tshirt' && !!selectedSize)
     : false
-  const categoryLabel = (p: CatalogProduct) => {
-    if (p.type === 'tshirt') {
-      const tags = (p as TshirtProduct).tags
-      return tags.length > 0
-        ? tags.map(t => CATEGORY_LABELS[t as StickerCategory] ?? t).join(' · ')
-        : 'T-Shirt'
-    }
-    return CATEGORY_LABELS[(p as StickerProduct).category]
-  }
+  const categoryLabel = (p: CatalogProduct) =>
+    CATEGORY_LABELS[(p.type === 'tshirt' ? (p as TshirtProduct) : (p as StickerProduct)).category] ?? 'T-Shirt'
 
   const stickerVariants = selectedProduct?.type === 'sticker'
     ? (selectedProduct as StickerProduct).variants
+    : undefined
+
+  const tshirtVariants = selectedProduct?.type === 'tshirt'
+    ? (selectedProduct as TshirtProduct).colorVariants
+    : undefined
+
+  const activeTshirtVariant: TshirtColorVariant | undefined = tshirtVariants
+    ? tshirtVariants.find(v => v.image === modalImage || v.modelImage === modalImage) ?? tshirtVariants[0]
     : undefined
 
   return (
@@ -226,15 +252,15 @@ export default function ShopPage() {
 
         {tab !== 'custom' && (
           <div className="flex gap-2 flex-wrap">
-            {(['all', 'developer', 'designer', 'bmx', 'cycling', 'pop-culture', 'street', 'humour'] as StickerFilter[]).map(c => (
+            {(['all', ...availableCategories] as StickerFilter[]).map(c => (
               <button
                 key={c}
                 className={`px-4 py-[0.3rem] border border-teal text-[0.85rem] cursor-pointer rounded-sm transition-[background,color] duration-200 ${stickerFilter === c ? 'bg-teal text-[#1a1a1a] font-bold' : 'bg-transparent text-teal hover:bg-[rgba(0,221,215,0.15)]'}`}
                 onClick={() => { setStickerFilter(c); setPage(1) }}
               >
                 {c === 'all'
-                  ? (tab === 'tshirt' ? 'All T-Shirts' : 'All Stickers')
-                  : CATEGORY_LABELS[c as StickerCategory]}
+                  ? (tab === 'tshirt' ? 'All T-Shirts' : tab === 'sticker' ? 'All Stickers' : 'All')
+                  : CATEGORY_LABELS[c as ProductCategory]}
               </button>
             ))}
           </div>
@@ -243,6 +269,14 @@ export default function ShopPage() {
         {search && (
           <p className="text-[#888] text-[0.82rem]">
             {filtered.length} result{filtered.length !== 1 ? 's' : ''} for &ldquo;{search}&rdquo;
+          </p>
+        )}
+        {(tab === 'tshirt' || tab === 'all') && (
+          <p className="text-[#555] text-[0.75rem]">
+            T-shirt mockup photos by{' '}
+            <a href="https://mockupmark.com" target="_blank" rel="noopener noreferrer" className="text-[#666] underline hover:text-[#888]">
+              Mockup Mark
+            </a>
           </p>
         )}
       </div>
@@ -261,9 +295,9 @@ export default function ShopPage() {
             {/* Image wrapper prevents right-click save */}
             <div className="relative select-none">
               <img
-                src={product.image}
+                src={variantImages[product.id] ?? product.image}
                 alt={product.name}
-                className="w-full aspect-square object-cover block border-b-2 border-[#333] pointer-events-none"
+                className={`w-full object-cover block border-b-2 border-[#333] pointer-events-none ${product.type === 'tshirt' ? 'aspect-3/4' : 'aspect-square'}`}
                 draggable={false}
                 onContextMenu={e => e.preventDefault()}
               />
@@ -364,13 +398,13 @@ export default function ShopPage() {
                 <img
                   src={modalImage || selectedProduct.image}
                   alt={selectedProduct.name}
-                  className="w-full aspect-square object-cover block pointer-events-none"
+                  className={`w-full object-cover block pointer-events-none ${selectedProduct.type === 'tshirt' ? 'aspect-3/4' : 'aspect-square'}`}
                   draggable={false}
                   onContextMenu={e => e.preventDefault()}
                 />
               </div>
 
-              {/* Colour variant strip */}
+              {/* Sticker colour variant strip */}
               {stickerVariants && stickerVariants.length > 1 && (
                 <div className="flex gap-2 flex-wrap px-3 py-[0.6rem] bg-[#444] border-t border-[#3a3a3a]">
                   {stickerVariants.map(v => (
@@ -380,14 +414,34 @@ export default function ShopPage() {
                       onClick={() => setModalImage(v.image)}
                       className={`w-10 h-10 rounded overflow-hidden border-2 cursor-pointer shrink-0 transition-[border-color,transform] duration-150 hover:scale-110 ${(modalImage || selectedProduct.image) === v.image ? 'border-lime scale-110' : 'border-[#555]'}`}
                     >
-                      <img
-                        src={v.image}
-                        alt={v.colorLabel}
-                        className="w-full h-full object-cover pointer-events-none"
-                        draggable={false}
-                        onContextMenu={e => e.preventDefault()}
-                      />
+                      <img src={v.image} alt={v.colorLabel} className="w-full h-full object-cover pointer-events-none" draggable={false} onContextMenu={e => e.preventDefault()} />
                     </button>
+                  ))}
+                </div>
+              )}
+
+              {/* T-shirt colour variant strip */}
+              {tshirtVariants && tshirtVariants.length > 0 && (
+                <div className="flex gap-2 flex-wrap px-3 py-[0.6rem] bg-[#444] border-t border-[#3a3a3a]">
+                  {tshirtVariants.map(v => (
+                    <div key={v.color} className="flex flex-col gap-1 items-center">
+                      <button
+                        title={v.colorLabel}
+                        onClick={() => setModalImage(v.image)}
+                        className={`w-10 aspect-3/4 rounded overflow-hidden border-2 cursor-pointer shrink-0 transition-[border-color,transform] duration-150 hover:scale-110 ${activeTshirtVariant?.color === v.color ? 'border-lime scale-110' : 'border-[#555]'}`}
+                      >
+                        <img src={v.image} alt={v.colorLabel} className="w-full h-full object-cover pointer-events-none" draggable={false} onContextMenu={e => e.preventDefault()} />
+                      </button>
+                      {v.modelImage && (
+                        <button
+                          title={`${v.colorLabel} — model`}
+                          onClick={() => setModalImage(v.modelImage!)}
+                          className={`w-10 aspect-3/4 rounded overflow-hidden border-2 cursor-pointer shrink-0 transition-[border-color,transform] duration-150 hover:scale-110 ${modalImage === v.modelImage ? 'border-teal scale-110' : 'border-[#555]'}`}
+                        >
+                          <img src={v.modelImage} alt={`${v.colorLabel} model`} className="w-full h-full object-cover pointer-events-none" draggable={false} onContextMenu={e => e.preventDefault()} />
+                        </button>
+                      )}
+                    </div>
                   ))}
                 </div>
               )}
@@ -444,15 +498,24 @@ export default function ShopPage() {
                       Colour <span className="text-[0.8rem] text-[#ccc]">— {selectedColor.label}</span>
                     </p>
                     <div className="flex gap-[0.6rem] flex-wrap">
-                      {selectedProduct.colors.map(c => (
-                        <button
-                          key={c.name}
-                          className={`w-[30px] h-[30px] rounded-full cursor-pointer border-[3px] border-transparent shrink-0 transition-[border-color,transform] duration-150 hover:scale-[1.15] ${selectedColor.name === c.name ? '!border-lime scale-[1.15]' : ''}`}
-                          style={{ background: c.hex, borderColor: c.name === 'white' ? '#888' : 'transparent' }}
-                          title={c.label}
-                          onClick={() => setSelectedColor(c)}
-                        />
-                      ))}
+                      {(tshirtVariants
+                        ? selectedProduct.colors.filter(c => tshirtVariants.some(v => v.color === c.name))
+                        : selectedProduct.colors
+                      ).map(c => {
+                        const variant = tshirtVariants?.find(v => v.color === c.name)
+                        return (
+                          <button
+                            key={c.name}
+                            className={`w-7.5 h-7.5 rounded-full cursor-pointer border-[3px] border-transparent shrink-0 transition-[border-color,transform] duration-150 hover:scale-[1.15] ${selectedColor.name === c.name ? 'border-lime! scale-[1.15]' : ''}`}
+                            style={{ background: c.hex, borderColor: c.name === 'white' ? '#888' : 'transparent' }}
+                            title={c.label}
+                            onClick={() => {
+                              setSelectedColor(c)
+                              if (variant) setModalImage(variant.image)
+                            }}
+                          />
+                        )
+                      })}
                     </div>
                   </div>
                   <div>
