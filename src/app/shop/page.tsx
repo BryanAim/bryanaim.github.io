@@ -311,6 +311,18 @@ export default function ShopPage() {
         )}
       </div>
 
+      {/* Pagination — top */}
+      {totalPages > 1 && (
+        <div className="flex items-center gap-[0.4rem] flex-wrap mb-6">
+          <button className="px-3 py-[0.4rem] border border-[#555] bg-transparent text-[#ccc] text-[0.9rem] cursor-pointer rounded-sm min-w-[36px] transition-[border-color,background,color] duration-150 hover:enabled:border-lime hover:enabled:text-white disabled:opacity-35 disabled:cursor-not-allowed" onClick={() => goToPage(safePage - 1)} disabled={safePage === 1}>←</button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
+            <button key={n} className={`px-3 py-[0.4rem] border border-[#555] bg-transparent text-[#ccc] text-[0.9rem] cursor-pointer rounded-sm min-w-[36px] transition-[border-color,background,color] duration-150 hover:border-lime hover:text-white ${n === safePage ? 'border-lime bg-lime text-[#1a1a1a] font-bold' : ''}`} onClick={() => goToPage(n)}>{n}</button>
+          ))}
+          <button className="px-3 py-[0.4rem] border border-[#555] bg-transparent text-[#ccc] text-[0.9rem] cursor-pointer rounded-sm min-w-[36px] transition-[border-color,background,color] duration-150 hover:enabled:border-lime hover:enabled:text-white disabled:opacity-35 disabled:cursor-not-allowed" onClick={() => goToPage(safePage + 1)} disabled={safePage === totalPages}>→</button>
+          <span className="text-[#666] text-[0.8rem] ml-2">{filtered.length} items · page {safePage}/{totalPages}</span>
+        </div>
+      )}
+
       {/* Product grid */}
       <div className="grid gap-6 mb-24 [grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]">
         {visible.length === 0 && (

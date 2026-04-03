@@ -79,13 +79,6 @@ export const PRODUCTS: CatalogProduct[] = [
     canUseOn: ['Laptop', 'Phone', 'Bike', 'Skateboard'],
   },
   {
-    id: 's-des-3', type: 'sticker', category: 'designer',
-    name: 'World of Perps Sticker', price: 200,
-    image: '/img/projects/design/illustrations/world-of-perps.jpg',
-    description: 'Bold original illustration. Eye-catching anywhere.',
-    canUseOn: ['Laptop', 'Notebook', 'Phone'],
-  },
-  {
     id: 's-des-5', type: 'sticker', category: 'designer',
     name: 'Sensei Wisdom Sticker', price: 150,
     image: '/img/projects/design/illustrations/sensei-no-pills.jpg',
