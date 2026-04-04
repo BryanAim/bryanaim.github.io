@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 import Header from './components/Header'
+import WhatsAppButton from './components/WhatsAppButton'
 import PageTransition from './components/PageTransition'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
@@ -219,6 +220,7 @@ export default function RootLayout({
         <div id="content-wrap">
           <PageTransition>{children}</PageTransition>
           <Footer />
+          <WhatsAppButton />
         </div>
         <SpeedInsights />
         <Analytics />

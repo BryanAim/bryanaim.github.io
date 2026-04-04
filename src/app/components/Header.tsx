@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 const navLinks = [
   { href: '/',              label: 'Home',     icon: 'fas fa-home' },
   { href: '/about',         label: 'About Me', icon: 'fas fa-user' },
+  { href: '/work',          label: 'Work',     icon: 'fas fa-briefcase' },
   { href: '/contact',       label: 'Contact',  icon: 'fas fa-envelope' },
   { href: '/shop',          label: 'Shop',     icon: 'fas fa-shopping-bag' },
   { href: 'https://blog.isalebryan.dev/', label: 'My Blog',  icon: 'fas fa-pen-nib' },

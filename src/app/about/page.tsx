@@ -61,20 +61,6 @@ const webProjects: Project[] = [
   { title: 'Personal Library', img: '/img/projects/project1.jpg', url: 'https://github.com/BryanAim/FCC-personal-library', github: 'https://github.com/BryanAim/FCC-personal-library' },
   { title: 'GSAP Scroll Animation', img: '/img/projects/project2.jpg', url: 'https://github.com/BryanAim/gsap-scroll-animation', github: 'https://github.com/BryanAim/gsap-scroll-animation' },
 ]
-const bmxPhotos: Photo[] = [
-  { src: '/img/bmx/bmx1.jpg', caption: 'Night session — helmet on, ready to ride' },
-  { src: '/img/bmx/bmx2.jpg', caption: 'Locked in' },
-  { src: '/img/bmx/bmx3.jpg', caption: 'Suited up for the streets' },
-  { src: '/img/bmx/bmx4.jpg', caption: 'Street style' },
-  { src: '/img/bmx/bmx5.jpg', caption: 'City nights' },
-  { src: '/img/bmx/bmx6.jpg', caption: 'Moonlit ride' },
-  { src: '/img/bmx/bmx7.jpg', caption: 'Always thinking two tricks ahead' },
-  { src: '/img/bmx/bmx8.jpg', caption: 'Streets are my playground' },
-  { src: '/img/bmx/bmx9.jpg', caption: 'Daytime vibes' },
-  { src: '/img/bmx/bmx10.jpg', caption: 'Balanced' },
-  { src: '/img/bmx/bmx11.jpg', caption: 'Forward momentum' },
-]
-
 const communityPhotos: Photo[] = [
   { src: '/img/projects/community/speaking-at-event.jpeg', caption: 'Speaking at a peer education event' },
   { src: '/img/projects/community/indoor-audience.jpeg', caption: 'Engaged audience at an indoor session' },
@@ -135,21 +121,6 @@ const cards = [
     socials: [
       { icon: 'fab fa-facebook', label: 'Facebook', url: 'https://facebook.com/BryanAim' },
       { icon: 'fab fa-linkedin', label: 'LinkedIn', url: 'https://linkedin.com/in/brian-isale/' },
-    ],
-    hasCert: false,
-  },
-  {
-    id: 'bmx', icon: '◈', title: 'BMX Street',
-    color: '#f472b6', glow: 'rgba(244,114,182,0.3)',
-    tagline: 'Streets are my playground',
-    description: 'When the laptop closes, the bike comes out. BMX street riding is my reset button — learning new tricks, reading the city, proving real growth happens outside the comfort zone.',
-    skills: null, projects: null, photos: bmxPhotos,
-    bgImage: '/img/bmx/bmx1-banner.jpg',
-    tags: ['Street Riding', 'Trick Learning', 'Urban Explorer'],
-    socials: [
-      { icon: 'fab fa-instagram', label: 'Instagram', url: 'https://www.instagram.com/isalebryan/' },
-      { icon: 'fab fa-tiktok', label: 'TikTok', url: 'https://tiktok.com/@bmxbrian' },
-      { icon: 'fab fa-youtube', label: 'YouTube', url: 'https://youtube.com/@bryanaim' },
     ],
     hasCert: false,
   },
@@ -601,7 +572,7 @@ export default function About() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
       >
-        Developer · Designer · Community Builder · BMX Rider
+        Developer · Designer · Community Builder
       </motion.h2>
 
       {/* ── Bio ── */}
@@ -631,6 +602,14 @@ export default function About() {
             <span className="about-badge">💡 Lifelong Learner</span>
             <span className="about-badge">🎓 Google Africa Scholar</span>
             <span className="about-badge">🏆 Certified Mentor</span>
+          </div>
+          <div className="about-bio-actions">
+            <a href="/cv.pdf" download className="home-cta-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
+              <i className="fas fa-download" /> Download CV
+            </a>
+            <a href="/work?tab=services" className="home-cta-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
+              Hire me
+            </a>
           </div>
         </motion.div>
       </div>
