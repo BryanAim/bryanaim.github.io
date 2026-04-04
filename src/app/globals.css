@@ -4778,3 +4778,218 @@ progress::-moz-progress-bar {
   .qm-panel { max-height: 95vh; border-radius: 14px 14px 0 0; align-self: flex-end; }
   .qm-proposal-ctas { flex-direction: column; }
 }
+
+/* =====================
+   404 — Not Found
+   ===================== */
+
+/* Glitch keyframes */
+@keyframes glitch-main {
+  0%,100% { clip-path: inset(0 0 100% 0); transform: translate(0) }
+  5%       { clip-path: inset(10% 0 60% 0); transform: translate(-3px, 1px) }
+  10%      { clip-path: inset(40% 0 30% 0); transform: translate(3px, -1px) }
+  15%      { clip-path: inset(70% 0 5%  0); transform: translate(-2px, 2px) }
+  20%      { clip-path: inset(0 0 100% 0); transform: translate(0) }
+}
+@keyframes glitch-r {
+  0%,100% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0 }
+  5%       { clip-path: inset(10% 0 60% 0); transform: translate(4px, -2px); opacity: 0.7 }
+  10%      { clip-path: inset(55% 0 20% 0); transform: translate(-4px, 1px); opacity: 0.7 }
+  15%      { clip-path: inset(75% 0 2%  0); transform: translate(3px, -1px); opacity: 0.7 }
+  20%      { clip-path: inset(0 0 100% 0); opacity: 0 }
+}
+@keyframes glitch-b {
+  0%,100% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0 }
+  5%       { clip-path: inset(15% 0 55% 0); transform: translate(-4px, 2px); opacity: 0.6 }
+  10%      { clip-path: inset(45% 0 35% 0); transform: translate(4px, -2px); opacity: 0.6 }
+  15%      { clip-path: inset(65% 0 8%  0); transform: translate(-2px, 1px); opacity: 0.6 }
+  20%      { clip-path: inset(0 0 100% 0); opacity: 0 }
+}
+@keyframes nf-cursor-blink {
+  0%,100% { opacity: 1 } 50% { opacity: 0 }
+}
+@keyframes nf-grid-scroll {
+  from { background-position: 0 0 }
+  to   { background-position: 0 48px }
+}
+@keyframes nf-scanline {
+  0%   { top: -10% }
+  100% { top: 110% }
+}
+
+.nf-wrap {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Scrolling grid bg */
+.nf-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,221,215,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,221,215,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: nf-grid-scroll 4s linear infinite;
+  pointer-events: none;
+}
+.nf-grid::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, rgba(0,221,215,0.07), transparent);
+  animation: nf-scanline 3.5s linear infinite;
+}
+
+.nf-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+  width: 100%;
+}
+
+/* Glitch 404 */
+.nf-glitch-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0.25rem;
+}
+.nf-glitch {
+  position: relative;
+  display: inline-block;
+  font-size: clamp(5rem, 22vw, 9.5rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #1a1a1a;
+  -webkit-text-stroke: 2px rgba(0,221,215,0.35);
+  animation: glitch-main 4s steps(1) infinite;
+}
+.nf-glitch::before,
+.nf-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+.nf-glitch::before {
+  color: #ff3d6b;
+  -webkit-text-stroke: 2px #ff3d6b;
+  animation: glitch-r 4s steps(1) infinite;
+}
+.nf-glitch::after {
+  color: #00ddd7;
+  -webkit-text-stroke: 2px #00ddd7;
+  animation: glitch-b 4s steps(1) infinite;
+}
+
+.nf-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+  margin-bottom: 0.4rem;
+}
+.nf-desc {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Terminal */
+.nf-terminal {
+  background: #0d0d0d;
+  border: 1px solid rgba(0,221,215,0.18);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+  text-align: left;
+  box-shadow: 0 0 40px rgba(0,221,215,0.06);
+}
+.nf-terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  background: #161616;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nf-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.nf-dot--red    { background: #ff5f57; }
+.nf-dot--yellow { background: #febc2e; }
+.nf-dot--green  { background: #28c840; }
+.nf-terminal-title {
+  margin-left: 6px;
+  font-size: 0.75rem;
+  color: #555;
+  font-family: monospace;
+}
+.nf-terminal-body {
+  padding: 14px 18px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  min-height: 160px;
+}
+.nf-terminal-line {
+  display: block;
+  white-space: pre;
+}
+.nf-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: #00ddd7;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: nf-cursor-blink 0.9s step-end infinite;
+}
+
+.nf-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nf-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.4rem;
+  background: var(--color-text);
+  color: #000;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.nf-btn-primary:hover { opacity: 0.85; }
+.nf-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #ccc;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.nf-btn-ghost:hover { border-color: rgba(255,255,255,0.35); color: #fff; }

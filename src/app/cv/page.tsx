@@ -8,7 +8,7 @@ export default function CV() {
         Download or view my resume
       </h2>
       <div className="cv-content">
-        <a href="/cv.pdf" className="btn-dark">Download CV</a>
+        <a href="/isale_brian_cv.pdf" className="btn-dark">Download CV</a>
         {/* Embed or display CV content */}
       </div>
     </main>

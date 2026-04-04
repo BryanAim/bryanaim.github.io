@@ -604,7 +604,7 @@ export default function About() {
             <span className="about-badge">🏆 Certified Mentor</span>
           </div>
           <div className="about-bio-actions">
-            <a href="/cv.pdf" download className="home-cta-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
+            <a href="/isale_brian_cv.pdf" download className="home-cta-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
               <i className="fas fa-download" /> Download CV
             </a>
             <a href="/work?tab=services" className="home-cta-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
