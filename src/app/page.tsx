@@ -164,6 +164,9 @@ export default function Home() {
             <a href="/about" className="home-cta-primary">
               Explore my work <i className="fas fa-arrow-right" />
             </a>
+            <a href="/work#services" className="home-cta-ghost">
+              <i className="" /> Services
+            </a>
             <a href="/contact" className="home-cta-ghost">
               Get in touch
             </a>

@@ -138,7 +138,7 @@ export const designProjects: DesignProject[] = [
     category: 'logo',
     tags: ['fitness', 'gym', 'brand-identity', 'sports'],
     primaryImage: '/img/projects/design/logos/barbell-syndicate.jpg',
-    year: '2020',
+    year: '2026',
     client: 'Barbell Syndicate',
     description:
       'Bold brand identity for a powerlifting and strength-training community. The mark needed to project raw power while staying clean enough for apparel and digital use.',
