@@ -339,6 +339,79 @@ function buildWhatsAppMessage(
   return lines.join('\n')
 }
 
+/* ─── PDF download ─── */
+function downloadProposal(
+  serviceName: string,
+  steps: QuoteStep[],
+  selections: Record<string, string[]>,
+  summaryItems: { label: string; add: number }[],
+  base: number,
+  total: number,
+  color: string,
+) {
+  const date = new Date().toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })
+  const rows = summaryItems.filter(i => i.add !== 0).map(i => `
+    <tr>
+      <td>${i.label}</td>
+      <td style="text-align:right;color:${i.add > 0 ? '#555' : '#16a34a'}">${i.add > 0 ? `+${fmt(i.add)}` : `−${fmt(Math.abs(i.add))}`}</td>
+    </tr>`).join('')
+
+  const requirementLines = steps.map(s => {
+    const sel = selections[s.id] ?? []
+    if (!sel.length) return ''
+    const tags = sel.map(v => s.options.find(o => o.label === v)?.tag ?? v).join(', ')
+    return `<tr><td style="color:#555">${s.question.replace('?', '')}</td><td>${tags}</td></tr>`
+  }).filter(Boolean).join('')
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Quote — ${serviceName}</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;color:#111;padding:48px;max-width:680px;margin:auto}
+  h1{font-size:1.5rem;margin-bottom:4px}
+  .sub{color:#777;font-size:0.85rem;margin-bottom:32px}
+  .badge{display:inline-block;background:${color}18;color:${color};border:1px solid ${color}55;border-radius:4px;padding:2px 10px;font-size:0.8rem;font-weight:600;margin-bottom:24px}
+  h2{font-size:1rem;font-weight:700;margin:24px 0 8px;color:#111}
+  table{width:100%;border-collapse:collapse;font-size:0.9rem}
+  td{padding:7px 4px;border-bottom:1px solid #eee}
+  .total-row td{font-weight:700;font-size:1rem;border-top:2px solid ${color};border-bottom:none;padding-top:12px;color:${color}}
+  .base-row td{color:#555}
+  .disclaimer{margin-top:28px;font-size:0.78rem;color:#888;line-height:1.5;border-top:1px solid #eee;padding-top:16px}
+  .footer{margin-top:40px;font-size:0.8rem;color:#aaa;text-align:center}
+  @media print{body{padding:32px}}
+</style>
+</head>
+<body>
+  <h1>Project Quote</h1>
+  <div class="sub">Prepared by Brian Isale · isalebryan.dev · ${date}</div>
+  <div class="badge">${serviceName}</div>
+
+  <h2>Requirements</h2>
+  <table>${requirementLines}</table>
+
+  <h2>Price Breakdown</h2>
+  <table>
+    <tr class="base-row"><td>Base (${serviceName})</td><td style="text-align:right">${fmt(base)}</td></tr>
+    ${rows}
+    <tr class="total-row"><td>Estimated Total</td><td style="text-align:right">${fmt(total)}</td></tr>
+  </table>
+
+  <p class="disclaimer">This is an estimate — the final price is confirmed after a short consultation where we align on exact scope, timeline, and deliverables. To proceed, reach out via WhatsApp (+254 728 822 142) or email isale.bryan@gmail.com.</p>
+  <div class="footer">isalebryan.dev</div>
+</body>
+</html>`
+
+  const w = window.open('', '_blank')
+  if (!w) return
+  w.document.write(html)
+  w.document.close()
+  w.focus()
+  setTimeout(() => w.print(), 400)
+}
+
 /* ─── Component ─── */
 interface QuoteModalProps {
   serviceId: string
@@ -568,6 +641,12 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
                   <a href={mailUrl} className="qm-cta-mail">
                     <i className="fas fa-envelope" /> Send via Email
                   </a>
+                  <button
+                    className="qm-cta-pdf"
+                    onClick={() => downloadProposal(serviceName, steps, selections, summaryItems, config.base, total, color)}
+                  >
+                    <i className="fas fa-download" /> Download PDF
+                  </button>
                 </div>
               </motion.div>
             )}

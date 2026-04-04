@@ -20,11 +20,12 @@ export const metadata: Metadata = {
   description:
     'Brian Isale is a Full Stack Developer, Creative Designer, and Community Builder based in Nakuru, Kenya. Google Africa Scholar with 6+ years experience building modern web apps, brand identities, and open-source tools for Africa.',
   keywords: [
-    'Brian Isale', 'BryanAim', 'full stack developer Kenya', 'web developer Nakuru',
+    'Brian Isale', 'BryanAim', 'full stack developer Kenya', 'web developer Nakuru','nakuru software developer',
     'creative designer Kenya', 'Next.js developer Africa', 'React developer Kenya',
     'Google Africa Scholar', 'software engineer Kenya', 'UI UX designer Nakuru',
     'brand identity designer Kenya', 'motion graphics Kenya', 'frontend developer Africa',
     'community builder Kenya', 'Andela scholar',
+    'bmxbrian', 'janja','janjanation'
   ],
   authors: [{ name: 'Brian Isale', url: 'https://isalebryan.dev' }],
   creator: 'Brian Isale',

@@ -365,7 +365,7 @@ type Tab = 'dev' | 'design' | 'services'
 interface ActiveQuote { serviceId: string; serviceName: string; color: string }
 
 export default function Work() {
-  const [tab, setTab] = useState<Tab>('dev')
+  const [tab, setTab] = useState<Tab>('services')
   const [activeQuote, setActiveQuote] = useState<ActiveQuote | null>(null)
 
   return (
@@ -396,11 +396,11 @@ export default function Work() {
         transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
       >
         <button
-          className={`wk-tab${tab === 'dev' ? ' active' : ''}`}
-          onClick={() => setTab('dev')}
+          className={`wk-tab wk-tab--services${tab === 'services' ? ' active' : ''}`}
+          onClick={() => setTab('services')}
         >
-          <i className="fas fa-code" /> Development
-          <span className="wk-tab-count">{devProjects.length}</span>
+          <i className="fas fa-handshake" /> Services
+          <span className="wk-tab-count">{services.length}</span>
         </button>
         <button
           className={`wk-tab${tab === 'design' ? ' active' : ''}`}
@@ -410,11 +410,11 @@ export default function Work() {
           <span className="wk-tab-count">{allDesignProjects.length}</span>
         </button>
         <button
-          className={`wk-tab wk-tab--services${tab === 'services' ? ' active' : ''}`}
-          onClick={() => setTab('services')}
+          className={`wk-tab${tab === 'dev' ? ' active' : ''}`}
+          onClick={() => setTab('dev')}
         >
-          <i className="fas fa-handshake" /> Services
-          <span className="wk-tab-count">{services.length}</span>
+          <i className="fas fa-code" /> Development
+          <span className="wk-tab-count">{devProjects.length}</span>
         </button>
       </motion.div>
 
