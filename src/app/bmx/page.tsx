@@ -1,6 +1,7 @@
 'use client'
 import { AnimatePresence, motion, useMotionValue, useTransform, useInView, useScroll, useSpring } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 
 /* ─── Animation variants ─── */
 const springEase = [0.16, 1, 0.3, 1] as const
@@ -218,17 +219,17 @@ function HPhaseCard({ phase, index, scrollYProgress }: {
   const scale = useTransform(scrollYProgress, inputRange, inputRange.map(v => v === cardCenter ? 1.1 : 0.88))
 
   return (
-    <motion.div className="bmx-htl-phase" style={{ opacity, scale }}>
-      <div className="bmx-htl-card" style={{ borderColor: `${phase.color}50` }}>
-        <div className="bmx-htl-card-top">
-          <span className="bmx-htl-phase-name" style={{ color: phase.color }}>{phase.phase}</span>
+    <motion.div className="w-[240px] md:w-[420px] flex-shrink-0 flex flex-col items-center" style={{ opacity, scale }}>
+      <div className="w-full bg-white/[0.03] border border-white/[0.08] border-t-[3px] rounded-xl px-[1.2rem] py-[1.1rem] mb-[14px] transition-colors hover:bg-white/[0.07]" style={{ borderColor: `${phase.color}50` }}>
+        <div className="mb-2">
+          <span className="text-[0.82rem] font-extrabold tracking-[2px] uppercase" style={{ color: phase.color }}>{phase.phase}</span>
         </div>
-        <p className="bmx-htl-note">{phase.note}</p>
-        <div className="bmx-tricks-wrap">
+        <p className="text-[0.79rem] leading-[1.7] text-white mb-3">{phase.note}</p>
+        <div className="flex flex-wrap gap-[0.4rem]">
           {phase.tricks.map((t) => (
             <span
               key={t}
-              className="bmx-trick-tag"
+              className="border rounded-full px-[0.65rem] py-[0.2rem] text-[0.75rem] font-semibold tracking-[0.3px]"
               style={{ borderColor: phase.color, color: phase.color }}
             >
               {t}
@@ -236,12 +237,12 @@ function HPhaseCard({ phase, index, scrollYProgress }: {
           ))}
         </div>
       </div>
-      <div className="bmx-htl-connector" style={{ background: phase.color }} />
+      <div className="w-0.5 h-[14px] flex-shrink-0 origin-top" style={{ background: phase.color }} />
       <div
-        className="bmx-htl-dot"
+        className="w-[13px] h-[13px] rounded-full flex-shrink-0 relative z-10"
         style={{ background: phase.color, boxShadow: `0 0 14px ${phase.color}70` }}
       />
-      <span className="bmx-htl-year" style={{ color: `${phase.color}99` }}>{phase.period}</span>
+      <span className="mt-2 text-[0.67rem] font-mono tracking-[0.5px] text-center whitespace-nowrap" style={{ color: `${phase.color}99` }}>{phase.period}</span>
     </motion.div>
   )
 }
@@ -264,10 +265,10 @@ function SkillsTimeline() {
   const x = useSpring(rawX, { damping: 60, mass: 1, stiffness: 500 })
 
   return (
-    <div ref={sectionRef} style={{ height: sectionHeight }} className="bmx-htl-section">
+    <div ref={sectionRef} style={{ height: sectionHeight }} className="relative -mx-6 md:-mx-16">
       <div className="bmx-htl-sticky">
 
-        <div className="bmx-htl-scroll-hint">
+        <div className="flex items-center gap-2 text-[0.7rem] tracking-[2.5px] uppercase text-lime px-[60px] mb-10">
           <motion.span
             animate={{ y: [0, 5, 0] }}
             transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
@@ -278,16 +279,16 @@ function SkillsTimeline() {
         </div>
 
         <motion.div className="bmx-htl-track" style={{ x }}>
-          <div className="bmx-htl-spine" />
+          <div className="absolute inset-x-0 bottom-[38px] h-0.5 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 3%, rgba(255,255,255,0.1) 97%, transparent 100%)' }} />
           {progression.map((phase, i) => (
             <HPhaseCard key={phase.period} phase={phase} index={i} scrollYProgress={scrollYProgress} />
           ))}
         </motion.div>
 
-        <div className="bmx-htl-progress-bg">
+        <div className="mx-5 mt-0 md:mx-[60px] md:mt-6 h-0.5 bg-white/[0.07] rounded-sm overflow-hidden">
           <motion.div
-            className="bmx-htl-progress-fill"
-            style={{ scaleX: scrollYProgress, transformOrigin: 'left' }}
+            className="h-full rounded-sm"
+            style={{ scaleX: scrollYProgress, transformOrigin: 'left', background: 'linear-gradient(90deg, #b1db00, #00ddd7, #f472b6, #ff8c42)' }}
           />
         </div>
 
@@ -311,27 +312,27 @@ function GearTicker() {
 
   const renderRow = (items: typeof gear) =>
     items.map((g, i) => (
-      <span key={i} className="bmx-ticker-item">
-        <span className="bmx-ticker-icon">{g.icon}</span>
-        <span className="bmx-ticker-label">{g.label}</span>
-        <span className="bmx-ticker-sep">—</span>
-        <span className="bmx-ticker-value">{g.value}</span>
-        <span className="bmx-ticker-dot">·</span>
+      <span key={i} className="inline-flex items-center gap-3 px-8">
+        <span className="text-2xl">{g.icon}</span>
+        <span className="text-[0.82rem] tracking-[1.5px] uppercase text-white/[0.38]">{g.label}</span>
+        <span className="text-white/20 text-[1.1rem]">—</span>
+        <span className="font-bold text-[#e8e8e8] text-[1.15rem]">{g.value}</span>
+        <span className="text-white/[0.15] text-[1.4rem] ml-2">·</span>
       </span>
     ))
 
   return (
-    <div className="bmx-ticker-wrap">
-      <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary">—</span> The Setup
+    <div className="py-14 -mx-6 md:-mx-16 border-t border-b border-white/[0.06] flex flex-col gap-[1.4rem] overflow-hidden">
+      <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8 px-6 md:px-16" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <span className="text-secondary mr-2">—</span> The Setup
         </motion.div>
-      <div className="bmx-ticker-row-clip">
+      <div className="overflow-hidden w-full">
         <motion.div className="bmx-ticker-row" style={{ x: smooth1 }}>
           {renderRow(repeated)}
         </motion.div>
       </div>
-      <div className="bmx-ticker-row-clip">
-        <motion.div className="bmx-ticker-row bmx-ticker-row-muted" style={{ x: smooth2 }}>
+      <div className="overflow-hidden w-full">
+        <motion.div className="bmx-ticker-row opacity-35" style={{ x: smooth2 }}>
           {renderRow(reversedRepeated)}
         </motion.div>
       </div>
@@ -343,31 +344,31 @@ function GearTicker() {
 function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
   return (
     <motion.div
-      className="bmx-video-slot"
+      className="border border-white/[0.08] rounded-lg overflow-hidden flex flex-col gap-[0.3rem] transition-all"
       style={{ borderColor: `${color}44` }}
       variants={fadeUp}
       whileHover={{ borderColor: color, scale: 1.02 }}
       transition={{ duration: 0.2 }}
     >
       {clip.youtubeId ? (
-        <div className="bmx-video-yt-wrap">
+        <div className="relative w-full aspect-[9/16] bg-black">
           <iframe
             src={`https://www.youtube.com/embed/${clip.youtubeId}`}
             title={clip.label}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="bmx-video-yt-frame"
+            className="absolute inset-0 w-full h-full border-0 block"
           />
         </div>
       ) : clip.src ? (
-        <video src={clip.src} controls playsInline className="bmx-video-player" />
+        <video src={clip.src} controls playsInline className="w-full aspect-[9/16] object-cover bg-black block" />
       ) : (
-        <div className="bmx-video-placeholder" style={{ color: `${color}66` }}>
+        <div className="aspect-[9/16] flex flex-col items-center justify-center text-[0.62rem] uppercase tracking-[0.4px] bg-white/[0.02] gap-[0.2rem]" style={{ color: `${color}66` }}>
           <i className="fas fa-film" style={{ fontSize: '1.5rem', marginBottom: '0.4rem' }} />
           <span>clip incoming</span>
         </div>
       )}
-      <p className="bmx-video-label" style={{ color }}>{clip.label}</p>
+      <p className="text-[0.62rem] px-[0.4rem] py-[0.25rem] leading-[1.4] m-0 font-semibold" style={{ color }}>{clip.label}</p>
     </motion.div>
   )
 }
@@ -383,7 +384,7 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
 
   return (
     <motion.div
-      className={`bmx-rs-card bmx-rs-${status}`}
+      className={`bmx-rs-card${isPast ? ' opacity-75' : ''}`}
       style={{
         top: stickyTop,
         zIndex: index + 1,
@@ -396,9 +397,9 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
       }}
     >
       {/* Ghost Q number background texture */}
-      <div className="bmx-rs-ghost" style={{ color: quarter.color }}>Q{quarter.q}</div>
+      <div className="absolute -right-[0.05em] -bottom-[0.15em] text-[22rem] font-black font-mono leading-none opacity-[0.04] pointer-events-none select-none tracking-[-4px]" style={{ color: quarter.color }}>Q{quarter.q}</div>
       {/* Overlay */}
-      <div className="bmx-rs-overlay" style={{ background: `linear-gradient(115deg, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.85) 55%, ${quarter.color}12 100%)` }} />
+      <div className="absolute inset-0" style={{ background: `linear-gradient(115deg, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.85) 55%, ${quarter.color}12 100%)` }} />
 
       <div className="bmx-rs-content">
         {/* Left column — Q number + period */}
@@ -409,11 +410,11 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
         </div>
 
         {/* Middle column — trick info */}
-        <div className="bmx-rs-middle">
-          <div className="bmx-rs-top-row">
-            <p className="bmx-rs-counter">{index + 1} / {total}</p>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-4 mb-[0.4rem]">
+            <p className="text-[0.72rem] text-white/30 tracking-[3px] uppercase m-0">{index + 1} / {total}</p>
             <div
-              className={`bmx-quarter-badge bmx-badge-${status}`}
+              className="text-[0.7rem] font-bold tracking-[0.6px] uppercase px-[0.6rem] py-[0.25rem] rounded-full bg-white/[0.07] text-white/50 flex items-center gap-[0.4rem] relative"
               style={isActive ? { background: quarter.color, color: '#0a0a0a' } : {}}
             >
               {isActive && <span className="bmx-badge-pulse" style={{ background: quarter.color }} />}
@@ -423,10 +424,10 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
           <h3 className="bmx-rs-trick" style={{ color: quarter.color }}>{quarter.mainTrick}</h3>
           <p className="bmx-rs-note">{quarter.mainNote}</p>
 
-          <p className="bmx-rs-also-label">Also working on</p>
-          <div className="bmx-tricks-wrap">
+          <p className="text-[0.7rem] text-white/30 uppercase tracking-[2px] mb-2">Also working on</p>
+          <div className="flex flex-wrap gap-[0.4rem]">
             {quarter.otherTricks.map(t => (
-              <span key={t} className="bmx-trick-tag" style={{ borderColor: `${quarter.color}88`, color: `${quarter.color}cc` }}>{t}</span>
+              <span key={t} className="border rounded-full px-[0.65rem] py-[0.2rem] text-[0.75rem] font-semibold tracking-[0.3px]" style={{ borderColor: `${quarter.color}88`, color: `${quarter.color}cc` }}>{t}</span>
             ))}
           </div>
 
@@ -476,7 +477,7 @@ function GalXCell({ photo, onSelect, tileIndex }: { photo: typeof photos[0]; onS
 
   return (
     <motion.div
-      className="bmx-galx-cell"
+      className="relative rounded-[10px] overflow-hidden cursor-zoom-in group"
       layoutId={`bmx-photo-${tileIndex % photos.length}`}
       style={{ rotateX, rotateY: useTransform(rotateY, v => v + curveY), transformPerspective: 700 }}
       onMouseMove={onMouseMove}
@@ -489,9 +490,12 @@ function GalXCell({ photo, onSelect, tileIndex }: { photo: typeof photos[0]; onS
         layoutId={`bmx-photo-img-${tileIndex % photos.length}`}
         src={photo.src}
         alt={photo.caption}
+        className="w-full h-full object-cover block pointer-events-none"
         draggable={false}
       />
-      <div className="bmx-photo-overlay"><span>{photo.caption}</span></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10 flex items-end p-[0.9rem] opacity-0 group-hover:opacity-100 transition-opacity">
+        <span className="text-[0.82rem] text-white font-semibold">{photo.caption}</span>
+      </div>
     </motion.div>
   )
 }
@@ -503,27 +507,35 @@ function GalleryX({ onSelect }: { onSelect: (i: number) => void }) {
   const y = useMotionValue(0)
 
   useEffect(() => {
-    if (!containerRef.current) return
-    const cw = containerRef.current.offsetWidth
-    const ch = containerRef.current.offsetHeight
-    const tiles = [...photos, ...photos, ...photos, ...photos]
-    const rows = Math.ceil(tiles.length / GRID_COLS)
-    const gridW = GRID_COLS * (CELL_W + CELL_GAP) - CELL_GAP
-    const gridH = rows * (CELL_H + CELL_GAP) - CELL_GAP
-    const left = -(gridW - cw)
-    const top = -(gridH - ch)
-    setConstraints({ left, right: 0, top, bottom: 0 })
-    // Start centered
-    x.set(left / 2)
-    y.set(top / 2)
+    const measure = () => {
+      if (!containerRef.current) return
+      const cw = containerRef.current.offsetWidth
+      const ch = containerRef.current.offsetHeight
+      if (!cw || !ch) return // guard: skip if not yet painted
+      const tiles = [...photos, ...photos, ...photos, ...photos]
+      const rows = Math.ceil(tiles.length / GRID_COLS)
+      const gridW = GRID_COLS * (CELL_W + CELL_GAP) - CELL_GAP
+      const gridH = rows * (CELL_H + CELL_GAP) - CELL_GAP
+      const left = -(gridW - cw)
+      const top = -(gridH - ch)
+      setConstraints({ left, right: 0, top, bottom: 0 })
+      // Start centered
+      x.set(left / 2)
+      y.set(top / 2)
+    }
+    measure()
+    // Re-measure on resize (handles orientation changes or window resize)
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
   }, [x, y])
 
   const tiles = [...photos, ...photos, ...photos, ...photos]
 
   return (
-    <div ref={containerRef} className="bmx-galx-clip">
+    // height as inline style ensures it's present at paint time before useEffect measures
+    <div ref={containerRef} className="relative overflow-hidden rounded-xl select-none" style={{ height: '75vh', perspective: '1200px' }}>
       <motion.div
-        className="bmx-galx-grid"
+        className="grid grid-cols-[repeat(8,320px)] auto-rows-[240px] gap-3 w-max p-1"
         drag
         dragConstraints={constraints}
         dragTransition={{ power: 0.25, timeConstant: 380 }}
@@ -535,7 +547,7 @@ function GalleryX({ onSelect }: { onSelect: (i: number) => void }) {
           <GalXCell key={i} photo={p} tileIndex={i} onSelect={onSelect} />
         ))}
       </motion.div>
-      <div className="bmx-galx-hint">drag to explore</div>
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[0.72rem] text-lime tracking-[2px] uppercase pointer-events-none">drag to explore</div>
     </div>
   )
 }
@@ -549,6 +561,9 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
   onPrev: () => void
   onNext: () => void
 }) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -559,9 +574,11 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose, onPrev, onNext])
 
-  return (
+  if (!mounted) return null
+
+  return createPortal(
     <motion.div
-      className="bmx-lightbox-overlay"
+      className="fixed inset-0 z-[999] bg-black/[0.88] backdrop-blur-[10px] flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -569,7 +586,8 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
       onClick={onClose}
     >
       <motion.div
-        className="bmx-lightbox-frame"
+        className="relative max-w-[min(90vw,900px)] max-h-[90vh] rounded-2xl overflow-hidden bg-[#111]"
+        style={{ boxShadow: '0 40px 120px rgba(0,0,0,0.7)' }}
         layoutId={`bmx-photo-${index}`}
         onClick={e => e.stopPropagation()}
       >
@@ -577,10 +595,10 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
           layoutId={`bmx-photo-img-${index}`}
           src={photo.src}
           alt={photo.caption}
-          className="bmx-lightbox-img"
+          className="block w-full max-h-[78vh] object-contain"
         />
         <motion.p
-          className="bmx-lightbox-caption"
+          className="px-[1.2rem] py-[0.9rem] text-[0.85rem] text-white/60 bg-black/40 m-0"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.18 }}
@@ -590,7 +608,7 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
       </motion.div>
 
       <motion.button
-        className="bmx-lightbox-close"
+        className="fixed top-6 right-6 bg-white/10 border border-white/[0.15] text-white w-10 h-10 rounded-full cursor-pointer text-base flex items-center justify-center z-[1000] transition-colors hover:bg-white/20"
         onClick={onClose}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -602,7 +620,7 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
 
       {index > 0 && (
         <motion.button
-          className="bmx-lightbox-nav bmx-lightbox-prev"
+          className="fixed top-1/2 -translate-y-1/2 left-4 hidden md:flex bg-white/[0.08] border border-white/[0.12] text-white w-12 h-16 rounded-xl cursor-pointer text-[2rem] items-center justify-center z-[1000] transition-colors leading-none hover:bg-white/[0.16]"
           onClick={e => { e.stopPropagation(); onPrev() }}
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
@@ -614,7 +632,7 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
       )}
       {index < total - 1 && (
         <motion.button
-          className="bmx-lightbox-nav bmx-lightbox-next"
+          className="fixed top-1/2 -translate-y-1/2 right-4 hidden md:flex bg-white/[0.08] border border-white/[0.12] text-white w-12 h-16 rounded-xl cursor-pointer text-[2rem] items-center justify-center z-[1000] transition-colors leading-none hover:bg-white/[0.16]"
           onClick={e => { e.stopPropagation(); onNext() }}
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
@@ -626,14 +644,15 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
       )}
 
       <motion.div
-        className="bmx-lightbox-counter"
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 text-[0.75rem] tracking-[2px] text-white/40 z-[1000]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.15 }}
       >
         {index + 1} / {total}
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   )
 }
 
@@ -668,30 +687,33 @@ export default function BMX() {
       {/* ── Intro banner (parallax) ── */}
       <motion.div
         ref={heroRef}
-        className="bmx-intro"
+        className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 md:gap-12 items-center my-8 mb-14"
         variants={fadeUp} initial="hidden"
         whileInView="show" viewport={{ once: true }}
         style={{ opacity: heroOpacity }}
       >
-        <div className="bmx-intro-img" style={{ overflow: 'hidden' }}>
-          <motion.img src="/img/bmx/bmx2.jpg" alt="BMX bike" style={{ y: heroImgY }} />
+        <div
+          className="relative rounded-[14px] overflow-hidden aspect-[4/3] border-2 border-pink-400/30 group"
+          style={{ boxShadow: '0 16px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(244,114,182,0.2)' }}
+        >
+          <motion.img src="/img/bmx/bmx2.jpg" alt="BMX bike" className="w-full h-full object-cover transition-transform duration-[0.6s] ease-in-out group-hover:scale-[1.04]" style={{ y: heroImgY }} />
         </div>
-        <div className="bmx-intro-text">
-          <h3>Why <span className="text-secondary">BMX?</span></h3>
-          <p>
+        <div>
+          <h3 className="text-[2rem] font-extrabold mb-4 text-[#e0e0e0]">Why <span className="text-secondary">BMX?</span></h3>
+          <p className="text-[0.95rem] leading-[1.8] text-white mb-[0.9rem]">
             When the laptop closes, the bike comes out. Started in March 2025 with zero riding
             background — just curiosity and stubbornness. BMX demands full presence, punishes
             half-heartedness, and rewards patience the exact same way coding does.
           </p>
-          <p>
+          <p className="text-[0.95rem] leading-[1.8] text-white mb-[0.9rem]">
             Street rider — no parks nearby, so every trick gets learned on flat ground, curbs, and whatever
             the streets of Nakuru throw at you. Still a beginner and proud of it.
           </p>
-          <div className="bmx-intro-tags">
-            <span style={{ borderColor: '#f472b6', color: '#f472b6' }}>Street Style</span>
-            <span style={{ borderColor: '#b1db00', color: '#b1db00' }}>Self-Taught</span>
-            <span style={{ borderColor: '#00ddd7', color: '#00ddd7' }}>Nakuru, Kenya</span>
-            <span style={{ borderColor: '#ff8c42', color: '#ff8c42' }}>Since Mar 2025</span>
+          <div className="flex flex-wrap gap-2 mt-5">
+            <span className="px-3 py-[0.25rem] border rounded-full text-[0.78rem] font-semibold tracking-[0.5px]" style={{ borderColor: '#f472b6', color: '#f472b6' }}>Street Style</span>
+            <span className="px-3 py-[0.25rem] border rounded-full text-[0.78rem] font-semibold tracking-[0.5px]" style={{ borderColor: '#b1db00', color: '#b1db00' }}>Self-Taught</span>
+            <span className="px-3 py-[0.25rem] border rounded-full text-[0.78rem] font-semibold tracking-[0.5px]" style={{ borderColor: '#00ddd7', color: '#00ddd7' }}>Nakuru, Kenya</span>
+            <span className="px-3 py-[0.25rem] border rounded-full text-[0.78rem] font-semibold tracking-[0.5px]" style={{ borderColor: '#ff8c42', color: '#ff8c42' }}>Since Mar 2025</span>
           </div>
         </div>
       </motion.div>
@@ -700,12 +722,12 @@ export default function BMX() {
       <GearTicker />
 
       {/* ── Skills Progression ── */}
-      <div className="bmx-section">
-        <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary">—</span> Skills Progression
+      <div className="mb-16">
+        <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <span className="text-secondary mr-2">—</span> Skills Progression
         </motion.div>
         <motion.p
-          className="bmx-goals-sub"
+          className="text-[0.88rem] text-white mb-6"
           variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
         >
           One year in — from never touching a BMX to bunny hops and backwards riding
@@ -714,17 +736,17 @@ export default function BMX() {
       </div>
 
       {/* ── 2026 Quarterly Goals ── */}
-      <div className="bmx-section">
-        <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary">—</span> 2026 Trick Roadmap
+      <div className="mb-16">
+        <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <span className="text-secondary mr-2">—</span> 2026 Trick Roadmap
         </motion.div>
         <motion.p
-          className="bmx-goals-sub"
+          className="text-[0.88rem] text-white mb-6"
           variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
         >
           Quarter by quarter — one main trick, supporting tricks, and clips as I go
         </motion.p>
-        <div className="bmx-roadmap-stack">
+        <div className="flex flex-col pb-[40vh] overflow-visible">
           {quarters2026.map((q, i) => (
             <RoadmapStackCard key={q.q} quarter={q} index={i} total={quarters2026.length} />
           ))}
@@ -732,9 +754,9 @@ export default function BMX() {
       </div>
 
       {/* ── Photo Gallery ── */}
-      <div className="bmx-section">
-        <motion.div className="bmx-section-label" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary">—</span> Gallery
+      <div className="mb-16">
+        <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <span className="text-secondary mr-2">—</span> Gallery
         </motion.div>
         <GalleryX onSelect={setSelectedPhoto} />
       </div>
@@ -754,12 +776,12 @@ export default function BMX() {
 
       {/* ── Follow ── */}
       <motion.div
-        className="bmx-follow"
+        className="text-center py-12 pb-8 border-t border-white/[0.06]"
         variants={fadeUp} initial="hidden"
         whileInView="show" viewport={{ once: true }}
       >
-        <p >Follow the sessions</p>
-        <div className="bmx-follow-links">
+        <p className="text-[0.8rem] tracking-[3px] uppercase text-white/30 mb-5">Follow the sessions</p>
+        <div className="flex justify-center gap-4 flex-wrap">
           <a href="https://www.instagram.com/isalebryan/" target="_blank" rel="noopener noreferrer"
             className="bmx-follow-btn" style={{ '--fb-color': '#e1306c' } as React.CSSProperties}>
             <i className="fab fa-instagram" /> Instagram
