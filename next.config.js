@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const isDev = process.env.NODE_ENV === 'development'
+
 const securityHeaders = [
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -12,7 +14,8 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       // Scripts: self + inline (needed for JSON-LD schema tags) + Vercel analytics
-      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+      // unsafe-eval is required by React dev tools (never used in production)
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com`,
       // Styles: self + inline (Framer Motion injects inline styles)
       "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com",
       // Fonts

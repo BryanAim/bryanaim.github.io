@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { PRODUCTS, StickerProduct, TshirtProduct } from '@/lib/products'
 
 // ── SEO / AEO / GEO metadata ──────────────────────────────────────────────────
 export const metadata: Metadata = {
@@ -97,89 +98,125 @@ const storeJsonLd = {
   ],
 }
 
-/** ItemList schema — representative products for rich results & AI answer engines */
+const BASE_URL = 'https://isalebryan.dev'
+const AUTHOR = { '@type': 'Person', name: 'Brian Isale', url: BASE_URL }
+const BRAND  = { '@type': 'Brand', name: 'BryanAim / Janja' }
+const SHIPPING = {
+  '@type': 'OfferShippingDetails',
+  shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'KE' },
+  deliveryTime: {
+    '@type': 'ShippingDeliveryTime',
+    handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'DAY' },
+  },
+}
+
+/** ItemList — every product in the catalogue for rich results & AI answer engines */
 const itemListJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: "Janja's Shop — Stickers & T-Shirts",
   description:
     'Custom BMX stickers, developer stickers, pop-culture graphic tees and street art t-shirts by Brian Isale. Designed in Nakuru, Kenya.',
-  url: 'https://isalebryan.dev/shop',
-  numberOfItems: 3,
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      item: {
-        '@type': 'Product',
-        name: 'BMX Stickers — Custom Designs',
-        description:
-          'High-quality vinyl BMX stickers for bike frames, helmets, and water bottles. Designed in Nakuru, Kenya. Multiple colour variants available.',
-        url: 'https://isalebryan.dev/shop',
-        image: 'https://isalebryan.dev/img/products/stickers/bmx-life.jpg',
-        brand: { '@type': 'Brand', name: 'BryanAim / Janja' },
-        offers: {
-          '@type': 'Offer',
-          priceCurrency: 'KES',
-          price: '150',
-          priceValidUntil: '2026-12-31',
-          availability: 'https://schema.org/InStock',
-          seller: { '@type': 'Person', name: 'Brian Isale' },
-          shippingDetails: {
-            '@type': 'OfferShippingDetails',
-            shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'KE' },
-            deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'DAY' } },
-          },
-        },
-        category: 'Stickers > BMX',
-      },
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      item: {
-        '@type': 'Product',
-        name: 'Graphic T-Shirts — BMX & Pop Culture',
-        description:
-          'Premium cotton graphic t-shirts with BMX, street art, pop-culture, and developer designs. Available in multiple colours and sizes XS–XXL. Shipped across Kenya.',
-        url: 'https://isalebryan.dev/shop',
-        image: 'https://isalebryan.dev/img/products/t-shirts/ride-crash-swear-repeat-rasts-purple-and-blue-green-tshirt.jpg',
-        brand: { '@type': 'Brand', name: 'BryanAim / Janja' },
-        offers: {
+  url: `${BASE_URL}/shop`,
+  numberOfItems: PRODUCTS.length,
+  itemListElement: PRODUCTS.map((p, i) => {
+    const absImage = `${BASE_URL}${p.image}`
+    const isTshirt = p.type === 'tshirt'
+    const tp = p as TshirtProduct
+    const offer = isTshirt
+      ? {
           '@type': 'AggregateOffer',
           priceCurrency: 'KES',
-          lowPrice: '900',
-          highPrice: '1200',
-          offerCount: '6',
+          lowPrice: String(tp.price - 300),
+          highPrice: String(tp.price),
+          offerCount: String(tp.sizes?.length ?? 6),
           availability: 'https://schema.org/InStock',
-          seller: { '@type': 'Person', name: 'Brian Isale' },
-        },
-        category: 'Clothing > T-Shirts',
-      },
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      item: {
-        '@type': 'Product',
-        name: 'Developer & Designer Stickers',
-        description:
-          'Stickers for developers and designers — code, git, coffee, and creative themes. Perfect for laptops, notebooks, and water bottles.',
-        url: 'https://isalebryan.dev/shop',
-        image: 'https://isalebryan.dev/img/products/stickers/git-commit-and-pray.jpg',
-        brand: { '@type': 'Brand', name: 'BryanAim / Janja' },
-        offers: {
+          seller: AUTHOR,
+          shippingDetails: SHIPPING,
+        }
+      : {
           '@type': 'Offer',
           priceCurrency: 'KES',
-          price: '150',
+          price: String(p.price),
           priceValidUntil: '2026-12-31',
           availability: 'https://schema.org/InStock',
-          seller: { '@type': 'Person', name: 'Brian Isale' },
-        },
-        category: 'Stickers > Developer',
+          seller: AUTHOR,
+          shippingDetails: SHIPPING,
+        }
+
+    // Collect all images for this product (main + variants)
+    const allImages: string[] = [absImage]
+    if (isTshirt && tp.colorVariants) {
+      for (const v of tp.colorVariants) {
+        const url = `${BASE_URL}${v.image}`
+        if (!allImages.includes(url)) allImages.push(url)
+        if (v.modelImage) {
+          const mUrl = `${BASE_URL}${v.modelImage}`
+          if (!allImages.includes(mUrl)) allImages.push(mUrl)
+        }
+      }
+    } else {
+      const sp = p as StickerProduct
+      if (sp.variants) {
+        for (const v of sp.variants) {
+          const url = `${BASE_URL}${v.image}`
+          if (!allImages.includes(url)) allImages.push(url)
+        }
+      }
+    }
+
+    return {
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Product',
+        '@id': `${BASE_URL}/shop#product-${p.id}`,
+        name: p.name,
+        description: p.description,
+        url: `${BASE_URL}/shop`,
+        image: allImages,
+        brand: BRAND,
+        category: isTshirt ? `Clothing > T-Shirts > ${p.category}` : `Stickers > ${p.category}`,
+        offers: offer,
       },
-    },
-  ],
+    }
+  }),
+}
+
+/** ImageObject — every product image attributed to Brian Isale for Google Images */
+const imageListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: "Janja's Shop — Product Images",
+  url: `${BASE_URL}/shop`,
+  itemListElement: PRODUCTS.flatMap((p, pi) => {
+    const images: string[] = [p.image]
+    if (p.type === 'tshirt') {
+      const tp = p as TshirtProduct
+      tp.colorVariants?.forEach(v => {
+        if (!images.includes(v.image)) images.push(v.image)
+        if (v.modelImage && !images.includes(v.modelImage)) images.push(v.modelImage)
+      })
+    } else {
+      const sp = p as StickerProduct
+      sp.variants?.forEach(v => { if (!images.includes(v.image)) images.push(v.image) })
+    }
+    return images.map((img, ii) => ({
+      '@type': 'ListItem',
+      position: pi * 10 + ii + 1,
+      item: {
+        '@type': 'ImageObject',
+        contentUrl: `${BASE_URL}${img}`,
+        name: `${p.name}${images.length > 1 ? ` — variant ${ii + 1}` : ''}`,
+        description: p.description,
+        author: AUTHOR,
+        creator: AUTHOR,
+        copyrightHolder: AUTHOR,
+        license: `${BASE_URL}/shop`,
+        acquireLicensePage: `${BASE_URL}/shop`,
+      },
+    }))
+  }),
 }
 
 /** FAQ schema — targets high-intent search queries and AI answer engines (AEO/GEO) */
@@ -261,6 +298,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(storeJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(imageListJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       {children}
