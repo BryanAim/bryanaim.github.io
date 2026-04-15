@@ -58,7 +58,7 @@ export default function DesignProjectPage() {
           <i className="fas fa-arrow-left" /> Back
         </button>
         <span className="dp-breadcrumb-sep">/</span>
-        <Link href="/about" className="dp-breadcrumb-link">About</Link>
+        <Link href="/work" className="dp-breadcrumb-link">Work</Link>
         <span className="dp-breadcrumb-sep">/</span>
         <span style={{ color: project.color }}>{project.title}</span>
       </motion.div>
@@ -199,7 +199,7 @@ export default function DesignProjectPage() {
             <p className="dp-section-label">Tags</p>
             <div className="dp-tags-list">
               {project.tags.map(tag => (
-                <Link key={tag} href={`/about`} className="dp-tag">#{tag}</Link>
+                <Link key={tag} href={`/work`} className="dp-tag">#{tag}</Link>
               ))}
             </div>
           </div>
