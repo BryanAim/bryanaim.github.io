@@ -86,7 +86,7 @@ const cards = [
     tagline: 'Building solutions across the full stack',
     description: 'Started with a Google × Andela scholarship in 2018. From slick frontends to solid backends, cloud infrastructure, AI tools, and everything in between.',
     skills: webDevSkills, projects: webProjects, photos: null,
-    bgImage: '/img/projects/design/enjoy-music.jpg',
+    bgImage: '/img/projects/design/compositions/enjoy-music.jpg',
     tags: ['Full-Stack', 'Open Source', 'Google Scholar'],
     socials: [
       { icon: 'fab fa-github', label: 'GitHub', url: 'https://github.com/BryanAim' },

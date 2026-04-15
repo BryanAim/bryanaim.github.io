@@ -18,8 +18,8 @@
  */
 
 import sharp from 'sharp'
-import { readFileSync, statSync, existsSync } from 'fs'
-import { resolve, extname, basename, dirname, join } from 'path'
+import { statSync, existsSync, unlinkSync } from 'fs'
+import { resolve, extname, basename, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -69,6 +69,9 @@ try {
 
   const newSize = statSync(outputAbsolute).size / 1024
   console.error(`Compressed: ${basename(inputAbsolute)} ${Math.round(sizeKb)}KB → ${Math.round(newSize)}KB (WebP q${quality})`)
+
+  // Delete the original — WebP is the new source of truth
+  unlinkSync(inputAbsolute)
 
   const publicPath = outputRelative.replace(/\\/g, '/').replace(/^public\//, '/')
   process.stdout.write(publicPath)

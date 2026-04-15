@@ -74,7 +74,7 @@ export const PRODUCTS: CatalogProduct[] = [
   {
     id: 's-des-2', type: 'sticker', category: 'designer',
     name: 'Ying Yang No Sensei', price: 200,
-    image: '/img/projects/design/ying-yang-no-sensei.jpg',
+    image: '/img/projects/design/illustrations/ying-yang-no-sensei.jpg',
     description: 'Balance & wisdom. Original illustration sticker.',
     canUseOn: ['Laptop', 'Phone', 'Bike', 'Skateboard'],
   },

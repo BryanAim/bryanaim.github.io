@@ -17,7 +17,7 @@ const TYPED_BIOS = [
 
 const BG_IMAGES = [
   '/img/background.jpg',
-  '/img/projects/design/avril-music.jpg',
+  '/img/projects/design/compositions/avril-music.jpg',
   '/img/projects/design/compositions/mike-explode.jpg',
   '/img/bmx/bmx23-bg.jpg',
 ]

@@ -141,7 +141,7 @@ See scheduling section in `.claude/skills/update-design-projects.md` for details
 
 ## Image Compression
 `agents/compress-images.mjs` uses `sharp` (installed as devDependency).
-- Compresses images > 300 KB to WebP at 85% quality
+- Compresses images > 300 KB to WebP at 85% quality and **deletes the original** (WebP is the only copy)
 - Called automatically by `/update-design-projects`
 - Can also be run manually:
   ```bash
