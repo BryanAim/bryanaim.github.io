@@ -10,12 +10,18 @@ const categoryLabel: Record<Category, string> = {
   print: 'Brochure & Print',
   composition: 'Photo Composition',
   illustration: 'Digital Illustration',
+  motion: 'Motion Graphics',
+  'ui-ux': 'UI / UX Design',
+  photography: 'Photography',
 }
 const categoryIcon: Record<Category, string> = {
   logo: 'fas fa-pen-nib',
   print: 'fas fa-file-alt',
   composition: 'fas fa-layer-group',
   illustration: 'fas fa-paint-brush',
+  motion: 'fas fa-film',
+  'ui-ux': 'fas fa-pen-ruler',
+  photography: 'fas fa-camera',
 }
 
 export default function DesignProjectPage() {

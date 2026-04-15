@@ -148,6 +148,10 @@ export const designProjects: DesignProject[] = [
     category: 'logo',
     tags: ['fitness', 'gym', 'brand-identity', 'sports'],
     primaryImage: '/img/projects/design/logos/barbell-syndicate.jpg',
+    images: [
+      { src: '/img/projects/design/logos/barbell-syndicate.jpg', label: 'Light Version', isChosen: true },
+      { src: '/img/projects/design/logos/barbell-syndicate-black.webp', label: 'Dark Version' },
+    ],
     year: '2026',
     client: 'Barbell Syndicate',
     description:
@@ -437,7 +441,7 @@ export const designProjects: DesignProject[] = [
     slug: 'avril-music',
     title: 'Avril — Music Campaign',
     category: 'composition',
-    tags: ['music', 'photo-manipulation', 'art', 'celebrity'],
+    tags: ['music', 'photo-manipulation', 'art', 'celebrity', 'kenya'],
     primaryImage: '/img/projects/design/compositions/avril-music.jpg',
     year: '2019',
     client: 'Personal / Fan Art',
@@ -467,7 +471,7 @@ export const designProjects: DesignProject[] = [
     slug: 'king-isale',
     title: 'King Isale',
     category: 'composition',
-    tags: ['personal', 'photo-manipulation', 'art', 'portrait'],
+    tags: ['personal', 'photo-manipulation', 'art', 'portrait', 'personal-brand'],
     primaryImage: '/img/projects/design/compositions/king-isale.png',
     year: '2019',
     client: 'Personal',
@@ -621,5 +625,181 @@ export const designProjects: DesignProject[] = [
       'Warmth, colour, and storytelling. The composition uses rich seasonal palettes and carefully placed characters to evoke the feeling of the holidays without relying on clichés.',
     tools: ['Adobe Illustrator', 'Adobe Photoshop'],
     color: '#e53935',
+  },
+
+  /* ─────────────────────────────────────────
+     NEW LOGOS
+  ───────────────────────────────────────── */
+  {
+    slug: 'koilas-creatives',
+    title: 'Koilas Creatives',
+    category: 'logo',
+    tags: ['brand-identity', 'creative', 'street', 'kenya'],
+    primaryImage: '/img/projects/design/logos/koilas-creatives-yellow.png',
+    images: [
+      { src: '/img/projects/design/logos/koilas-creatives-yellow.png', label: 'Yellow Highlights', isChosen: true },
+      { src: '/img/projects/design/logos/koilas-creatives-white.png', label: 'White Highlights' },
+      { src: '/img/projects/design/logos/koilas-creatives-bag-mockup.webp', label: 'Shopping Bag Mockup' },
+      { src: '/img/projects/design/logos/koilas-creatives-snapback-front.webp', label: 'Snapback Front' },
+      { src: '/img/projects/design/logos/koilas-creatives-snapback-back.webp', label: 'Snapback Back' },
+      { src: '/img/projects/design/logos/koilas-creatives-tshirts.webp', label: 'T-Shirts Mockup' },
+    ],
+    year: '2024',
+    client: 'Koilas Creatives',
+    description:
+      'Full brand identity for Koilas Creatives — a Kenyan streetwear and creative lifestyle brand. Delivered in two colourways with a complete merchandise mockup suite.',
+    concept:
+      'A bold wordmark built around a stylised face icon communicates personality and street credibility. The yellow-on-dark and white-on-dark variants ensure the mark pops across merch, social media, and retail contexts.',
+    tools: ['Adobe Illustrator'],
+    color: '#8b5cf6',
+  },
+  {
+    slug: 'infinite-talent',
+    title: 'Infinite Talent Limited',
+    category: 'logo',
+    tags: ['brand-identity', 'corporate', 'professional', 'kenya'],
+    primaryImage: '/img/projects/design/logos/infinite-talent-limited.webp',
+    images: [
+      { src: '/img/projects/design/logos/infinite-talent-limited.webp', label: 'Landscape Logo', isChosen: true },
+      { src: '/img/projects/design/logos/infinite-talent-limited-square.webp', label: 'Square Version' },
+    ],
+    year: '2024',
+    client: 'Infinite Talent Limited',
+    description:
+      'Brand identity for Infinite Talent Limited — a recruitment and talent management agency. The mark had to communicate ambition, human potential, and professional credibility.',
+    concept:
+      'A dynamic figure in motion forms the core of the mark, wrapped in an infinity loop — visualising limitless potential. The pink and blue palette breaks from traditional corporate tones, giving the brand a modern, people-first energy.',
+    tools: ['Adobe Illustrator'],
+    color: '#e91e63',
+  },
+  {
+    slug: 'nalepo-agrosupplies',
+    title: 'Nalepo Agrosupplies',
+    category: 'logo',
+    tags: ['agriculture', 'farming', 'brand-identity', 'kenya', 'stationery'],
+    primaryImage: '/img/projects/design/logos/nalepo-agrosupplies-logo.png',
+    images: [
+      { src: '/img/projects/design/logos/nalepo-agrosupplies-logo.png', label: 'Logo on White', isChosen: true },
+      { src: '/img/projects/design/logos/nalepo-agrosupplies-logo-black.png', label: 'Logo on Black' },
+      { src: '/img/projects/design/logos/nalepo-agrosupplies-business-card.jpg', label: 'Business Card' },
+    ],
+    year: '2024',
+    client: 'Nalepo Agrosupplies (The JACSU Group)',
+    description:
+      'Brand identity and business card design for Nalepo Agrosupplies, an agri-supplies business based in Mau-Narok under The JACSU Group. The system covers logo on light and dark backgrounds plus print-ready stationery.',
+    concept:
+      'A green leaf mark enclosed in a circle signals growth and nature. The bold yellow wordmark on the business card commands attention while the dynamic diagonal band layout adds energy — grounding the brand in both agriculture and ambition.',
+    tools: ['Adobe Illustrator'],
+    color: '#f5a000',
+  },
+  {
+    slug: 'game-park-hyenas',
+    title: 'Game Park Hyenas',
+    category: 'logo',
+    tags: ['sports', 'brand-identity', 'kenya', 'system'],
+    primaryImage: '/img/projects/design/logos/game-park-hyenas-design2.webp',
+    images: [
+      { src: '/img/projects/design/logos/game-park-hyenas-design2.webp', label: 'Final Design', isChosen: true },
+      { src: '/img/projects/design/logos/game-park-hyenas-design1.webp', label: 'Initial Concept' },
+    ],
+    year: '2024',
+    client: 'Game Park Hyenas',
+    description:
+      'Sports team logo for Game Park Hyenas — a basketball team. Two design directions were explored before landing on a refined, mascot-forward badge.',
+    concept:
+      'The hyena mascot is embedded within a basketball graphic, framed by bold arched lettering. The blue and orange colour palette is classic sportswear, ensuring the mark works on jerseys, court graphics, and social media.',
+    tools: ['Adobe Illustrator'],
+    color: '#1976d2',
+  },
+
+  /* ─────────────────────────────────────────
+     NEW PRINT
+  ───────────────────────────────────────── */
+  {
+    slug: 'football-clinic-2021',
+    title: 'Football Clinic 2021',
+    category: 'print',
+    tags: ['event', 'poster', 'sports', 'kenya'],
+    primaryImage: '/img/projects/design/print/football-clinic-2021-poster.webp',
+    year: '2021',
+    client: 'Football Clinic Nakuru',
+    description:
+      'Event poster for the Football Clinic 2021 in Nakuru — featuring professional players including Boniface Ambani. Designed to drive attendance and communicate the prestige of the event.',
+    concept:
+      'High-contrast orange and black with bold action photography creates immediate visual impact. The layout hierarchy prioritises the celebrity appeal up front, while all event logistics are clearly structured below.',
+    tools: ['Adobe Photoshop', 'Adobe Illustrator'],
+    color: '#ff8c42',
+  },
+  {
+    slug: 'hadija-sheban',
+    title: 'Hadija Sheban — Channel Art',
+    category: 'print',
+    tags: ['social-media', 'personal-brand', 'marketing', 'print'],
+    primaryImage: '/img/projects/design/print/hadija-sheban-youtube-banner.webp',
+    year: '2024',
+    client: 'Hadija Sheban',
+    description:
+      'YouTube channel art for Hadija Sheban, a Kenyan travel vlogger covering food, culture, and new destinations. The banner establishes her brand across the channel and links to all her social platforms.',
+    concept:
+      'A teal palette references both travel and the vlogger\'s signature warmth. A mosque skyline silhouette hints at cultural exploration, while a clean two-column layout balances the "Travel Vlogger" headline against a confident portrait photo and social media handles.',
+    tools: ['Adobe Photoshop', 'Adobe Illustrator'],
+    color: '#00bcd4',
+  },
+
+  /* ─────────────────────────────────────────
+     NEW ILLUSTRATIONS
+  ───────────────────────────────────────── */
+  {
+    slug: 'fuumbuum',
+    title: 'FuumBuum',
+    category: 'illustration',
+    tags: ['digital-art', 'illustration', 'portrait', 'personal-brand'],
+    primaryImage: '/img/projects/design/illustrations/fuumbuum-blue.webp',
+    images: [
+      { src: '/img/projects/design/illustrations/fuumbuum-blue.webp', label: 'Blue Background', isChosen: true },
+      { src: '/img/projects/design/illustrations/fuumbuum-star.webp', label: 'Star Background' },
+    ],
+    year: '2024',
+    client: 'FuumBuum',
+    description:
+      'Vector portrait illustration for FuumBuum — a personal brand identity piece rendered in two background variants. The illustration captures character and swagger as a digital avatar.',
+    concept:
+      'A clean vector portrait with bold flat colours and signature sunglasses projects confidence and personality. The star motif in the alternate version adds a layer of aspiration and visual flair.',
+    tools: ['Adobe Illustrator'],
+    color: '#1565c0',
+  },
+  {
+    slug: 'liz-obuya',
+    title: 'Liz Obuya',
+    category: 'illustration',
+    tags: ['digital-art', 'illustration', 'portrait', 'africa', 'beauty'],
+    primaryImage: '/img/projects/design/illustrations/liz-obuya.webp',
+    year: '2024',
+    client: 'Liz Obuya',
+    description:
+      'A digital illustration portrait for Liz Obuya — the subject\'s silhouette merges with the shape of the African continent, filled with vibrant traditional fabric patterns against a pink background.',
+    concept:
+      'Africa as identity. By forming the continent\'s outline from the subject\'s natural hair and head wrap, the piece celebrates African womanhood, heritage, and pride in a single bold visual statement.',
+    tools: ['Adobe Illustrator'],
+    color: '#e91e63',
+  },
+
+  /* ─────────────────────────────────────────
+     NEW COMPOSITIONS
+  ───────────────────────────────────────── */
+  {
+    slug: 'triple-portrait',
+    title: 'Triple Portrait',
+    category: 'composition',
+    tags: ['portrait', 'photo-manipulation', 'composite', 'creative'],
+    primaryImage: '/img/projects/design/compositions/design1.jpg',
+    year: '2024',
+    client: 'Personal / Commission',
+    description:
+      'A photo composite featuring the same subject in three simultaneous poses within a single frame — exploring presence, movement, and spatial identity.',
+    concept:
+      'Three versions of one person coexist in the same corridor, each occupying a distinct emotional state. Precise masking and matched lighting make the impossible feel documentary.',
+    tools: ['Adobe Photoshop'],
+    color: '#4fc3f7',
   },
 ]
