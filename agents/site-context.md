@@ -50,7 +50,7 @@ interface DesignProject {
 - **print**: event poster, flyer, wedding invite, brochure, business card (layout as hero, not logo)
 - **composition**: photo manipulation, composite portrait, layered photographic art, album artwork
 - **illustration**: digital drawing, character art, hand-drawn style, anime-influenced, vector illustration (not a logo)
-- **motion**: motion graphics stills, animation frames, GIF previews, video title cards, After Effects output
+- **motion**: motion graphics stills, animation frames, GIF previews, video title cards, After Effects output, `.mp4`/`.mov` clips (YouTube intros, lower thirds, openers, reels)
 - **ui-ux**: app screens, wireframes, high-fidelity mockups, Figma prototypes, web UI design
 - **photography**: editorial or fine-art photography with minimal post-processing (no significant compositing)
 

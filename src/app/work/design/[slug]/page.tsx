@@ -1,6 +1,9 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
+
+const VIDEO_EXTS = /\.(mp4|mov|webm)$/i
+const isVideo = (src: string) => VIDEO_EXTS.test(src)
 import { motion, AnimatePresence } from 'framer-motion'
 import { designProjects, Category } from '../../designProjects'
 import Link from 'next/link'
@@ -32,6 +35,10 @@ export default function DesignProjectPage() {
   const [activeImg, setActiveImg] = useState(0)
   const [lightbox, setLightbox] = useState(false)
 
+  const currentIndex = designProjects.findIndex(p => p.slug === slug)
+  const prevProject = currentIndex > 0 ? designProjects[currentIndex - 1] : null
+  const nextProject = currentIndex < designProjects.length - 1 ? designProjects[currentIndex + 1] : null
+
   if (!project) {
     return (
       <main id="work" style={{ textAlign: 'center', paddingTop: '6rem' }}>
@@ -52,7 +59,7 @@ export default function DesignProjectPage() {
 
   return (
     <main id="work" className="dp-page">
-      {/* ── Breadcrumb ── */}
+      {/* ── Breadcrumb + Top pagination ── */}
       <motion.div className="dp-breadcrumb" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
         <button onClick={() => router.back()} className="dp-back-btn">
           <i className="fas fa-arrow-left" /> Back
@@ -61,34 +68,64 @@ export default function DesignProjectPage() {
         <Link href="/work" className="dp-breadcrumb-link">Work</Link>
         <span className="dp-breadcrumb-sep">/</span>
         <span style={{ color: project.color }}>{project.title}</span>
+
+        <div className="dp-pagination-top">
+          {prevProject ? (
+            <Link href={`/work/design/${prevProject.slug}`} className="dp-page-btn">
+              <i className="fas fa-chevron-left" />
+              <span className="dp-page-btn-label">{prevProject.title}</span>
+            </Link>
+          ) : <span className="dp-page-btn dp-page-btn--disabled"><i className="fas fa-chevron-left" /></span>}
+          <span className="dp-page-count">{currentIndex + 1} <span>/</span> {designProjects.length}</span>
+          {nextProject ? (
+            <Link href={`/work/design/${nextProject.slug}`} className="dp-page-btn">
+              <span className="dp-page-btn-label">{nextProject.title}</span>
+              <i className="fas fa-chevron-right" />
+            </Link>
+          ) : <span className="dp-page-btn dp-page-btn--disabled"><i className="fas fa-chevron-right" /></span>}
+        </div>
       </motion.div>
 
       {/* ── Hero Image + Gallery ── */}
       <motion.div className="dp-hero" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-        {/* Main image */}
+        {/* Main image / video */}
         <div
           className="dp-hero-image-wrap"
-          style={{ borderColor: project.color, cursor: 'zoom-in' }}
-          onClick={() => setLightbox(true)}
+          style={{ borderColor: project.color, cursor: isVideo(currentImage.src) ? 'default' : 'zoom-in' }}
+          onClick={() => { if (!isVideo(currentImage.src)) setLightbox(true) }}
         >
           <AnimatePresence mode="wait">
-            <motion.img
-              key={activeImg}
-              src={currentImage.src}
-              alt={currentImage.label ?? project.title}
-              className="dp-hero-image"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-            />
+            {isVideo(currentImage.src) ? (
+              <motion.video
+                key={activeImg}
+                src={currentImage.src}
+                className="dp-hero-image"
+                controls
+                playsInline
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+              />
+            ) : (
+              <motion.img
+                key={activeImg}
+                src={currentImage.src}
+                alt={currentImage.label ?? project.title}
+                className="dp-hero-image"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+              />
+            )}
           </AnimatePresence>
           {currentImage.isChosen && (
             <span className="dp-chosen-badge" style={{ background: project.color, color: '#000' }}>
               <i className="fas fa-check-circle" /> Chosen Design
             </span>
           )}
-          <span className="dp-zoom-hint"><i className="fas fa-search-plus" /></span>
+          {!isVideo(currentImage.src) && <span className="dp-zoom-hint"><i className="fas fa-search-plus" /></span>}
           <div className="dp-hero-image-overlay" style={{ background: `linear-gradient(to top, ${project.color}22, transparent)` }} />
         </div>
 
@@ -102,7 +139,13 @@ export default function DesignProjectPage() {
                 style={i === activeImg ? { borderColor: project.color } : {}}
                 onClick={() => setActiveImg(i)}
               >
-                <img src={img.src} alt={img.label ?? ''} />
+                {isVideo(img.src) ? (
+                  <div className="dp-thumb-video-placeholder">
+                    <i className="fas fa-play-circle" style={{ color: project.color }} />
+                  </div>
+                ) : (
+                  <img src={img.src} alt={img.label ?? ''} />
+                )}
                 {img.label && (
                   <span className="dp-thumb-label" style={i === activeImg ? { color: project.color } : {}}>
                     {img.isChosen && <i className="fas fa-check-circle" style={{ marginRight: '0.25rem' }} />}
@@ -136,17 +179,33 @@ export default function DesignProjectPage() {
                 </button>
               </>
             )}
-            <motion.img
-              key={activeImg}
-              src={currentImage.src}
-              alt={currentImage.label ?? project.title}
-              className="dp-lightbox-img"
-              onClick={e => e.stopPropagation()}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            />
+            {isVideo(currentImage.src) ? (
+              <motion.video
+                key={activeImg}
+                src={currentImage.src}
+                className="dp-lightbox-img"
+                controls
+                autoPlay
+                playsInline
+                onClick={e => e.stopPropagation()}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              />
+            ) : (
+              <motion.img
+                key={activeImg}
+                src={currentImage.src}
+                alt={currentImage.label ?? project.title}
+                className="dp-lightbox-img"
+                onClick={e => e.stopPropagation()}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              />
+            )}
             {currentImage.label && (
               <p className="dp-lightbox-caption">{currentImage.label}</p>
             )}
@@ -261,6 +320,40 @@ export default function DesignProjectPage() {
           </a>
         </motion.div>
       </div>
+
+      {/* ── Bottom Pagination ── */}
+      <motion.div
+        className="dp-pagination-bottom"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5 }}
+      >
+        {prevProject ? (
+          <Link href={`/work/design/${prevProject.slug}`} className="dp-page-card dp-page-card--prev">
+            <div className="dp-page-card-img">
+              <img src={prevProject.primaryImage} alt={prevProject.title} />
+            </div>
+            <div className="dp-page-card-info">
+              <span className="dp-page-card-dir"><i className="fas fa-arrow-left" /> Previous</span>
+              <p className="dp-page-card-title" style={{ color: prevProject.color }}>{prevProject.title}</p>
+              <span className="dp-page-card-cat">{categoryLabel[prevProject.category]}</span>
+            </div>
+          </Link>
+        ) : <div />}
+        {nextProject ? (
+          <Link href={`/work/design/${nextProject.slug}`} className="dp-page-card dp-page-card--next">
+            <div className="dp-page-card-info dp-page-card-info--right">
+              <span className="dp-page-card-dir">Next <i className="fas fa-arrow-right" /></span>
+              <p className="dp-page-card-title" style={{ color: nextProject.color }}>{nextProject.title}</p>
+              <span className="dp-page-card-cat">{categoryLabel[nextProject.category]}</span>
+            </div>
+            <div className="dp-page-card-img">
+              <img src={nextProject.primaryImage} alt={nextProject.title} />
+            </div>
+          </Link>
+        ) : <div />}
+      </motion.div>
 
       {/* ── Related Projects ── */}
       {related.length > 0 && (
