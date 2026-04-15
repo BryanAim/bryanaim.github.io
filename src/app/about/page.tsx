@@ -645,6 +645,20 @@ export default function About() {
         {openCard && <CardModal card={openCard} onClose={() => setOpenCard(null)} />}
       </AnimatePresence>
 
+      {/* ── Quote ── */}
+      <motion.div
+        className="about-quote"
+        variants={fadeUp} initial="hidden"
+        whileInView="show" viewport={{ once: true, margin: '-60px' }}
+      >
+        <blockquote className="quote">
+          &ldquo;Your work is going to fill a large part of your life, and the only way to be truly
+          satisfied is to do what you believe is great work. And the only way to do great work is to
+          love what you do. If you haven&apos;t found it yet, keep looking. Don&apos;t settle.&rdquo;
+          <cite>— Steve Jobs</cite>
+        </blockquote>
+      </motion.div>
+
     </main>
   )
 }
