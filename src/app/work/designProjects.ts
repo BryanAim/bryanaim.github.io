@@ -1,4 +1,14 @@
-export type Category = 'logo' | 'print' | 'composition' | 'illustration'
+// Core categories — agent may extend this union when genuinely new work types are encountered.
+// When adding a new value: also update dgCatLabels + dgCatIcons in work/page.tsx AND about/page.tsx,
+// and create the matching subfolder under public/img/projects/design/.
+export type Category =
+  | 'logo'
+  | 'print'
+  | 'composition'
+  | 'illustration'
+  | 'motion'       // motion graphics, animated content
+  | 'ui-ux'        // app/web interface mockups, wireframes, prototypes
+  | 'photography'  // photo series, editorial photography (no significant manipulation)
 
 export interface ProjectImage {
   src: string

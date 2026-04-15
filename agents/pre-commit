@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+# pre-commit — warns when design images are not yet catalogued in designProjects.ts
+#
+# Run manually:  bash agents/pre-commit
+# Install:       bash agents/install-hooks.sh
+#
+# Exit codes: 0 = clean, 1 = uncatalogued images found (blocks commit)
+
+set -euo pipefail
+
+DESIGN_DIR="public/img/projects/design"
+DATA_FILE="src/app/work/designProjects.ts"
+MEMORY_FILE="agents/design-memory.json"
+
+# ── Helpers ─────────────────────────────────────────────────────────────────
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Colour
+
+warn() { echo -e "${YELLOW}⚠  $*${NC}"; }
+ok()   { echo -e "${GREEN}✓  $*${NC}"; }
+err()  { echo -e "${RED}✗  $*${NC}"; }
+
+# ── Navigate to project root ─────────────────────────────────────────────────
+# Works whether run as a hook (.git/hooks/pre-commit) or directly (agents/pre-commit)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# If running from .git/hooks, go up two levels; if from agents/, go up one
+if [[ "$SCRIPT_DIR" == *"/.git/hooks" ]]; then
+  PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+else
+  PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+fi
+cd "$PROJECT_ROOT"
+
+# ── Gather all design image paths ────────────────────────────────────────────
+if [ ! -d "$DESIGN_DIR" ]; then
+  ok "No design image directory found — skipping check."
+  exit 0
+fi
+
+# Find all image files, produce public paths like /img/projects/design/logos/foo.jpg
+all_images=()
+while IFS= read -r -d '' file; do
+  # Skip PDFs
+  [[ "$file" == *.pdf ]] && continue
+  # Convert to public path
+  pub_path="${file#public}"
+  all_images+=("$pub_path")
+done < <(find "$DESIGN_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -print0 2>/dev/null)
+
+if [ ${#all_images[@]} -eq 0 ]; then
+  ok "No design images found."
+  exit 0
+fi
+
+# ── Build set of known paths (from designProjects.ts) ────────────────────────
+known_paths=$(grep -oE '"(/img/projects/design/[^"]+)"' "$DATA_FILE" 2>/dev/null | tr -d '"' || true)
+
+# ── Build set of processed paths (from design-memory.json) ───────────────────
+memory_paths=""
+if [ -f "$MEMORY_FILE" ]; then
+  # Extract keys from "processed" object — paths look like "public/img/projects/design/..."
+  # Convert them to public paths: strip the leading "public"
+  memory_paths=$(python3 -c "
+import json, sys
+try:
+    data = json.load(open('$MEMORY_FILE'))
+    for p in data.get('processed', {}).keys():
+        print(p.lstrip('public'))
+except: pass
+" 2>/dev/null || true)
+fi
+
+all_known=$(printf '%s\n%s' "$known_paths" "$memory_paths" | sort -u)
+
+# ── Find uncatalogued images ──────────────────────────────────────────────────
+uncatalogued=()
+for img in "${all_images[@]}"; do
+  if ! echo "$all_known" | grep -qF "$img"; then
+    uncatalogued+=("$img")
+  fi
+done
+
+# ── Report ────────────────────────────────────────────────────────────────────
+if [ ${#uncatalogued[@]} -eq 0 ]; then
+  ok "All ${#all_images[@]} design image(s) are catalogued."
+  exit 0
+fi
+
+echo ""
+warn "Found ${#uncatalogued[@]} uncatalogued design image(s):"
+for img in "${uncatalogued[@]}"; do
+  echo "    $img"
+done
+echo ""
+echo "  Run '/update-design-projects' in Claude Code to catalogue them automatically."
+echo "  Or commit anyway with:  git commit --no-verify"
+echo ""
+
+# Warn but do not hard-block — exit 0 so commits still go through.
+# Change to 'exit 1' if you want to hard-block commits until images are catalogued.
+exit 0

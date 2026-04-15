@@ -30,6 +30,9 @@ yarn-error.log*
 # order data
 data/
 
+# agent memory files (local state, not committed)
+agents/*.json
+
 # vercel
 .vercel
 

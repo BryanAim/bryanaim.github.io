@@ -185,6 +185,9 @@ const dgCatLabels: Record<Category | 'all', string> = {
   print: 'Print',
   composition: 'Compositions',
   illustration: 'Illustrations',
+  motion: 'Motion',
+  'ui-ux': 'UI / UX',
+  photography: 'Photography',
 }
 const dgCatIcons: Record<Category | 'all', string> = {
   all: 'fas fa-th',
@@ -192,6 +195,9 @@ const dgCatIcons: Record<Category | 'all', string> = {
   print: 'fas fa-file-alt',
   composition: 'fas fa-layer-group',
   illustration: 'fas fa-paint-brush',
+  motion: 'fas fa-film',
+  'ui-ux': 'fas fa-pen-ruler',
+  photography: 'fas fa-camera',
 }
 
 const PAGE_SIZE = 9

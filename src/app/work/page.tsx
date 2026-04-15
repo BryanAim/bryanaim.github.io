@@ -1,80 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { designProjects as allDesignProjects, Category } from './designProjects'
+import { devProjects, DevProject } from './devProjects'
 import QuoteModal from '../components/QuoteModal'
-
-/* ─── Types ─── */
-interface DevProject {
-  title: string
-  img: string
-  url: string
-  github?: string
-  desc: string
-  tags: string[]
-}
-
-/* ─── Data ─── */
-const devProjects: DevProject[] = [
-  {
-    title: 'WeatherNow',
-    img: '/img/projects/weather.jpg',
-    url: 'https://weathernow-afb00.web.app/',
-    github: 'https://github.com/BryanAim/weather-app',
-    desc: 'Real-time weather app with geolocation and 5-day forecasts.',
-    tags: ['JavaScript', 'Firebase', 'API'],
-  },
-  {
-    title: 'Covid Tracker',
-    img: '/img/projects/corona.jpg',
-    url: 'https://isalebryan.dev/everything-corona-virus/',
-    github: 'https://github.com/BryanAim/everything-corona-virus',
-    desc: 'Live global COVID-19 statistics dashboard with charts.',
-    tags: ['JavaScript', 'REST API', 'Charts'],
-  },
-  {
-    title: 'VueGram',
-    img: '/img/projects/vuegram.jpg',
-    url: 'https://aim-vuegram.herokuapp.com/',
-    github: 'https://github.com/BryanAim/vuegram',
-    desc: 'Instagram-inspired photo sharing app built with Vue.js and Firebase.',
-    tags: ['Vue.js', 'Firebase', 'Vuex'],
-  },
-  {
-    title: 'NaxTechmakers',
-    img: '/img/projects/naxtechmakers.jpg',
-    url: 'http://naxtechmakers.com/',
-    github: 'https://github.com/NakuruTechMakers/techiesofnakuru',
-    desc: 'Community website for the Nakuru tech ecosystem.',
-    tags: ['HTML', 'CSS', 'JavaScript'],
-  },
-  {
-    title: 'Personal Portfolio',
-    img: '/img/projects/my-portfolio.jpg',
-    url: 'https://isalebryan.dev',
-    github: 'https://github.com/BryanAim/bryanaim.github.io',
-    desc: 'This site — built with Next.js, TypeScript, and Framer Motion.',
-    tags: ['Next.js', 'TypeScript', 'Framer Motion'],
-  },
-  {
-    title: 'Personal Library',
-    img: '/img/projects/project1.jpg',
-    url: 'https://github.com/BryanAim/FCC-personal-library',
-    github: 'https://github.com/BryanAim/FCC-personal-library',
-    desc: 'freeCodeCamp quality assurance project — book library API.',
-    tags: ['Node.js', 'Express', 'MongoDB'],
-  },
-  {
-    title: 'GSAP Scroll Animation',
-    img: '/img/projects/project2.jpg',
-    url: 'https://github.com/BryanAim/gsap-scroll-animation',
-    github: 'https://github.com/BryanAim/gsap-scroll-animation',
-    desc: 'Smooth scroll-triggered animation experiments with GSAP.',
-    tags: ['GSAP', 'JavaScript', 'CSS'],
-  },
-]
 
 /* ─── Design gallery constants ─── */
 const dgCatLabels: Record<Category | 'all', string> = {
@@ -83,6 +14,9 @@ const dgCatLabels: Record<Category | 'all', string> = {
   print: 'Print',
   composition: 'Compositions',
   illustration: 'Illustrations',
+  motion: 'Motion',
+  'ui-ux': 'UI / UX',
+  photography: 'Photography',
 }
 const dgCatIcons: Record<Category | 'all', string> = {
   all: 'fas fa-th',
@@ -90,6 +24,9 @@ const dgCatIcons: Record<Category | 'all', string> = {
   print: 'fas fa-file-alt',
   composition: 'fas fa-layer-group',
   illustration: 'fas fa-paint-brush',
+  motion: 'fas fa-film',
+  'ui-ux': 'fas fa-pen-ruler',
+  photography: 'fas fa-camera',
 }
 const PAGE_SIZE = 9
 const SPRING = [0.16, 1, 0.3, 1] as const
@@ -130,14 +67,20 @@ function DevCard({ p }: { p: DevProject }) {
 }
 
 /* ─── Design gallery ─── */
-function DesignGallery() {
+function DesignGallery({ shuffleSeed }: { shuffleSeed: number }) {
   const [activeCat, setActiveCat] = useState<Category | 'all'>('all')
   const [activeTag, setActiveTag] = useState('')
   const [page, setPage] = useState(0)
 
+  // Shuffle the source list whenever the seed changes (tab click or page load)
+  const shuffledProjects = useMemo(
+    () => [...allDesignProjects].sort(() => Math.random() - 0.5),
+    [shuffleSeed], // eslint-disable-line react-hooks/exhaustive-deps
+  )
+
   const allTags = Array.from(new Set(allDesignProjects.flatMap(p => p.tags))).sort()
 
-  const filtered = allDesignProjects.filter(p => {
+  const filtered = shuffledProjects.filter(p => {
     const catOk = activeCat === 'all' || p.category === activeCat
     const tagOk = !activeTag || p.tags.includes(activeTag)
     return catOk && tagOk
@@ -367,6 +310,19 @@ interface ActiveQuote { serviceId: string; serviceName: string; color: string }
 export default function Work() {
   const [tab, setTab] = useState<Tab>('services')
   const [activeQuote, setActiveQuote] = useState<ActiveQuote | null>(null)
+  // New seed on mount (page refresh) and on every tab click → re-shuffles project order
+  const [shuffleSeed, setShuffleSeed] = useState(() => Math.random())
+
+  function switchTab(t: Tab) {
+    setTab(t)
+    setShuffleSeed(Math.random())
+  }
+
+  // Shuffled dev projects — recalculated whenever seed changes
+  const shuffledDevProjects = useMemo(
+    () => [...devProjects].sort(() => Math.random() - 0.5),
+    [shuffleSeed], // eslint-disable-line react-hooks/exhaustive-deps
+  )
 
   return (
     <main id="work-page">
@@ -397,21 +353,21 @@ export default function Work() {
       >
         <button
           className={`wk-tab wk-tab--services${tab === 'services' ? ' active' : ''}`}
-          onClick={() => setTab('services')}
+          onClick={() => switchTab('services')}
         >
           <i className="fas fa-handshake" /> Services
           <span className="wk-tab-count">{services.length}</span>
         </button>
         <button
           className={`wk-tab${tab === 'design' ? ' active' : ''}`}
-          onClick={() => setTab('design')}
+          onClick={() => switchTab('design')}
         >
           <i className="fas fa-pen-nib" /> Design
           <span className="wk-tab-count">{allDesignProjects.length}</span>
         </button>
         <button
           className={`wk-tab${tab === 'dev' ? ' active' : ''}`}
-          onClick={() => setTab('dev')}
+          onClick={() => switchTab('dev')}
         >
           <i className="fas fa-code" /> Development
           <span className="wk-tab-count">{devProjects.length}</span>
@@ -430,7 +386,7 @@ export default function Work() {
             transition={{ duration: 0.4, ease: 'easeOut' }}
           >
             <div className="wk-dev-grid">
-              {devProjects.map(p => <DevCard key={p.title} p={p} />)}
+              {shuffledDevProjects.map(p => <DevCard key={p.title} p={p} />)}
             </div>
             <div className="wk-dev-footer">
               <a
@@ -453,7 +409,7 @@ export default function Work() {
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
           >
-            <DesignGallery />
+            <DesignGallery shuffleSeed={shuffleSeed} />
             <div className="wk-dev-footer">
               <a
                 href="https://behance.net/isalebryan"
