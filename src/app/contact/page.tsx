@@ -1,7 +1,9 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import { useRef, useEffect, useState } from 'react'
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion'
+import { services } from '../work/services'
+import QuoteModal from '../components/QuoteModal'
 
 /* ─── Data ─── */
 const contactInfo = [
@@ -63,12 +65,15 @@ function DrawLine({ color = '#00ddd7' }: { color?: string }) {
   )
 }
 
+interface ActiveQuote { serviceId: string; serviceName: string; color: string }
+
 /* ─── Page ─── */
 export default function Contact() {
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
+  const [activeQuote, setActiveQuote] = useState<ActiveQuote | null>(null)
 
   // Load LinkedIn badge script
   useEffect(() => {
@@ -143,6 +148,137 @@ export default function Contact() {
         </motion.div>
 
       </section>
+
+      {/* ══════════════════════════════════
+          LET'S WORK TOGETHER  (moved up)
+      ══════════════════════════════════ */}
+      <section className="ct-services-section">
+        <div className="ct-section-head">
+          <motion.h2
+            className="ct-section-heading"
+            variants={curtain(0)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+          >
+            Let&apos;s <span className="text-secondary">Work Together</span>
+          </motion.h2>
+          <DrawLine color="#00ddd7" />
+        </div>
+
+        <motion.p
+          className="ct-services-sub"
+          variants={riseUp(0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-40px' }}
+        >
+          Pick a service and get an instant quote — or browse the shop.
+        </motion.p>
+
+        {/* ── Service cards ── */}
+        <motion.div
+          className="ct-services-grid"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-40px' }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
+        >
+          {services.map((s) => (
+            <motion.button
+              key={s.serviceId}
+              className="ct-service-card"
+              style={{ '--ct-sv-color': s.color } as React.CSSProperties}
+              variants={riseUp(0)}
+              whileHover={{ y: -4, boxShadow: `0 20px 48px rgba(0,0,0,0.5), 0 0 0 1px ${s.color}55` }}
+              onClick={() => setActiveQuote({ serviceId: s.serviceId, serviceName: s.title, color: s.color })}
+            >
+              <div className="ct-sv-top">
+                <span className="ct-sv-icon" style={{ color: s.color, background: `${s.color}1a` }}>
+                  <i className={s.icon} />
+                </span>
+                <span className="ct-sv-pricing" style={{ color: s.color }}>{s.pricing}</span>
+              </div>
+              <p className="ct-sv-title">{s.title}</p>
+              <p className="ct-sv-turnaround"><i className="fas fa-clock" /> {s.turnaround}</p>
+              <span className="ct-sv-cta" style={{ color: s.color }}>
+                Get a quote <i className="fas fa-arrow-right" />
+              </span>
+            </motion.button>
+          ))}
+        </motion.div>
+
+        {/* ── Shop divider ── */}
+        <motion.div
+          className="ct-shop-divider"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+        >
+          <span>or shop the collection</span>
+        </motion.div>
+
+        {/* ── Shop cards ── */}
+        <motion.div
+          className="ct-shop-cards"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-40px' }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
+        >
+          {([
+            {
+              icon: 'fas fa-store',
+              label: 'Browse the Shop',
+              desc: 'Stickers, tees, prints, and more — ready to order.',
+              color: '#b1db00',
+              href: '/shop',
+              cta: 'Visit shop',
+            },
+            {
+              icon: 'fas fa-pen-nib',
+              label: 'Custom Order',
+              desc: 'Upload your own artwork or brief — I\'ll make it happen.',
+              color: '#00ddd7',
+              href: '/shop/custom',
+              cta: 'Start custom order',
+            },
+          ] as const).map((item) => (
+            <motion.a
+              key={item.href}
+              href={item.href}
+              className="ct-shop-card"
+              style={{ '--ct-sh-color': item.color } as React.CSSProperties}
+              variants={riseUp(0)}
+              whileHover={{ y: -4, boxShadow: `0 20px 48px rgba(0,0,0,0.5), 0 0 0 1px ${item.color}55` }}
+            >
+              <span className="ct-sh-icon" style={{ color: item.color, background: `${item.color}1a` }}>
+                <i className={item.icon} />
+              </span>
+              <div className="ct-sh-body">
+                <p className="ct-sh-label">{item.label}</p>
+                <p className="ct-sh-desc">{item.desc}</p>
+              </div>
+              <span className="ct-sh-cta" style={{ color: item.color }}>
+                {item.cta} <i className="fas fa-long-arrow-alt-right" />
+              </span>
+            </motion.a>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* Quote modal */}
+      <AnimatePresence>
+        {activeQuote && (
+          <QuoteModal
+            serviceId={activeQuote.serviceId}
+            serviceName={activeQuote.serviceName}
+            color={activeQuote.color}
+            onClose={() => setActiveQuote(null)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* ══════════════════════════════════
           CONTACT CARDS
