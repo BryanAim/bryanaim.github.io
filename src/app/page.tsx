@@ -162,7 +162,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 1.05, ease: 'easeOut' }}
           >
             <a href="/about" className="home-cta-primary">
-              Explore my work <i className="fas fa-arrow-right" />
+              About Me <i className="fas fa-arrow-right" />
             </a>
             <a href="/work#services" className="home-cta-ghost">
               <i className="" /> Services
