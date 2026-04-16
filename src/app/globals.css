@@ -2027,19 +2027,69 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   border-radius: 8px;
   font-size: 0.65rem;
 }
-.dgm-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.dgm-tags-section {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.6rem 0.75rem;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+}
+.dgm-tags-label {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(255,255,255,0.25);
+  padding-top: 0.2rem;
+}
+.dgm-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .dgm-tag {
-  padding: 0.15rem 0.55rem;
+  padding: 0.15rem 0.5rem;
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.09);
   border-radius: 4px;
-  color: rgba(255,255,255,0.38);
-  font-size: 0.68rem;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.66rem;
   cursor: pointer;
   transition: all 0.18s;
 }
-.dgm-tag:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); }
-.dgm-tag.active { background: rgba(177,219,0,0.08); }
+.dgm-tag:hover { border-color: rgba(255,255,255,0.28); color: rgba(255,255,255,0.65); }
+.dgm-tags-toggle {
+  padding: 0.15rem 0.5rem;
+  background: transparent;
+  border: 1px dashed rgba(255,255,255,0.18);
+  border-radius: 4px;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.66rem;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.dgm-tags-toggle:hover { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.6); }
+.dgm-results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.dgm-pagination-top {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.dgm-page-btn--sm {
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.7rem !important;
+  min-width: unset !important;
+}
+.dgm-page-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.4);
+  min-width: 2.5rem;
+  text-align: center;
+}
+.dgm-page-label span { color: rgba(255,255,255,0.2); margin: 0 0.15rem; }
 .dgm-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

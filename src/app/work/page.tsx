@@ -28,6 +28,17 @@ const dgCatIcons: Record<Category | 'all', string> = {
   'ui-ux': 'fas fa-pen-ruler',
   photography: 'fas fa-camera',
 }
+const dgCatColors: Record<Category | 'all', string> = {
+  all: '#b1db00',
+  logo: '#b1db00',
+  print: '#ff8c42',
+  composition: '#e91e63',
+  illustration: '#a78bfa',
+  motion: '#ff5722',
+  'ui-ux': '#4fc3f7',
+  photography: '#27ae60',
+}
+const TAGS_VISIBLE = 16
 const PAGE_SIZE = 9
 const SPRING = [0.16, 1, 0.3, 1] as const
 
@@ -71,6 +82,7 @@ function DesignGallery({ shuffleSeed }: { shuffleSeed: number }) {
   const [activeCat, setActiveCat] = useState<Category | 'all'>('all')
   const [activeTag, setActiveTag] = useState('')
   const [page, setPage] = useState(0)
+  const [showAllTags, setShowAllTags] = useState(false)
 
   // Shuffle the source list whenever the seed changes (tab click or page load)
   const shuffledProjects = useMemo(
@@ -92,53 +104,90 @@ function DesignGallery({ shuffleSeed }: { shuffleSeed: number }) {
   const handleCat = (cat: Category | 'all') => { setActiveCat(cat); setActiveTag(''); setPage(0) }
   const handleTag = (tag: string) => { setActiveTag(activeTag === tag ? '' : tag); setPage(0) }
 
+  const accentColor = dgCatColors[activeCat]
+  const visibleTags = showAllTags ? allTags : allTags.slice(0, TAGS_VISIBLE)
+  const hiddenCount = allTags.length - TAGS_VISIBLE
+
   return (
     <div className="wk-design-wrap">
-      {/* Category tabs */}
+      {/* ── Category tabs ── */}
       <div className="dgm-tabs">
-        {(Object.keys(dgCatLabels) as (Category | 'all')[]).map(cat => (
-          <button
-            key={cat}
-            className={`dgm-tab ${activeCat === cat ? 'active' : ''}`}
-            style={activeCat === cat ? { borderColor: '#b1db00', color: '#b1db00' } : {}}
-            onClick={() => handleCat(cat)}
-          >
-            <i className={dgCatIcons[cat]} />
-            {dgCatLabels[cat]}
-            <span className="dgm-tab-count">
-              {cat === 'all' ? allDesignProjects.length : allDesignProjects.filter(p => p.category === cat).length}
+        {(Object.keys(dgCatLabels) as (Category | 'all')[]).map(cat => {
+          const color = dgCatColors[cat]
+          const isActive = activeCat === cat
+          const count = cat === 'all' ? allDesignProjects.length : allDesignProjects.filter(p => p.category === cat).length
+          return (
+            <button
+              key={cat}
+              className={`dgm-tab ${isActive ? 'active' : ''}`}
+              style={isActive ? { borderColor: color, color: color, background: `${color}14` } : {}}
+              onClick={() => handleCat(cat)}
+            >
+              <i className={dgCatIcons[cat]} style={isActive ? { color } : {}} />
+              {dgCatLabels[cat]}
+              <span className="dgm-tab-count" style={isActive ? { background: `${color}28`, color } : {}}>
+                {count}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+
+      {/* ── Tag filter ── */}
+      <div className="dgm-tags-section">
+        <span className="dgm-tags-label"><i className="fas fa-tag" /> Tags</span>
+        <div className="dgm-tags">
+          {visibleTags.map(tag => (
+            <button
+              key={tag}
+              className={`dgm-tag ${activeTag === tag ? 'active' : ''}`}
+              style={activeTag === tag ? { borderColor: accentColor, color: accentColor, background: `${accentColor}12` } : {}}
+              onClick={() => handleTag(tag)}
+            >
+              #{tag}
+            </button>
+          ))}
+          {!showAllTags && hiddenCount > 0 && (
+            <button className="dgm-tags-toggle" onClick={() => setShowAllTags(true)}>
+              +{hiddenCount} more
+            </button>
+          )}
+          {showAllTags && (
+            <button className="dgm-tags-toggle" onClick={() => setShowAllTags(false)}>
+              show less
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* ── Results bar + top pagination ── */}
+      <div className="dgm-results-bar">
+        <p className="dgm-results-count">
+          {filtered.length === 0
+            ? 'No projects'
+            : `${page * PAGE_SIZE + 1}–${Math.min((page + 1) * PAGE_SIZE, filtered.length)} of ${filtered.length}`}
+          {(activeCat !== 'all' || activeTag) && (
+            <button className="dgm-clear-filters" onClick={() => { handleCat('all'); setShowAllTags(false) }}>
+              ✕ clear
+            </button>
+          )}
+        </p>
+        {totalPages > 1 && (
+          <div className="dgm-pagination-top">
+            <button className="dgm-page-btn dgm-page-btn--sm" disabled={page === 0} onClick={() => setPage(p => p - 1)}>
+              <i className="fas fa-chevron-left" />
+            </button>
+            <span className="dgm-page-label" style={{ color: accentColor }}>
+              {page + 1} <span>/</span> {totalPages}
             </span>
-          </button>
-        ))}
-      </div>
-
-      {/* Tag cloud */}
-      <div className="dgm-tags">
-        {allTags.map(tag => (
-          <button
-            key={tag}
-            className={`dgm-tag ${activeTag === tag ? 'active' : ''}`}
-            style={activeTag === tag ? { borderColor: '#b1db00', color: '#b1db00' } : {}}
-            onClick={() => handleTag(tag)}
-          >
-            #{tag}
-          </button>
-        ))}
-      </div>
-
-      {/* Results count */}
-      <p className="dgm-results-count">
-        {filtered.length === 0
-          ? 'No projects'
-          : `Showing ${page * PAGE_SIZE + 1}–${Math.min((page + 1) * PAGE_SIZE, filtered.length)} of ${filtered.length} project${filtered.length !== 1 ? 's' : ''}`}
-        {(activeCat !== 'all' || activeTag) && (
-          <button className="dgm-clear-filters" onClick={() => handleCat('all')}>
-            ✕ clear filters
-          </button>
+            <button className="dgm-page-btn dgm-page-btn--sm" disabled={page === totalPages - 1} onClick={() => setPage(p => p + 1)}>
+              <i className="fas fa-chevron-right" />
+            </button>
+          </div>
         )}
-      </p>
+      </div>
 
-      {/* Grid */}
+      {/* ── Grid ── */}
       {filtered.length > 0 ? (
         <div className="dgm-grid">
           {pageItems.map(project => (
@@ -178,7 +227,7 @@ function DesignGallery({ shuffleSeed }: { shuffleSeed: number }) {
         </div>
       )}
 
-      {/* Pagination */}
+      {/* ── Bottom pagination ── */}
       {totalPages > 1 && (
         <div className="dgm-pagination">
           <button className="dgm-page-btn" disabled={page === 0} onClick={() => setPage(p => p - 1)}>
@@ -189,7 +238,7 @@ function DesignGallery({ shuffleSeed }: { shuffleSeed: number }) {
               <button
                 key={i}
                 className={`dgm-dot ${i === page ? 'active' : ''}`}
-                style={i === page ? { background: '#b1db00' } : {}}
+                style={i === page ? { background: accentColor } : {}}
                 onClick={() => setPage(i)}
               />
             ))}
