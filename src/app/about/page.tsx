@@ -601,7 +601,7 @@ export default function About() {
             Art and technology enthusiast on a mission. I build modern solutions to everyday
             problems — because I genuinely believe technology is Africa&apos;s greatest lever for
             change. When I&apos;m not shipping code or crafting visuals, you&apos;ll find me at
-            community events, developer meetups, or pushing limits on my BMX.
+            community events, developer meetups, or pushing limits on my BMX bike.
           </p>
           <div className="about-badges">
             <span className="about-badge">🌍 Based in Kenya</span>
