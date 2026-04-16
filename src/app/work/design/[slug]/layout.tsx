@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import { designProjects } from '../../designProjects'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
   children: React.ReactNode
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = designProjects.find(p => p.slug === params.slug)
+  const { slug } = await params
+  const project = designProjects.find(p => p.slug === slug)
 
   if (!project) {
     return {
@@ -21,6 +22,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     print: 'Brochure & Print',
     composition: 'Photo Composition',
     illustration: 'Digital Illustration',
+    motion: 'Motion Graphics',
+    'ui-ux': 'UI / UX Design',
+    photography: 'Photography',
   }
 
   const title = `${project.title} — ${categoryLabel[project.category] ?? 'Design'} by Brian Isale`
