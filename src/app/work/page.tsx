@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, Suspense } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { designProjects as allDesignProjects } from './designProjects'
 import { devProjects, DevProject } from './devProjects'
@@ -149,8 +150,15 @@ type Tab = 'dev' | 'design' | 'services'
 
 interface ActiveQuote { serviceId: string; serviceName: string; color: string }
 
-export default function Work() {
-  const [tab, setTab] = useState<Tab>('services')
+function WorkInner() {
+  const searchParams = useSearchParams()
+  const paramTab = searchParams.get('tab')
+  const paramTag  = searchParams.get('tag') ?? ''
+  const paramFrom = searchParams.get('from') ?? undefined
+
+  const [tab, setTab] = useState<Tab>(() =>
+    paramTab === 'design' || paramTab === 'dev' ? paramTab : 'services'
+  )
   const [activeQuote, setActiveQuote] = useState<ActiveQuote | null>(null)
   // New seed on mount (page refresh) and on every tab click → re-shuffles project order
   const [shuffleSeed, setShuffleSeed] = useState(() => Math.random())
@@ -251,7 +259,7 @@ export default function Work() {
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
           >
-            <DesignGallery shuffleSeed={shuffleSeed} />
+            <DesignGallery shuffleSeed={shuffleSeed} initialTag={paramTag} backSlug={paramFrom} />
             <div className="wk-dev-footer">
               <a
                 href="https://behance.net/isalebryan"
@@ -305,5 +313,13 @@ export default function Work() {
         )}
       </AnimatePresence>
     </main>
+  )
+}
+
+export default function Work() {
+  return (
+    <Suspense fallback={null}>
+      <WorkInner />
+    </Suspense>
   )
 }

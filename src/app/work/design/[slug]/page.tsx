@@ -43,8 +43,8 @@ export default function DesignProjectPage() {
     return (
       <main id="work" style={{ textAlign: 'center', paddingTop: '6rem' }}>
         <h1 className="lg-heading">Project <span className="text-secondary">Not Found</span></h1>
-        <Link href="/about" className="btn-light" style={{ marginTop: '2rem', display: 'inline-block' }}>
-          ← Back
+        <Link href="/work" className="btn-light" style={{ marginTop: '2rem', display: 'inline-block' }}>
+          ← Back to Work
         </Link>
       </main>
     )
@@ -65,7 +65,7 @@ export default function DesignProjectPage() {
           <i className="fas fa-arrow-left" /> Back
         </button>
         <span className="dp-breadcrumb-sep">/</span>
-        <Link href="/work" className="dp-breadcrumb-link">Work</Link>
+        <Link href="/work?tab=design" className="dp-breadcrumb-link">Work</Link>
         <span className="dp-breadcrumb-sep">/</span>
         <span style={{ color: project.color }}>{project.title}</span>
 
@@ -258,7 +258,7 @@ export default function DesignProjectPage() {
             <p className="dp-section-label">Tags</p>
             <div className="dp-tags-list">
               {project.tags.map(tag => (
-                <Link key={tag} href={`/work`} className="dp-tag">#{tag}</Link>
+                <Link key={tag} href={`/work?tab=design&tag=${tag}&from=${project.slug}`} className="dp-tag">#{tag}</Link>
               ))}
             </div>
           </div>

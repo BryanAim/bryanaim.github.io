@@ -40,11 +40,21 @@ const PAGE_SIZE = 9
 const TAGS_VISIBLE = 16
 
 /* ─── Component ─── */
-export default function DesignGallery({ shuffleSeed }: { shuffleSeed: number }) {
+export default function DesignGallery({
+  shuffleSeed,
+  initialTag = '',
+  backSlug,
+}: {
+  shuffleSeed: number
+  initialTag?: string
+  backSlug?: string
+}) {
   const [activeCat, setActiveCat] = useState<Category | 'all'>('all')
-  const [activeTag, setActiveTag] = useState('')
+  const [activeTag, setActiveTag] = useState(initialTag)
   const [page, setPage] = useState(0)
   const [showAllTags, setShowAllTags] = useState(false)
+
+  const backProject = backSlug ? allDesignProjects.find(p => p.slug === backSlug) : null
 
   const shuffledProjects = useMemo(
     () => [...allDesignProjects].sort(() => Math.random() - 0.5),
@@ -74,6 +84,13 @@ export default function DesignGallery({ shuffleSeed }: { shuffleSeed: number }) 
 
   return (
     <div className="wk-design-wrap">
+      {/* ── Back link (when arriving via a tag from a project page) ── */}
+      {backProject && (
+        <Link href={`/work/design/${backProject.slug}`} className="dgm-back-link">
+          <i className="fas fa-arrow-left" /> Back to {backProject.title}
+        </Link>
+      )}
+
       {/* ── Category tabs ── */}
       <div className="dgm-tabs">
         {(Object.keys(dgCatLabels) as (Category | 'all')[]).map(cat => {
