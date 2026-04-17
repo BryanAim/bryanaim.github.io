@@ -266,7 +266,7 @@ function SkillsTimeline() {
 
   return (
     <div ref={sectionRef} style={{ height: sectionHeight }} className="relative -mx-6 md:-mx-16 mb-16">
-      <div className="bmx-htl-sticky">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center p-0">
 
         <div className="absolute top-[8vh] md:top-[12vh] left-6 md:left-[60px] z-20 pr-6">
           <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-4" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
@@ -287,7 +287,7 @@ function SkillsTimeline() {
           <span>scroll to explore</span>
         </div>
 
-        <motion.div className="bmx-htl-track" style={{ x }}>
+        <motion.div className="flex items-start gap-5 md:gap-[32px] px-5 md:px-[calc(50vw-210px)] pb-[52px] w-max relative will-change-transform" style={{ x }}>
           <div className="absolute inset-x-0 bottom-[38px] h-0.5 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 3%, rgba(255,255,255,0.1) 97%, transparent 100%)' }} />
           {progression.map((phase, i) => (
             <HPhaseCard key={phase.period} phase={phase} index={i} scrollYProgress={scrollYProgress} />
@@ -356,7 +356,7 @@ function GearSetup() {
 function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
   return (
     <motion.div
-      className="border border-white/[0.08] rounded-lg overflow-hidden flex flex-col gap-[0.3rem] transition-all"
+      className="w-full md:w-[calc(33%-0.4rem)] md:min-w-[120px] lg:w-[140px] shrink-0 border border-white/[0.08] rounded-lg overflow-hidden flex flex-col gap-[0.3rem] transition-all"
       style={{ borderColor: `${color}44` }}
       variants={fadeUp}
       whileHover={{ borderColor: color, scale: 1.02 }}
@@ -396,7 +396,7 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
 
   return (
     <motion.div
-      className={`bmx-rs-card${isPast ? ' opacity-75' : ''}`}
+      className={`sticky h-auto lg:h-[calc(100vh-120px)] min-h-[60vh] md:min-h-[70vh] rounded-[14px] overflow-hidden border-t-[3px] shadow-[0_8px_32px_rgba(0,0,0,0.4)] mb-6 will-change-transform bg-[#0c0c0c]${isPast ? ' opacity-75' : ''}`}
       style={{
         top: stickyTop,
         zIndex: index + 1,
@@ -413,12 +413,12 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
       {/* Overlay */}
       <div className="absolute inset-0" style={{ background: `linear-gradient(115deg, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.85) 55%, ${quarter.color}12 100%)` }} />
 
-      <div className="bmx-rs-content">
+      <div className="absolute inset-0 flex flex-col lg:flex-row items-start lg:items-center p-[1.4rem_1.2rem_1.2rem] md:p-[2rem_2rem_1.6rem] lg:p-[3rem_4rem] gap-[0.8rem] lg:gap-[3rem] overflow-y-auto lg:overflow-hidden">
         {/* Left column — Q number + period */}
-        <div className="bmx-rs-left">
-          <span className="bmx-rs-index">{String(index + 1).padStart(2, '0')}</span>
-          <span className="bmx-rs-qnum" style={{ color: quarter.color }}>Q{quarter.q}</span>
-          <span className="bmx-rs-period">{quarter.range}</span>
+        <div className="flex flex-row lg:flex-col items-center gap-[0.8rem] lg:gap-[1.2rem] shrink-0">
+          <span className="text-[0.7rem] text-white/20 font-mono tracking-[2px] [writing-mode:horizontal-tb] lg:[writing-mode:vertical-rl]">{String(index + 1).padStart(2, '0')}</span>
+          <span className="text-[2.2rem] md:text-[2.6rem] lg:text-[3.8rem] font-black font-mono leading-none [text-shadow:0_0_40px_var(--rs-color)]" style={{ color: quarter.color }}>Q{quarter.q}</span>
+          <span className="text-[0.65rem] text-white/25 uppercase tracking-[1.5px] [writing-mode:horizontal-tb] lg:[writing-mode:vertical-rl]">{quarter.range}</span>
         </div>
 
         {/* Middle column — trick info */}
@@ -433,8 +433,8 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
               {statusLabel}
             </div>
           </div>
-          <h3 className="bmx-rs-trick" style={{ color: quarter.color }}>{quarter.mainTrick}</h3>
-          <p className="bmx-rs-note">{quarter.mainNote}</p>
+          <h3 className="text-[2rem] md:text-[2.4rem] lg:text-[3.2rem] font-black uppercase tracking-[3px] leading-none mb-[0.8rem]" style={{ color: quarter.color }}>{quarter.mainTrick}</h3>
+          <p className="text-[0.82rem] md:text-[0.85rem] lg:text-[0.9rem] leading-[1.78] text-white/55 mb-[0.8rem] lg:mb-[1.2rem] max-w-[420px]">{quarter.mainNote}</p>
 
           <p className="text-[0.7rem] text-white/30 uppercase tracking-[2px] mb-2">Also working on</p>
           <div className="flex flex-wrap gap-[0.4rem]">
@@ -445,7 +445,7 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
 
           {/* Mobile-only video toggle */}
           <button
-            className="bmx-rs-videos-toggle"
+            className="flex lg:hidden items-center gap-2 bg-transparent border rounded-md px-3 py-[0.4rem] text-[0.75rem] tracking-[1.5px] uppercase cursor-pointer mt-2 font-mono"
             style={{ borderColor: `${quarter.color}88`, color: quarter.color }}
             onClick={() => setVideosOpen(v => !v)}
           >
@@ -455,7 +455,7 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
         </div>
 
         {/* Right column — video clips (always visible on desktop, toggle on mobile) */}
-        <div className={`bmx-rs-videos${videosOpen ? ' bmx-rs-videos-open' : ''}`}>
+        <div className={`${videosOpen ? 'flex' : 'hidden'} lg:flex flex-col md:flex-row flex-wrap lg:flex-nowrap gap-[0.6rem] shrink-0 items-stretch w-full lg:w-auto`}>
           {quarter.videos.map((v, i) => (
             <VideoSlot key={i} clip={v} color={quarter.color} />
           ))}
@@ -784,15 +784,15 @@ export default function BMX() {
         <p className="text-[0.8rem] tracking-[3px] uppercase text-white/30 mb-5">Follow the sessions</p>
         <div className="flex justify-center gap-4 flex-wrap">
           <a href="https://www.instagram.com/isalebryan/" target="_blank" rel="noopener noreferrer"
-            className="bmx-follow-btn" style={{ '--fb-color': '#e1306c' } as React.CSSProperties}>
+            className="inline-flex items-center gap-[0.5rem] px-[1.4rem] py-[0.6rem] border rounded-[6px] font-bold text-[0.85rem] no-underline transition-colors hover:bg-[color-mix(in_srgb,var(--fb-color)_15%,transparent)]" style={{ '--fb-color': '#e1306c' } as React.CSSProperties}>
             <i className="fab fa-instagram" /> Instagram
           </a>
           <a href="https://tiktok.com/@bmxbrian" target="_blank" rel="noopener noreferrer"
-            className="bmx-follow-btn" style={{ '--fb-color': '#e0e0e0' } as React.CSSProperties}>
+            className="inline-flex items-center gap-[0.5rem] px-[1.4rem] py-[0.6rem] border rounded-[6px] font-bold text-[0.85rem] no-underline transition-colors hover:bg-[color-mix(in_srgb,var(--fb-color)_15%,transparent)]" style={{ '--fb-color': '#e0e0e0' } as React.CSSProperties}>
             <i className="fab fa-tiktok" /> TikTok
           </a>
           <a href="https://youtube.com/@bryanaim" target="_blank" rel="noopener noreferrer"
-            className="bmx-follow-btn" style={{ '--fb-color': '#ff0000' } as React.CSSProperties}>
+            className="inline-flex items-center gap-[0.5rem] px-[1.4rem] py-[0.6rem] border rounded-[6px] font-bold text-[0.85rem] no-underline transition-colors hover:bg-[color-mix(in_srgb,var(--fb-color)_15%,transparent)]" style={{ '--fb-color': '#ff0000' } as React.CSSProperties}>
             <i className="fab fa-youtube" /> YouTube
           </a>
         </div>
