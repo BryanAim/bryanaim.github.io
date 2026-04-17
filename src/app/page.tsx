@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Typed from 'typed.js'
+import Image from 'next/image'
 
 // Bio for each typed string — fires after typing finishes, before deletion starts
 // Typed string order: Full Stack Dev, Creative Designer, Community Builder, BMX Rider, Lifelong Learner, Friend
@@ -207,7 +208,7 @@ export default function Home() {
           >
             <div className="home-portrait-glow" />
             <div className="home-portrait-ring" />
-            <img src="/img/portrait.jpg" alt="" className="home-portrait-img" />
+            <Image src="/img/portrait.jpg" alt="Brian Isale" className="home-portrait-img" width={800} height={1000} priority />
           </motion.div>
         </div>
       </div>

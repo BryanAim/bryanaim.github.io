@@ -315,6 +315,8 @@
 .menu .nav-item {
   transform: translate3d(600px, 0, 0);
   transition: all 0.5s ease-out;
+  width: 100%;
+  text-align: center;
 }
 .menu .nav-item.show {
   transform: translate3d(0, 0, 0);
@@ -635,6 +637,9 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   text-transform: uppercase;
   border-radius: 6px;
   text-decoration: none;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
 }
 .home-cta-ghost:hover {
@@ -2607,6 +2612,135 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   max-width: 480px;
 }
 
+/* ── Hero scroll-hint ── */
+.ct-hero-scroll-hint {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.5px;
+}
+.ct-hero-scroll-hint i { margin-right: 0.35rem; }
+
+/* ── Hero slide container ── */
+.ct-hero-slide { margin-top: 1.8rem; }
+
+/* ── Slide label ── */
+.ct-slide-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 1.2rem;
+}
+
+/* ── Stats grid (slide 1) ── */
+.ct-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 3rem;
+}
+.ct-stat-value {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #00ddd7;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.ct-stat-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* ── CTA row (slide 2) ── */
+.ct-hero-ctas {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+.ct-hero-cta--primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  background: #00ddd7;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.ct-hero-cta--ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.75);
+  font-weight: 600;
+  font-size: 0.88rem;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.ct-hero-cta--ghost:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+.ct-hero-cta--wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  background: rgba(37,211,102,0.12);
+  border: 1px solid rgba(37,211,102,0.35);
+  color: #25d366;
+  font-weight: 600;
+  font-size: 0.88rem;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.ct-hero-cta--wa:hover { background: rgba(37,211,102,0.22); }
+
+/* ── Slide dots ── */
+.ct-hero-dots {
+  display: flex;
+  gap: 0.45rem;
+  margin-top: 2.5rem;
+}
+.ct-hero-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  transition: all 0.35s ease;
+}
+.ct-hero-dot.active {
+  width: 22px;
+  border-radius: 3px;
+  background: #00ddd7;
+}
+
+/* ── Hero scroll wrap — sticky behaviour ── */
+.ct-hero-scroll-wrap {
+  height: 300vh;
+}
+.ct-hero--sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: unset;
+}
+
+/* ── Mobile: disable sticky hero ── */
+@media (max-width: 767px) {
+  .ct-hero-scroll-wrap { height: auto; }
+  .ct-hero--sticky { position: static; height: auto; min-height: 60vh; }
+  .ct-hero-dots { display: none; }
+  .ct-hero-scroll-hint { display: none; }
+}
+
 /* ── Draw line ── */
 .ct-draw-line-wrap {
   margin: 1.5rem 0 2.5rem;
@@ -2621,7 +2755,6 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 }
 
 /* ── Section padding — mobile first ── */
-.ct-cards-section,
 .ct-socials-section,
 .ct-services-section,
 .ct-embeds-section {
@@ -2674,11 +2807,20 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
    ===================== */
 
 /* Info cards row */
+/* Contact cards — standalone section layout */
 .ct-info-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.2rem;
   margin-bottom: 3rem;
+}
+/* Contact cards — inside hero slide */
+.ct-hero-contact-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+  max-width: 500px;
 }
 .ct-info-card {
   display: flex;
@@ -2724,6 +2866,43 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 
 /* Section heading */
 .ct-section { margin-bottom: 3rem; }
+
+/* Sticky socials overrides section padding-bottom */
+.ct-socials-sticky { padding-bottom: 0 !important; }
+
+/* ── Social rail (desktop scroll-driven) ── */
+.ct-socials-rail-wrap {
+  height: 300vh;
+}
+.ct-socials-sticky {
+  position: sticky !important;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.ct-socials-overflow {
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+.ct-socials-row {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  padding: 0.5rem 0;
+}
+/* Rail cards have fixed width */
+.ct-socials-row .ct-social-card {
+  width: 220px;
+  flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .ct-socials-rail-wrap  { height: auto; }
+  .ct-socials-sticky     { position: static !important; height: auto; }
+  .ct-socials-overflow   { display: none; }
+}
 
 /* Social cards grid */
 .ct-socials-grid {
@@ -2822,7 +3001,7 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 @media (min-width: 640px) {
   .ct-services-grid { grid-template-columns: repeat(3, 1fr); }
 }
-@media (max-width: 400px) {
+@media (max-width: 639px) {
   .ct-services-grid { grid-template-columns: 1fr; }
 }
 
@@ -3876,7 +4055,13 @@ progress::-moz-progress-bar {
   display: flex;
   gap: 0.5rem;
   margin: 2rem 2rem 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.wk-tabs::-webkit-scrollbar {
+  display: none;
 }
 .wk-tab {
   display: flex;
