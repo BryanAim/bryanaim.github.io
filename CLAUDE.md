@@ -164,6 +164,9 @@ Everything is in `src/app/globals.css`. Naming conventions:
 - Shop: `sp-*` (shop page), `pm-*` (product modal), `cart-*`
 - Tailwind utility classes used inline for simple layouts
 
+**CSS / Animation Gotchas:**
+- **Corner Bleed:** Avoid using child background image scaling (`group-hover:scale-[...]`) inside parent containers with `overflow-hidden` and `rounded-[...]` classes. This frequently causes the child element to briefly render outside the rounded borders during the transition in WebKit browsers. Instead, keep the background element static and apply hover effects (like `box-shadow`) to the parent container using Framer Motion (see `about/page.tsx`'s `StackCard` or `bmx/page.tsx`'s `RoadmapStackCard` for reference).
+
 ---
 
 ## Environment Variables

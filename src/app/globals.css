@@ -411,30 +411,6 @@ header {
   color: var(--color-lime);
 }
 
-.about-quote {
-  margin: 4rem auto 2rem;
-  max-width: 720px;
-  text-align: center;
-}
-
-.about-quote blockquote {
-  font-style: italic;
-  font-size: 1.15rem;
-  line-height: 1.8;
-  color: var(--color-lime);
-  border-left: 3px solid var(--color-lime);
-  padding: 1rem 1.5rem;
-  margin: 0;
-}
-
-.about-quote cite {
-  display: block;
-  margin-top: 0.75rem;
-  font-style: normal;
-  font-size: 0.9rem;
-  color: #aaa;
-  letter-spacing: 0.05em;
-}
 
 /* =====================
    Main — shared background + overlay
@@ -794,255 +770,16 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 }
 
 /* =====================
-   About — Bio Section
+   About — spin ring keyframe (used via Tailwind arbitrary animation)
    ===================== */
-.about-bio-section {
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-.about-portrait-wrap {
-  position: relative;
-  flex-shrink: 0;
-}
-.about-portrait {
-  width: 190px;
-  height: 190px;
-  border-radius: 50%;
-  border: 4px solid #b1db00;
-  display: block;
-  position: relative;
-  z-index: 1;
-  object-fit: cover;
-}
-.portrait-spin-ring {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  width: calc(100% + 20px);
-  height: calc(100% + 20px);
-  border-radius: 50%;
-  border: 2px dashed rgba(0, 221, 215, 0.35);
-  animation: portrait-ring-spin 18s linear infinite;
-  pointer-events: none;
-}
 @keyframes portrait-ring-spin {
   to { transform: rotate(360deg); }
-}
-.about-bio-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-.about-bio-text p {
-  font-size: 1.05rem;
-  line-height: 1.85;
-  color: #d8d8d8;
-  margin-bottom: 1.2rem;
-}
-.about-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.about-badge {
-  background: rgba(177, 219, 0, 0.12);
-  border: 1px solid rgba(177, 219, 0, 0.4);
-  color: #b1db00;
-  padding: 0.3rem 0.85rem;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-/* =====================
-   About — Stats Bar
-   ===================== */
-.about-stats {
-  display: flex;
-  justify-content: space-around;
-  gap: 1rem;
-  background: rgba(0,0,0,0.25);
-  border: 1px solid rgba(177, 219, 0, 0.15);
-  border-radius: 8px;
-  padding: 1.5rem 2rem;
-  margin-bottom: 2.5rem;
-}
-.stat-item {
-  text-align: center;
-}
-.stat-number {
-  font-size: 2.4rem;
-  font-weight: 800;
-  color: #b1db00;
-  line-height: 1;
-  font-family: 'Courier New', monospace;
-}
-.stat-suffix {
-  font-size: 1.8rem;
-  color: #00ddd7;
-}
-.stat-label {
-  font-size: 0.78rem;
-  color: #999;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-top: 0.3rem;
-}
-
-/* =====================
-   About — Cards label
-   ===================== */
-.about-cards-section { margin-top: 0.5rem; margin-bottom: 0; }
-.cards-section-label {
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  margin-bottom: 1.5rem;
 }
 
 /* =====================
    Sticky Stack Cards
    ===================== */
 
-/* Container: must have overflow visible for sticky to work */
-.stack-container {
-  display: flex;
-  flex-direction: column;
-  /* bottom padding = enough room for last card to fully stick before contact section */
-  padding-bottom: 40vh;
-  overflow: visible;
-}
-
-/* Each card: position sticky, top set inline per card */
-.stack-card {
-  position: sticky;
-  /* top: set inline (80px, 96px, 112px, 128px) */
-  height: calc(100vh - 120px);
-  border-radius: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  border-top: 3px solid var(--ac-color, #b1db00);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  /* gap between cards so previous peeks behind next */
-  margin-bottom: 1.5rem;
-  will-change: transform;
-}
-
-/* Background */
-.stack-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  transition: transform 0.6s ease;
-}
-.stack-card:hover .stack-bg { transform: scale(1.03); }
-
-/* Dark overlay — strong on left for legibility */
-.stack-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    110deg,
-    rgba(0,0,0,0.93) 0%,
-    rgba(0,0,0,0.72) 50%,
-    rgba(0,0,0,0.3) 100%
-  );
-}
-
-/* Content */
-.stack-content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  padding: 3rem 4rem;
-  gap: 3rem;
-}
-.stack-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
-  flex-shrink: 0;
-}
-.stack-index {
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.25);
-  font-family: 'Courier New', monospace;
-  letter-spacing: 2px;
-  writing-mode: vertical-rl;
-}
-.stack-icon {
-  font-size: 3.2rem;
-  color: var(--ac-color, #b1db00);
-  font-family: 'Courier New', monospace;
-  font-weight: 800;
-  text-shadow: 0 0 28px var(--ac-glow, rgba(177,219,0,0.5));
-  line-height: 1;
-}
-.stack-right { flex: 1; max-width: 580px; }
-.stack-category {
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.35);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-.stack-title {
-  font-size: 3rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  line-height: 1.05;
-  margin-bottom: 0.6rem;
-}
-.stack-tagline {
-  font-size: 1rem;
-  font-style: italic;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 1rem;
-}
-.stack-desc {
-  font-size: 0.92rem;
-  line-height: 1.78;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 1.2rem;
-  max-width: 460px;
-}
-.stack-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 1.5rem;
-}
-.stack-tag {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.18);
-  color: #fff;
-  padding: 0.22rem 0.7rem;
-  border-radius: 20px;
-  font-size: 0.76rem;
-  backdrop-filter: blur(4px);
-}
-.stack-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 2px;
-  transition: gap 0.2s ease;
-}
-.stack-card:hover .stack-cta { gap: 0.9rem; }
 
 /* ── Static card (opens modal) ── */
 .ac-card {
@@ -1168,287 +905,20 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
 }
 .ac-card:hover .ac-cta { opacity: 1; transform: translateX(0); }
 
-/* ── Modal overlay ── */
-.ms-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.82);
-  z-index: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  backdrop-filter: blur(6px);
-}
+/* About modal scrollbar */
+.about-modal-panel { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
+.about-modal-panel::-webkit-scrollbar { width: 4px; }
+.about-modal-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
 
-/* ── Modal panel ── */
-.ms-panel {
-  background: #252525;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  width: 100%;
-  max-width: 760px;
-  max-height: 88vh;
-  overflow-y: auto;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.15) transparent;
-}
-.ms-panel::-webkit-scrollbar { width: 4px; }
-.ms-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
-
-.ms-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 1.6rem;
-  border-bottom: 2px solid;
-  position: sticky;
-  top: 0;
-  background: #252525;
-  z-index: 1;
-}
-.ms-panel-title {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-.ms-panel-icon {
-  font-size: 1.8rem;
-  font-family: 'Courier New', monospace;
-  font-weight: 800;
-  line-height: 1;
-}
-.ms-panel-title h2 {
-  font-size: 1.3rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-.ms-close-btn {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: #fff;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-.ms-close-btn:hover { background: rgba(255,255,255,0.18); }
-
-.ms-panel-body { padding: 1.4rem 1.6rem; }
-
-.ms-desc {
-  font-size: 0.95rem;
-  line-height: 1.8;
-  color: #ccc;
-  margin-bottom: 1.2rem;
-}
-.ms-section { margin-bottom: 1.4rem; }
-.ms-section-title {
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 0.8rem;
-}
-
-/* Community photo grid in modal */
-.ms-community-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
-}
-.ms-community-thumb {
-  position: relative;
-  border-radius: 6px;
-  overflow: hidden;
-  aspect-ratio: 4/3;
-  cursor: default;
-}
-.ms-community-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
-}
-.ms-community-thumb:hover img { transform: scale(1.06); }
-.ms-community-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.75));
-  color: #fff;
-  font-size: 0.72rem;
-  padding: 1rem 0.5rem 0.4rem;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  line-height: 1.3;
-}
-.ms-community-thumb:hover .ms-community-caption { opacity: 1; }
-.ms-community-grid--portrait .ms-community-thumb { aspect-ratio: 3/4; }
-
-/* Projects grid in modal */
-.ms-projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.7rem;
-}
-.ms-project-thumb {
-  position: relative;
-  display: block;
-  border-radius: 6px;
-  overflow: hidden;
-  aspect-ratio: 16/9;
-  cursor: default;
-}
-.ms-project-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
-}
-.ms-project-thumb:hover img { transform: scale(1.06); }
-.ms-project-hover {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.ms-project-thumb:hover .ms-project-hover { opacity: 1; }
-.ms-project-title {
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 0.3rem;
-}
-.ms-project-links {
-  display: flex;
-  gap: 0.4rem;
-}
-.ms-project-gh {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  color: var(--ph-color, #b1db00);
-  font-size: 0.78rem;
-  border: 1px solid var(--ph-color, #b1db00);
-  padding: 0.2rem 0.6rem;
-  border-radius: 20px;
-  transition: background 0.2s;
-}
-.ms-project-gh:hover { background: var(--ph-color, #b1db00); color: #000; }
-
-/* Skills in modal */
-.ms-skills-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
-.ms-skills-grid--two-col { grid-template-columns: 1fr 1fr; column-gap: 1.5rem; }
-.ms-skill-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.82rem;
-  color: #bbb;
-  margin-bottom: 0.25rem;
-}
-.ms-skill-track {
-  height: 6px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 3px;
-  overflow: hidden;
-}
-.ms-skill-fill {
-  height: 100%;
-  border-radius: 3px;
-  width: 0%;
-  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Tags in modal */
-.ms-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.ms-tag {
-  padding: 0.4rem 1rem;
-  border: 1px solid;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 600;
-}
-
-/* Certificate inside modal */
-.ms-cert-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 8px;
-  padding: 0.9rem 1.2rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-bottom: 0.8rem;
-}
-.ms-cert-row:hover { background: rgba(255,255,255,0.08); }
-.ms-cert-left {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-}
-.ms-cert-icon { font-size: 1.6rem; }
-.ms-cert-name { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 0.1rem; }
-.ms-cert-sub { font-size: 0.78rem; color: #888; }
-.ms-cert-toggle { font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
-.ms-cert-img {
-  width: 100%;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-/* Social buttons in modal */
-.ms-socials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255,255,255,0.07);
-}
-.ms-social-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 1rem;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 24px;
-  font-size: 0.82rem;
-  color: #ccc;
-  text-decoration: none;
-  background: rgba(255,255,255,0.05);
-  transition: all 0.22s ease;
-}
-.ms-social-btn:hover {
+/* About social button hover — uses CSS variable set inline */
+.about-social-btn:hover {
   background: var(--sb-color, #b1db00);
   color: #000;
   border-color: var(--sb-color, #b1db00);
 }
-.ms-social-btn i { font-size: 0.9rem; }
+
+/* About project link hover — color set via style prop */
+.about-project-gh:hover { background: currentColor; color: #000; }
 
 /* =====================
    Work / Projects
@@ -3620,66 +3090,12 @@ main#home::before { display: none; } /* remove shared overlay — gradient handl
   .lg-heading { font-size: 2.8rem; }
   .sm-heading  { font-size: 1rem; }
 
-  /* Bio section — stack vertically, center */
-  .about-bio-section {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .about-portrait { width: 140px; height: 140px; }
-  .portrait-spin-ring { width: 158px; height: 158px; top: -9px; left: -9px; }
-  .about-badges { justify-content: center; }
-
-  /* Stats row */
-  .about-stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-  .stat-item { text-align: center; }
-
-  /* Stack cards */
-  .stack-container { padding-bottom: 20vh; }
-  .stack-card {
-    height: calc(85vh - 80px);
-  }
-  .stack-content {
-    flex-direction: column;
-    padding: 2rem 1.5rem;
-    gap: 1.2rem;
-    align-items: flex-start;
-  }
-  .stack-left {
-    flex-direction: row;
-    gap: 0.8rem;
-    align-items: center;
-  }
-  .stack-index { writing-mode: horizontal-tb; }
-  .stack-title { font-size: 2rem; }
-  .stack-desc { display: none; } /* too much text on small screen */
-  .stack-right { max-width: 100%; }
-
-  /* Modal */
-  .ms-overlay { padding: 0; align-items: flex-end; }
-  .ms-panel {
-    width: 100%;
-    max-width: 100%;
-    max-height: 88vh;
-    border-radius: 20px 20px 0 0;
-  }
-  .ms-panel-header { padding: 1rem 1.2rem; }
-  .ms-panel-body { padding: 1rem 1.2rem; }
-  .ms-projects-grid { grid-template-columns: repeat(2, 1fr); }
-  .ms-community-grid { grid-template-columns: repeat(2, 1fr); }
-  .ms-skills-grid { grid-template-columns: 1fr; }
-
   /* Contact page — mobile */
   .ct-hero-h1 { font-size: clamp(2.8rem, 12vw, 5rem); }
   .ct-info-row { grid-template-columns: 1fr; gap: 0.75rem; }
   .ct-socials-grid { grid-template-columns: 1fr; }
   .ct-embeds-row { grid-template-columns: 1fr; gap: 2rem; }
 
-  /* Cards section label */
-  .about-cards-section { text-align: center; }
 }
 
 /* BMX page — mobile */
@@ -3998,29 +3414,6 @@ progress::-moz-progress-bar {
   .ct-socials-grid { grid-template-columns: repeat(2, 1fr); }
   .ct-embeds-row { grid-template-columns: 1fr; }
 
-  /* About bio */
-  .about-bio-section {
-    flex-direction: column;
-    text-align: center;
-  }
-  .about-badges {
-    justify-content: center;
-  }
-  /* Stats */
-  .about-stats {
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    padding: 1rem;
-  }
-  .stat-number { font-size: 1.8rem; }
-  /* Stack cards */
-  .stack-content { padding: 2rem 1.5rem; gap: 1.5rem; }
-  .stack-title { font-size: 1.8rem; }
-  .stack-desc { display: none; }
-  .stack-section { height: 70vh; }
-  .stack-sticky { height: calc(70vh - 80px); }
-  .ms-projects-grid { grid-template-columns: 1fr; }
-  .ms-panel { max-height: 92vh; }
   .projects,
   .products,
   .inspirations,
@@ -4377,16 +3770,8 @@ progress::-moz-progress-bar {
   color: #fff;
 }
 
-/* About bio actions */
-.about-bio-actions {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
 @media (max-width: 600px) {
   .sv-grid { grid-template-columns: 1fr; }
-  .about-bio-actions { flex-direction: column; }
 }
 
 /* =====================

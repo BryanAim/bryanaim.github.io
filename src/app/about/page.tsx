@@ -1,10 +1,10 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import DesignGallery from '../components/DesignGallery'
 
 /* ─── Animation variants ─── */
-const ease = 'easeOut' as const
 const SPRING = [0.16, 1, 0.3, 1] as const
 
 const fadeUp = {
@@ -75,9 +75,6 @@ const communityPhotos: Photo[] = [
   { src: '/img/projects/community/school-outreach-3.jpeg', caption: 'Community school outreach' },
 ]
 
-// Design projects come from the shared data file (allDesignProjects)
-// and are rendered via DesignGalleryModal below
-
 const cards = [
   {
     id: 'webdev', icon: '</>', title: 'Tech & Development',
@@ -136,14 +133,14 @@ const stats = [
 /* ─── Skill Bar ─── */
 function SkillBar({ name, level, color, animate, delay }: { name: string; level: number; color: string; animate: boolean; delay: number }) {
   return (
-    <div className="ms-skill-item">
-      <div className="ms-skill-label">
+    <div>
+      <div className="flex justify-between text-[0.82rem] text-[#bbb] mb-[0.25rem]">
         <span>{name}</span>
         <span style={{ color }}>{level}%</span>
       </div>
-      <div className="ms-skill-track">
+      <div className="h-[6px] bg-white/[0.08] rounded-full overflow-hidden">
         <div
-          className="ms-skill-fill"
+          className="h-full rounded-full transition-[width] duration-[900ms] [transition-timing-function:cubic-bezier(0.4,0,0.2,1)]"
           style={{
             width: animate ? `${level}%` : '0%',
             background: `linear-gradient(90deg, ${color}88, ${color})`,
@@ -158,16 +155,20 @@ function SkillBar({ name, level, color, animate, delay }: { name: string; level:
 /* ─── Project Thumb ─── */
 function ProjectThumb({ p, color }: { p: Project; color: string }) {
   return (
-    <div className="ms-project-thumb" style={{ '--ph-color': color } as React.CSSProperties}>
-      <img src={p.img} alt={p.title} />
-      <div className="ms-project-hover">
-        <span className="ms-project-title">{p.title}</span>
-        <div className="ms-project-links">
-          <a href={p.url} target="_blank" rel="noopener noreferrer" className="ms-project-gh">
+    <div className="group relative block rounded-md overflow-hidden aspect-video cursor-default">
+      <img src={p.img} alt={p.title} className="w-full h-full object-cover block transition-transform duration-[400ms] group-hover:scale-[1.06]" />
+      <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-[0.4rem] opacity-0 transition-opacity duration-[250ms] group-hover:opacity-100">
+        <span className="text-white text-[0.85rem] font-bold text-center mb-[0.3rem]">{p.title}</span>
+        <div className="flex gap-[0.4rem]">
+          <a href={p.url} target="_blank" rel="noopener noreferrer"
+            className="about-project-gh inline-flex items-center gap-[0.3rem] text-[0.78rem] border px-[0.6rem] py-[0.2rem] rounded-full transition-colors duration-200"
+            style={{ color, borderColor: color } as React.CSSProperties}>
             <i className="fas fa-eye" /> View
           </a>
           {p.github && (
-            <a href={p.github} target="_blank" rel="noopener noreferrer" className="ms-project-gh">
+            <a href={p.github} target="_blank" rel="noopener noreferrer"
+              className="about-project-gh inline-flex items-center gap-[0.3rem] text-[0.78rem] border px-[0.6rem] py-[0.2rem] rounded-full transition-colors duration-200"
+              style={{ color, borderColor: color } as React.CSSProperties}>
               <i className="fab fa-github" /> GitHub
             </a>
           )}
@@ -195,9 +196,9 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
     return () => window.removeEventListener('keydown', handler)
   }, [onClose])
 
-  return (
+  return createPortal(
     <motion.div
-      className="ms-overlay"
+      className="fixed inset-0 bg-black/[0.82] z-[900] flex items-center justify-center p-6 backdrop-blur-[6px] max-[768px]:p-0 max-[768px]:items-end"
       onClick={onClose}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -205,26 +206,32 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
       transition={{ duration: 0.25 }}
     >
       <motion.div
-        className="ms-panel"
+        className="about-modal-panel bg-[#252525] rounded-xl border border-white/[0.08] w-full max-w-[760px] max-h-[88vh] overflow-y-auto shadow-[0_30px_80px_rgba(0,0,0,0.7)] max-[768px]:max-w-full max-[768px]:rounded-t-[20px] max-[768px]:rounded-b-none max-[768px]:max-h-[92vh]"
         onClick={e => e.stopPropagation()}
         initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 40, opacity: 0 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
-        <div className="ms-panel-header" style={{ borderColor: card.color }}>
-          <div className="ms-panel-title">
-            <span className="ms-panel-icon" style={{ color: card.color }}>{card.icon}</span>
-            <h2 style={{ color: card.color }}>{card.title}</h2>
+        <div
+          className="flex items-center justify-between px-[1.6rem] py-[1.2rem] border-b-2 sticky top-0 bg-[#252525] z-[1] max-[768px]:px-[1.2rem] max-[768px]:py-4"
+          style={{ borderColor: card.color }}
+        >
+          <div className="flex items-center gap-[0.8rem]">
+            <span className="text-[1.8rem] font-['Courier_New',monospace] font-extrabold leading-none" style={{ color: card.color }}>{card.icon}</span>
+            <h2 className="text-[1.3rem] font-extrabold uppercase tracking-[2px]" style={{ color: card.color }}>{card.title}</h2>
           </div>
-          <button className="ms-close-btn" onClick={onClose}>✕</button>
+          <button
+            className="bg-white/[0.08] border border-white/[0.12] text-white w-[34px] h-[34px] rounded-full cursor-pointer text-[0.9rem] flex items-center justify-center transition-all duration-200 hover:bg-white/[0.18] shrink-0"
+            onClick={onClose}
+          >✕</button>
         </div>
-        <div className="ms-panel-body">
-          <p className="ms-desc">{card.description}</p>
+        <div className="px-[1.6rem] py-[1.4rem] max-[768px]:px-[1.2rem] max-[768px]:py-4">
+          <p className="text-[0.95rem] leading-[1.8] text-[#ccc] mb-[1.2rem]">{card.description}</p>
           {card.skills && (
-            <div className="ms-section">
-              <h4 className="ms-section-title" style={{ color: card.color }}>— Skills</h4>
-              <div className={`ms-skills-grid ${card.skills.length > 6 ? 'ms-skills-grid--two-col' : ''}`}>
+            <div className="mb-[1.4rem]">
+              <h4 className="text-[0.78rem] font-bold uppercase tracking-[3px] mb-[0.8rem]" style={{ color: card.color }}>— Skills</h4>
+              <div className={`grid gap-2 ${card.skills.length > 6 ? 'grid-cols-2 gap-x-6 max-[768px]:grid-cols-1' : 'grid-cols-1'}`}>
                 {card.skills.map((s, i) => (
                   <SkillBar key={s.name} name={s.name} level={s.level} color={card.color} animate={animSkills} delay={i * 0.08} />
                 ))}
@@ -232,60 +239,65 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
             </div>
           )}
           {!card.skills && (
-            <div className="ms-section">
-              <div className="ms-tags">
+            <div className="mb-[1.4rem]">
+              <div className="flex flex-wrap gap-2">
                 {card.tags.map(t => (
-                  <span key={t} className="ms-tag" style={{ borderColor: card.color, color: card.color }}>{t}</span>
+                  <span key={t} className="px-4 py-[0.4rem] border rounded-full text-[0.82rem] font-semibold" style={{ borderColor: card.color, color: card.color }}>{t}</span>
                 ))}
               </div>
             </div>
           )}
           {card.id === 'design' && (
-            <div className="ms-section">
-              <h4 className="ms-section-title" style={{ color: card.color }}>— Portfolio</h4>
+            <div className="mb-[1.4rem]">
+              <h4 className="text-[0.78rem] font-bold uppercase tracking-[3px] mb-[0.8rem]" style={{ color: card.color }}>— Portfolio</h4>
               <DesignGallery shuffleSeed={shuffleSeed} />
             </div>
           )}
           {card.photos && (
-            <div className="ms-section">
-              <h4 className="ms-section-title" style={{ color: card.color }}>— Photos</h4>
-              <div className={`ms-community-grid ${card.id === 'bmx' ? 'ms-community-grid--portrait' : ''}`}>
+            <div className="mb-[1.4rem]">
+              <h4 className="text-[0.78rem] font-bold uppercase tracking-[3px] mb-[0.8rem]" style={{ color: card.color }}>— Photos</h4>
+              <div className="grid grid-cols-3 gap-[0.6rem] max-[768px]:grid-cols-2">
                 {card.photos.map((p: Photo) => (
-                  <div key={p.src} className="ms-community-thumb">
-                    <img src={p.src} alt={p.caption} />
-                    <div className="ms-community-caption">{p.caption}</div>
+                  <div key={p.src} className="group relative rounded-md overflow-hidden aspect-[4/3] cursor-default">
+                    <img src={p.src} alt={p.caption} className="w-full h-full object-cover block transition-transform duration-[400ms] group-hover:scale-[1.06]" />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/75 to-transparent text-white text-[0.72rem] px-[0.5rem] pb-[0.4rem] pt-4 opacity-0 transition-opacity duration-[250ms] group-hover:opacity-100 leading-[1.3]">
+                      {p.caption}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
           )}
           {card.id !== 'design' && card.projects && (
-            <div className="ms-section">
-              <h4 className="ms-section-title" style={{ color: card.color }}>— Projects</h4>
-              <div className="ms-projects-grid">
+            <div className="mb-[1.4rem]">
+              <h4 className="text-[0.78rem] font-bold uppercase tracking-[3px] mb-[0.8rem]" style={{ color: card.color }}>— Projects</h4>
+              <div className="grid grid-cols-2 gap-[0.7rem] max-[768px]:grid-cols-1">
                 {card.projects.map(p => <ProjectThumb key={p.title} p={p} color={card.color} />)}
               </div>
             </div>
           )}
           {card.hasCert && (
-            <div className="ms-section">
-              <h4 className="ms-section-title" style={{ color: card.color }}>— Certificate</h4>
-              <div className="ms-cert-row" onClick={() => setShowCert(s => !s)}>
-                <div className="ms-cert-left">
-                  <i className="fas fa-award ms-cert-icon" style={{ color: card.color }} />
+            <div className="mb-[1.4rem]">
+              <h4 className="text-[0.78rem] font-bold uppercase tracking-[3px] mb-[0.8rem]" style={{ color: card.color }}>— Certificate</h4>
+              <div
+                className="flex items-center justify-between gap-4 bg-white/[0.04] border border-white/[0.08] rounded-lg px-[1.2rem] py-[0.9rem] cursor-pointer transition-colors duration-200 hover:bg-white/[0.08] mb-[0.8rem]"
+                onClick={() => setShowCert(s => !s)}
+              >
+                <div className="flex items-center gap-[0.9rem]">
+                  <i className="fas fa-award text-[1.6rem]" style={{ color: card.color }} />
                   <div>
-                    <p className="ms-cert-name">Google Africa Scholarship</p>
-                    <p className="ms-cert-sub">Mobile Web Specialist · Andela & Pluralsight · 2019</p>
+                    <p className="text-[0.95rem] font-bold text-white mb-[0.1rem]">Google Africa Scholarship</p>
+                    <p className="text-[0.78rem] text-[#888]">Mobile Web Specialist · Andela & Pluralsight · 2019</p>
                   </div>
                 </div>
-                <span className="ms-cert-toggle" style={{ color: card.color }}>{showCert ? 'Hide ↑' : 'View ↓'}</span>
+                <span className="text-[0.8rem] font-semibold whitespace-nowrap" style={{ color: card.color }}>{showCert ? 'Hide ↑' : 'View ↓'}</span>
               </div>
               <AnimatePresence>
                 {showCert && (
                   <motion.img
                     src="/img/certificate-google-scholar.png"
                     alt="Google Africa Scholar Certificate"
-                    className="ms-cert-img"
+                    className="w-full rounded-md border border-white/10"
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
@@ -295,18 +307,19 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
               </AnimatePresence>
             </div>
           )}
-          <div className="ms-section ms-socials">
+          <div className="flex flex-wrap gap-2 pt-4 border-t border-white/[0.07]">
             {card.socials.map(s => (
               <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
-                className="ms-social-btn" style={{ '--sb-color': card.color } as React.CSSProperties}>
-                <i className={s.icon} /><span>{s.label}</span>
+                className="about-social-btn inline-flex items-center gap-[0.45rem] px-4 py-[0.45rem] border border-white/15 rounded-[24px] text-[0.82rem] text-[#ccc] no-underline bg-white/[0.05] transition-all duration-[220ms]"
+                style={{ '--sb-color': card.color } as React.CSSProperties}>
+                <i className={`${s.icon} text-[0.9rem]`} /><span>{s.label}</span>
               </a>
             ))}
           </div>
         </div>
       </motion.div>
     </motion.div>
-  )
+  , document.body)
 }
 
 /* ─── Sticky Stack Card (pure CSS sticky) ─── */
@@ -315,17 +328,17 @@ function StackCard({
 }: {
   card: typeof cards[0]; index: number; total: number; onOpen: (c: typeof cards[0]) => void
 }) {
-  // Each card sticks 16px lower than the previous — creates the fanned deck look
   const stickyTop = 80 + index * 16
 
   return (
     <motion.div
-      className="stack-card"
+      className="group sticky h-[calc(100vh-120px)] rounded-[14px] overflow-hidden cursor-pointer border-t-[3px] shadow-[0_8px_32px_rgba(0,0,0,0.4)] mb-6 will-change-transform max-[768px]:h-[calc(85vh-80px)]"
       style={{
         top: stickyTop,
         zIndex: index + 1,
         '--ac-color': card.color,
         '--ac-glow': card.glow,
+        borderColor: card.color,
       } as React.CSSProperties}
       onClick={() => onOpen(card)}
       whileHover={{
@@ -333,22 +346,33 @@ function StackCard({
         transition: { duration: 0.2 },
       }}
     >
-      <div className="stack-bg" style={{ backgroundImage: `url('${card.bgImage}')` }} />
-      <div className="stack-overlay" />
-      <div className="stack-content">
-        <div className="stack-left">
-          <span className="stack-index">0{index + 1}</span>
-          <span className="stack-icon">{card.icon}</span>
+      <div
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-[600ms] ease-[ease]"
+        style={{ backgroundImage: `url('${card.bgImage}')` }}
+      />
+      <div className="absolute inset-0 [background:linear-gradient(110deg,rgba(0,0,0,0.93)_0%,rgba(0,0,0,0.72)_50%,rgba(0,0,0,0.3)_100%)]" />
+      <div className="absolute inset-0 flex items-center px-16 py-12 gap-12 max-[768px]:flex-col max-[768px]:px-6 max-[768px]:py-8 max-[768px]:gap-[1.2rem] max-[768px]:items-start">
+        <div className="flex flex-col items-center gap-[1.2rem] shrink-0 max-[768px]:flex-row max-[768px]:gap-[0.8rem] max-[768px]:items-center">
+          <span className="text-[0.7rem] text-white/25 font-['Courier_New',monospace] tracking-[2px] [writing-mode:vertical-rl] max-[768px]:[writing-mode:horizontal-tb]">0{index + 1}</span>
+          <span
+            className="text-[3.2rem] font-['Courier_New',monospace] font-extrabold leading-none"
+            style={{ color: card.color, textShadow: `0 0 28px ${card.glow}` }}
+          >{card.icon}</span>
         </div>
-        <div className="stack-right">
-          <p className="stack-category">{index + 1} / {total}</p>
-          <h3 className="stack-title" style={{ color: card.color }}>{card.title}</h3>
-          <p className="stack-tagline">{card.tagline}</p>
-          <p className="stack-desc">{card.description}</p>
-          <div className="stack-tags">
-            {card.tags.map(t => <span key={t} className="stack-tag">{t}</span>)}
+        <div className="flex-1 max-w-[580px] max-[768px]:max-w-full">
+          <p className="text-[0.72rem] text-white/35 tracking-[3px] uppercase mb-2">{index + 1} / {total}</p>
+          <h3 className="text-5xl font-extrabold uppercase tracking-[2px] leading-[1.05] mb-[0.6rem] max-[768px]:text-[2rem]" style={{ color: card.color }}>{card.title}</h3>
+          <p className="text-base italic text-white/70 mb-4">{card.tagline}</p>
+          <p className="text-[0.92rem] leading-[1.78] text-white/60 mb-[1.2rem] max-w-[460px] max-[768px]:hidden">{card.description}</p>
+          <div className="flex flex-wrap gap-[0.4rem] mb-6">
+            {card.tags.map(t => (
+              <span key={t} className="bg-white/[0.07] border border-white/[0.18] text-white px-[0.7rem] py-[0.22rem] rounded-full text-[0.76rem] backdrop-blur-[4px]">{t}</span>
+            ))}
           </div>
-          <div className="stack-cta" style={{ color: card.color }}>
+          <div
+            className="inline-flex items-center gap-2 text-[0.85rem] font-bold tracking-[1.5px] uppercase border-b border-current pb-[2px] transition-[gap] duration-200 group-hover:gap-[0.9rem]"
+            style={{ color: card.color }}
+          >
             Explore <i className="fas fa-arrow-right" />
           </div>
         </div>
@@ -379,12 +403,12 @@ function StatCounter({ value, suffix, label }: typeof stats[0]) {
   }, [inView, value])
 
   return (
-    <motion.div className="stat-item" variants={fadeUp}>
-      <div className="stat-number">
+    <motion.div className="text-center" variants={fadeUp}>
+      <div className="text-[2.4rem] font-extrabold text-lime leading-none font-['Courier_New',monospace] max-[768px]:text-[1.8rem]">
         <span ref={ref}>0</span>
-        <span className="stat-suffix">{suffix}</span>
+        <span className="text-[1.8rem] text-teal max-[768px]:text-[1.4rem]">{suffix}</span>
       </div>
-      <p className="stat-label">{label}</p>
+      <p className="text-[0.78rem] text-[#999] uppercase tracking-[1.5px] mt-[0.3rem]">{label}</p>
     </motion.div>
   )
 }
@@ -392,6 +416,9 @@ function StatCounter({ value, suffix, label }: typeof stats[0]) {
 /* ─── Page ─── */
 export default function About() {
   const [openCard, setOpenCard] = useState<typeof cards[0] | null>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -422,34 +449,33 @@ export default function About() {
       </motion.h2>
 
       {/* ── Bio ── */}
-      <div className="about-bio-section">
+      <div className="flex gap-10 items-center mb-8 max-[768px]:flex-col max-[768px]:items-center max-[768px]:text-center">
         <motion.div
-          className="about-portrait-wrap"
+          className="relative shrink-0"
           variants={fadeLeft} initial="hidden"
           whileInView="show" viewport={{ once: true, margin: '-80px' }}
         >
-          <img src="/img/portrait.jpg" alt="Isale Brian" className="about-portrait" />
-          <div className="portrait-spin-ring" />
+          <img src="/img/portrait.jpg" alt="Isale Brian" className="w-[190px] h-[190px] rounded-full border-4 border-lime block relative z-[1] object-cover max-[768px]:w-[140px] max-[768px]:h-[140px]" />
+          <div className="absolute -top-[10px] -left-[10px] w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-full border-2 border-dashed border-teal/35 [animation:portrait-ring-spin_18s_linear_infinite] pointer-events-none max-[768px]:w-[158px] max-[768px]:h-[158px] max-[768px]:-top-[9px] max-[768px]:-left-[9px]" />
         </motion.div>
         <motion.div
-          className="about-bio-text"
           variants={fadeRight} initial="hidden"
           whileInView="show" viewport={{ once: true, margin: '-80px' }}
         >
-          <h3 className="about-bio-title">The <span className="text-secondary">Story</span></h3>
-          <p>
+          <h3 className="text-[1.6rem] font-bold mb-[0.8rem] uppercase tracking-[2px]">The <span className="text-secondary">Story</span></h3>
+          <p className="text-[1.05rem] leading-[1.85] text-[#d8d8d8] mb-[1.2rem]">
             Art and technology enthusiast on a mission. I build modern solutions to everyday
             problems — because I genuinely believe technology is Africa&apos;s greatest lever for
             change. When I&apos;m not shipping code or crafting visuals, you&apos;ll find me at
             community events, developer meetups, or pushing limits on my BMX bike.
           </p>
-          <div className="about-badges">
-            <span className="about-badge">🌍 Based in Kenya</span>
-            <span className="about-badge">💡 Lifelong Learner</span>
-            <span className="about-badge">🎓 Google Africa Scholar</span>
-            <span className="about-badge">🏆 Certified Mentor</span>
+          <div className="flex flex-wrap gap-2 mb-[1.2rem] max-[768px]:justify-center">
+            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.85rem] py-[0.3rem] rounded-full text-[0.82rem] font-semibold tracking-[0.3px]">🌍 Based in Kenya</span>
+            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.85rem] py-[0.3rem] rounded-full text-[0.82rem] font-semibold tracking-[0.3px]">💡 Lifelong Learner</span>
+            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.85rem] py-[0.3rem] rounded-full text-[0.82rem] font-semibold tracking-[0.3px]">🎓 Google Africa Scholar</span>
+            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.85rem] py-[0.3rem] rounded-full text-[0.82rem] font-semibold tracking-[0.3px]">🏆 Certified Mentor</span>
           </div>
-          <div className="about-bio-actions">
+          <div className="flex gap-3 flex-wrap max-[600px]:flex-col">
             <a href="/isale_brian_cv.pdf" download className="home-cta-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
               <i className="fas fa-download" /> Download CV
             </a>
@@ -462,7 +488,7 @@ export default function About() {
 
       {/* ── Stats ── */}
       <motion.div
-        className="about-stats"
+        className="flex justify-around gap-4 bg-black/25 border border-lime/[0.15] rounded-lg px-8 py-6 mb-10 max-[768px]:flex-wrap max-[768px]:gap-6 max-[768px]:px-4 max-[768px]:py-4"
         variants={stagger(0.12)} initial="hidden"
         whileInView="show" viewport={{ once: true, margin: '-60px' }}
       >
@@ -470,9 +496,9 @@ export default function About() {
       </motion.div>
 
       {/* ── Sticky stack cards ── */}
-      <div className="about-cards-section">
+      <div className="mt-2 mb-0">
         <motion.p
-          className="cards-section-label text-secondary"
+          className="text-[0.82rem] uppercase tracking-[4px] mb-6 text-secondary max-[768px]:text-center"
           variants={fadeUp} initial="hidden"
           whileInView="show" viewport={{ once: true }}
         >
@@ -480,28 +506,30 @@ export default function About() {
         </motion.p>
       </div>
 
-      <div className="stack-container">
+      <div className="flex flex-col pb-[40vh] overflow-visible max-[768px]:pb-[20vh]">
         {cards.map((card, i) => (
           <StackCard key={card.id} card={card} index={i} total={cards.length} onOpen={setOpenCard} />
         ))}
       </div>
 
-      {/* ── Modal ── */}
-      <AnimatePresence>
-        {openCard && <CardModal card={openCard} onClose={() => setOpenCard(null)} />}
-      </AnimatePresence>
+      {/* ── Modal — portal to escape PageTransition transform ── */}
+      {mounted && (
+        <AnimatePresence>
+          {openCard && <CardModal card={openCard} onClose={() => setOpenCard(null)} />}
+        </AnimatePresence>
+      )}
 
       {/* ── Quote ── */}
       <motion.div
-        className="about-quote"
+        className="mx-auto mt-16 mb-8 max-w-[720px] text-center"
         variants={fadeUp} initial="hidden"
         whileInView="show" viewport={{ once: true, margin: '-60px' }}
       >
-        <blockquote className="quote">
+        <blockquote className="quote italic text-[1.15rem] leading-[1.8] text-lime border-l-[3px] border-lime px-6 py-4 m-0">
           &ldquo;Your work is going to fill a large part of your life, and the only way to be truly
           satisfied is to do what you believe is great work. And the only way to do great work is to
           love what you do. If you haven&apos;t found it yet, keep looking. Don&apos;t settle.&rdquo;
-          <cite>— Steve Jobs</cite>
+          <cite className="block mt-3 not-italic text-[0.9rem] text-[#aaa] tracking-[0.05em]">— Steve Jobs</cite>
         </blockquote>
       </motion.div>
 
