@@ -215,8 +215,8 @@ function HPhaseCard({ phase, index, scrollYProgress }: {
   const lo = Math.max(0, cardCenter - halfWindow)
   const hi = Math.min(1, cardCenter + halfWindow)
   const inputRange = Array.from(new Set([lo, cardCenter, hi]))
-  const opacity = useTransform(scrollYProgress, inputRange, inputRange.map(v => v === cardCenter ? 1 : 0.5))
-  const scale = useTransform(scrollYProgress, inputRange, inputRange.map(v => v === cardCenter ? 1.1 : 0.88))
+  const opacity = useTransform(scrollYProgress, inputRange, inputRange.map(v => v === cardCenter ? 1 : 0.85))
+  const scale = useTransform(scrollYProgress, inputRange, inputRange.map(v => v === cardCenter ? 1.05 : 0.95))
 
   return (
     <motion.div className="w-[240px] md:w-[420px] flex-shrink-0 flex flex-col items-center" style={{ opacity, scale }}>
@@ -265,10 +265,19 @@ function SkillsTimeline() {
   const x = useSpring(rawX, { damping: 60, mass: 1, stiffness: 500 })
 
   return (
-    <div ref={sectionRef} style={{ height: sectionHeight }} className="relative -mx-6 md:-mx-16">
+    <div ref={sectionRef} style={{ height: sectionHeight }} className="relative -mx-6 md:-mx-16 mb-16">
       <div className="bmx-htl-sticky">
 
-        <div className="flex items-center gap-2 text-[0.7rem] tracking-[2.5px] uppercase text-lime px-[60px] mb-10">
+        <div className="absolute top-[8vh] md:top-[12vh] left-6 md:left-[60px] z-20 pr-6">
+          <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-4" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+            <span className="text-secondary mr-2">—</span> Skills Progression
+          </motion.div>
+          <motion.p className="text-[0.88rem] text-white max-w-lg mb-0" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+            One year in — from never touching a BMX to bunny hops and backwards riding
+          </motion.p>
+        </div>
+
+        <div className="flex items-center gap-2 text-[0.7rem] tracking-[2.5px] uppercase text-lime px-[60px] mb-[6vh] mt-[6vh]">
           <motion.span
             animate={{ y: [0, 5, 0] }}
             transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
@@ -297,43 +306,46 @@ function SkillsTimeline() {
   )
 }
 
-/* ─── Gear Ticker ─── */
-function GearTicker() {
+/* ─── The Setup (Animated Cards Ticker) ─── */
+function GearSetup() {
   const { scrollY } = useScroll()
-  // Row 1 drifts left, row 2 drifts right as page scrolls
-  const x1 = useTransform(scrollY, (v) => (-v * 0.35) % 800)
-  const x2 = useTransform(scrollY, (v) => (v * 0.35) % 800)
-  const smooth1 = useSpring(x1, { damping: 40, stiffness: 200, mass: 0.5 })
-  const smooth2 = useSpring(x2, { damping: 40, stiffness: 200, mass: 0.5 })
+  // x1 scrolls left, x2 scrolls right linearly with page scroll
+  const x1 = useTransform(scrollY, (v) => -v * 0.7)
+  const x2 = useTransform(scrollY, (v) => v * 0.7 - 500)
+  const smooth1 = useSpring(x1, { damping: 50, stiffness: 200, mass: 0.5 })
+  const smooth2 = useSpring(x2, { damping: 50, stiffness: 200, mass: 0.5 })
 
-  // Repeat enough to always fill the screen at any scroll
-  const repeated = [...gear, ...gear, ...gear, ...gear]
-  const reversedRepeated = [...[...gear].reverse(), ...[...gear].reverse(), ...[...gear].reverse(), ...[...gear].reverse()]
+  // Duplicate items enough times to outlast maximum page scroll
+  const row1Items = Array(15).fill(gear.slice(0, 3)).flat()
+  const row2Items = Array(15).fill(gear.slice(3, 6)).flat()
 
-  const renderRow = (items: typeof gear) =>
+  const renderCards = (items: typeof gear) =>
     items.map((g, i) => (
-      <span key={i} className="inline-flex items-center gap-3 px-8">
-        <span className="text-2xl">{g.icon}</span>
-        <span className="text-[0.82rem] tracking-[1.5px] uppercase text-white/[0.38]">{g.label}</span>
-        <span className="text-white/20 text-[1.1rem]">—</span>
-        <span className="font-bold text-[#e8e8e8] text-[1.15rem]">{g.value}</span>
-        <span className="text-white/[0.15] text-[1.4rem] ml-2">·</span>
-      </span>
+      <div 
+        key={i} 
+        className="flex-shrink-0 w-[240px] md:w-[320px] flex flex-col bg-white/[0.03] border border-white/[0.08] rounded-xl p-5 hover:bg-white/[0.06] hover:border-lime/40 transition-all group"
+      >
+        <div className="flex items-center gap-3 mb-2">
+          <span className="text-[1.35rem] opacity-70 group-hover:opacity-100 transition-opacity">{g.icon}</span>
+          <span className="text-[0.7rem] font-bold tracking-[2px] uppercase text-white/40 group-hover:text-lime transition-colors">{g.label}</span>
+        </div>
+        <p className="text-[0.95rem] lg:text-[1.05rem] font-medium text-white/90 leading-snug whitespace-normal">{g.value}</p>
+      </div>
     ))
 
   return (
-    <div className="py-14 -mx-6 md:-mx-16 border-t border-b border-white/[0.06] flex flex-col gap-[1.4rem] overflow-hidden">
-      <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8 px-6 md:px-16" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary mr-2">—</span> The Setup
-        </motion.div>
-      <div className="overflow-hidden w-full">
-        <motion.div className="bmx-ticker-row" style={{ x: smooth1 }}>
-          {renderRow(repeated)}
+    <div className="mb-16 py-12 -mx-6 md:-mx-16 border-t border-b border-white/[0.06] overflow-hidden flex flex-col gap-[1.25rem]">
+      <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-2 px-6 md:px-16" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        <span className="text-secondary mr-2">—</span> The Setup
+      </motion.div>
+      <div className="overflow-visible w-full relative">
+        <motion.div className="flex gap-4 md:gap-5 w-max px-6 md:px-16" style={{ x: smooth1 }}>
+          {renderCards(row1Items)}
         </motion.div>
       </div>
-      <div className="overflow-hidden w-full">
-        <motion.div className="bmx-ticker-row opacity-35" style={{ x: smooth2 }}>
-          {renderRow(reversedRepeated)}
+      <div className="overflow-visible w-full relative">
+        <motion.div className="flex gap-4 md:gap-5 w-max px-6 md:px-16" style={{ x: smooth2, marginLeft: '-150px' }}>
+          {renderCards(row2Items)}
         </motion.div>
       </div>
     </div>
@@ -719,21 +731,10 @@ export default function BMX() {
       </motion.div>
 
       {/* ── The Setup (gear ticker) ── */}
-      <GearTicker />
+      <GearSetup />
 
       {/* ── Skills Progression ── */}
-      <div className="mb-16">
-        <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary mr-2">—</span> Skills Progression
-        </motion.div>
-        <motion.p
-          className="text-[0.88rem] text-white mb-6"
-          variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-        >
-          One year in — from never touching a BMX to bunny hops and backwards riding
-        </motion.p>
-        <SkillsTimeline />
-      </div>
+      <SkillsTimeline />
 
       {/* ── 2026 Quarterly Goals ── */}
       <div className="mb-16">
