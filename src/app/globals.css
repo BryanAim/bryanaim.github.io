@@ -3601,7 +3601,7 @@ progress::-moz-progress-bar {
   inset: 0;
   background: rgba(0,0,0,0.7);
   backdrop-filter: blur(4px);
-  z-index: 1000;
+  z-index: 1100;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3911,7 +3911,8 @@ progress::-moz-progress-bar {
 .qm-btn-next:disabled { opacity: 0.35; cursor: default; }
 
 @media (max-width: 600px) {
-  .qm-panel { max-height: 95vh; border-radius: 14px 14px 0 0; align-self: flex-end; }
+  .qm-overlay { padding: 0.5rem; align-items: center; }
+  .qm-panel { max-height: 92vh; border-radius: 14px; }
   .qm-proposal-ctas { flex-direction: column; }
 }
 

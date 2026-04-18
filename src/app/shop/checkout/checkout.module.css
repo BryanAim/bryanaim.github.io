@@ -300,7 +300,7 @@
 .inlineColorSwatch:hover { transform: scale(1.15) }
 .inlineColorSwatchActive { border-color: #b1db00 !important; transform: scale(1.15) }
 
-.inlineSizes { display: flex; gap: 0.35rem; flex-wrap: wrap }
+.inlineSizes { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 0.35rem }
 
 .inlineSizeBtn {
   padding: 0.25rem 0.55rem;
@@ -319,3 +319,11 @@
 
 /* ── Left column ───────────────────────────────────────────────── */
 .left { min-width: 0 }
+
+.item { flex-wrap: wrap }
+
+.inlineEditFull {
+  flex-basis: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+}

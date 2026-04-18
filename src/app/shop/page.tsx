@@ -232,7 +232,7 @@ export default function ShopPage() {
   return (
     <main id="shop">
       <motion.h1
-        className="text-[7rem] mb-[0.2rem] text-center"
+        className="text-[clamp(2.8rem,16vw,7rem)] mb-[0.2rem] text-center"
         initial={{ opacity: 0, y: -50, filter: 'blur(4px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -245,7 +245,7 @@ export default function ShopPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
       >
-        Stickers &amp; T-Shirts — for devs, designers, riders &amp; everyone
+        Stickers, T-Shirts &amp; Helmets — for devs, designers, riders &amp; everyone
       </motion.h2>
 
       {/* Search bar */}
@@ -427,12 +427,15 @@ export default function ShopPage() {
 
       {/* Product modal — rendered in portal to escape PageTransition transform */}
       {selectedProduct && mounted && createPortal(
-        <div className="fixed inset-0 bg-black/75 z-[200] flex items-center justify-center p-4" onClick={() => setSelectedProduct(null)}>
-          <div className="bg-[#515151] max-w-[780px] w-full max-h-[90vh] overflow-y-auto border-b-[5px] border-lime grid grid-cols-2 max-[600px]:grid-cols-1 max-[600px]:max-h-[95vh] relative" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/75 z-[1100] flex items-center max-[600px]:items-end justify-center p-4 max-[600px]:p-0" onClick={() => setSelectedProduct(null)}>
+          <div className="bg-[#515151] max-w-[780px] w-full max-h-[90vh] max-[600px]:max-h-[95vh] border-b-[5px] border-lime flex flex-col max-[600px]:rounded-t-2xl relative" onClick={e => e.stopPropagation()}>
             <button
               className="absolute top-3 right-3 bg-black/50 text-white border-none w-8 h-8 rounded-full text-[1.1rem] cursor-pointer flex items-center justify-center z-10 transition-[background,color] duration-150 hover:bg-lime hover:text-[#1a1a1a]"
               onClick={() => setSelectedProduct(null)}
             >✕</button>
+
+            {/* Scrollable content */}
+            <div className="overflow-y-auto flex-1 grid grid-cols-2 max-[600px]:grid-cols-1">
 
             {/* Left column: image + variant strip */}
             <div className="flex flex-col">
@@ -440,7 +443,7 @@ export default function ShopPage() {
                 <img
                   src={modalImage || selectedProduct.image}
                   alt={selectedProduct.name}
-                  className={`w-full object-cover block pointer-events-none ${selectedProduct.type === 'tshirt' ? 'aspect-3/4' : 'aspect-square'}`}
+                  className={`w-full object-cover block pointer-events-none ${selectedProduct.type === 'tshirt' ? 'aspect-3/4' : 'aspect-square'} max-[600px]:max-h-[50vw]`}
                   draggable={false}
                   onContextMenu={e => e.preventDefault()}
                 />
@@ -613,6 +616,7 @@ export default function ShopPage() {
                 )
               }
             </div>
+            </div>{/* end scrollable grid */}
           </div>
         </div>
       , document.body)}
@@ -620,7 +624,7 @@ export default function ShopPage() {
       {/* Cart FAB + Cart panel — rendered in portal to escape PageTransition transform */}
       {mounted && createPortal(<>
       <button
-        className="fixed bottom-8 right-8 bg-lime text-[#1a1a1a] border-none w-[60px] h-[60px] rounded-full text-[1.4rem] cursor-pointer flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.4)] z-[100] transition-transform hover:scale-110"
+        className="fixed bottom-8 max-[600px]:bottom-[5.5rem] right-8 bg-lime text-[#1a1a1a] border-none w-[60px] h-[60px] rounded-full text-[1.4rem] cursor-pointer flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.4)] z-[100] transition-transform hover:scale-110"
         onClick={() => setCartOpen(true)}
         aria-label="Open cart"
       >

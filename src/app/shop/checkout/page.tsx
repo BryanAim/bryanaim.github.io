@@ -232,55 +232,6 @@ export default function Checkout() {
                             {isExpanded ? 'Done' : 'Edit'}
                           </button>
                         )}
-                        {isExpanded && isTshirt && (
-                          <div className={styles.inlineEdit}>
-                            <p className={styles.inlineEditLabel}>Color</p>
-                            <div className={styles.inlineColors}>
-                              {TSHIRT_COLORS.map(c => (
-                                <button
-                                  key={c.name}
-                                  title={c.label}
-                                  className={`${styles.inlineColorSwatch} ${item.color?.name === c.name ? styles.inlineColorSwatchActive : ''}`}
-                                  style={{ background: c.hex, borderColor: c.name === 'white' ? '#999' : 'transparent' }}
-                                  onClick={() => updateItem(item.cartId, { color: c })}
-                                />
-                              ))}
-                            </div>
-                            <p className={styles.inlineEditLabel} style={{ marginTop: '0.5rem' }}>Size</p>
-                            <div className={styles.inlineSizes}>
-                              {TSHIRT_SIZES.map(s => (
-                                <button
-                                  key={s}
-                                  className={`${styles.inlineSizeBtn} ${item.size === s ? styles.inlineSizeBtnActive : ''}`}
-                                  onClick={() => updateItem(item.cartId, { size: s, price: TSHIRT_SIZE_PRICES[s] })}
-                                >
-                                  {s}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                        {isExpanded && isSticker && (
-                          <div className={styles.inlineEdit}>
-                            <p className={styles.inlineEditLabel}>Size</p>
-                            <div className={styles.inlineSizes}>
-                              {STICKER_PRESETS.map(preset => (
-                                <button
-                                  key={preset.label}
-                                  className={`${styles.inlineSizeBtn} ${item.widthCm === preset.widthCm ? styles.inlineSizeBtnActive : ''}`}
-                                  onClick={() => updateItem(item.cartId, {
-                                    widthCm: preset.widthCm,
-                                    heightCm: preset.heightCm,
-                                    price: catalogStickerPrice(item.price, preset),
-                                  })}
-                                >
-                                  <span>{preset.label}</span>
-                                  <span style={{ fontSize: '0.7rem', display: 'block' }}>{preset.widthCm}×{preset.heightCm}cm</span>
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        )}
 
                         <div className={styles.itemControls}>
                           <button className={styles.qtyBtn} onClick={() => changeQty(item.cartId, -1)} aria-label="Decrease">−</button>
@@ -293,6 +244,55 @@ export default function Checkout() {
                         <span className={styles.itemTotal}>KES {(item.price * item.quantity).toLocaleString()}</span>
                         <span className={styles.itemUnit}>KES {item.price.toLocaleString()} ea.</span>
                       </div>
+                      {isExpanded && isTshirt && (
+                        <div className={`${styles.inlineEdit} ${styles.inlineEditFull}`}>
+                          <p className={styles.inlineEditLabel}>Color</p>
+                          <div className={styles.inlineColors}>
+                            {TSHIRT_COLORS.map(c => (
+                              <button
+                                key={c.name}
+                                title={c.label}
+                                className={`${styles.inlineColorSwatch} ${item.color?.name === c.name ? styles.inlineColorSwatchActive : ''}`}
+                                style={{ background: c.hex, borderColor: c.name === 'white' ? '#999' : 'transparent' }}
+                                onClick={() => updateItem(item.cartId, { color: c })}
+                              />
+                            ))}
+                          </div>
+                          <p className={styles.inlineEditLabel} style={{ marginTop: '0.5rem' }}>Size</p>
+                          <div className={styles.inlineSizes}>
+                            {TSHIRT_SIZES.map(s => (
+                              <button
+                                key={s}
+                                className={`${styles.inlineSizeBtn} ${item.size === s ? styles.inlineSizeBtnActive : ''}`}
+                                onClick={() => updateItem(item.cartId, { size: s, price: TSHIRT_SIZE_PRICES[s] })}
+                              >
+                                {s}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {isExpanded && isSticker && (
+                        <div className={`${styles.inlineEdit} ${styles.inlineEditFull}`}>
+                          <p className={styles.inlineEditLabel}>Size</p>
+                          <div className={styles.inlineSizes}>
+                            {STICKER_PRESETS.map(preset => (
+                              <button
+                                key={preset.label}
+                                className={`${styles.inlineSizeBtn} ${item.widthCm === preset.widthCm ? styles.inlineSizeBtnActive : ''}`}
+                                onClick={() => updateItem(item.cartId, {
+                                  widthCm: preset.widthCm,
+                                  heightCm: preset.heightCm,
+                                  price: catalogStickerPrice(item.price, preset),
+                                })}
+                              >
+                                <span>{preset.label}</span>
+                                <span style={{ fontSize: '0.7rem', display: 'block' }}>{preset.widthCm}×{preset.heightCm}cm</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )
                 })}
