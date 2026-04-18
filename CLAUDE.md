@@ -164,6 +164,29 @@ Everything is in `src/app/globals.css`. Naming conventions:
 - Shop: `sp-*` (shop page), `pm-*` (product modal), `cart-*`
 - Tailwind utility classes used inline for simple layouts
 
+### Tailwind Migration Status (~3850 lines → target <600)
+
+| Page / Component | Status | Notes |
+|-----------------|--------|-------|
+| `shop/page.tsx` | ✅ Done | `shop.module.css` deleted; all inline Tailwind |
+| `about/page.tsx` | ✅ Done | |
+| `bmx/page.tsx` | ✅ Done | Ticker/HTL track CSS kept (Framer Motion motion values) |
+| `work/page.tsx` | ✅ Done | `.sv-card:hover` and `.wk-dev-img` scale kept in CSS |
+| `contact/page.tsx` | ⬜ Todo | Two stacked sections in CSS (`ct-*`, `sc-*`) |
+| `home/page.tsx` | ⬜ Todo | Keep all `home-*` animation classes |
+| `design/[slug]/page.tsx` | ⬜ Todo | `dgn-*` detail classes |
+| `DesignGallery` component | ⬜ Todo | `dgm-*` ~270 lines |
+| `QuoteModal` component | ⬜ Todo | `qm-*` classes |
+| `shop/checkout/page.tsx` | ⬜ Todo | `ck-*` classes |
+| `Header.tsx` / `layout.tsx` | 🔒 Keep | `.side-nav-*`, `#content-wrap` must stay |
+
+**What must always stay in CSS** (see `.claude/skills/tailwind-migrate.md` keep-list for full detail):
+- `.side-nav-*`, `#content-wrap` — JS-controlled CSS vars
+- `@keyframes` blocks
+- `.wk-dev-img` scale — WebKit corner-bleed with `overflow-hidden` + `rounded`
+- `.sv-card:hover` — `color-mix()` with runtime CSS var `--sv-color`
+- Classes with `writing-mode: vertical-rl`, `color-mix()` on runtime vars, Framer Motion `style={{ x: motionValue }}` targets
+
 **CSS / Animation Gotchas:**
 - **Corner Bleed:** Avoid using child background image scaling (`group-hover:scale-[...]`) inside parent containers with `overflow-hidden` and `rounded-[...]` classes. This frequently causes the child element to briefly render outside the rounded borders during the transition in WebKit browsers. Instead, keep the background element static and apply hover effects (like `box-shadow`) to the parent container using Framer Motion (see `about/page.tsx`'s `StackCard` or `bmx/page.tsx`'s `RoadmapStackCard` for reference).
 

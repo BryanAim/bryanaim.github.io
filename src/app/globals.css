@@ -3209,185 +3209,32 @@ progress::-moz-progress-bar {
 /* =====================
    WORK PAGE
    ===================== */
-#work-page {
-  position: relative;
-  min-height: 100vh;
-  padding: 0;
-}
 
-/* ── Tabs ── */
-.wk-tabs {
-  display: flex;
-  gap: 0.5rem;
-  margin: 2rem 2rem 0;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.wk-tabs::-webkit-scrollbar {
-  display: none;
-}
-.wk-tab {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 1.2rem;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 6px;
-  background: transparent;
-  color: #aaa;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s;
-}
-.wk-tab:hover {
-  color: #fff;
-  border-color: rgba(255,255,255,0.3);
-}
-.wk-tab.active {
-  color: #00ddd7;
-  border-color: #00ddd7;
-  background: rgba(0,221,215,0.07);
-}
-.wk-tab-count {
-  font-size: 0.75rem;
-  background: rgba(255,255,255,0.08);
-  padding: 0.1rem 0.4rem;
-  border-radius: 99px;
-}
-.wk-tab.active .wk-tab-count {
-  background: rgba(0,221,215,0.15);
-}
+/* .wk-tabs — migrated to Tailwind */
+/* .wk-tab, .wk-tab:hover, .wk-tab.active — migrated to Tailwind */
+/* .wk-tab-count, .wk-tab.active .wk-tab-count — migrated to Tailwind */
+/* .wk-tab--services.active, .wk-tab--services.active .wk-tab-count — migrated to Tailwind */
+/* .wk-section — migrated to Tailwind */
+/* .wk-dev-grid — migrated to Tailwind */
+/* .wk-dev-card — migrated to Tailwind */
+/* .wk-dev-img-wrap — migrated to Tailwind */
+/* .wk-dev-img-overlay, .wk-dev-card:hover .wk-dev-img-overlay — migrated to Tailwind */
+/* .wk-dev-btn, .wk-dev-btn:hover — migrated to Tailwind */
+/* .wk-dev-body, .wk-dev-title, .wk-dev-desc — migrated to Tailwind */
+/* .wk-dev-tags, .wk-dev-tag — migrated to Tailwind */
+/* .wk-dev-footer, .wk-github-link, .wk-github-link:hover — migrated to Tailwind */
+/* .wk-design-wrap — migrated to Tailwind */
 
-/* ── Section wrapper ── */
-.wk-section {
-  padding: 2rem 2rem 4rem;
-}
-
-/* ── Dev grid ── */
-.wk-dev-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-.wk-dev-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: border-color 0.2s;
-  cursor: default;
-}
-.wk-dev-img-wrap {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-}
+/* Image scale on hover — kept in CSS to avoid WebKit corner-bleed on overflow:hidden + rounded */
 .wk-dev-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   transition: transform 0.4s ease;
 }
-.wk-dev-card:hover .wk-dev-img {
+.group:hover .wk-dev-img {
   transform: scale(1.04);
-}
-.wk-dev-img-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.25s;
-}
-.wk-dev-card:hover .wk-dev-img-overlay {
-  opacity: 1;
-}
-.wk-dev-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.45rem 0.9rem;
-  background: rgba(0,221,215,0.15);
-  border: 1px solid #00ddd7;
-  border-radius: 5px;
-  color: #00ddd7;
-  font-size: 0.82rem;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-.wk-dev-btn:hover {
-  background: rgba(0,221,215,0.28);
-}
-.wk-dev-body {
-  padding: 1rem 1.1rem 1.2rem;
-}
-.wk-dev-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 0.4rem;
-}
-.wk-dev-desc {
-  font-size: 0.85rem;
-  color: #aaa;
-  line-height: 1.55;
-  margin-bottom: 0.75rem;
-}
-.wk-dev-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-.wk-dev-tag {
-  font-size: 0.72rem;
-  padding: 0.15rem 0.55rem;
-  border: 1px solid rgba(0,221,215,0.3);
-  border-radius: 99px;
-  color: #00ddd7;
-}
-
-/* ── Footer links ── */
-.wk-dev-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 2.5rem;
-}
-.wk-github-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.5rem;
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 6px;
-  color: #ccc;
-  font-size: 0.9rem;
-  text-decoration: none;
-  transition: color 0.2s, border-color 0.2s, background 0.2s;
-}
-.wk-github-link:hover {
-  color: #fff;
-  border-color: rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.04);
-}
-
-/* ── Design wrap ── */
-.wk-design-wrap {
-  margin-top: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
 }
 
 @media (max-width: 600px) {
-  .wk-tabs { margin: 1.5rem 1rem 0; }
-  .wk-section { padding: 1.5rem 1rem 3rem; }
-  .wk-dev-grid { grid-template-columns: 1fr; gap: 1rem; }
+  /* .wk-tabs, .wk-section, .wk-dev-grid — migrated to Tailwind (max-sm: prefix) */
   .dgm-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
   .dgm-tab { font-size: 0.68rem; padding: 0.35rem 0.65rem; }
   .dgm-tab-count { display: none; }
@@ -3399,151 +3246,21 @@ progress::-moz-progress-bar {
   .dgm-grid { grid-template-columns: 1fr; }
 }
 
-/* ── Services tab highlight ── */
-.wk-tab--services.active {
-  color: #34d399;
-  border-color: #34d399;
-  background: rgba(52,211,153,0.07);
-}
-.wk-tab--services.active .wk-tab-count {
-  background: rgba(52,211,153,0.15);
-}
-
 /* =====================
    SERVICES
    ===================== */
-.sv-intro {
-  color: #aaa;
-  font-size: 0.95rem;
-  margin-bottom: 2rem;
-  max-width: 600px;
-}
 
-.sv-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
+/* .sv-intro, .sv-grid, .sv-card-top, .sv-icon, .sv-meta — migrated to Tailwind */
+/* .sv-price, .sv-turnaround, .sv-title, .sv-desc — migrated to Tailwind */
+/* .sv-deliverables, .sv-cta, .sv-cta:hover — migrated to Tailwind */
+/* .sv-footer, .sv-footer-link, .sv-footer-link:hover — migrated to Tailwind */
 
+/* border-color hover uses runtime CSS var — must stay in CSS */
 .sv-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
   transition: border-color 0.2s;
-  cursor: default;
 }
 .sv-card:hover {
   border-color: color-mix(in srgb, var(--sv-color) 40%, transparent);
-}
-
-.sv-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.sv-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.sv-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.2rem;
-}
-.sv-price {
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-.sv-turnaround {
-  font-size: 0.75rem;
-  color: #888;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.sv-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.sv-desc {
-  font-size: 0.85rem;
-  color: #aaa;
-  line-height: 1.6;
-}
-
-.sv-deliverables {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  flex: 1;
-}
-.sv-deliverables li {
-  font-size: 0.82rem;
-  color: #ccc;
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-.sv-deliverables li i {
-  font-size: 0.7rem;
-  flex-shrink: 0;
-}
-
-.sv-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin-top: 0.5rem;
-  padding: 0.5rem 1.1rem;
-  border: 1px solid;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-decoration: none;
-  align-self: flex-start;
-  transition: background 0.2s, opacity 0.2s;
-}
-.sv-cta:hover {
-  background: rgba(255,255,255,0.06);
-}
-
-.sv-footer {
-  text-align: center;
-  margin-top: 2.5rem;
-  color: #888;
-  font-size: 0.9rem;
-}
-.sv-footer-link {
-  color: #00ddd7;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.sv-footer-link:hover {
-  color: #fff;
-}
-
-@media (max-width: 600px) {
-  .sv-grid { grid-template-columns: 1fr; }
 }
 
 /* =====================
