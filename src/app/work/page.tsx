@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, Suspense } from 'react'
+import { useState, useMemo, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { designProjects as allDesignProjects } from './designProjects'
@@ -123,18 +123,19 @@ function WorkInner() {
     paramTab === 'design' || paramTab === 'dev' ? paramTab : 'services'
   )
   const [activeQuote, setActiveQuote] = useState<ActiveQuote | null>(null)
-  // New seed on mount (page refresh) and on every tab click → re-shuffles project order
-  const [shuffleSeed, setShuffleSeed] = useState(() => Math.random())
+  // seed=0 on SSR (stable), randomized after mount to avoid hydration mismatch
+  const [shuffleSeed, setShuffleSeed] = useState(0)
+  useEffect(() => { setShuffleSeed(Math.random()) }, [])
 
   function switchTab(t: Tab) {
     setTab(t)
-    setShuffleSeed(Math.random())
+    setShuffleSeed(Math.random()) // always >0 after mount, so shuffle fires
   }
 
-  // Shuffled dev projects — recalculated whenever seed changes
+  // seed=0 returns original order (SSR); any other seed shuffles randomly
   const shuffledDevProjects = useMemo(
-    () => [...devProjects].sort(() => Math.random() - 0.5),
-    [shuffleSeed], // eslint-disable-line react-hooks/exhaustive-deps
+    () => shuffleSeed === 0 ? [...devProjects] : [...devProjects].sort(() => Math.random() - 0.5),
+    [shuffleSeed],
   )
 
   /* ── Shared tab base classes ── */

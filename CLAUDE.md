@@ -175,7 +175,7 @@ Everything is in `src/app/globals.css`. Naming conventions:
 | `contact/page.tsx` | ⬜ Todo | Two stacked sections in CSS (`ct-*`, `sc-*`) |
 | `home/page.tsx` | ⬜ Todo | Keep all `home-*` animation classes |
 | `design/[slug]/page.tsx` | ⬜ Todo | `dgn-*` detail classes |
-| `DesignGallery` component | ⬜ Todo | `dgm-*` ~270 lines |
+| `DesignGallery` component | ✅ Done | `.dgm-card:hover`, `.dgm-img` scale, `.dgm-overlay` kept in CSS |
 | `QuoteModal` component | ⬜ Todo | `qm-*` classes |
 | `shop/checkout/page.tsx` | ⬜ Todo | `ck-*` classes |
 | `Header.tsx` / `layout.tsx` | 🔒 Keep | `.side-nav-*`, `#content-wrap` must stay |
