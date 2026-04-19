@@ -503,7 +503,7 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
 
   return createPortal(
     <motion.div
-      className="qm-overlay"
+      className="fixed inset-0 z-[1100] flex items-center justify-center bg-black/70 backdrop-blur p-4 max-[600px]:p-2"
       onClick={onClose}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -511,7 +511,7 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
       transition={{ duration: 0.2 }}
     >
       <motion.div
-        className="qm-panel"
+        className="flex w-full max-w-[540px] max-h-[90vh] flex-col overflow-hidden rounded-[14px] border border-white/10 bg-[#111]"
         onClick={e => e.stopPropagation()}
         initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -519,20 +519,33 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
         transition={{ duration: 0.35, ease: 'easeOut' }}
       >
         {/* Header */}
-        <div className="qm-header" style={{ borderBottomColor: color }}>
+        <div
+          className="flex shrink-0 items-start justify-between border-b px-[1.4rem] pb-4 pt-5"
+          style={{ borderBottomColor: color }}
+        >
           <div>
-            <p className="qm-header-service" style={{ color }}>{serviceName}</p>
-            <p className="qm-header-title">
+            <p
+              className="mb-[0.15rem] text-[0.75rem] font-semibold uppercase tracking-[0.08em]"
+              style={{ color }}
+            >
+              {serviceName}
+            </p>
+            <p className="text-base font-bold text-white">
               {isLast ? 'Your Proposal' : `Step ${step + 1} of ${steps.length}`}
             </p>
           </div>
-          <button className="qm-close" onClick={onClose}>✕</button>
+          <button
+            className="cursor-pointer border-none bg-transparent p-[0.2rem] text-base leading-none text-[#666] transition-colors duration-150 hover:text-white"
+            onClick={onClose}
+          >
+            ✕
+          </button>
         </div>
 
         {/* Progress bar */}
-        <div className="qm-progress-track">
+        <div className="h-[3px] shrink-0 bg-white/[0.08]">
           <motion.div
-            className="qm-progress-fill"
+            className="h-full rounded-[0_2px_2px_0]"
             style={{ background: color }}
             animate={{ width: `${((isLast ? steps.length : step) / steps.length) * 100}%` }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -540,10 +553,10 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
         </div>
 
         {/* Live price pill */}
-        <div className="qm-price-pill">
-          <span className="qm-price-label">Estimated total</span>
+        <div className="flex shrink-0 items-center justify-between border-b border-white/[0.06] bg-white/[0.03] px-[1.4rem] py-[0.65rem]">
+          <span className="text-[0.78rem] uppercase tracking-[0.06em] text-[#777]">Estimated total</span>
           <motion.span
-            className="qm-price-value"
+            className="text-[1.1rem] font-extrabold"
             key={total}
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
@@ -554,44 +567,52 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
         </div>
 
         {/* Body */}
-        <div className="qm-body">
+        <div className="flex-1 overflow-y-auto px-[1.4rem] py-5">
           <AnimatePresence mode="wait">
             {!isLast ? (
               <motion.div
                 key={step}
-                className="qm-step"
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -24 }}
                 transition={{ duration: 0.25, ease: 'easeOut' }}
               >
-                <h3 className="qm-question">{currentStep.question}</h3>
-                {currentStep.hint && <p className="qm-hint">{currentStep.hint}</p>}
+                <h3 className="mb-[0.3rem] text-base font-bold text-white">{currentStep.question}</h3>
+                {currentStep.hint && (
+                  <p className="mb-4 text-[0.8rem] text-[#777]">{currentStep.hint}</p>
+                )}
 
-                <div className="qm-options">
+                <div className="mt-3 flex flex-col gap-2">
                   {currentStep.options.map(opt => {
                     const selected = currentSel.includes(opt.label)
                     return (
                       <button
                         key={opt.label}
-                        className={`qm-option${selected ? ' selected' : ''}`}
+                        className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-left transition-colors duration-150 hover:border-white/20 hover:bg-white/[0.06]"
                         style={selected ? { borderColor: color, background: `${color}14` } : {}}
                         onClick={() => toggle(opt.label)}
                       >
-                        <div className="qm-option-main">
-                          <span className="qm-option-check" style={selected ? { background: color, borderColor: color } : {}}>
+                        <div className="flex min-w-0 flex-1 items-start gap-3">
+                          <span
+                            className="mt-px flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] border-[1.5px] border-white/25 text-[0.6rem] text-black transition-colors duration-150"
+                            style={selected ? { background: color, borderColor: color } : {}}
+                          >
                             {selected && <i className="fas fa-check" />}
                           </span>
-                          <div className="qm-option-text">
-                            <span className="qm-option-label">{opt.label}</span>
-                            {opt.hint && <span className="qm-option-hint">{opt.hint}</span>}
+                          <div className="flex min-w-0 flex-col gap-[0.15rem]">
+                            <span className="text-[0.88rem] font-medium text-[#e0e0e0]">{opt.label}</span>
+                            {opt.hint && <span className="text-[0.75rem] text-[#666]">{opt.hint}</span>}
                           </div>
                         </div>
                         {opt.add > 0 && (
-                          <span className="qm-option-add" style={{ color }}>+{fmt(opt.add)}</span>
+                          <span className="shrink-0 whitespace-nowrap text-[0.8rem] font-bold" style={{ color }}>
+                            +{fmt(opt.add)}
+                          </span>
                         )}
                         {opt.add < 0 && (
-                          <span className="qm-option-add qm-option-add--discount">−{fmt(Math.abs(opt.add))}</span>
+                          <span className="shrink-0 whitespace-nowrap text-[0.8rem] font-bold text-[#34d399]">
+                            −{fmt(Math.abs(opt.add))}
+                          </span>
                         )}
                       </button>
                     )
@@ -601,48 +622,58 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
             ) : (
               <motion.div
                 key="proposal"
-                className="qm-proposal"
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -24 }}
                 transition={{ duration: 0.25, ease: 'easeOut' }}
               >
-                <p className="qm-proposal-intro">
+                <p className="mb-5 text-[0.88rem] text-[#aaa]">
                   Based on your requirements, here&apos;s a proposed quote:
                 </p>
 
-                <div className="qm-breakdown">
-                  <div className="qm-breakdown-row qm-breakdown-base">
-                    <span>Base ({serviceName})</span>
-                    <span>{fmt(config.base)}</span>
+                <div className="mb-4 overflow-hidden rounded-[10px] border border-white/[0.08] bg-white/[0.03]">
+                  <div className="flex items-center justify-between gap-4 border-b border-white/[0.05] px-4 py-[0.6rem] text-[0.85rem]">
+                    <span className="font-semibold text-[#e0e0e0]">Base ({serviceName})</span>
+                    <span className="font-medium text-[#ccc]">{fmt(config.base)}</span>
                   </div>
                   {summaryItems.filter(i => i.add !== 0).map((item, i) => (
-                    <div key={i} className="qm-breakdown-row">
-                      <span>{item.label}</span>
-                      <span style={{ color: item.add > 0 ? '#aaa' : '#34d399' }}>
+                    <div key={i} className="flex items-center justify-between gap-4 border-b border-white/[0.05] px-4 py-[0.6rem] text-[0.85rem]">
+                      <span className="text-[#aaa]">{item.label}</span>
+                      <span className="font-medium" style={{ color: item.add > 0 ? '#aaa' : '#34d399' }}>
                         {item.add > 0 ? `+${fmt(item.add)}` : `−${fmt(Math.abs(item.add))}`}
                       </span>
                     </div>
                   ))}
-                  <div className="qm-breakdown-total" style={{ borderTopColor: color }}>
-                    <span>Estimated Total</span>
+                  <div
+                    className="flex items-center justify-between border-t-[1.5px] px-4 py-[0.85rem] text-base font-extrabold"
+                    style={{ borderTopColor: color }}
+                  >
+                    <span className="text-white">Estimated Total</span>
                     <span style={{ color }}>{fmt(total)}</span>
                   </div>
                 </div>
 
-                <p className="qm-disclaimer">
-                  <i className="fas fa-info-circle" /> This is an estimate — the final price is confirmed after a short consultation where we align on exact scope, timeline, and deliverables.
+                <p className="mb-5 flex gap-[0.4rem] text-[0.78rem] leading-[1.55] text-[#666]">
+                  <i className="fas fa-info-circle mt-[2px] shrink-0" /> This is an estimate — the final price is confirmed after a short consultation where we align on exact scope, timeline, and deliverables.
                 </p>
 
-                <div className="qm-proposal-ctas">
-                  <a href={waUrl} target="_blank" rel="noopener noreferrer" className="qm-cta-wa">
+                <div className="flex flex-wrap gap-3 max-[600px]:flex-col">
+                  <a
+                    href={waUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-[0.45rem] rounded-[7px] bg-[#25d366] px-5 py-[0.65rem] text-[0.88rem] font-semibold text-white no-underline transition-opacity duration-200 hover:opacity-[0.88]"
+                  >
                     <i className="fab fa-whatsapp" /> Send via WhatsApp
                   </a>
-                  <a href={mailUrl} className="qm-cta-mail">
+                  <a
+                    href={mailUrl}
+                    className="inline-flex items-center gap-[0.45rem] rounded-[7px] border border-white/15 px-5 py-[0.65rem] text-[0.88rem] font-semibold text-[#ccc] no-underline transition-colors duration-200 hover:border-white/35 hover:text-white"
+                  >
                     <i className="fas fa-envelope" /> Send via Email
                   </a>
                   <button
-                    className="qm-cta-pdf"
+                    className="inline-flex cursor-pointer items-center gap-[0.45rem] rounded-[7px] border border-white/10 bg-transparent px-5 py-[0.65rem] text-[0.88rem] font-semibold text-[#888] transition-colors duration-200 hover:border-white/25 hover:text-[#ccc]"
                     onClick={() => downloadProposal(serviceName, steps, selections, summaryItems, config.base, total, color)}
                   >
                     <i className="fas fa-download" /> Download PDF
@@ -655,12 +686,16 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
 
         {/* Footer nav */}
         {!isLast && (
-          <div className="qm-footer">
-            <button className="qm-btn-back" onClick={back} disabled={step === 0}>
+          <div className="flex shrink-0 items-center justify-between border-t border-white/[0.07] px-[1.4rem] py-4">
+            <button
+              className="flex items-center gap-[0.4rem] rounded-[6px] border border-white/10 bg-transparent px-4 py-2 text-[0.85rem] text-[#888] transition-colors duration-150 disabled:cursor-default disabled:opacity-30 enabled:hover:border-white/30 enabled:hover:text-white"
+              onClick={back}
+              disabled={step === 0}
+            >
               <i className="fas fa-arrow-left" /> Back
             </button>
             <button
-              className="qm-btn-next"
+              className="flex items-center gap-[0.4rem] rounded-[6px] border border-white/15 bg-transparent px-5 py-[0.55rem] text-[0.88rem] font-semibold text-[#666] transition-colors duration-200 disabled:cursor-default disabled:opacity-35"
               style={canContinue ? { background: color, borderColor: color, color: '#000' } : {}}
               onClick={next}
               disabled={!canContinue}
@@ -670,8 +705,11 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
           </div>
         )}
         {isLast && (
-          <div className="qm-footer">
-            <button className="qm-btn-back" onClick={back}>
+          <div className="flex shrink-0 items-center justify-between border-t border-white/[0.07] px-[1.4rem] py-4">
+            <button
+              className="flex items-center gap-[0.4rem] rounded-[6px] border border-white/10 bg-transparent px-4 py-2 text-[0.85rem] text-[#888] transition-colors duration-150 enabled:hover:border-white/30 enabled:hover:text-white"
+              onClick={back}
+            >
               <i className="fas fa-arrow-left" /> Edit requirements
             </button>
           </div>

@@ -172,11 +172,11 @@ Everything is in `src/app/globals.css`. Naming conventions:
 | `about/page.tsx` | ✅ Done | |
 | `bmx/page.tsx` | ✅ Done | Ticker/HTL track CSS kept (Framer Motion motion values) |
 | `work/page.tsx` | ✅ Done | `.sv-card:hover` and `.wk-dev-img` scale kept in CSS |
-| `contact/page.tsx` | ⬜ Todo | Two stacked sections in CSS (`ct-*`, `sc-*`) |
+| `contact/page.tsx` | ✅ Done | `ct-*` keep-list classes stay in CSS (pseudo-elements, color-mix runtime vars) |
 | `home/page.tsx` | ⬜ Todo | Keep all `home-*` animation classes |
 | `design/[slug]/page.tsx` | ✅ Done | `dp-thumb*`, `dp-related-card*`, `dp-behance-cta*` kept in CSS (runtime CSS vars + WebKit hover) |
 | `DesignGallery` component | ✅ Done | `.dgm-card:hover`, `.dgm-img` scale, `.dgm-overlay` kept in CSS |
-| `QuoteModal` component | ⬜ Todo | `qm-*` classes |
+| `QuoteModal` component | ✅ Done | All `qm-*` classes migrated to inline Tailwind |
 | `shop/checkout/page.tsx` | ✅ Done | `checkout.module.css` deleted; all inline Tailwind |
 | `Header.tsx` / `layout.tsx` | 🔒 Keep | `.side-nav-*`, `#content-wrap` must stay |
 
