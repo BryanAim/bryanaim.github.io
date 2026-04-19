@@ -58,39 +58,71 @@ export default function DesignProjectPage() {
     .slice(0, 3)
 
   return (
-    <main id="work" className="dp-page">
+    <main id="work" className="pb-20">
       {/* ── Breadcrumb + Top pagination ── */}
-      <motion.div className="dp-breadcrumb" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
-        <button onClick={() => router.back()} className="dp-back-btn">
+      <motion.div
+        className="flex items-center gap-2 text-[0.82rem] text-white/40 mb-8 flex-wrap"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <button
+          onClick={() => router.back()}
+          className="bg-transparent border border-white/15 text-white/60 px-[0.8rem] py-[0.3rem] rounded-[6px] cursor-pointer text-[0.8rem] transition-all duration-200 flex items-center gap-[0.4rem] hover:border-[#00ddd7] hover:text-[#00ddd7]"
+        >
           <i className="fas fa-arrow-left" /> Back
         </button>
-        <span className="dp-breadcrumb-sep">/</span>
-        <Link href="/work?tab=design" className="dp-breadcrumb-link">Work</Link>
-        <span className="dp-breadcrumb-sep">/</span>
+        <span className="text-white/20">/</span>
+        <Link href="/work?tab=design" className="text-white/50 no-underline hover:text-[#00ddd7] transition-colors duration-200">
+          Work
+        </Link>
+        <span className="text-white/20">/</span>
         <span style={{ color: project.color }}>{project.title}</span>
 
-        <div className="dp-pagination-top">
+        {/* Top pagination */}
+        <div className="flex items-center gap-2 ml-auto max-sm:hidden">
           {prevProject ? (
-            <Link href={`/work/design/${prevProject.slug}`} className="dp-page-btn">
+            <Link
+              href={`/work/design/${prevProject.slug}`}
+              className="flex items-center gap-[0.4rem] px-[0.6rem] py-[0.3rem] rounded-[6px] border border-white/[0.12] text-white/55 no-underline text-[0.72rem] transition-[border-color,color,background] duration-200 whitespace-nowrap max-w-[160px] overflow-hidden hover:border-[#00ddd7] hover:text-[#00ddd7] hover:bg-[rgba(0,221,215,0.06)]"
+            >
               <i className="fas fa-chevron-left" />
-              <span className="dp-page-btn-label">{prevProject.title}</span>
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap">{prevProject.title}</span>
             </Link>
-          ) : <span className="dp-page-btn dp-page-btn--disabled"><i className="fas fa-chevron-left" /></span>}
-          <span className="dp-page-count">{currentIndex + 1} <span>/</span> {designProjects.length}</span>
+          ) : (
+            <span className="flex items-center gap-[0.4rem] px-[0.6rem] py-[0.3rem] rounded-[6px] border border-white/[0.12] text-white/55 text-[0.72rem] whitespace-nowrap max-w-[160px] overflow-hidden opacity-20 cursor-default pointer-events-none">
+              <i className="fas fa-chevron-left" />
+            </span>
+          )}
+          <span className="text-[0.68rem] text-white/30 whitespace-nowrap px-1">
+            {currentIndex + 1} <span className="mx-[0.15rem]">/</span> {designProjects.length}
+          </span>
           {nextProject ? (
-            <Link href={`/work/design/${nextProject.slug}`} className="dp-page-btn">
-              <span className="dp-page-btn-label">{nextProject.title}</span>
+            <Link
+              href={`/work/design/${nextProject.slug}`}
+              className="flex items-center gap-[0.4rem] px-[0.6rem] py-[0.3rem] rounded-[6px] border border-white/[0.12] text-white/55 no-underline text-[0.72rem] transition-[border-color,color,background] duration-200 whitespace-nowrap max-w-[160px] overflow-hidden hover:border-[#00ddd7] hover:text-[#00ddd7] hover:bg-[rgba(0,221,215,0.06)]"
+            >
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap">{nextProject.title}</span>
               <i className="fas fa-chevron-right" />
             </Link>
-          ) : <span className="dp-page-btn dp-page-btn--disabled"><i className="fas fa-chevron-right" /></span>}
+          ) : (
+            <span className="flex items-center gap-[0.4rem] px-[0.6rem] py-[0.3rem] rounded-[6px] border border-white/[0.12] text-white/55 text-[0.72rem] whitespace-nowrap max-w-[160px] overflow-hidden opacity-20 cursor-default pointer-events-none">
+              <i className="fas fa-chevron-right" />
+            </span>
+          )}
         </div>
       </motion.div>
 
       {/* ── Hero Image + Gallery ── */}
-      <motion.div className="dp-hero" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+      <motion.div
+        className="mb-12"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         {/* Main image / video */}
         <div
-          className="dp-hero-image-wrap"
+          className="relative border-2 rounded-[14px] overflow-hidden max-h-[520px]"
           style={{ borderColor: project.color, cursor: isVideo(currentImage.src) ? 'default' : 'zoom-in' }}
           onClick={() => { if (!isVideo(currentImage.src)) setLightbox(true) }}
         >
@@ -99,7 +131,7 @@ export default function DesignProjectPage() {
               <motion.video
                 key={activeImg}
                 src={currentImage.src}
-                className="dp-hero-image"
+                className="w-full h-full object-contain bg-black/40 block max-h-[520px]"
                 controls
                 playsInline
                 initial={{ opacity: 0 }}
@@ -112,7 +144,7 @@ export default function DesignProjectPage() {
                 key={activeImg}
                 src={currentImage.src}
                 alt={currentImage.label ?? project.title}
-                className="dp-hero-image"
+                className="w-full h-full object-contain bg-black/40 block max-h-[520px]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -121,21 +153,31 @@ export default function DesignProjectPage() {
             )}
           </AnimatePresence>
           {currentImage.isChosen && (
-            <span className="dp-chosen-badge" style={{ background: project.color, color: '#000' }}>
+            <span
+              className="absolute top-[0.7rem] left-[0.7rem] px-[0.8rem] py-[0.3rem] rounded-full text-[0.7rem] font-bold flex items-center gap-[0.35rem] z-[2]"
+              style={{ background: project.color, color: '#000' }}
+            >
               <i className="fas fa-check-circle" /> Chosen Design
             </span>
           )}
-          {!isVideo(currentImage.src) && <span className="dp-zoom-hint"><i className="fas fa-search-plus" /></span>}
-          <div className="dp-hero-image-overlay" style={{ background: `linear-gradient(to top, ${project.color}22, transparent)` }} />
+          {!isVideo(currentImage.src) && (
+            <span className="absolute bottom-[0.7rem] right-[0.7rem] bg-black/55 text-white/70 w-8 h-8 rounded-full flex items-center justify-center text-[0.8rem] pointer-events-none backdrop-blur-sm">
+              <i className="fas fa-search-plus" />
+            </span>
+          )}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-[40%] pointer-events-none"
+            style={{ background: `linear-gradient(to top, ${project.color}22, transparent)` }}
+          />
         </div>
 
-        {/* Thumbnail strip (only if multiple images) */}
+        {/* Thumbnail strip (only if multiple images) — CSS classes kept for runtime CSS var */}
         {allImages.length > 1 && (
           <div className="dp-thumbs">
             {allImages.map((img, i) => (
               <button
                 key={i}
-                className={`dp-thumb ${i === activeImg ? 'active' : ''}`}
+                className={`dp-thumb${i === activeImg ? ' active' : ''}`}
                 style={i === activeImg ? { borderColor: project.color } : {}}
                 onClick={() => setActiveImg(i)}
               >
@@ -162,19 +204,30 @@ export default function DesignProjectPage() {
       <AnimatePresence>
         {lightbox && (
           <motion.div
-            className="dp-lightbox"
+            className="fixed inset-0 bg-black/[0.93] z-[9999] flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setLightbox(false)}
           >
-            <button className="dp-lightbox-close" onClick={() => setLightbox(false)}>✕</button>
+            <button
+              className="absolute top-4 right-[1.2rem] bg-white/10 border-none text-white w-10 h-10 rounded-full text-[1.1rem] cursor-pointer transition-[background] duration-200 hover:bg-white/20"
+              onClick={() => setLightbox(false)}
+            >
+              ✕
+            </button>
             {allImages.length > 1 && (
               <>
-                <button className="dp-lightbox-prev" onClick={e => { e.stopPropagation(); setActiveImg(i => (i - 1 + allImages.length) % allImages.length) }}>
+                <button
+                  className="absolute top-1/2 -translate-y-1/2 left-4 bg-white/10 border-none text-white w-11 h-11 rounded-full text-[1rem] cursor-pointer transition-[background] duration-200 hover:bg-white/20"
+                  onClick={e => { e.stopPropagation(); setActiveImg(i => (i - 1 + allImages.length) % allImages.length) }}
+                >
                   <i className="fas fa-chevron-left" />
                 </button>
-                <button className="dp-lightbox-next" onClick={e => { e.stopPropagation(); setActiveImg(i => (i + 1) % allImages.length) }}>
+                <button
+                  className="absolute top-1/2 -translate-y-1/2 right-4 bg-white/10 border-none text-white w-11 h-11 rounded-full text-[1rem] cursor-pointer transition-[background] duration-200 hover:bg-white/20"
+                  onClick={e => { e.stopPropagation(); setActiveImg(i => (i + 1) % allImages.length) }}
+                >
                   <i className="fas fa-chevron-right" />
                 </button>
               </>
@@ -183,7 +236,7 @@ export default function DesignProjectPage() {
               <motion.video
                 key={activeImg}
                 src={currentImage.src}
-                className="dp-lightbox-img"
+                className="max-w-[90vw] max-h-[88vh] object-contain rounded-[6px] shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
                 controls
                 autoPlay
                 playsInline
@@ -198,7 +251,7 @@ export default function DesignProjectPage() {
                 key={activeImg}
                 src={currentImage.src}
                 alt={currentImage.label ?? project.title}
-                className="dp-lightbox-img"
+                className="max-w-[90vw] max-h-[88vh] object-contain rounded-[6px] shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
                 onClick={e => e.stopPropagation()}
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -207,96 +260,135 @@ export default function DesignProjectPage() {
               />
             )}
             {currentImage.label && (
-              <p className="dp-lightbox-caption">{currentImage.label}</p>
+              <p className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white/80 px-4 py-[0.4rem] rounded-[20px] text-[0.78rem] whitespace-nowrap backdrop-blur-sm">
+                {currentImage.label}
+              </p>
             )}
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* ── Content ── */}
-      <div className="dp-content">
+      <div className="grid grid-cols-[280px_1fr] gap-12 mb-16 max-[900px]:grid-cols-1">
         {/* Left: Meta */}
-        <motion.div className="dp-meta" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-          <div className="dp-category-badge" style={{ borderColor: project.color, color: project.color }}>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div
+            className="inline-flex items-center gap-2 border rounded-full px-[0.9rem] py-[0.35rem] text-[0.75rem] font-bold uppercase tracking-[0.5px] mb-4"
+            style={{ borderColor: project.color, color: project.color }}
+          >
             <i className={categoryIcon[project.category]} />
             {categoryLabel[project.category]}
           </div>
 
-          <h1 className="dp-title" style={{ color: project.color }}>{project.title}</h1>
+          <h1
+            className="text-[1.7rem] max-sm:text-[1.3rem] font-extrabold mt-0 mb-6 leading-[1.2]"
+            style={{ color: project.color }}
+          >
+            {project.title}
+          </h1>
 
-          <div className="dp-meta-row">
-            <div className="dp-meta-item">
-              <span className="dp-meta-label">Year</span>
-              <span className="dp-meta-value">{project.year}</span>
+          <div className="flex flex-col gap-[0.7rem] mb-6">
+            <div className="flex flex-col gap-[0.1rem]">
+              <span className="text-[0.7rem] uppercase tracking-[0.5px] text-white/35">Year</span>
+              <span className="text-[0.88rem] text-white/80">{project.year}</span>
             </div>
             {project.client && (
-              <div className="dp-meta-item">
-                <span className="dp-meta-label">Client</span>
-                <span className="dp-meta-value">{project.client}</span>
+              <div className="flex flex-col gap-[0.1rem]">
+                <span className="text-[0.7rem] uppercase tracking-[0.5px] text-white/35">Client</span>
+                <span className="text-[0.88rem] text-white/80">{project.client}</span>
               </div>
             )}
             {allImages.length > 1 && (
-              <div className="dp-meta-item">
-                <span className="dp-meta-label">Images</span>
-                <span className="dp-meta-value">{allImages.length} files</span>
+              <div className="flex flex-col gap-[0.1rem]">
+                <span className="text-[0.7rem] uppercase tracking-[0.5px] text-white/35">Images</span>
+                <span className="text-[0.88rem] text-white/80">{allImages.length} files</span>
               </div>
             )}
           </div>
 
-          <div className="dp-tools-section">
-            <p className="dp-section-label">Tools Used</p>
-            <div className="dp-tools-list">
+          <div className="mb-[1.2rem]">
+            <p className="text-[0.7rem] uppercase tracking-[0.5px] text-white/35 mt-0 mb-2">Tools Used</p>
+            <div className="flex flex-wrap gap-[0.4rem]">
               {project.tools.map(tool => (
-                <span key={tool} className="dp-tool-tag" style={{ borderColor: `${project.color}66`, color: project.color }}>
+                <span
+                  key={tool}
+                  className="px-[0.65rem] py-[0.25rem] border rounded-[6px] text-[0.73rem] bg-white/[0.03]"
+                  style={{ borderColor: `${project.color}66`, color: project.color }}
+                >
                   {tool}
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="dp-tags-section">
-            <p className="dp-section-label">Tags</p>
-            <div className="dp-tags-list">
+          <div className="mb-[1.2rem]">
+            <p className="text-[0.7rem] uppercase tracking-[0.5px] text-white/35 mt-0 mb-2">Tags</p>
+            <div className="flex flex-wrap gap-[0.4rem]">
               {project.tags.map(tag => (
-                <Link key={tag} href={`/work?tab=design&tag=${tag}&from=${project.slug}`} className="dp-tag">#{tag}</Link>
+                <Link
+                  key={tag}
+                  href={`/work?tab=design&tag=${tag}&from=${project.slug}`}
+                  className="text-[0.73rem] text-white/40 no-underline transition-colors duration-200 hover:text-[#b1db00]"
+                >
+                  #{tag}
+                </Link>
               ))}
             </div>
           </div>
         </motion.div>
 
         {/* Right: Description */}
-        <motion.div className="dp-description" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
-          <div className="dp-desc-block">
-            <h2 className="dp-desc-heading" style={{ color: project.color }}>
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <div className="mb-6">
+            <h2
+              className="text-[1rem] font-bold uppercase tracking-[0.5px] mt-0 mb-[0.7rem] flex items-center gap-2"
+              style={{ color: project.color }}
+            >
               <i className="fas fa-info-circle" /> About the Project
             </h2>
-            <p className="dp-desc-text">{project.description}</p>
+            <p className="text-white/65 leading-[1.75] text-[0.92rem] m-0">{project.description}</p>
           </div>
 
-          <div className="dp-desc-block" style={{ marginTop: '2rem' }}>
-            <h2 className="dp-desc-heading" style={{ color: project.color }}>
+          <div className="mt-8 mb-6">
+            <h2
+              className="text-[1rem] font-bold uppercase tracking-[0.5px] mt-0 mb-[0.7rem] flex items-center gap-2"
+              style={{ color: project.color }}
+            >
               <i className="fas fa-lightbulb" /> The Concept
             </h2>
-            <p className="dp-desc-text">{project.concept}</p>
+            <p className="text-white/65 leading-[1.75] text-[0.92rem] m-0">{project.concept}</p>
           </div>
 
           {/* Image notes (if multiple) */}
           {allImages.length > 1 && (
-            <div className="dp-concepts-list">
-              <h2 className="dp-desc-heading" style={{ color: project.color }}>
+            <div className="mt-8 mb-6">
+              <h2
+                className="text-[1rem] font-bold uppercase tracking-[0.5px] mt-0 mb-[0.7rem] flex items-center gap-2"
+                style={{ color: project.color }}
+              >
                 <i className="fas fa-images" /> Files in this Project
               </h2>
-              <div className="dp-concepts-items">
+              <div className="flex flex-col gap-2 mt-[0.6rem]">
                 {allImages.map((img, i) => (
                   <button
                     key={i}
-                    className={`dp-concept-item ${i === activeImg ? 'active' : ''}`}
+                    className={`flex items-center gap-[0.8rem] px-[0.9rem] py-[0.6rem] bg-white/[0.03] border border-white/[0.07] rounded-[8px] cursor-pointer transition-all duration-200 text-left hover:bg-white/[0.06]${i === activeImg ? ' !border-current' : ''}`}
                     style={i === activeImg ? { borderColor: project.color, background: `${project.color}11` } : {}}
                     onClick={() => setActiveImg(i)}
                   >
-                    <span className="dp-concept-num" style={{ color: project.color }}>0{i + 1}</span>
+                    <span className="text-[1.1rem] font-extrabold opacity-50" style={{ color: project.color }}>
+                      0{i + 1}
+                    </span>
                     <div>
-                      <p className="dp-concept-label">
+                      <p className="text-[0.83rem] text-white/75 m-0 font-medium">
                         {img.isChosen && <i className="fas fa-check-circle" style={{ color: project.color, marginRight: '0.3rem' }} />}
                         {img.label ?? `Image ${i + 1}`}
                       </p>
@@ -307,6 +399,7 @@ export default function DesignProjectPage() {
             </div>
           )}
 
+          {/* Behance CTA — CSS class kept: .dp-behance-cta:hover uses --dp-color runtime var */}
           <a
             href="https://behance.net/isalebryan"
             target="_blank"
@@ -323,33 +416,47 @@ export default function DesignProjectPage() {
 
       {/* ── Bottom Pagination ── */}
       <motion.div
-        className="dp-pagination-bottom"
+        className="grid grid-cols-2 max-sm:grid-cols-1 gap-4 my-12 pt-10 border-t border-white/[0.07]"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.5 }}
       >
         {prevProject ? (
-          <Link href={`/work/design/${prevProject.slug}`} className="dp-page-card dp-page-card--prev">
-            <div className="dp-page-card-img">
-              <img src={prevProject.primaryImage} alt={prevProject.title} />
+          <Link
+            href={`/work/design/${prevProject.slug}`}
+            className="flex items-center gap-[0.9rem] p-[0.9rem] rounded-[10px] border border-white/[0.08] no-underline transition-[border-color,background,transform] duration-[250ms] overflow-hidden hover:border-white/25 hover:bg-white/[0.04] hover:-translate-y-0.5"
+          >
+            <div className="shrink-0 w-16 h-16 rounded-[6px] overflow-hidden">
+              <img src={prevProject.primaryImage} alt={prevProject.title} className="w-full h-full object-cover block" />
             </div>
-            <div className="dp-page-card-info">
-              <span className="dp-page-card-dir"><i className="fas fa-arrow-left" /> Previous</span>
-              <p className="dp-page-card-title" style={{ color: prevProject.color }}>{prevProject.title}</p>
-              <span className="dp-page-card-cat">{categoryLabel[prevProject.category]}</span>
+            <div className="min-w-0 flex flex-col gap-[0.2rem]">
+              <span className="text-[0.65rem] uppercase tracking-[0.6px] text-white/30">
+                <i className="fas fa-arrow-left" /> Previous
+              </span>
+              <p className="text-[0.88rem] font-bold m-0 overflow-hidden text-ellipsis whitespace-nowrap" style={{ color: prevProject.color }}>
+                {prevProject.title}
+              </p>
+              <span className="text-[0.65rem] text-white/30">{categoryLabel[prevProject.category]}</span>
             </div>
           </Link>
         ) : <div />}
         {nextProject ? (
-          <Link href={`/work/design/${nextProject.slug}`} className="dp-page-card dp-page-card--next">
-            <div className="dp-page-card-info dp-page-card-info--right">
-              <span className="dp-page-card-dir">Next <i className="fas fa-arrow-right" /></span>
-              <p className="dp-page-card-title" style={{ color: nextProject.color }}>{nextProject.title}</p>
-              <span className="dp-page-card-cat">{categoryLabel[nextProject.category]}</span>
+          <Link
+            href={`/work/design/${nextProject.slug}`}
+            className="flex flex-row-reverse max-sm:flex-row items-center gap-[0.9rem] p-[0.9rem] rounded-[10px] border border-white/[0.08] no-underline transition-[border-color,background,transform] duration-[250ms] overflow-hidden text-right max-sm:text-left hover:border-white/25 hover:bg-white/[0.04] hover:-translate-y-0.5"
+          >
+            <div className="shrink-0 w-16 h-16 rounded-[6px] overflow-hidden">
+              <img src={nextProject.primaryImage} alt={nextProject.title} className="w-full h-full object-cover block" />
             </div>
-            <div className="dp-page-card-img">
-              <img src={nextProject.primaryImage} alt={nextProject.title} />
+            <div className="min-w-0 flex flex-col gap-[0.2rem] items-end max-sm:items-start">
+              <span className="text-[0.65rem] uppercase tracking-[0.6px] text-white/30">
+                Next <i className="fas fa-arrow-right" />
+              </span>
+              <p className="text-[0.88rem] font-bold m-0 overflow-hidden text-ellipsis whitespace-nowrap" style={{ color: nextProject.color }}>
+                {nextProject.title}
+              </p>
+              <span className="text-[0.65rem] text-white/30">{categoryLabel[nextProject.category]}</span>
             </div>
           </Link>
         ) : <div />}
@@ -358,29 +465,45 @@ export default function DesignProjectPage() {
       {/* ── Related Projects ── */}
       {related.length > 0 && (
         <motion.section
-          className="dp-related"
+          className="pt-12 border-t border-white/[0.07]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6 }}
         >
-          <h3 className="dp-related-heading">More <span className="text-secondary">Projects</span></h3>
-          <div className="dp-related-grid">
+          <h3 className="text-[1.5rem] font-bold mb-6 uppercase tracking-[0.5px]">
+            More <span className="text-secondary">Projects</span>
+          </h3>
+          {/* dp-related-card, dp-related-img-wrap, dp-related-overlay kept in CSS:
+              child image scale + overlay opacity are triggered by parent hover —
+              WebKit corner-bleed concern with scale inside overflow:hidden + rounded */}
+          <div className="grid grid-cols-3 max-[900px]:grid-cols-2 max-sm:grid-cols-1 gap-[1.2rem]">
             {related.map((rp, i) => (
-              <motion.div key={rp.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }}>
+              <motion.div
+                key={rp.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+              >
                 <Link href={`/work/design/${rp.slug}`} className="dp-related-card">
                   <div className="dp-related-img-wrap" style={{ borderColor: rp.color }}>
                     <img src={rp.primaryImage} alt={rp.title} />
                     {rp.images && rp.images.length > 1 && (
-                      <span className="dp-related-multi"><i className="fas fa-images" /> {rp.images.length}</span>
+                      <span className="absolute top-[0.4rem] right-[0.4rem] bg-black/65 text-white/75 text-[0.6rem] px-[0.4rem] py-[0.15rem] rounded-[4px] backdrop-blur-sm">
+                        <i className="fas fa-images" /> {rp.images.length}
+                      </span>
                     )}
                     <div className="dp-related-overlay" style={{ background: `${rp.color}22` }} />
                   </div>
-                  <div className="dp-related-info">
-                    <span className="dp-related-category" style={{ color: rp.color }}>
+                  <div className="px-[0.9rem] py-[0.75rem]">
+                    <span
+                      className="text-[0.68rem] uppercase tracking-[0.5px] font-semibold"
+                      style={{ color: rp.color }}
+                    >
                       {categoryLabel[rp.category]}
                     </span>
-                    <p className="dp-related-title">{rp.title}</p>
+                    <p className="text-[0.85rem] text-white/80 mt-[0.2rem] mb-0 font-semibold">{rp.title}</p>
                   </div>
                 </Link>
               </motion.div>
