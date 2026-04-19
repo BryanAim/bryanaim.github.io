@@ -177,7 +177,7 @@ Everything is in `src/app/globals.css`. Naming conventions:
 | `design/[slug]/page.tsx` | ✅ Done | `dp-thumb*`, `dp-related-card*`, `dp-behance-cta*` kept in CSS (runtime CSS vars + WebKit hover) |
 | `DesignGallery` component | ✅ Done | `.dgm-card:hover`, `.dgm-img` scale, `.dgm-overlay` kept in CSS |
 | `QuoteModal` component | ⬜ Todo | `qm-*` classes |
-| `shop/checkout/page.tsx` | ⬜ Todo | `ck-*` classes |
+| `shop/checkout/page.tsx` | ✅ Done | `checkout.module.css` deleted; all inline Tailwind |
 | `Header.tsx` / `layout.tsx` | 🔒 Keep | `.side-nav-*`, `#content-wrap` must stay |
 
 **What must always stay in CSS** (see `.claude/skills/tailwind-migrate.md` keep-list for full detail):
