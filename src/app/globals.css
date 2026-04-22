@@ -368,25 +368,6 @@ h1, h2, h3 {
   font-weight: 600;
 }
 
-.lg-heading {
-  font-size: 7rem;
-  margin-bottom: 0.2rem;
-  text-align: center;
-}
-
-.sm-heading {
-  margin-bottom: 3rem;
-  padding: 0.2rem 1rem;
-  background: rgba(73, 73, 73, 0.5);
-  text-align: center;
-}
-
-span.type {
-  font-size: 1.7em;
-  font-weight: 600;
-  color: #b1db00;
-}
-
 .typed-cursor {
   font-size: 1.8em;
 }
@@ -402,14 +383,7 @@ header {
   width: 100%;
 }
 
-.text-secondary {
-  color: var(--color-lime);
-}
 
-.quote {
-  font-style: italic;
-  color: var(--color-lime);
-}
 
 
 /* =====================
@@ -510,135 +484,6 @@ main > * {
   to { transform: rotate(360deg); }
 }
 
-/* =====================
-   Sticky Stack Cards
-   ===================== */
-
-
-/* ── Static card (opens modal) ── */
-.ac-card {
-  position: relative;
-  height: 300px;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  outline: none;
-  border-top: 3px solid var(--ac-color, #b1db00);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-.ac-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 0 1px var(--ac-color, #b1db00), 0 0 30px var(--ac-glow, rgba(177,219,0,0.2));
-}
-
-/* background image */
-.ac-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  transition: transform 0.6s ease;
-}
-.ac-card:hover .ac-bg { transform: scale(1.07); }
-
-/* gradient overlay — darkens bottom where text lives */
-.ac-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.15) 0%,
-    rgba(0,0,0,0.35) 40%,
-    rgba(0,0,0,0.88) 100%
-  );
-  transition: background 0.35s ease;
-}
-.ac-card:hover .ac-overlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.25) 0%,
-    rgba(0,0,0,0.5) 40%,
-    rgba(0,0,0,0.93) 100%
-  );
-}
-
-/* subtle glow border on hover */
-.ac-glow-border {
-  position: absolute;
-  inset: 0;
-  border-radius: 10px;
-  border: 1px solid transparent;
-  transition: border-color 0.35s ease;
-  pointer-events: none;
-  z-index: 2;
-}
-.ac-card:hover .ac-glow-border {
-  border-color: var(--ac-color, #b1db00);
-}
-
-/* content layer */
-.ac-content {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1.4rem;
-}
-.ac-top { display: flex; justify-content: flex-start; }
-.ac-icon {
-  font-size: 2rem;
-  color: var(--ac-color, #b1db00);
-  font-family: 'Courier New', monospace;
-  font-weight: 800;
-  text-shadow: 0 0 18px var(--ac-glow, rgba(177,219,0,0.5));
-  line-height: 1;
-}
-
-.ac-title {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--ac-color, #b1db00);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 0.3rem;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-}
-.ac-tagline {
-  color: rgba(255,255,255,0.85);
-  font-size: 0.88rem;
-  font-style: italic;
-  margin-bottom: 0.8rem;
-  line-height: 1.4;
-}
-.ac-tags {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-  margin-bottom: 0.6rem;
-}
-.ac-tag {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.25);
-  color: #fff;
-  padding: 0.18rem 0.6rem;
-  border-radius: 20px;
-  font-size: 0.72rem;
-  backdrop-filter: blur(6px);
-}
-.ac-cta {
-  font-size: 0.75rem;
-  color: var(--ac-color, #b1db00);
-  font-weight: 600;
-  letter-spacing: 1px;
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  display: block;
-}
-.ac-card:hover .ac-cta { opacity: 1; transform: translateX(0); }
-
 /* About modal scrollbar */
 .about-modal-panel { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
 .about-modal-panel::-webkit-scrollbar { width: 4px; }
@@ -653,24 +498,6 @@ main > * {
 
 /* About project link hover — color set via style prop */
 .about-project-gh:hover { background: currentColor; color: #000; }
-
-/* =====================
-   Work / Projects
-   ===================== */
-.projects {
-  display: grid;
-  grid-gap: 0.7rem;
-  grid-template-columns: repeat(3, 1fr);
-}
-.projects img {
-  width: 100%;
-  border: 3px #fff solid;
-}
-.projects img:hover {
-  opacity: 0.5;
-  border-color: #b1db00;
-  transition: all 0.5s ease-out;
-}
 
 /* =====================
    Work Page — redesigned
@@ -1428,10 +1255,6 @@ main > * {
   /* Base padding */
   main { padding: 1.5rem; }
 
-  /* Headings scale down */
-  .lg-heading { font-size: 2.8rem; }
-  .sm-heading  { font-size: 1rem; }
-
   /* Contact page — mobile */
   .ct-hero-h1 { font-size: clamp(2.8rem, 12vw, 5rem); }
   .ct-info-row { grid-template-columns: 1fr; gap: 0.75rem; }
@@ -1452,157 +1275,9 @@ main > * {
 }
 
 /* =====================
-   Blogs
+   Responsive — mobile nav
    ===================== */
-.blog-content {
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: 1fr 1fr;
-}
-.blog-content .video {
-  background: #515151;
-  padding: 1rem;
-  border-bottom: #b1db00 5px solid;
-}
-.blog-content .video h3,
-.blog-content .learning-docs h3 {
-  color: #b1db00;
-  margin-bottom: 1rem;
-}
-.blog-content .video iframe {
-  max-width: 100%;
-}
-.blog-content .learning-docs {
-  background: #515151;
-  padding: 1rem;
-  border-bottom: #b1db00 5px solid;
-}
-
-/* =====================
-   CV
-   ===================== */
-.cv-content {
-  background: #515151;
-  padding: 2rem;
-  border-bottom: #b1db00 5px solid;
-  display: inline-block;
-}
-
-/* =====================
-   Inspiration
-   ===================== */
-.inspirations {
-  display: grid;
-  grid-gap: 1.5rem;
-  grid-template-columns: repeat(3, 1fr);
-}
-.inspirations .item {
-  background: #515151;
-  padding: 1rem;
-  border-bottom: #b1db00 4px solid;
-}
-.inspirations .item h3 {
-  color: #b1db00;
-  margin-bottom: 0.5rem;
-}
-
-/* =====================
-   Breadcrumb
-   ===================== */
-.breadcrumb {
-  margin-bottom: 1rem;
-}
-
-.breadcrumb a {
-  color: #888;
-  font-size: 0.85rem;
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
-.breadcrumb a:hover {
-  color: #b1db00;
-}
-
-.status-success {
-  color: #b1db00;
-  margin-bottom: 1rem;
-}
-
-/* =====================
-   Buttons
-   ===================== */
-.btn, .btn-dark, .btn-light {
-  display: block;
-  padding: 0.5rem 1rem;
-  border: 0;
-  margin-bottom: 0.3rem;
-  cursor: pointer;
-}
-.btn:hover, .btn-dark:hover, .btn-light:hover {
-  background: #b1db00;
-  color: #000;
-}
-.btn-dark {
-  background: black;
-  color: #fff;
-}
-.btn-light {
-  background: #c4c4c4;
-  color: #333;
-}
-
-/* =====================
-   Progress bars
-   ===================== */
-progress {
-  background-color: #b1db00;
-}
-progress::-webkit-progress-bar {
-  background-color: #444;
-}
-progress::-webkit-progress-value {
-  background-color: rgba(185, 229, 0, 0.5);
-}
-progress::-moz-progress-bar {
-  background-color: #b1db00;
-}
-
-/* =====================
-   Footer
-   ===================== */
-#main-footer {
-  text-align: center;
-  padding: 1rem;
-  background: #2b2b2b;
-  color: #00ddd7;
-  height: 60px;
-}
-
-/* =====================
-   Responsive
-   ===================== */
-@media screen and (min-width: 1171px) {
-  .projects {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media screen and (min-width: 769px) and (max-width: 1170px) {
-  .projects {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 @media screen and (max-width: 768px) {
-  main {
-    align-items: center;
-    text-align: center;
-  }
-  .lg-heading {
-    line-height: 1;
-    margin-bottom: 1rem;
-  }
   ul.menu-nav,
   div.menu-branding {
     float: none;
@@ -1631,25 +1306,6 @@ progress::-moz-progress-bar {
   .ct-info-row { grid-template-columns: 1fr; }
   .ct-socials-grid { grid-template-columns: repeat(2, 1fr); }
   .ct-embeds-row { grid-template-columns: 1fr; }
-
-  .projects,
-  .products,
-  .inspirations,
-  .blog-content {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media screen and (max-width: 500px) {
-  main#home h1 {
-    margin-top: 10vh;
-  }
-  .projects,
-  .products,
-  .inspirations,
-  .blog-content {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* =====================

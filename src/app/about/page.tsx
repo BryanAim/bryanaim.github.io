@@ -432,15 +432,15 @@ export default function About() {
     <main id="about">
       {/* ── Heading ── */}
       <motion.h1
-        className="lg-heading"
+        className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
-        About <span className="text-secondary">Me</span>
+        About <span className="text-lime">Me</span>
       </motion.h1>
       <motion.h2
-        className="sm-heading"
+        className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
@@ -462,7 +462,7 @@ export default function About() {
           variants={fadeRight} initial="hidden"
           whileInView="show" viewport={{ once: true, margin: '-80px' }}
         >
-          <h3 className="text-[1.6rem] font-bold mb-[0.8rem] uppercase tracking-[2px]">The <span className="text-secondary">Story</span></h3>
+          <h3 className="text-[1.6rem] font-bold mb-[0.8rem] uppercase tracking-[2px]">The <span className="text-lime">Story</span></h3>
           <p className="text-[1.05rem] leading-[1.85] text-[#d8d8d8] mb-[1.2rem]">
             Art and technology enthusiast on a mission. I build modern solutions to everyday
             problems — because I genuinely believe technology is Africa&apos;s greatest lever for
@@ -498,7 +498,7 @@ export default function About() {
       {/* ── Sticky stack cards ── */}
       <div className="mt-2 mb-0">
         <motion.p
-          className="text-[0.82rem] uppercase tracking-[4px] mb-6 text-secondary max-[768px]:text-center"
+          className="text-[0.82rem] uppercase tracking-[4px] mb-6 text-lime max-[768px]:text-center"
           variants={fadeUp} initial="hidden"
           whileInView="show" viewport={{ once: true }}
         >

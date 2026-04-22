@@ -113,14 +113,14 @@ export default function Checkout() {
   if (stage === 'paid' && order) {
     return (
       <main id="checkout" className="print:bg-white print:text-black">
-        <h1 className="lg-heading">Pay<span className="text-secondary">ment</span></h1>
+        <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Pay<span className="text-lime">ment</span></h1>
         <div className="bg-[#515151] border-b-[5px] border-[#b1db00] max-w-[560px] p-8 print:bg-white print:text-black print:border-[#ccc]">
           <div className="border-b border-[#666] mb-6 pb-4">
             <h2 className="text-[1.8rem] mb-2">Payment Successful!</h2>
             <p>Thank you, <strong>{order.customer_name || 'Customer'}</strong>. Your order is confirmed.</p>
           </div>
           <div>
-            <h3 className="text-secondary mb-4">E-Receipt</h3>
+            <h3 className="text-lime mb-4">E-Receipt</h3>
             <table className="w-full border-collapse mb-6">
               <tbody>
                 <tr>
@@ -150,8 +150,8 @@ export default function Checkout() {
           </div>
           <div className="border-t border-[#666] pt-4 flex gap-4 items-center flex-wrap">
             <p className="w-full text-[#aaa] italic mb-4">Keep this receipt. We will reach out to arrange delivery or meetup.</p>
-            <button className="btn-light print:hidden" onClick={() => window.print()}>Print Receipt</button>
-            <a href="/shop" className="btn-dark print:hidden">Continue Shopping</a>
+            <button className="block px-4 py-2 mb-[0.3rem] cursor-pointer border-0 bg-[#c4c4c4] text-[#333] transition-colors hover:bg-lime hover:text-black print:hidden" onClick={() => window.print()}>Print Receipt</button>
+            <a href="/shop" className="block px-4 py-2 mb-[0.3rem] cursor-pointer border-0 bg-black text-white transition-colors hover:bg-lime hover:text-black print:hidden">Continue Shopping</a>
           </div>
         </div>
       </main>
@@ -162,13 +162,13 @@ export default function Checkout() {
   if (stage === 'waiting') {
     return (
       <main id="checkout">
-        <h1 className="lg-heading">Pay<span className="text-secondary">ing…</span></h1>
+        <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Pay<span className="text-lime">ing…</span></h1>
         <div className="bg-[#515151] p-8 border-b-[5px] border-[#b1db00] max-w-[480px]">
           <div className="text-center py-8">
             <div className="w-14 h-14 border-[6px] border-[#555] border-t-[#b1db00] rounded-full mx-auto mb-6 animate-spin" />
             <h3 className="text-[#b1db00] text-[1.8rem] mb-4">Check your phone</h3>
             <p className="mb-2 text-[1.1rem]">M-Pesa prompt sent to <strong>{form.phone}</strong>.</p>
-            <p className="mb-2 text-[1.1rem]">Enter your <span className="text-secondary">M-Pesa PIN</span> to pay <strong>KES {total.toLocaleString()}</strong>.</p>
+            <p className="mb-2 text-[1.1rem]">Enter your <span className="text-lime">M-Pesa PIN</span> to pay <strong>KES {total.toLocaleString()}</strong>.</p>
             <p className="text-[#b1db00] mt-6 italic">Waiting for confirmation…</p>
           </div>
         </div>
@@ -180,10 +180,10 @@ export default function Checkout() {
   if (stage === 'error') {
     return (
       <main id="checkout">
-        <h1 className="lg-heading">Check<span className="text-secondary">out</span></h1>
+        <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Check<span className="text-lime">out</span></h1>
         <div className="bg-[#515151] p-8 border-b-[5px] border-[#b1db00] max-w-[480px]">
           <p className="text-[#ff6b6b] mb-4">{errorMsg}</p>
-          <button className="btn-dark" onClick={() => setStage('form')}>Try Again</button>
+          <button className="block px-4 py-2 mb-[0.3rem] cursor-pointer border-0 bg-black text-white transition-colors hover:bg-lime hover:text-black" onClick={() => setStage('form')}>Try Again</button>
         </div>
       </main>
     )
@@ -192,11 +192,11 @@ export default function Checkout() {
   // ── Main checkout ────────────────────────────────────────────────────────────
   return (
     <main id="checkout">
-      <nav className="breadcrumb">
-        <a href="/shop">← Back to Shop</a>
+      <nav className="mb-4">
+        <a href="/shop" className="text-[#888] text-[0.85rem] no-underline transition-colors duration-150 hover:text-lime">← Back to Shop</a>
       </nav>
-      <h1 className="lg-heading">Check<span className="text-secondary">out</span></h1>
-      <h2 className="sm-heading">Review your order and pay with M-Pesa</h2>
+      <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Check<span className="text-lime">out</span></h1>
+      <h2 className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold">Review your order and pay with M-Pesa</h2>
 
       {cart.length === 0 ? (
         <div className="bg-[#515151] p-8 border-b-[5px] border-[#b1db00] max-w-[480px]">

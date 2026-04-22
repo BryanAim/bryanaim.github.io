@@ -148,15 +148,15 @@ function WorkInner() {
     <main id="work-page">
       {/* ── Heading ── */}
       <motion.h1
-        className="lg-heading"
+        className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
-        My <span className="text-secondary">Work</span>
+        My <span className="text-lime">Work</span>
       </motion.h1>
       <motion.h2
-        className="sm-heading"
+        className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}

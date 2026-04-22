@@ -271,7 +271,7 @@ export default function Contact() {
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
           >
-            Let&apos;s <span className="text-secondary">Work Together</span>
+            Let&apos;s <span className="text-lime">Work Together</span>
           </motion.h2>
           <DrawLine color="#00ddd7" />
         </div>
@@ -397,7 +397,7 @@ export default function Contact() {
               whileInView="show"
               viewport={{ once: true, margin: '-60px' }}
             >
-              Find me <span className="text-secondary">online</span>
+              Find me <span className="text-lime">online</span>
             </motion.h2>
             <DrawLine color="#b1db00" />
           </div>
@@ -440,7 +440,7 @@ export default function Contact() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             <h3 className="text-2xl font-bold mb-[1.2rem] uppercase tracking-[1px]">
-              LinkedIn <span className="text-secondary">Profile</span>
+              LinkedIn <span className="text-lime">Profile</span>
             </h3>
             <div className="bg-white/[0.03] border border-white/[0.07] rounded-lg p-4 min-h-[160px]">
               <div className="LI-profile-badge" data-version="v1" data-size="large"
@@ -457,7 +457,7 @@ export default function Contact() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             <h3 className="text-2xl font-bold mb-[1.2rem] uppercase tracking-[1px]">
-              Behance <span className="text-secondary">Portfolio</span>
+              Behance <span className="text-lime">Portfolio</span>
             </h3>
             <a
               href="https://behance.net/isalebryan"

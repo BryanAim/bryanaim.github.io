@@ -270,7 +270,7 @@ function SkillsTimeline() {
 
         <div className="absolute top-[8vh] md:top-[12vh] left-6 md:left-[60px] z-20 pr-6">
           <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-4" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-            <span className="text-secondary mr-2">—</span> Skills Progression
+            <span className="text-lime mr-2">—</span> Skills Progression
           </motion.div>
           <motion.p className="text-[0.88rem] text-white max-w-lg mb-0" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
             One year in — from never touching a BMX to bunny hops and backwards riding
@@ -336,7 +336,7 @@ function GearSetup() {
   return (
     <div className="mb-16 py-12 -mx-6 md:-mx-16 border-t border-b border-white/[0.06] overflow-hidden flex flex-col gap-[1.25rem]">
       <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-2 px-6 md:px-16" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-        <span className="text-secondary mr-2">—</span> The Setup
+        <span className="text-lime mr-2">—</span> The Setup
       </motion.div>
       <div className="overflow-visible w-full relative">
         <motion.div className="flex gap-4 md:gap-5 w-max px-6 md:px-16" style={{ x: smooth1 }}>
@@ -680,15 +680,15 @@ export default function BMX() {
     <main id="bmx">
       {/* ── Hero heading ── */}
       <motion.h1
-        className="lg-heading"
+        className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
-        BMX <span className="text-secondary">Life</span>
+        BMX <span className="text-lime">Life</span>
       </motion.h1>
       <motion.h2
-        className="sm-heading"
+        className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
@@ -711,7 +711,7 @@ export default function BMX() {
           <motion.img src="/img/bmx/bmx2.jpg" alt="BMX bike" className="w-full h-full object-cover transition-transform duration-[0.6s] ease-in-out group-hover:scale-[1.04]" style={{ y: heroImgY }} />
         </div>
         <div>
-          <h3 className="text-[2rem] font-extrabold mb-4 text-[#e0e0e0]">Why <span className="text-secondary">BMX?</span></h3>
+          <h3 className="text-[2rem] font-extrabold mb-4 text-[#e0e0e0]">Why <span className="text-lime">BMX?</span></h3>
           <p className="text-[0.95rem] leading-[1.8] text-white mb-[0.9rem]">
             When the laptop closes, the bike comes out. Started in March 2025 with zero riding
             background — just curiosity and stubbornness. BMX demands full presence, punishes
@@ -739,7 +739,7 @@ export default function BMX() {
       {/* ── 2026 Quarterly Goals ── */}
       <div className="mb-16">
         <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary mr-2">—</span> 2026 Trick Roadmap
+          <span className="text-lime mr-2">—</span> 2026 Trick Roadmap
         </motion.div>
         <motion.p
           className="text-[0.88rem] text-white mb-6"
@@ -757,7 +757,7 @@ export default function BMX() {
       {/* ── Photo Gallery ── */}
       <div className="mb-16">
         <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-secondary mr-2">—</span> Gallery
+          <span className="text-lime mr-2">—</span> Gallery
         </motion.div>
         <GalleryX onSelect={setSelectedPhoto} />
       </div>

@@ -180,6 +180,8 @@ Everything is in `src/app/globals.css`. Naming conventions:
 | `shop/checkout/page.tsx` | ✅ Done | `checkout.module.css` deleted; all inline Tailwind |
 | `Header.tsx` / `layout.tsx` | 🔒 Keep | `.side-nav-*`, `#content-wrap` must stay |
 
+**Recent bulk cleanup (Apr 2026):** Deleted ~350 lines of dead/migrated CSS — `ac-*` stack cards, `.projects`, Blogs/CV/Inspiration/Buttons/Progress/Footer legacy sections, old Responsive media queries. Migrated `lg-heading`, `sm-heading`, `text-secondary`, `breadcrumb`, `btn-dark`, `btn-light` to inline Tailwind across all pages.
+
 **What must always stay in CSS** (see `.claude/skills/tailwind-migrate.md` keep-list for full detail):
 - `.side-nav-*`, `#content-wrap` — JS-controlled CSS vars
 - `@keyframes` blocks

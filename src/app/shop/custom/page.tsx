@@ -187,13 +187,13 @@ export default function CustomOrderPage() {
 
   return (
     <main id="shop">
-      <nav className="breadcrumb">
-        <a href="/shop">← Back to Shop</a>
+      <nav className="mb-4">
+        <a href="/shop" className="text-[#888] text-[0.85rem] no-underline transition-colors duration-150 hover:text-lime">← Back to Shop</a>
       </nav>
-      <h1 className="lg-heading">
-        Custom <span className="text-secondary">Order</span>
+      <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">
+        Custom <span className="text-lime">Order</span>
       </h1>
-      <h2 className="sm-heading">
+      <h2 className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold">
         Upload your design — we print &amp; deliver in Nakuru
       </h2>
 
