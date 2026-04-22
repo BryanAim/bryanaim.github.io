@@ -447,50 +447,16 @@ main > * {
    Animation Classes Kept (Framer Motion)
    ===================== */
 
-/* ── Background slideshow (kept: animation used by slideshow logic) ── */
-.home-bg-wrap {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-}
+/* ── Background slideshow (kept: bgZoom animation only — layout moved to Tailwind) ── */
 .home-bg-slide {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  transition: opacity 1.4s ease;
-  /* slight slow zoom on active */
   animation: bgZoom 12s ease-in-out infinite alternate;
 }
 @keyframes bgZoom {
   from { transform: scale(1); }
   to   { transform: scale(1.06); }
 }
-.home-bg-gradient {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      105deg,
-      rgba(34,34,34,0.96) 0%,
-      rgba(34,34,34,0.82) 45%,
-      rgba(34,34,34,0.35) 100%
-    );
-}
 
-/* ── Portrait animations (kept: Framer Motion animations + ring spin) ── */
-.home-portrait-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  border-radius: 50%;
-  display: block;
-  box-shadow:
-    0 0 0 5px rgba(177,219,0,0.15),
-    0 0 0 12px rgba(177,219,0,0.05),
-    0 24px 64px rgba(0,0,0,0.65);
-}
+/* ── Portrait animations (kept: ring spin + ::after pseudo-element) ── */
 .home-portrait-ring {
   position: absolute;
   inset: -14px;
@@ -508,14 +474,6 @@ main > * {
 }
 @keyframes portraitSpin {
   to { transform: rotate(360deg); }
-}
-.home-portrait-glow {
-  position: absolute;
-  inset: -25%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(177,219,0,0.12) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: -1;
 }
 
 /* ── Scroll hint animation (kept: Framer Motion animation + pulsing line) ── */

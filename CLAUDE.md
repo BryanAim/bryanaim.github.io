@@ -173,7 +173,7 @@ Everything is in `src/app/globals.css`. Naming conventions:
 | `bmx/page.tsx` | ✅ Done | Ticker/HTL track CSS kept (Framer Motion motion values) |
 | `work/page.tsx` | ✅ Done | `.sv-card:hover` and `.wk-dev-img` scale kept in CSS |
 | `contact/page.tsx` | ✅ Done | `ct-*` keep-list classes stay in CSS (pseudo-elements, color-mix runtime vars) |
-| `home/page.tsx` | ⬜ Todo | Keep all `home-*` animation classes |
+| `home/page.tsx` | ✅ Done | `home-bg-wrap`, `home-bg-gradient`, `home-portrait-img`, `home-portrait-glow` migrated; `home-bg-slide`, `home-portrait-ring`, `home-scroll-hint`, `home-scroll-line` kept (keyframes/pseudo/writing-mode); slide dots moved below social icons |
 | `design/[slug]/page.tsx` | ✅ Done | `dp-thumb*`, `dp-related-card*`, `dp-behance-cta*` kept in CSS (runtime CSS vars + WebKit hover) |
 | `DesignGallery` component | ✅ Done | `.dgm-card:hover`, `.dgm-img` scale, `.dgm-overlay` kept in CSS |
 | `QuoteModal` component | ✅ Done | All `qm-*` classes migrated to inline Tailwind |

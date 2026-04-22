@@ -96,15 +96,18 @@ export default function Home() {
   return (
     <main id="home" className="relative overflow-hidden px-0 py-0 min-h-screen flex items-center bg-none">
       {/* ── Background slideshow ── */}
-      <div className="home-bg-wrap" aria-hidden="true">
+      <div className="fixed inset-0 z-0" aria-hidden="true">
         {BG_IMAGES.map((src, i) => (
           <div
             key={src}
-            className="home-bg-slide"
+            className="home-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-1400"
             style={{ backgroundImage: `url('${src}')`, opacity: i === bgIndex ? 1 : 0 }}
           />
         ))}
-        <div className="home-bg-gradient" />
+        <div
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(105deg, rgba(34,34,34,0.96) 0%, rgba(34,34,34,0.82) 45%, rgba(34,34,34,0.35) 100%)' }}
+        />
       </div>
 
       {/* ── Hero row: content + portrait side by side ── */}
@@ -197,6 +200,19 @@ export default function Home() {
               </motion.a>
             ))}
           </motion.div>
+
+          {/* ── Slide dots ── */}
+          <motion.div
+            className="flex gap-2 mt-4 pointer-events-none max-sm:justify-center"
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.5 }}
+          >
+            {BG_IMAGES.map((_, i) => (
+              <div key={i} className={`h-1 rounded transition-all duration-400 ${i === bgIndex ? 'w-9 bg-lime' : 'w-5 bg-white/20'}`} />
+            ))}
+          </motion.div>
         </div>
 
         {/* Portrait — flex sibling, no absolute positioning */}
@@ -207,18 +223,22 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="home-portrait-glow" />
+            <div
+              className="absolute rounded-full pointer-events-none -z-10"
+              style={{ inset: '-25%', background: 'radial-gradient(circle, rgba(177,219,0,0.12) 0%, transparent 65%)' }}
+            />
             <div className="home-portrait-ring" />
-            <Image src="/img/portrait.jpg" alt="Brian Isale" className="home-portrait-img" width={800} height={1000} priority />
+            <Image
+              src="/img/portrait.jpg"
+              alt="Brian Isale"
+              className="w-full h-full object-cover object-top rounded-full block"
+              style={{ boxShadow: '0 0 0 5px rgba(177,219,0,0.15), 0 0 0 12px rgba(177,219,0,0.05), 0 24px 64px rgba(0,0,0,0.65)' }}
+              width={800}
+              height={1000}
+              priority
+            />
           </motion.div>
         </div>
-      </div>
-
-      {/* ── Slide dots ── */}
-      <div className="absolute bottom-10 left-20 z-20 flex gap-2 pointer-events-none max-lg:left-8" aria-hidden="true">
-        {BG_IMAGES.map((_, i) => (
-          <div key={i} className={`h-1 rounded transition-all duration-400 ${i === bgIndex ? 'w-9 bg-lime' : 'w-5 bg-white/20'}`} />
-        ))}
       </div>
 
       <ScrollHint />
