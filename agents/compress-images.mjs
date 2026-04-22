@@ -71,6 +71,7 @@ const outputRelative = inputRelative.replace(new RegExp(`\\${ext}$`, 'i'), '.web
 
 try {
   await sharp(inputAbsolute)
+    .rotate()  // auto-rotate based on EXIF orientation, then strip EXIF
     .webp({ quality })
     .toFile(outputAbsolute)
 

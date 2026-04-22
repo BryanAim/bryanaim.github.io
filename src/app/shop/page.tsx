@@ -5,12 +5,12 @@ import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import {
-  TshirtColor, CartItem, TSHIRT_COLORS, TSHIRT_SIZES, TSHIRT_SIZE_PRICES,
+  TshirtColor, CartItem, TSHIRT_COLORS, TSHIRT_SIZE_PRICES,
   StickerPreset, STICKER_PRESETS, catalogStickerPrice,
   loadCart, saveCart,
 } from '@/lib/shopTypes'
 import {
-  PRODUCTS, CatalogProduct, StickerProduct, TshirtProduct, TshirtColorVariant, ProductCategory,
+  PRODUCTS, CatalogProduct, StickerProduct, TshirtProduct, TshirtColorVariant, HelmProduct, ProductCategory,
 } from '@/lib/products'
 
 // ─── Re-export CartItem so checkout can import it from here ──────────────────
@@ -27,7 +27,7 @@ const COLOR_HEX: Record<string, string> = {
 
 // ─── Internal types ──────────────────────────────────────────────────────────
 
-type FilterTab = 'all' | 'sticker' | 'tshirt' | 'custom'
+type FilterTab = 'all' | 'sticker' | 'tshirt' | 'helmet' | 'custom'
 type StickerFilter = 'all' | ProductCategory
 
 const PAGE_SIZE = 12
@@ -129,13 +129,18 @@ export default function ShopPage() {
         ? TSHIRT_SIZE_PRICES[selectedSize]
         : selectedProduct.price
 
+  const helmViews = selectedProduct?.type === 'helmet'
+    ? (selectedProduct as HelmProduct).views
+    : undefined
+
   const ALL_CATEGORY_ORDER: ProductCategory[] = ['developer', 'designer', 'bmx', 'cycling', 'pop-culture', 'street', 'humour', 'football']
 
   const availableCategories = useMemo(() => {
     const source = tab === 'sticker' ? PRODUCTS.filter(p => p.type === 'sticker')
       : tab === 'tshirt' ? PRODUCTS.filter(p => p.type === 'tshirt')
+      : tab === 'helmet' ? PRODUCTS.filter(p => p.type === 'helmet')
       : PRODUCTS
-    const cats = new Set(source.map(p => (p as StickerProduct | TshirtProduct).category))
+    const cats = new Set(source.map(p => (p as StickerProduct | TshirtProduct | HelmProduct).category))
     return ALL_CATEGORY_ORDER.filter(c => cats.has(c))
   }, [tab])
 
@@ -144,19 +149,17 @@ export default function ShopPage() {
   const filtered = tab === 'custom' ? [] : shuffledProducts.filter(p => {
     if (tab === 'sticker' && p.type !== 'sticker') return false
     if (tab === 'tshirt' && p.type !== 'tshirt') return false
+    if (tab === 'helmet' && p.type !== 'helmet') return false
     if (stickerFilter !== 'all') {
-      if (p.type === 'sticker') {
-        if ((p as StickerProduct).category !== stickerFilter) return false
-      } else if (p.type === 'tshirt') {
-        if ((p as TshirtProduct).category !== stickerFilter) return false
-      }
+      const cat = (p as StickerProduct | TshirtProduct | HelmProduct).category
+      if (cat !== stickerFilter) return false
     }
     if (searchLower) {
       const s = p as StickerProduct
       const inName = p.name.toLowerCase().includes(searchLower)
       const inDesc = p.description.toLowerCase().includes(searchLower)
       const inTags = (s.tags ?? []).some((tag: string) => tag.toLowerCase().includes(searchLower))
-      const category = p.type === 'sticker' ? s.category : (p as TshirtProduct).category
+      const category = (p as StickerProduct | TshirtProduct | HelmProduct).category
       const inCategory = CATEGORY_LABELS[category]?.toLowerCase().includes(searchLower) ?? false
       if (!inName && !inDesc && !inTags && !inCategory) return false
     }
@@ -182,7 +185,9 @@ export default function ShopPage() {
     if (selectedProduct.type === 'tshirt' && !selectedSize) return
     const cartId = selectedProduct.type === 'tshirt'
       ? `${selectedProduct.id}-${selectedColor.name}-${selectedSize}`
-      : `${selectedProduct.id}-${selectedStickerPreset.label}`
+      : selectedProduct.type === 'helmet'
+        ? selectedProduct.id
+        : `${selectedProduct.id}-${selectedStickerPreset.label}`
     const itemName = selectedProduct.type === 'sticker'
       ? `${selectedProduct.name} (${selectedStickerPreset.label})`
       : selectedProduct.name
@@ -212,10 +217,13 @@ export default function ShopPage() {
   const cartCount = cart.reduce((s, i) => s + i.quantity, 0)
   const cartTotal = cart.reduce((s, i) => s + i.price * i.quantity, 0)
   const canAdd = selectedProduct
-    ? selectedProduct.type === 'sticker' || (selectedProduct.type === 'tshirt' && !!selectedSize)
+    ? selectedProduct.type === 'sticker' || selectedProduct.type === 'helmet' || (selectedProduct.type === 'tshirt' && !!selectedSize)
     : false
-  const categoryLabel = (p: CatalogProduct) =>
-    CATEGORY_LABELS[(p.type === 'tshirt' ? (p as TshirtProduct) : (p as StickerProduct)).category] ?? 'T-Shirt'
+  const categoryLabel = (p: CatalogProduct) => {
+    if (p.type === 'tshirt') return CATEGORY_LABELS[(p as TshirtProduct).category] ?? 'T-Shirt'
+    if (p.type === 'helmet') return CATEGORY_LABELS[(p as HelmProduct).category] ?? 'Helmet'
+    return CATEGORY_LABELS[(p as StickerProduct).category] ?? 'Sticker'
+  }
 
   const stickerVariants = selectedProduct?.type === 'sticker'
     ? (selectedProduct as StickerProduct).variants
@@ -245,7 +253,7 @@ export default function ShopPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
       >
-        Stickers, T-Shirts &amp; Helmets — for devs, designers, riders &amp; everyone
+        Stickers, T-Shirts &amp; Helmets — for devs, designers &amp; riders
       </motion.h2>
 
       {/* Search bar */}
@@ -269,13 +277,13 @@ export default function ShopPage() {
       {/* Filter bar */}
       <div className="flex flex-col gap-3 mb-8">
         <div className="flex gap-2 flex-wrap">
-          {(['all', 'sticker', 'tshirt', 'custom'] as FilterTab[]).map(t => (
+          {(['all', 'sticker', 'tshirt', 'helmet', 'custom'] as FilterTab[]).map(t => (
             <button
               key={t}
               className={`px-[1.4rem] py-2 border-2 text-[0.95rem] cursor-pointer rounded-sm transition-[background,color] duration-200 ${t === 'custom' ? `border-teal ${tab === t ? 'bg-teal text-[#1a1a1a] font-bold' : 'bg-transparent text-teal hover:bg-[rgba(0,221,215,0.12)]'}` : `border-lime ${tab === t ? 'bg-lime text-[#1a1a1a] font-bold' : 'bg-transparent text-white hover:bg-[rgba(177,219,0,0.15)]'}`}`}
               onClick={() => changeTab(t)}
             >
-              {t === 'all' ? 'All' : t === 'sticker' ? 'Stickers' : t === 'tshirt' ? 'T-Shirts' : '🎨 Custom'}
+              {t === 'all' ? 'All' : t === 'sticker' ? 'Stickers' : t === 'tshirt' ? 'T-Shirts' : t === 'helmet' ? 'Helmets' : '🎨 Custom'}
             </button>
           ))}
         </div>
@@ -289,7 +297,7 @@ export default function ShopPage() {
                 onClick={() => { setStickerFilter(c); setPage(1) }}
               >
                 {c === 'all'
-                  ? (tab === 'tshirt' ? 'All T-Shirts' : tab === 'sticker' ? 'All Stickers' : 'All')
+                  ? (tab === 'tshirt' ? 'All T-Shirts' : tab === 'sticker' ? 'All Stickers' : tab === 'helmet' ? 'All Helmets' : 'All')
                   : CATEGORY_LABELS[c as ProductCategory]}
               </button>
             ))}
@@ -347,7 +355,7 @@ export default function ShopPage() {
             {/* Type badge — only shown on "All" tab; redundant when filtered by type */}
             {tab === 'all' && (
               <Badge className="absolute top-[0.6rem] right-[0.6rem]">
-                {product.type === 'tshirt' ? 'T-Shirt' : 'Sticker'}
+                {product.type === 'tshirt' ? 'T-Shirt' : product.type === 'helmet' ? 'Helmet' : 'Sticker'}
               </Badge>
             )}
             {isProductNew(product) && (
@@ -361,7 +369,9 @@ export default function ShopPage() {
               <p className="text-white text-[0.9rem]">
                 {product.type === 'tshirt'
                   ? `From KES ${Math.min(...product.sizes.map(s => TSHIRT_SIZE_PRICES[s])).toLocaleString()}`
-                  : `From KES ${catalogStickerPrice(product.price, STICKER_PRESETS[0]).toLocaleString()}`}
+                  : product.type === 'helmet'
+                    ? `KES ${product.price.toLocaleString()}`
+                    : `From KES ${catalogStickerPrice(product.price, STICKER_PRESETS[0]).toLocaleString()}`}
               </p>
               {product.type === 'tshirt' && product.colorVariants && product.colorVariants.length > 0 && (
                 <div className="flex gap-[0.3rem] mt-2 flex-wrap">
@@ -448,6 +458,22 @@ export default function ShopPage() {
                   onContextMenu={e => e.preventDefault()}
                 />
               </div>
+
+              {/* Helmet view strip */}
+              {helmViews && helmViews.length > 1 && (
+                <div className="flex gap-2 flex-wrap px-3 py-[0.6rem] bg-[#444] border-t border-[#3a3a3a]">
+                  {helmViews.map(v => (
+                    <button
+                      key={v.label}
+                      title={v.label.charAt(0).toUpperCase() + v.label.slice(1)}
+                      onClick={() => setModalImage(v.src)}
+                      className={`w-10 h-10 rounded overflow-hidden border-2 cursor-pointer shrink-0 transition-[border-color,transform] duration-150 hover:scale-110 ${(modalImage || selectedProduct!.image) === v.src ? 'border-lime scale-110' : 'border-[#555]'}`}
+                    >
+                      <img src={v.src} alt={v.label} className="w-full h-full object-cover pointer-events-none" draggable={false} onContextMenu={e => e.preventDefault()} />
+                    </button>
+                  ))}
+                </div>
+              )}
 
               {/* Sticker colour variant strip */}
               {stickerVariants && stickerVariants.length > 1 && (
@@ -539,6 +565,16 @@ export default function ShopPage() {
                 </>
               )}
 
+              {selectedProduct.type === 'helmet' && (
+                <div className="flex flex-wrap gap-[0.4rem]">
+                  <span className="text-[0.75rem] border border-[#666] text-[#aaa] px-[0.55rem] py-[0.2rem] rounded-sm">EX-UK</span>
+                  <span className="text-[0.75rem] border border-[#666] text-[#aaa] px-[0.55rem] py-[0.2rem] rounded-sm capitalize">{(selectedProduct as HelmProduct).color}</span>
+                  {(selectedProduct as HelmProduct).brand && (
+                    <span className="text-[0.75rem] border border-[#666] text-[#aaa] px-[0.55rem] py-[0.2rem] rounded-sm">{(selectedProduct as HelmProduct).brand}</span>
+                  )}
+                </div>
+              )}
+
               {selectedProduct.type === 'tshirt' && (
                 <>
                   <div>
@@ -611,7 +647,9 @@ export default function ShopPage() {
                   >
                     {selectedProduct.type === 'tshirt' && !selectedSize
                       ? 'Select a size'
-                      : `Add to Cart — KES ${modalPrice.toLocaleString()}`}
+                      : selectedProduct.type === 'helmet'
+                        ? `Reserve — KES ${modalPrice.toLocaleString()}`
+                        : `Add to Cart — KES ${modalPrice.toLocaleString()}`}
                   </button>
                 )
               }
@@ -624,7 +662,7 @@ export default function ShopPage() {
       {/* Cart FAB + Cart panel — rendered in portal to escape PageTransition transform */}
       {mounted && createPortal(<>
       <button
-        className="fixed bottom-8 max-[600px]:bottom-[5.5rem] right-8 bg-lime text-[#1a1a1a] border-none w-[60px] h-[60px] rounded-full text-[1.4rem] cursor-pointer flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.4)] z-[100] transition-transform hover:scale-110"
+        className="fixed bottom-[5.5rem] right-8 bg-lime text-[#1a1a1a] border-none w-[60px] h-[60px] rounded-full text-[1.4rem] cursor-pointer flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.4)] z-[100] transition-transform hover:scale-110"
         onClick={() => setCartOpen(true)}
         aria-label="Open cart"
       >

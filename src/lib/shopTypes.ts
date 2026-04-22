@@ -6,7 +6,7 @@ export interface TshirtColor {
   label: string
 }
 
-export type ProductType = 'sticker' | 'tshirt' | 'custom_sticker' | 'custom_tshirt'
+export type ProductType = 'sticker' | 'tshirt' | 'helmet' | 'custom_sticker' | 'custom_tshirt'
 
 export interface CartItem {
   cartId: string
