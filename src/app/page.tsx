@@ -94,7 +94,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main id="home">
+    <main id="home" className="relative overflow-hidden px-0 py-0 min-h-screen flex items-center bg-none">
       {/* ── Background slideshow ── */}
       <div className="home-bg-wrap" aria-hidden="true">
         {BG_IMAGES.map((src, i) => (
@@ -108,47 +108,48 @@ export default function Home() {
       </div>
 
       {/* ── Hero row: content + portrait side by side ── */}
-      <div className="home-row">
-        <div className="home-content">
+      <div className="relative z-10 flex items-center justify-between gap-12 px-20 w-full max-lg:flex-col max-lg:gap-6 max-lg:px-8 max-sm:px-4 max-sm:pt-24 max-sm:text-center">
+        <div className="flex-1 max-w-2xl">
           <motion.p
-            className="home-eyebrow"
+            className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-white/40 mb-5 max-lg:justify-center"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           >
-            <span className="home-eyebrow-line" />
+            <span className="inline-block w-8 h-px bg-lime flex-shrink-0" />
             Based in Nakuru, Kenya
           </motion.p>
 
           <motion.h1
-            className="home-name"
+            className="text-6xl font-black leading-tight tracking-tighter text-white mb-5 max-2xl:text-5xl max-lg:text-5xl max-sm:text-4xl"
+            style={{ fontSize: 'clamp(3.2rem, 8vw, 6.5rem)' }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
             Isale<br />
-            <span className="home-name-accent">Brian.</span>
+            <span className="block text-lime">Brian.</span>
           </motion.h1>
 
           <motion.div
-            className="home-role-wrap"
+            className="flex items-center gap-2 mb-6 min-h-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            <span className="home-role-cursor" aria-hidden="true">›</span>
-            <span ref={typeRef} className="home-role" aria-live="polite" aria-atomic="true" />
+            <span className="text-xl font-bold text-teal flex-shrink-0" aria-hidden="true">›</span>
+            <span ref={typeRef} className="text-lg text-white/75 font-medium" aria-live="polite" aria-atomic="true" />
           </motion.div>
 
           {/* Bio — synced to Typed.js string completion */}
-          <div className="home-bio-wrap">
+          <div className="min-h-20 mb-8">
             <AnimatePresence mode="wait">
               <motion.p
                 key={bioIndex}
-                className="home-bio"
-                initial={{ opacity: 0, y: 8 }}
+                className="text-sm leading-relaxed text-white/50 max-w-xl"
+                initial={{ opacity: 0, y: 2 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
+                exit={{ opacity: 0, y: -1.5 }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
               >
                 {TYPED_BIOS[bioIndex]}
@@ -157,24 +158,24 @@ export default function Home() {
           </div>
 
           <motion.div
-            className="home-ctas"
-            initial={{ opacity: 0, y: 20 }}
+            className="flex flex-wrap gap-4 mb-10 max-sm:flex-col max-sm:items-center"
+            initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.05, ease: 'easeOut' }}
           >
-            <a href="/about" className="home-cta-primary">
-              About Me <i className="fas fa-arrow-right" />
+            <a href="/about" className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-black font-black text-sm uppercase tracking-widest rounded-md transition-all duration-200 hover:bg-[#c8f000] hover:-translate-y-0.5 hover:shadow-lg" style={{boxShadow: 'none'}}>
+              About Me <i className="fas fa-arrow-right text-xs transition-transform duration-200" />
             </a>
-            <a href="/work#services" className="home-cta-ghost">
-              <i className="" /> Services
+            <a href="/work#services" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/[0.06]">
+              Services
             </a>
-            <a href="/contact" className="home-cta-ghost">
+            <a href="/contact" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/[0.06]">
               Get in touch
             </a>
           </motion.div>
 
           <motion.div
-            className="home-socials"
+            className="flex gap-1"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.3 }}
@@ -185,12 +186,12 @@ export default function Home() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="home-social-btn"
+                className="w-10 h-10 inline-flex items-center justify-center text-base text-white/35 rounded-lg transition-all duration-200 hover:bg-white/[0.07]"
                 title={s.label}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 2.5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3 + i * 0.07, duration: 0.35 }}
-                whileHover={{ y: -3, color: s.color }}
+                whileHover={{ y: -0.75, color: s.color }}
               >
                 <i className={s.icon} />
               </motion.a>
@@ -199,9 +200,9 @@ export default function Home() {
         </div>
 
         {/* Portrait — flex sibling, no absolute positioning */}
-        <div className="home-portrait-wrap" aria-hidden="true">
+        <div className="flex-shrink-0 w-72 aspect-square pointer-events-none max-lg:hidden" aria-hidden="true">
           <motion.div
-            className="home-portrait-inner"
+            className="relative w-full h-full"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -214,9 +215,9 @@ export default function Home() {
       </div>
 
       {/* ── Slide dots ── */}
-      <div className="home-dots" aria-hidden="true">
+      <div className="absolute bottom-10 left-20 z-20 flex gap-2 pointer-events-none max-lg:left-8" aria-hidden="true">
         {BG_IMAGES.map((_, i) => (
-          <div key={i} className={`home-dot${i === bgIndex ? ' active' : ''}`} />
+          <div key={i} className={`h-1 rounded transition-all duration-400 ${i === bgIndex ? 'w-9 bg-lime' : 'w-5 bg-white/20'}`} />
         ))}
       </div>
 
