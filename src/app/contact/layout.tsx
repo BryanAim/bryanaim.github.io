@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   keywords: [
     'Brian Isale contact', 'contact Brian Isale', 'Brian Isale email',
     'Brian Isale phone number', 'hire Brian Isale', 'Brian Isale WhatsApp',
+    'contact BryanAim', 'contact Janja', 'contact Bryan Aim', 'isalebryan contact',
     'isale.bryan@gmail.com', 'freelance developer Kenya contact',
     'web developer for hire Nakuru', 'creative designer Kenya contact',
   ],
@@ -40,7 +41,7 @@ const contactPageJsonLd = {
   author: {
     '@type': 'Person',
     name: 'Brian Isale',
-    alternateName: ['BryanAim', 'Bryan Isale'],
+    alternateName: ['BryanAim', 'Bryan Aim', 'Brian Aim', 'Janja', 'isalebryan', 'isalebrian', 'Bryan Isale', 'Isale Brian'],
     email: 'isale.bryan@gmail.com',
     telephone: '+254728822142',
     url: 'https://isalebryan.dev',

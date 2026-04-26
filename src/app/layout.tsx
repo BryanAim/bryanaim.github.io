@@ -20,12 +20,13 @@ export const metadata: Metadata = {
   description:
     'Brian Isale is a Full Stack Developer, Creative Designer, and Community Builder based in Nakuru, Kenya. Google Africa Scholar with 6+ years experience building modern web apps, brand identities, and open-source tools for Africa.',
   keywords: [
-    'Brian Isale', 'BryanAim', 'full stack developer Kenya', 'web developer Nakuru','nakuru software developer',
+    'Brian Isale', 'BryanAim', 'Bryan Aim', 'Brian Aim', 'Janja', 'isalebryan', 'isalebrian', 'Isale Brian',
+    'janjanation', 'bmxbrian',
+    'full stack developer Kenya', 'web developer Nakuru', 'nakuru software developer',
     'creative designer Kenya', 'Next.js developer Africa', 'React developer Kenya',
     'Google Africa Scholar', 'software engineer Kenya', 'UI UX designer Nakuru',
     'brand identity designer Kenya', 'motion graphics Kenya', 'frontend developer Africa',
-    'community builder Kenya', 'Andela scholar',
-    'bmxbrian', 'janja','janjanation'
+    'community builder Kenya', 'Andela scholar'
   ],
   authors: [{ name: 'Brian Isale', url: 'https://isalebryan.dev' }],
   creator: 'Brian Isale',
@@ -78,7 +79,7 @@ const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Brian Isale',
-  alternateName: ['BryanAim', 'Bryan Isale', 'Isale Brian'],
+  alternateName: ['BryanAim', 'Bryan Aim', 'Brian Aim', 'Janja', 'isalebryan', 'isalebrian', 'Bryan Isale', 'Isale Brian'],
   url: 'https://isalebryan.dev',
   image: 'https://isalebryan.dev/img/portrait.jpg',
   jobTitle: ['Full Stack Developer', 'Creative Designer', 'Community Builder'],
@@ -148,7 +149,7 @@ const faqJsonLd = {
       name: 'Who is Brian Isale?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Brian Isale (also known as BryanAim) is a Full Stack Developer, Creative Designer, and Community Builder based in Nakuru, Kenya. He is a Google Africa Scholar (Andela, 2019) with over 6 years of professional experience building web applications, designing brand identities, and mentoring developers across Africa.',
+        text: 'Brian Isale — also known online as BryanAim, Bryan Aim, Brian Aim, Janja, isalebryan, and isalebrian — is a Full Stack Developer, Creative Designer, and Community Builder based in Nakuru, Kenya. He is a Google Africa Scholar (Andela, 2019) with over 6 years of professional experience building web applications, designing brand identities, and mentoring developers across Africa.',
       },
     },
     {

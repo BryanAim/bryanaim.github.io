@@ -66,8 +66,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       'graphic designer Nakuru Kenya',
       'logo designer Nakuru',
       'creative designer Kenya',
-      'Brian Isale',
-      'BryanAim design',
+      'Brian Isale', 'BryanAim', 'Bryan Aim', 'Janja', 'isalebryan',
+      'BryanAim design', 'Janja design',
       'design portfolio Kenya',
     ],
     robots: { index: true, follow: true },
@@ -105,7 +105,7 @@ export default async function DesignProjectLayout({ params, children }: Props) {
   const CREATOR = {
     '@type': 'Person',
     name: 'Brian Isale',
-    alternateName: 'BryanAim',
+    alternateName: ['BryanAim', 'Bryan Aim', 'Brian Aim', 'Janja', 'isalebryan', 'isalebrian', 'Bryan Isale', 'Isale Brian'],
     url: 'https://isalebryan.dev',
     jobTitle: 'Creative Designer & Full Stack Developer',
   }

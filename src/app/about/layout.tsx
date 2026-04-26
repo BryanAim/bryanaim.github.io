@@ -9,9 +9,9 @@ export const metadata: Metadata = {
     'Builds modern web apps with Next.js and React, crafts brand identities, and mentors developers across Africa.',
   keywords: [
     'about Brian Isale', 'Brian Isale biography', 'Brian Isale background',
-    'Google Africa Scholar Kenya', 'Andela scholar Kenya', 'BryanAim developer',
-    'full stack developer Nakuru Kenya', 'Brian Isale portfolio about',
-    'web developer community builder Kenya', 'Brian Isale skills',
+    'BryanAim', 'Bryan Aim', 'Brian Aim', 'Janja', 'isalebryan', 'isalebrian', 'Isale Brian',
+    'Google Africa Scholar Kenya', 'Andela scholar Kenya',
+    'full stack developer Nakuru Kenya', 'web developer community builder Kenya', 'Brian Isale skills',
   ],
   alternates: { canonical: 'https://isalebryan.dev/about' },
   openGraph: {
@@ -42,7 +42,7 @@ const profilePageJsonLd = {
   mainEntity: {
     '@type': 'Person',
     name: 'Brian Isale',
-    alternateName: ['BryanAim', 'Bryan Isale', 'Isale Brian'],
+    alternateName: ['BryanAim', 'Bryan Aim', 'Brian Aim', 'Janja', 'isalebryan', 'isalebrian', 'Bryan Isale', 'Isale Brian'],
     url: 'https://isalebryan.dev',
     image: 'https://isalebryan.dev/img/portrait.jpg',
     jobTitle: ['Full Stack Developer', 'Creative Designer', 'Community Builder'],
