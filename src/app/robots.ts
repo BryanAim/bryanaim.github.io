@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/'],
+        disallow: ['/api/', '/shop/checkout'],
       },
       // Allow major AI crawlers explicitly for GEO (Generative Engine Optimization)
       {
