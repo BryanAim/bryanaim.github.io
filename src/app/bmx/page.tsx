@@ -273,7 +273,7 @@ function SkillsTimeline() {
             <span className="text-lime mr-2">—</span> Skills Progression
           </motion.div>
           <motion.p className="text-[0.88rem] text-white max-w-lg mb-0" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-            One year in — from never touching a BMX to bunny hops and backwards riding
+            One year in. From never touching a BMX to bunny hops and backwards riding
           </motion.p>
         </div>
 
@@ -693,7 +693,7 @@ export default function BMX() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
       >
-        Streets are my playground — always learning, always riding
+        Streets are my playground. Always learning, always riding
       </motion.h2>
 
       {/* ── Intro banner (parallax) ── */}
@@ -714,12 +714,12 @@ export default function BMX() {
           <h3 className="text-[2rem] font-extrabold mb-4 text-[#e0e0e0]">Why <span className="text-lime">BMX?</span></h3>
           <p className="text-[0.95rem] leading-[1.8] text-white mb-[0.9rem]">
             When the laptop closes, the bike comes out. Started in March 2025 with zero riding
-            background — just curiosity and stubbornness. BMX demands full presence, punishes
+            background, just curiosity and stubbornness. BMX demands full presence, punishes
             half-heartedness, and rewards patience the exact same way coding does.
           </p>
           <p className="text-[0.95rem] leading-[1.8] text-white mb-[0.9rem]">
-            Street rider — no parks nearby, so every trick gets learned on flat ground, curbs, and whatever
-            the streets of Nakuru throw at you. Still a beginner and proud of it.
+            Street rider. Every trick gets learned on flat ground, curbs, and whatever
+            the streets throw at you. Still a beginner and proud of it.
           </p>
           <div className="flex flex-wrap gap-2 mt-5">
             <span className="px-3 py-[0.25rem] border rounded-full text-[0.78rem] font-semibold tracking-[0.5px]" style={{ borderColor: '#f472b6', color: '#f472b6' }}>Street Style</span>
