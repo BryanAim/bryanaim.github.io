@@ -38,29 +38,29 @@ const progression = [
     period: 'Mar 2025',
     phase: 'Day One',
     color: '#b1db00',
-    tricks: ['First time on a BMX', 'Pure riding — no tricks', 'Learning to roll straight', 'Getting used to the feel'],
-    note: 'Picked up my first BMX in March 2025. Zero background — just curiosity and a desire to learn something totally outside the comfort zone. The first few sessions were just riding around getting comfortable.',
+    tricks: ['First time on a BMX', 'Pure riding, no tricks', 'Learning to roll straight', 'Getting used to the feel'],
+    note: 'Picked up my first BMX in March 2025 with zero riding background. Pure curiosity. The first few sessions were just riding around getting used to it.',
   },
   {
     period: 'Mar – Apr 2025',
     phase: 'Bike Control',
     color: '#00ddd7',
     tricks: ['Basic balance', 'Smooth braking', 'Cornering', 'Riding in a straight line at speed'],
-    note: 'First two months were purely about bike control — getting comfortable enough that the bike felt like an extension of the body. No tricks, just miles.',
+    note: 'First two months were purely about getting comfortable enough that the bike felt like an extension of the body. No tricks, just miles.',
   },
   {
     period: 'May – Aug 2025',
     phase: 'Foundation Building',
     color: '#f472b6',
     tricks: ['Weight shifts', 'Balancing tricks', 'Building confidence', 'Standing on pegs'],
-    note: 'Started exploring balance-focused movements — shifting weight, learning to stand on the pegs while rolling. Building the body awareness that makes harder tricks possible.',
+    note: 'Started exploring balance-focused movements. Shifting weight, standing on pegs while rolling, building the body awareness that makes harder tricks possible.',
   },
   {
     period: 'Sep 2025 – Now',
     phase: 'Getting Technical',
     color: '#ff8c42',
     tricks: ['Bunny hops ✓', 'Backwards riding ✓', 'Peg stands in motion ✓', 'Reading street spots'],
-    note: 'The foundation started paying off. Bunny hops felt impossible at first — then one day it just clicked. Backwards riding and peg stands in motion followed. Still a beginner — and owning it.',
+    note: 'The foundation started paying off. Bunny hops felt impossible for weeks, then one day it just clicked. Backwards riding and peg stands in motion followed. Still a beginner, and owning it.',
   },
 ]
 
@@ -82,10 +82,10 @@ const quarters2026: Quarter[] = [
     range: 'Jan – Mar 2026',
     color: '#b1db00',
     mainTrick: 'Manuals',
-    mainNote: 'The balance point is everything — front end up, find the sweet spot, hold it. Working this daily on flat ground before adding distance.',
+    mainNote: 'Balance point is everything. Front end up, find the sweet spot, hold it. Working this daily on flat ground before adding distance.',
     otherTricks: ['Chicken Barspins', 'Footjams'],
     videos: [
-      { youtubeId: 'QbgRtB4eHG4', label: 'Manual practice — flat ground' },
+      { youtubeId: 'QbgRtB4eHG4', label: 'Manual practice, flat ground' },
       { youtubeId: 'RjamX-ao0A4', label: 'Pull-up bar tricks on BMX' },
       { youtubeId: 'PALoD0ijUsM', label: 'Bunny hop practice' },
     ],
@@ -95,12 +95,12 @@ const quarters2026: Quarter[] = [
     range: 'Apr – Jun 2026',
     color: '#f472b6',
     mainTrick: 'Barspins',
-    mainNote: 'The scary one. Building up to it off low hops first — hands need to trust letting go. Street style, so flat-ground and curb setups.',
+    mainNote: 'The scary one. Building up off low hops first, hands learning to trust letting go. Flat-ground and curb setups only.',
     otherTricks: ['Crankflips', 'X-Up', 'Pick Up Barspins'],
     videos: [
       { youtubeId: 'DU2M_j67068', label: 'Barspin drills' },
       { youtubeId: 'huO3YAudhJM', label: 'Crankflip attempts' },
-      { youtubeId: 'fvvah3dR48o', label: 'Bunny hops — building height' },
+      { youtubeId: 'fvvah3dR48o', label: 'Bunny hops, building height' },
     ],
   },
   {
@@ -112,7 +112,7 @@ const quarters2026: Quarter[] = [
     otherTricks: ['Halfcabs', 'Footplants'],
     videos: [
       { youtubeId: 'ndzq0-ooRzE', label: 'Trying fakies' },
-      { youtubeId: 'AB_rQSClML8', label: 'Riding backwards — fakie foundation' },
+      { youtubeId: 'AB_rQSClML8', label: 'Riding backwards, fakie foundation' },
       { label: 'Footplant spot hunt' },
     ],
   },
@@ -121,7 +121,7 @@ const quarters2026: Quarter[] = [
     range: 'Oct – Dec 2026',
     color: '#fbbf24',
     mainTrick: '180',
-    mainNote: 'The first real spin. Half a rotation — commit to it, spot the landing, roll out clean. Starting off small hops on flat ground, then curb drops.',
+    mainNote: 'The first real spin. Half a rotation, commit to it, spot the landing, roll out clean. Starting on flat ground, then curb drops.',
     otherTricks: ['Fakie 180', '180 to Manual', 'Nose Manual'],
     videos: [
       { label: '180 flat ground attempts' },
@@ -197,7 +197,7 @@ const gear = [
   { label: 'Tyres', value: 'HARTEX 2.4', icon: '⭕' },
   { label: 'Pegs', value: '4x chromoly steel', icon: '🔩' },
   { label: 'Brakes', value: 'None', icon: '✋' },
-  { label: 'Riding style', value: 'Street only — no parks nearby', icon: '🏙️' },
+  { label: 'Riding style', value: 'Street only, no parks nearby', icon: '🏙️' },
 ]
 
 /* ─── Horizontal Timeline Phase Card ─── */
@@ -266,9 +266,9 @@ function SkillsTimeline() {
 
   return (
     <div ref={sectionRef} style={{ height: sectionHeight }} className="relative -mx-6 md:-mx-16 mb-16">
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center p-0">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col p-0">
 
-        <div className="absolute top-[8vh] md:top-[12vh] left-6 md:left-[60px] z-20 pr-6">
+        <div className="pt-[5vh] md:pt-[8vh] px-6 md:px-[60px] shrink-0">
           <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-4" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <span className="text-lime mr-2">—</span> Skills Progression
           </motion.div>
@@ -277,24 +277,26 @@ function SkillsTimeline() {
           </motion.p>
         </div>
 
-        <div className="flex items-center gap-2 text-[0.7rem] tracking-[2.5px] uppercase text-lime px-[60px] mb-[6vh] mt-[6vh]">
-          <motion.span
-            animate={{ y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-          >
-            ↓
-          </motion.span>
-          <span>scroll to explore</span>
+        <div className="flex-1 flex flex-col justify-center">
+          <div className="flex items-center gap-2 text-[0.7rem] tracking-[2.5px] uppercase text-lime px-6 md:px-[60px] mb-4 mt-2 shrink-0">
+            <motion.span
+              animate={{ y: [0, 5, 0] }}
+              transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
+            >
+              ↓
+            </motion.span>
+            <span>scroll to explore</span>
+          </div>
+
+          <motion.div className="flex items-start gap-5 md:gap-[32px] px-5 md:px-[calc(50vw-210px)] pb-[52px] w-max relative will-change-transform" style={{ x }}>
+            <div className="absolute inset-x-0 bottom-[38px] h-0.5 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 3%, rgba(255,255,255,0.1) 97%, transparent 100%)' }} />
+            {progression.map((phase, i) => (
+              <HPhaseCard key={phase.period} phase={phase} index={i} scrollYProgress={scrollYProgress} />
+            ))}
+          </motion.div>
         </div>
 
-        <motion.div className="flex items-start gap-5 md:gap-[32px] px-5 md:px-[calc(50vw-210px)] pb-[52px] w-max relative will-change-transform" style={{ x }}>
-          <div className="absolute inset-x-0 bottom-[38px] h-0.5 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 3%, rgba(255,255,255,0.1) 97%, transparent 100%)' }} />
-          {progression.map((phase, i) => (
-            <HPhaseCard key={phase.period} phase={phase} index={i} scrollYProgress={scrollYProgress} />
-          ))}
-        </motion.div>
-
-        <div className="mx-5 mt-0 md:mx-[60px] md:mt-6 h-0.5 bg-white/[0.07] rounded-sm overflow-hidden">
+        <div className="mx-5 md:mx-[60px] mb-4 md:mb-6 h-0.5 bg-white/[0.07] rounded-sm overflow-hidden shrink-0">
           <motion.div
             className="h-full rounded-sm"
             style={{ scaleX: scrollYProgress, transformOrigin: 'left', background: 'linear-gradient(90deg, #b1db00, #00ddd7, #f472b6, #ff8c42)' }}
@@ -745,7 +747,7 @@ export default function BMX() {
           className="text-[0.88rem] text-white mb-6"
           variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
         >
-          Quarter by quarter — one main trick, supporting tricks, and clips as I go
+          Quarter by quarter. One main trick, supporting tricks, and clips as I go
         </motion.p>
         <div className="flex flex-col pb-[40vh] overflow-visible">
           {quarters2026.map((q, i) => (

@@ -110,7 +110,7 @@ const cards = [
     id: 'volunteer', icon: '♥', title: 'Community Work',
     color: '#ff8c42', glow: 'rgba(255,140,66,0.3)',
     tagline: 'Making a difference beyond the screen',
-    description: "Peer educator with HIV SEERs Kenya — fighting stigma through education and research. Also part of Unilever's Heroes for Change, reaching 3,000+ youth across Nakuru.",
+    description: "Peer educator with HIV SEERs Kenya, fighting stigma through education and research. Also part of Unilever's Heroes for Change, reaching 3,000+ youth across Nakuru.",
     skills: null, projects: null, photos: communityPhotos,
     bgImage: '/img/heroes-school-address.jpeg',
     tags: ['HIV SEERs Kenya', 'Heroes for Change', '3,000+ Youth', 'Andela Mentor'],
@@ -465,7 +465,7 @@ export default function About() {
           <h3 className="text-[1.6rem] font-bold mb-[0.8rem] uppercase tracking-[2px]">The <span className="text-lime">Story</span></h3>
           <p className="text-[1.05rem] leading-[1.85] text-[#d8d8d8] mb-[1.2rem]">
             Art and technology enthusiast on a mission. I build modern solutions to everyday
-            problems — because I genuinely believe technology is Africa&apos;s greatest lever for
+            problems. I genuinely believe technology is Africa&apos;s greatest lever for
             change. When I&apos;m not shipping code or crafting visuals, you&apos;ll find me at
             community events, developer meetups, or pushing limits on my BMX bike.
           </p>
@@ -502,7 +502,7 @@ export default function About() {
           variants={fadeUp} initial="hidden"
           whileInView="show" viewport={{ once: true }}
         >
-          What I&apos;m about — scroll through ↓
+          What I&apos;m about. Scroll through ↓
         </motion.p>
       </div>
 

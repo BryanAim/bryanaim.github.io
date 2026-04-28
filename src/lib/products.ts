@@ -158,7 +158,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-str-4', type: 'sticker', category: 'bmx',
     name: 'Bike Life', price: 150,
     image: '/img/products/stickers/bike-life-black.jpg',
-    description: 'Bike Life — a creed, not just a phrase. Available in black or white.',
+    description: 'Bike Life: a creed, not just a phrase. Available in black or white.',
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Laptop'],
     variants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/stickers/bike-life-black.jpg' },
@@ -189,7 +189,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-str-7', type: 'sticker', category: 'cycling',
     name: 'Chain Link Footprint', price: 150,
     image: '/img/products/stickers/chain-link-footprint-yellow.jpg',
-    description: 'Chain link meets footprint — unique cycling art sticker.',
+    description: 'Chain link meets footprint. Unique cycling art sticker.',
     canUseOn: ['Bike frame', 'Phone', 'Laptop', 'Water bottle'],
   },
   {
@@ -237,7 +237,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-str-12', type: 'sticker', category: 'street',
     name: 'Red Bull Logo', price: 150,
     image: '/img/products/stickers/red-bull-logo.jpg',
-    description: 'Red Bull sticker — gives your gear wings.',
+    description: 'Red Bull sticker. Gives your gear wings.',
     canUseOn: ['Bike frame', 'Helmet', 'Laptop', 'Water bottle'],
   },
   {
@@ -280,7 +280,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-str-15', type: 'sticker', category: 'street',
     name: 'Speed Bullet', price: 150,
     image: '/img/products/stickers/speed-bullet-red.jpg',
-    description: 'Speed bullet sticker — fast is a lifestyle.',
+    description: 'Speed bullet sticker. Fast is a lifestyle.',
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Car'],
   },
   {
@@ -310,7 +310,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-str-18', type: 'sticker', category: 'street',
     name: 'Skull Hot Head', price: 150,
     image: '/img/products/stickers/skull-hot-head-with-helmet.jpg',
-    description: 'Skull with a helmet — street art that wears its gear.',
+    description: 'Skull with a helmet. Street art that wears its gear.',
     canUseOn: ['Laptop', 'Phone', 'Helmet', 'Skateboard'],
     variants: [
       { color: 'default', colorLabel: 'Classic', image: '/img/products/stickers/skull-hot-head-with-helmet.jpg' },
@@ -324,28 +324,28 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-bmx-1', type: 'sticker', category: 'bmx',
     name: 'A Day Without BMX', price: 150,
     image: '/img/products/stickers/a-day-without-bmx-just-kidding-i-have-no-idea.jpg',
-    description: "A day without BMX? Just kidding — no idea what that even means.",
+    description: "A day without BMX? Just kidding. No idea what that even means.",
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
   {
     id: 's-bmx-2', type: 'sticker', category: 'bmx',
     name: 'All Bikes Matter BMX', price: 150,
     image: '/img/products/stickers/all-bikes-matter-bmx.jpg',
-    description: 'All bikes matter — BMX most of all. Rep the two-wheel life.',
+    description: 'All bikes matter. BMX most of all. Rep the two-wheel life.',
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
   {
     id: 's-bmx-3', type: 'sticker', category: 'bmx',
     name: 'BMX BMX BMX Rasta', price: 150,
     image: '/img/products/stickers/bmx-bmx-bmx-rasta.jpg',
-    description: 'Triple the BMX, triple the energy — in rasta colours.',
+    description: 'Triple the BMX, triple the energy. In rasta colours.',
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
   {
     id: 's-bmx-4', type: 'sticker', category: 'bmx',
     name: 'BMX Emoji', price: 150,
     image: '/img/products/stickers/bmx-emoji.jpg',
-    description: 'Say it with a sticker — BMX life in emoji form.',
+    description: 'Say it with a sticker. BMX life in emoji form.',
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
   {
@@ -373,7 +373,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-bmx-8', type: 'sticker', category: 'bmx',
     name: 'He Is Rizin', price: 150,
     image: '/img/products/stickers/he-is-rizin-black-jesus-rasta-with-bmx.jpg',
-    description: "Black Jesus on a BMX — he is rizin. Bold and unapologetic.",
+    description: "Black Jesus on a BMX. He is rizin. Bold and unapologetic.",
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
   {
@@ -394,28 +394,28 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-bmx-11', type: 'sticker', category: 'bmx',
     name: 'My Only Ex I Still Ride', price: 150,
     image: '/img/products/stickers/my-only-ex-i-still-ride-bmx.jpg',
-    description: "My only ex I still ride — BMX never breaks your heart.",
+    description: "My only ex I still ride. BMX never breaks your heart.",
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
   {
     id: 's-bmx-12', type: 'sticker', category: 'bmx',
     name: 'Shades of BMX Rasta', price: 150,
     image: '/img/products/stickers/shades-of-bmx-rasta.jpg',
-    description: 'BMX vibes in rasta shades — colourful, energetic, unstoppable.',
+    description: 'BMX vibes in rasta shades: colourful, energetic, unstoppable.',
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
   {
     id: 's-bmx-13', type: 'sticker', category: 'bmx',
     name: "I Don't Crash", price: 150,
     image: '/img/products/stickers/i-dont-crash-i-do-random-gravity-checks-rasta.jpg',
-    description: "I don't crash — I do random gravity checks. BMX humour, rasta style.",
+    description: "I don't crash. I do random gravity checks. BMX humour, rasta style.",
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
   {
     id: 's-bmx-14', type: 'sticker', category: 'bmx',
     name: 'Life Behind Bars', price: 150,
     image: '/img/products/stickers/life-behind-bars.jpg',
-    description: 'Life behind bars — the only bars worth living behind.',
+    description: 'Life behind bars. The only bars worth living behind.',
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
 
@@ -424,7 +424,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-cyc-1', type: 'sticker', category: 'cycling',
     name: 'Born to Ride Forced to Work', price: 150,
     image: '/img/products/stickers/born-to-ride-forced-to-work.jpg',
-    description: 'Born to ride, forced to work — the struggle every cyclist knows.',
+    description: 'Born to ride, forced to work. The struggle every cyclist knows.',
     canUseOn: ['Bike frame', 'Helmet', 'Phone', 'Water bottle'],
   },
   {
@@ -473,7 +473,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-des-10', type: 'sticker', category: 'designer',
     name: 'Falling Is a Form of Art', price: 150,
     image: '/img/products/stickers/falling-is-a-form-of-art.jpg',
-    description: "Falling is a form of art — and you're a masterpiece.",
+    description: "Falling is a form of art. And you're a masterpiece.",
     canUseOn: ['Laptop', 'Phone', 'Notebook'],
   },
   {
@@ -503,7 +503,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-pop-3', type: 'sticker', category: 'pop-culture',
     name: 'Bart Skeleton', price: 150,
     image: '/img/products/stickers/bart-skeleton.jpg',
-    description: "Bart as a skeleton — edgy Simpsons art for the bold.",
+    description: "Bart as a skeleton. Edgy Simpsons art for the bold.",
     canUseOn: ['Laptop', 'Phone', 'Notebook', 'Water bottle'],
   },
   {
@@ -552,7 +552,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-pop-12', type: 'sticker', category: 'pop-culture',
     name: 'Rick Head', price: 150,
     image: '/img/products/stickers/rick-head.jpg',
-    description: "Rick Sanchez sticker — wubba lubba dub dub.",
+    description: "Rick Sanchez sticker. Wubba lubba dub dub.",
     canUseOn: ['Laptop', 'Phone', 'Notebook', 'Water bottle'],
   },
   {
@@ -566,7 +566,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 's-pop-14', type: 'sticker', category: 'pop-culture',
     name: 'SpongeBob Raise Hand', price: 150,
     image: '/img/products/stickers/spongebob-raise-hand.jpg',
-    description: "SpongeBob raising his hand — because you always have the right answer.",
+    description: "SpongeBob raising his hand, because you always have the right answer.",
     canUseOn: ['Laptop', 'Phone', 'Notebook', 'Water bottle'],
   },
 
@@ -575,7 +575,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-7', type: 'tshirt',
     name: 'A Day Without BMX Tee', price: 1200,
     image: '/img/products/t-shirts/a-day-without-bmx-just-kidding-i-have-no-idea-white-tshirt.jpg',
-    description: "A day without BMX? Just kidding — no idea what that even means. Premium cotton tee.",
+    description: "A day without BMX? Just kidding. No idea what that even means. Premium cotton tee.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -599,7 +599,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-9', type: 'tshirt',
     name: 'All Bikes Matter BMX Tee', price: 1200,
     image: '/img/products/t-shirts/all-bikes-matter-bmx-white-tshirt.jpg',
-    description: 'All bikes matter — BMX especially. Wear the creed.',
+    description: 'All bikes matter. BMX especially. Wear the creed.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -626,7 +626,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-11', type: 'tshirt',
     name: 'Bike Life Tee (Graphic)', price: 1200,
     image: '/img/products/t-shirts/bike-life-black-t-shirt.jpg',
-    description: 'Bike Life graphic tee — for those who live on two wheels.',
+    description: 'Bike Life graphic tee, for those who live on two wheels.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -725,7 +725,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-19', type: 'tshirt',
     name: 'Born to Ride Forced to Work Tee', price: 1200,
     image: '/img/products/t-shirts/born-to-ride-forced-to-work-white-tshirt.jpg',
-    description: 'Born to ride, forced to work — the struggle every rider wears proudly.',
+    description: 'Born to ride, forced to work. The struggle every rider wears proudly.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -749,7 +749,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-21', type: 'tshirt',
     name: 'Falling Is a Form of Art Tee', price: 1200,
     image: '/img/products/t-shirts/falling-is-a-form-of-art-white-tshirt.jpg',
-    description: "Falling is a form of art — wear the philosophy.",
+    description: "Falling is a form of art. Wear the philosophy.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -761,7 +761,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-22', type: 'tshirt',
     name: 'He Is Rizin Tee', price: 1200,
     image: '/img/products/t-shirts/he-is-rizin-black-jesus-rasta-with-bmx-white-tshirt.jpg',
-    description: "Black Jesus on a BMX — he is rizin. Bold graphic tee for the brave.",
+    description: "Black Jesus on a BMX. He is rizin. Bold graphic tee for the brave.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -788,7 +788,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-24', type: 'tshirt',
     name: "I Don't Crash Tee", price: 1200,
     image: '/img/products/t-shirts/i-dont-crash-i-do-random-gravity-checks-rasta-white-tshirt.jpg',
-    description: "I don't crash — I do random gravity checks. Rasta BMX humour tee.",
+    description: "I don't crash. I do random gravity checks. Rasta BMX humour tee.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -814,7 +814,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-26', type: 'tshirt',
     name: 'Life Behind Bars Tee', price: 1200,
     image: '/img/products/t-shirts/life-behind-bars-white-tshirt.jpg',
-    description: 'Life behind bars — the only bars worth living behind.',
+    description: 'Life behind bars. The only bars worth living behind.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -865,7 +865,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-30', type: 'tshirt',
     name: 'Monster Energy With M Logo Tee', price: 1200,
     image: '/img/products/t-shirts/monster-energy-with-m-logo.jpg',
-    description: 'Monster Energy with the M logo — double the brand energy on one tee.',
+    description: 'Monster Energy with the M logo. Double the brand energy on one tee.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'street',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -877,7 +877,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-31', type: 'tshirt',
     name: 'My Only Ex I Still Ride Tee', price: 1200,
     image: '/img/products/t-shirts/my-only-ex-i-still-ride-bmx-white-tshirt.jpg',
-    description: "My only ex I still ride — BMX never breaks your heart.",
+    description: "My only ex I still ride. BMX never breaks your heart.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -891,7 +891,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-32', type: 'tshirt',
     name: 'Red Bull Logo Tee', price: 1200,
     image: '/img/products/t-shirts/red-bull-logo-white-tshirt.jpg',
-    description: 'Red Bull graphic tee — gives your wardrobe wings.',
+    description: 'Red Bull graphic tee. Gives your wardrobe wings.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'street',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -942,7 +942,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-36', type: 'tshirt',
     name: 'Rick Head Tee', price: 1300,
     image: '/img/products/t-shirts/rick-head-white-tshirt.jpg',
-    description: "Rick Sanchez graphic tee — wubba lubba dub dub.",
+    description: "Rick Sanchez graphic tee. Wubba lubba dub dub.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'pop-culture',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -956,7 +956,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-37', type: 'tshirt',
     name: 'Ride Crash Swear Repeat Tee', price: 1200,
     image: '/img/products/t-shirts/ride-crash-swear-repeat-rasts-purple-and-blue-white-tshirt-male-model.jpg',
-    description: "Ride, crash, swear, repeat — the official rasta BMX motto tee.",
+    description: "Ride, crash, swear, repeat. The official rasta BMX motto tee.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -970,7 +970,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-38', type: 'tshirt',
     name: 'Shades of BMX Rasta Tee', price: 1200,
     image: '/img/products/t-shirts/shades-of-bmx-rasta-white-tshirt.jpg',
-    description: 'BMX in rasta shades — colourful, energetic, unstoppable.',
+    description: 'BMX in rasta shades: colourful, energetic, unstoppable.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -997,7 +997,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-40', type: 'tshirt',
     name: 'SpongeBob Raise Hand Tee', price: 1300,
     image: '/img/products/t-shirts/spongebob-raise-hand-white-tshirt.jpg',
-    description: "SpongeBob raising his hand — because you always have the answer.",
+    description: "SpongeBob raising his hand, because you always have the answer.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'pop-culture',
     mockupCredit: 'https://mockupmark.com',
     colorVariants: [
@@ -1053,7 +1053,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-44', type: 'tshirt',
     name: 'The Codefather Tee', price: 1200,
     image: '/img/products/t-shirts/codefather-white-tshirt.webp',
-    description: "The Codefather — for devs who make offers you can't refuse.",
+    description: "The Codefather. For devs who make offers you can't refuse.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'white', colorLabel: 'White', image: '/img/products/t-shirts/codefather-white-tshirt.webp', modelImage: '/img/products/t-shirts/codefather-white-tshirt-model.webp' },
@@ -1066,7 +1066,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-45', type: 'tshirt',
     name: 'While Not Dead Tee', price: 1200,
     image: '/img/products/t-shirts/while-not-dead-eat-code-sleep-tan-tshirt.webp',
-    description: 'while(!dead) { eat(); code(); //sleep(); } — the dev lifestyle in one shirt.',
+    description: 'while(!dead) { eat(); code(); //sleep(); }. The dev lifestyle in one shirt.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'tan', colorLabel: 'Tan', image: '/img/products/t-shirts/while-not-dead-eat-code-sleep-tan-tshirt.webp' },
@@ -1079,7 +1079,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-46', type: 'tshirt',
     name: 'In Code We Trust Tee', price: 1200,
     image: '/img/products/t-shirts/in-code-we-trust-black-tshirt.webp',
-    description: 'IN C</> DE WE TRUST — every developer\'s creed on a premium black tee.',
+    description: 'IN C</> DE WE TRUST. Every developer\'s creed on a premium black tee.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/in-code-we-trust-black-tshirt.webp', modelImage: '/img/products/t-shirts/in-code-we-trust-black-tshirt-model.webp' },
@@ -1092,7 +1092,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-47', type: 'tshirt',
     name: 'Error 404 Sleep Not Found Tee', price: 1200,
     image: '/img/products/t-shirts/error-404-sleep-not-found-white-tshirt.webp',
-    description: 'ERROR 404: Sleep Not Found — the dev badge of honour at 4am.',
+    description: 'ERROR 404: Sleep Not Found. The dev badge of honour at 4am.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'white', colorLabel: 'White', image: '/img/products/t-shirts/error-404-sleep-not-found-white-tshirt.webp' },
@@ -1105,7 +1105,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-48', type: 'tshirt',
     name: 'Geek Element Tee', price: 1200,
     image: '/img/products/t-shirts/geek-element-black-tshirt.webp',
-    description: 'Ge — Germanium (Geek). Periodic table humour for the nerds who know.',
+    description: 'Ge (Germanium) = Geek. Periodic table humour for the nerds who know.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/geek-element-black-tshirt.webp' },
@@ -1118,7 +1118,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-49', type: 'tshirt',
     name: 'Clean Code Tee', price: 1200,
     image: '/img/products/t-shirts/clean-code-black-tshirt.webp',
-    description: 'Write clean code — it\'s magic. Minimal blue design on a crisp black tee.',
+    description: 'Write clean code. It\'s magic. Minimal blue design on a crisp black tee.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/clean-code-black-tshirt.webp' },
@@ -1131,7 +1131,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-50', type: 'tshirt',
     name: 'Geek Google Tee', price: 1200,
     image: '/img/products/t-shirts/geek-google-white-tshirt.webp',
-    description: 'Geek — in Google colours. The nerd identity tee you didn\'t know you needed.',
+    description: 'Geek, in Google colours. The nerd identity tee you didn\'t know you needed.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'white', colorLabel: 'White', image: '/img/products/t-shirts/geek-google-white-tshirt.webp' },
@@ -1144,7 +1144,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-51', type: 'tshirt',
     name: 'It Works On My Machine Tee', price: 1200,
     image: '/img/products/t-shirts/it-works-on-my-machine-black-tshirt.webp',
-    description: "It works on my machine — the developer's ultimate excuse, now wearable.",
+    description: "It works on my machine. The developer's ultimate excuse, now wearable.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/it-works-on-my-machine-black-tshirt.webp' },
@@ -1158,7 +1158,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-52', type: 'tshirt',
     name: 'Keep Calm and Code On Tee', price: 1200,
     image: '/img/products/t-shirts/keep-calm-code-on-black-tshirt.webp',
-    description: 'Keep calm and code on — the classic poster, remixed for devs.',
+    description: 'Keep calm and code on. The classic poster, remixed for devs.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/keep-calm-code-on-black-tshirt.webp' },
@@ -1171,7 +1171,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-53', type: 'tshirt',
     name: 'Developer Logo Tee', price: 1200,
     image: '/img/products/t-shirts/developer-logo-white-tshirt.webp',
-    description: "Dev(eloper) — the world's most popular platform, but for code.",
+    description: "Dev(eloper). The world's most popular platform, but for code.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'white', colorLabel: 'White', image: '/img/products/t-shirts/developer-logo-white-tshirt.webp' },
@@ -1184,7 +1184,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-54', type: 'tshirt',
     name: 'Eat Sleep Code Tee', price: 1200,
     image: '/img/products/t-shirts/eat-sleep-code-white-tshirt.webp',
-    description: 'Eat. Sleep. Code. Repeat — the dev lifestyle on a clean circuit-board tee.',
+    description: 'Eat. Sleep. Code. Repeat. The dev lifestyle on a clean circuit-board tee.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'white', colorLabel: 'White', image: '/img/products/t-shirts/eat-sleep-code-white-tshirt.webp' },
@@ -1197,7 +1197,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-55', type: 'tshirt',
     name: 'Full-Stack Developer Tee', price: 1200,
     image: '/img/products/t-shirts/full-stack-developer-white-tshirt.webp',
-    description: 'Full-Stack Developer — front, back, and everything in between.',
+    description: 'Full-Stack Developer: front, back, and everything in between.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'white', colorLabel: 'White', image: '/img/products/t-shirts/full-stack-developer-white-tshirt.webp', modelImage: '/img/products/t-shirts/full-stack-developer-white-tshirt-model.webp' },
@@ -1210,7 +1210,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-56', type: 'tshirt',
     name: 'I Love Code Tee', price: 1200,
     image: '/img/products/t-shirts/i-love-code-white-tshirt.webp',
-    description: 'I ❤ Code — simple, honest, and stylish on a classic white tee.',
+    description: 'I ❤ Code. Simple, honest, and stylish on a classic white tee.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'white', colorLabel: 'White', image: '/img/products/t-shirts/i-love-code-white-tshirt.webp' },
@@ -1223,7 +1223,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-57', type: 'tshirt',
     name: 'Front-End Developer Tee', price: 1200,
     image: '/img/products/t-shirts/frontend-developer-white-tshirt.webp',
-    description: '</> Front-End Developer — for the ones who make the web beautiful.',
+    description: '</> Front-End Developer. For the ones who make the web beautiful.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'white', colorLabel: 'White', image: '/img/products/t-shirts/frontend-developer-white-tshirt.webp' },
@@ -1236,7 +1236,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-58', type: 'tshirt',
     name: 'SELECT Shirt SQL Tee', price: 1200,
     image: '/img/products/t-shirts/select-shirt-sql-black-tshirt.webp',
-    description: "SELECT Shirt FROM Closet WHERE Clean = 1 AND Color = 'Black' — a query worth wearing.",
+    description: "SELECT Shirt FROM Closet WHERE Clean = 1 AND Color = 'Black'. A query worth wearing.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/select-shirt-sql-black-tshirt.webp', modelImage: '/img/products/t-shirts/select-shirt-sql-black-tshirt-model.webp' },
@@ -1249,7 +1249,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-59', type: 'tshirt',
     name: '!FALSE = TRUE Tee', price: 1200,
     image: '/img/products/t-shirts/not-false-is-true-black-tshirt.webp',
-    description: '!FALSE — it\'s funny because it\'s TRUE. Dev humour at its finest.',
+    description: '!FALSE. It\'s funny because it\'s TRUE. Dev humour at its finest.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/not-false-is-true-black-tshirt.webp', modelImage: '/img/products/t-shirts/not-false-is-true-black-tshirt-model.webp' },
@@ -1275,7 +1275,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-61', type: 'tshirt',
     name: "Every Programmer's Process Tee", price: 1200,
     image: '/img/products/t-shirts/programmers-process-black-tshirt.webp',
-    description: "Every Programmer's Process — five stages from panic to 'oh, it was a typo.'",
+    description: "Every Programmer's Process: five stages from panic to 'oh, it was a typo.'",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/programmers-process-black-tshirt.webp', modelImage: '/img/products/t-shirts/programmers-process-black-tshirt-model.webp' },
@@ -1288,7 +1288,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-62', type: 'tshirt',
     name: 'I Hate Programming Tee', price: 1200,
     image: '/img/products/t-shirts/i-hate-programming-black-tshirt.webp',
-    description: 'I Hate Programming × 3... IT WORKS!! I Love Programming — every dev\'s rollercoaster.',
+    description: 'I Hate Programming × 3... IT WORKS!! I Love Programming. Every dev\'s rollercoaster.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/i-hate-programming-black-tshirt.webp' },
@@ -1301,7 +1301,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-63', type: 'tshirt',
     name: 'Binary Code Bear Tee', price: 1200,
     image: '/img/products/t-shirts/binary-code-bear-tan-tshirt.webp',
-    description: "Sorry, I only speak binary code — a nerdy bear tee for the introverts.",
+    description: "Sorry, I only speak binary code. A nerdy bear tee for the introverts.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'developer',
     colorVariants: [
       { color: 'tan', colorLabel: 'Tan', image: '/img/products/t-shirts/binary-code-bear-tan-tshirt.webp' },
@@ -1316,7 +1316,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-64', type: 'tshirt',
     name: 'Janja Smiley Tee', price: 1200,
     image: '/img/products/t-shirts/janja-smiley-tan-tshirt.webp',
-    description: 'Janja. — the brand smiley tee, original and unapologetic.',
+    description: 'Janja. The brand smiley tee, original and unapologetic.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'street',
     colorVariants: [
       { color: 'tan', colorLabel: 'Tan', image: '/img/products/t-shirts/janja-smiley-tan-tshirt.webp', modelImage: '/img/products/t-shirts/janja-smiley-tan-tshirt-model.webp' },
@@ -1329,7 +1329,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-65', type: 'tshirt',
     name: 'Rasta Lion Tee', price: 1200,
     image: '/img/products/t-shirts/rasta-lion-white-tshirt.webp',
-    description: 'Lion of Judah with rasta stripes — bold, proud, and full of colour.',
+    description: 'Lion of Judah with rasta stripes: bold, proud, and full of colour.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'street',
     colorVariants: [
       { color: 'white', colorLabel: 'White', image: '/img/products/t-shirts/rasta-lion-white-tshirt.webp' },
@@ -1342,7 +1342,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-66', type: 'tshirt',
     name: 'Super G Tee', price: 1200,
     image: '/img/products/t-shirts/super-g-blue-tshirt.webp',
-    description: "Superman logo with a G — because you're the hero in your own story.",
+    description: "Superman logo with a G, because you're the hero in your own story.",
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'pop-culture',
     colorVariants: [
       { color: 'blue', colorLabel: 'Blue', image: '/img/products/t-shirts/super-g-blue-tshirt.webp', modelImage: '/img/products/t-shirts/super-g-blue-tshirt-model.webp' },
@@ -1355,7 +1355,7 @@ export const PRODUCTS: CatalogProduct[] = [
     id: 't-67', type: 'tshirt',
     name: 'BMX Smiley Tee', price: 1200,
     image: '/img/products/t-shirts/bmx-smiley-black-tshirt-model.webp',
-    description: 'BMX bike smiley face — because riding always puts a smile on your face.',
+    description: 'BMX bike smiley face, because riding always puts a smile on your face.',
     colors: TSHIRT_COLORS, sizes: TSHIRT_SIZES, category: 'bmx',
     colorVariants: [
       { color: 'black', colorLabel: 'Black', image: '/img/products/t-shirts/bmx-smiley-black-tshirt-model.webp' },
@@ -1501,7 +1501,7 @@ export const PRODUCTS: CatalogProduct[] = [
     name: 'Green Bullet BMX Helmet',
     price: 1800,
     image: '/img/products/helmets/green-bullet-bmx-helmet-side.webp',
-    description: 'Vivid green Bullet BMX helmet — hard to miss, hard to beat. EX-UK.',
+    description: 'Vivid green Bullet BMX helmet. Hard to miss, hard to beat. EX-UK.',
     color: 'green',
     brand: 'Bullet',
     category: 'bmx',

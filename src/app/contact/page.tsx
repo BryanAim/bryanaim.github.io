@@ -186,7 +186,7 @@ export default function Contact() {
           whileInView="show"
           viewport={{ once: true, margin: '-40px' }}
         >
-          Pick a service and get an instant quote — or browse the shop.
+          Pick a service and get an instant quote, or browse the shop.
         </motion.p>
 
         <motion.div
@@ -244,8 +244,8 @@ export default function Contact() {
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
         >
           {([
-            { icon: 'fas fa-store',   label: 'Browse the Shop', desc: 'Stickers, tees, prints, and more — ready to order.', color: '#b1db00', href: '/shop',        cta: 'Visit shop' },
-            { icon: 'fas fa-pen-nib', label: 'Custom Order',    desc: "Upload your own artwork or brief — I'll make it happen.", color: '#00ddd7', href: '/shop/custom', cta: 'Start custom order' },
+            { icon: 'fas fa-store',   label: 'Browse the Shop', desc: 'Stickers, tees, prints, and more. Ready to order.', color: '#b1db00', href: '/shop',        cta: 'Visit shop' },
+            { icon: 'fas fa-pen-nib', label: 'Custom Order',    desc: "Upload your own artwork or brief and I'll make it happen.", color: '#00ddd7', href: '/shop/custom', cta: 'Start custom order' },
           ] as const).map((item) => (
             <motion.a
               key={item.href}
