@@ -189,14 +189,14 @@ export default function Home() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 inline-flex items-center justify-center text-base text-white/35 rounded-lg transition-all duration-200 hover:bg-white/[0.07]"
-                title={s.label}
+                aria-label={s.label}
+                className="w-11 h-11 inline-flex items-center justify-center text-base text-white/35 rounded-lg transition-all duration-200 hover:bg-white/[0.07]"
                 initial={{ opacity: 0, y: 2.5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3 + i * 0.07, duration: 0.35 }}
                 whileHover={{ y: -0.75, color: s.color }}
               >
-                <i className={s.icon} />
+                <i className={s.icon} aria-hidden="true" />
               </motion.a>
             ))}
           </motion.div>

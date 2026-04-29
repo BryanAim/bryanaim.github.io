@@ -412,13 +412,9 @@ Keyboard users cannot activate these cards.
 
 ---
 
-### 3.8 — Social icons missing `aria-label`
+### 3.8 — ✅ DONE: Social icons `aria-label` + touch targets fixed (2026-04-29)
 **File:** `src/app/page.tsx:187–201`  
-Icons have `title` attribute but no `aria-label` — screen readers may not announce them. Also touch targets are `w-10 h-10` (40px) — below the 44px WCAG minimum.
-```tsx
-// Change w-10 h-10 to w-11 h-11, add aria-label={s.label}
-<motion.a aria-label={s.label} className="w-11 h-11 inline-flex items-center justify-center ...">
-```
+Added `aria-label={s.label}`, removed redundant `title`, added `aria-hidden="true"` to the `<i>` icon, and bumped `w-10 h-10` → `w-11 h-11` (44px WCAG minimum).
 
 ---
 
