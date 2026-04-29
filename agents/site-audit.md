@@ -90,14 +90,7 @@ Long-term: migrate to `lucide-react` (already in `package.json`) for tree-shaken
 
 ---
 
-### 1.7 — No AVIF format configured
-**File:** `next.config.js:42`
-```js
-images: {
-  formats: ['image/avif', 'image/webp'],  // add this
-  remotePatterns: [...],
-}
-```
+### 1.7 — ✅ DONE: AVIF format added to `next.config.js` (2026-04-29)
 
 ---
 
