@@ -232,18 +232,8 @@ const STATIC_DATES: Record<string, string> = {
 
 ---
 
-### 2.5 — Internal `<a>` tags throughout — no Next.js prefetching
-**Found:** 9+ instances across `page.tsx`, `about/page.tsx`, `contact/page.tsx`, `shop/`, `Header.tsx`.
-
-All internal hrefs should use `<Link>` from `next/link`. This restores client-side navigation, page prefetching on hover, and the PageTransition animations between routes (currently broken because full page reloads bypass the transition wrapper).
-
-```tsx
-import Link from 'next/link'
-// page.tsx:169
-<Link href="/about" className="...">About Me</Link>
-<Link href="/work#services" className="...">Services</Link>
-<Link href="/contact" className="...">Get in touch</Link>
-```
+### 2.5 — ✅ DONE: Internal `<a>` tags replaced with `<Link>` (2026-04-30)
+All 13 internal `<a href>` instances replaced with `<Link>` from `next/link` across 7 files: `Header.tsx` (logo + desktop nav + mobile nav), `layout.tsx` (footer BMX), `page.tsx` (3 CTAs), `about/page.tsx` (Hire Me), `shop/page.tsx` (checkout CTA), `shop/checkout/page.tsx` (3 back/continue links), `shop/custom/page.tsx` (back link). The `/isale_brian_cv.pdf` download link kept as `<a>` — `Link` does not support the `download` attribute.
 
 ---
 
@@ -740,7 +730,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 9. Change Work page default tab from `'services'` to `'dev'` — `work/page.tsx:122`
 10. Fix OG image dimensions (create real 1200×630 banner) — `layout.tsx:46`
 11. Add `<link rel="preload">` for first background slide — `layout.tsx <head>`
-12. Replace `<a>` with `<Link>` for all internal navigation
+12. ~~Replace `<a>` with `<Link>` for all internal navigation~~ ✅ 2026-04-30
 13. Add per-page canonical metadata (needs server shell pattern first)
 14. ~~Add AVIF format to `next.config.js`~~ ✅ 2026-04-29
 15. Add `display: 'swap'` to Inter font — `layout.tsx:11`

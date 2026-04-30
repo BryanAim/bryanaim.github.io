@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 
 const navLinks = [
   { href: '/',              label: 'Home',     icon: 'fas fa-home' },
@@ -42,7 +43,7 @@ export default function Header() {
         onMouseLeave={() => setHovered(false)}
       >
         {/* ── Logo ── */}
-        <a href="/" className="side-nav-logo">
+        <Link href="/" className="side-nav-logo">
           <span className="side-nav-logo-b">B</span>
           <AnimatePresence>
             {hovered && (
@@ -58,7 +59,7 @@ export default function Header() {
               </motion.span>
             )}
           </AnimatePresence>
-        </a>
+        </Link>
 
         {/* ── Divider ── */}
         <div className="side-nav-divider" />
@@ -69,7 +70,7 @@ export default function Header() {
             const isActive = pathname === href
             return (
               <li key={href} className="side-nav-item">
-                <a
+                <Link
                   href={href}
                   className={`side-nav-link${isActive ? ' active' : ''}`}
                   title={label}
@@ -117,7 +118,7 @@ export default function Header() {
                       </motion.span>
                     )}
                   </AnimatePresence>
-                </a>
+                </Link>
               </li>
             )
           })}
@@ -160,9 +161,9 @@ export default function Header() {
               key={href}
               className={`nav-item${mobileOpen ? ' show' : ''}${pathname === href ? ' current' : ''}`}
             >
-              <a href={href} className="nav-link" onClick={() => setMobileOpen(false)}>
+              <Link href={href} className="nav-link" onClick={() => setMobileOpen(false)}>
                 {label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

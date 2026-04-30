@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import DesignGallery from '../components/DesignGallery'
@@ -479,9 +480,9 @@ export default function About() {
             <a href="/isale_brian_cv.pdf" download className="home-cta-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
               <i className="fas fa-download" /> Download CV
             </a>
-            <a href="/work?tab=services" className="home-cta-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
+            <Link href="/work?tab=services" className="home-cta-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
               Hire me
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>

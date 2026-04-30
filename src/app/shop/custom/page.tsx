@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback, useEffect, DragEvent, ChangeEvent } from 'react'
+import Link from 'next/link'
 import styles from './custom.module.css'
 import {
   TSHIRT_COLORS, TSHIRT_SIZES, calcStickerPrice,
@@ -188,7 +189,7 @@ export default function CustomOrderPage() {
   return (
     <main id="shop">
       <nav className="mb-4">
-        <a href="/shop" className="text-[#888] text-[0.85rem] no-underline transition-colors duration-150 hover:text-lime">← Back to Shop</a>
+        <Link href="/shop" className="text-[#888] text-[0.85rem] no-underline transition-colors duration-150 hover:text-lime">← Back to Shop</Link>
       </nav>
       <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">
         Custom <span className="text-lime">Order</span>

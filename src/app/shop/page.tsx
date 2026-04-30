@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
+import Link from 'next/link'
 import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
@@ -710,9 +711,9 @@ export default function ShopPage() {
           </div>
           {cart.length > 0 && (
             <>
-              <a href="/shop/checkout" className="block text-center bg-lime text-[#1a1a1a] font-bold text-base py-[0.85rem] no-underline hover:bg-[#c8f500]">
+              <Link href="/shop/checkout" className="block text-center bg-lime text-[#1a1a1a] font-bold text-base py-[0.85rem] no-underline hover:bg-[#c8f500]">
                 Proceed to Checkout
-              </a>
+              </Link>
               <button className="bg-none border border-[#555] text-[#888] text-[0.85rem] p-2 cursor-pointer w-full hover:border-[#ff6b6b] hover:text-[#ff6b6b]" onClick={() => updateCart([])}>
                 Clear cart
               </button>

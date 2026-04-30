@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Typed from 'typed.js'
 import Image from 'next/image'
+import Link from 'next/link'
 
 // Bio for each typed string — fires after typing finishes, before deletion starts
 // Typed string order: Full Stack Dev, Creative Designer, Community Builder, BMX Rider, Lifelong Learner, Friend
@@ -166,15 +167,15 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.05, ease: 'easeOut' }}
           >
-            <a href="/about" className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-black font-black text-sm uppercase tracking-widest rounded-md transition-all duration-200 hover:bg-[#c8f000] hover:-translate-y-0.5 hover:shadow-lg" style={{boxShadow: 'none'}}>
+            <Link href="/about" className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-black font-black text-sm uppercase tracking-widest rounded-md transition-all duration-200 hover:bg-[#c8f000] hover:-translate-y-0.5 hover:shadow-lg" style={{boxShadow: 'none'}}>
               About Me <i className="fas fa-arrow-right text-xs transition-transform duration-200" />
-            </a>
-            <a href="/work#services" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/[0.06]">
+            </Link>
+            <Link href="/work#services" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/6">
               Services
-            </a>
-            <a href="/contact" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/[0.06]">
+            </Link>
+            <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/6">
               Get in touch
-            </a>
+            </Link>
           </motion.div>
 
           <motion.div

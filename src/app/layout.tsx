@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 import Header from './components/Header'
+import Link from 'next/link'
 import WhatsAppButton from './components/WhatsAppButton'
 import PageTransition from './components/PageTransition'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -244,9 +245,9 @@ function Footer() {
   return (
     <footer className="flex items-center justify-between px-8 py-4 text-xs text-white/30">
       <span>&copy; {new Date().getFullYear()} - Brian Isale</span>
-      <a href="/bmx" className="inline-flex items-center gap-1.5 hover:text-white/60 transition-colors duration-200">
+      <Link href="/bmx" className="inline-flex items-center gap-1.5 hover:text-white/60 transition-colors duration-200">
         <i className="fas fa-bicycle" aria-hidden="true" /> BMX Life
-      </a>
+      </Link>
     </footer>
   )
 }

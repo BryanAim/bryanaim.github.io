@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import {
   loadCart, saveCart, CART_KEY, CartItem,
   TSHIRT_COLORS, TSHIRT_SIZES, TSHIRT_SIZE_PRICES,
@@ -151,7 +152,7 @@ export default function Checkout() {
           <div className="border-t border-[#666] pt-4 flex gap-4 items-center flex-wrap">
             <p className="w-full text-[#aaa] italic mb-4">Keep this receipt. We will reach out to arrange delivery or meetup.</p>
             <button className="block px-4 py-2 mb-[0.3rem] cursor-pointer border-0 bg-[#c4c4c4] text-[#333] transition-colors hover:bg-lime hover:text-black print:hidden" onClick={() => window.print()}>Print Receipt</button>
-            <a href="/shop" className="block px-4 py-2 mb-[0.3rem] cursor-pointer border-0 bg-black text-white transition-colors hover:bg-lime hover:text-black print:hidden">Continue Shopping</a>
+            <Link href="/shop" className="block px-4 py-2 mb-[0.3rem] cursor-pointer border-0 bg-black text-white transition-colors hover:bg-lime hover:text-black print:hidden">Continue Shopping</Link>
           </div>
         </div>
       </main>
@@ -193,7 +194,7 @@ export default function Checkout() {
   return (
     <main id="checkout">
       <nav className="mb-4">
-        <a href="/shop" className="text-[#888] text-[0.85rem] no-underline transition-colors duration-150 hover:text-lime">← Back to Shop</a>
+        <Link href="/shop" className="text-[#888] text-[0.85rem] no-underline transition-colors duration-150 hover:text-lime">← Back to Shop</Link>
       </nav>
       <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Check<span className="text-lime">out</span></h1>
       <h2 className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold">Review your order and pay with M-Pesa</h2>
@@ -201,7 +202,7 @@ export default function Checkout() {
       {cart.length === 0 ? (
         <div className="bg-[#515151] p-8 border-b-[5px] border-[#b1db00] max-w-[480px]">
           <p className="text-[#888]">
-            Your cart is empty. <a href="/shop" className="text-[#b1db00]">Go back to shop</a>.
+            Your cart is empty. <Link href="/shop" className="text-[#b1db00]">Go back to shop</Link>.
           </p>
         </div>
       ) : (
