@@ -242,8 +242,11 @@ export default function RootLayout({
 
 function Footer() {
   return (
-    <footer id="main-footer">
-      &copy; {new Date().getFullYear()} - Brian Isale
+    <footer className="flex items-center justify-between px-8 py-4 text-xs text-white/30">
+      <span>&copy; {new Date().getFullYear()} - Brian Isale</span>
+      <a href="/bmx" className="inline-flex items-center gap-1.5 hover:text-white/60 transition-colors duration-200">
+        <i className="fas fa-bicycle" aria-hidden="true" /> BMX Life
+      </a>
     </footer>
   )
 }
