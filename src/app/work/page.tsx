@@ -24,14 +24,16 @@ function DevCard({ p }: { p: DevProject }) {
       <div className="relative aspect-video overflow-hidden">
         <img src={p.img} alt={p.title} className="wk-dev-img w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/60 flex items-center justify-center gap-3 opacity-0 transition-opacity duration-[250ms] group-hover:opacity-100">
-          <a
-            href={p.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-[0.35rem] px-[0.9rem] py-[0.45rem] bg-teal/15 border border-teal rounded-[5px] text-teal text-[0.82rem] no-underline transition-colors duration-200 hover:bg-teal/[0.28]"
-          >
-            <i className="fas fa-eye" /> View
-          </a>
+          {p.url && (
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-[0.35rem] px-[0.9rem] py-[0.45rem] bg-teal/15 border border-teal rounded-[5px] text-teal text-[0.82rem] no-underline transition-colors duration-200 hover:bg-teal/[0.28]"
+            >
+              <i className="fas fa-eye" /> View
+            </a>
+          )}
           {p.github && (
             <a
               href={p.github}

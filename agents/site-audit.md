@@ -11,7 +11,7 @@
 |---|-----|------|--------|
 | 1 | Add "Available for work" badge to homepage hero | 20 min | 🔴 Hiring |
 | 2 | Remove "BMX Rider / Lifelong Learner / Friend" from typed strings | 5 min | 🔴 Hiring |
-| 3 | Fix 3 dead dev project URLs (VueGram, Covid Tracker, NaxTechmakers HTTP) | 10 min | 🔴 Credibility |
+| 3 | ✅ Fix 3 dead dev project URLs (VueGram, Covid Tracker, NaxTechmakers HTTP) | 10 min | 🔴 Credibility |
 | 4 | Delete dead Google Analytics UA script from `layout.tsx:230–236` | 2 min | 🟠 Performance |
 | 5 | Fix the M-Pesa callback with no authentication (fake payment injection possible) | 2 hrs | 🔴 Security |
 
@@ -247,16 +247,18 @@ import Link from 'next/link'
 
 ---
 
-### 2.6 — Dead project URLs need immediate fix
+### 2.6 — ✅ DONE: Dead project URLs fixed (2026-04-30)
 **File:** `src/app/work/devProjects.ts`
 
-| Project | Problem | Fix |
-|---------|---------|-----|
-| VueGram | Heroku free tier shut down Nov 2022 — dead URL | Point `url` to GitHub repo |
-| Covid Tracker | isalebryan.dev/everything-corona-virus — 404 | Point to GitHub repo |
-| NaxTechmakers | `http://` not `https://` — browser security warning | Change to `https://` |
-| Personal Library | `url` and `github` are identical GitHub links | Remove duplicate `url` field |
-| GSAP Animation | Same — GitHub only | Remove duplicate `url` field |
+| Project | Problem | Fix Applied |
+|---------|---------|-------------|
+| VueGram | Heroku free tier shut down Nov 2022 — dead URL | `url` → GitHub repo |
+| Covid Tracker | isalebryan.dev/everything-corona-virus — 404 | `url` → GitHub repo |
+| NaxTechmakers | `http://` not `https://` — browser security warning | Changed to `https://` |
+| Personal Library | `url` and `github` were identical | Removed `url` field |
+| GSAP Animation | `url` and `github` were identical | Removed `url` field |
+
+`url` made optional in `DevProject` interface; Work page conditionally renders "View" button only when `url` is present.
 
 ---
 
@@ -728,7 +730,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 ### 🔴 Critical (Do This Week)
 1. Add "Available for work" badge to homepage — `page.tsx`
 2. Remove BMX Rider/Learner/Friend from typed strings — `page.tsx:76–83`
-3. Fix 3 dead dev project URLs — `devProjects.ts`
+3. ✅ Fix 3 dead dev project URLs — `devProjects.ts`
 4. Delete dead UA Google Analytics script — `layout.tsx:230–236`
 5. Fix M-Pesa callback auth (fake payment injection) — `callback/route.ts`
 6. Fix unstyled CV/Hire Me buttons on About page — `about/page.tsx:479,483`
