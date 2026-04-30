@@ -44,7 +44,7 @@ export const devProjects: DevProject[] = [
     img: '/img/projects/my-portfolio.jpg',
     url: 'https://isalebryan.dev',
     github: 'https://github.com/BryanAim/bryanaim.github.io',
-    desc: 'This site — built with Next.js, TypeScript, and Framer Motion.',
+    desc: 'This site. Built with Next.js, TypeScript, and Framer Motion.',
     tags: ['Next.js', 'TypeScript', 'Framer Motion'],
   },
   {
