@@ -785,10 +785,7 @@ export default function BMX() {
       >
         <p className="text-[0.8rem] tracking-[3px] uppercase text-white/30 mb-5">Follow the sessions</p>
         <div className="flex justify-center gap-4 flex-wrap">
-          <a href="https://www.instagram.com/isalebryan/" target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-[0.5rem] px-[1.4rem] py-[0.6rem] border rounded-[6px] font-bold text-[0.85rem] no-underline transition-colors hover:bg-[color-mix(in_srgb,var(--fb-color)_15%,transparent)]" style={{ '--fb-color': '#e1306c' } as React.CSSProperties}>
-            <i className="fab fa-instagram" /> Instagram
-          </a>
+          
           <a href="https://tiktok.com/@bmxbrian" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-[0.5rem] px-[1.4rem] py-[0.6rem] border rounded-[6px] font-bold text-[0.85rem] no-underline transition-colors hover:bg-[color-mix(in_srgb,var(--fb-color)_15%,transparent)]" style={{ '--fb-color': '#e0e0e0' } as React.CSSProperties}>
             <i className="fab fa-tiktok" /> TikTok
