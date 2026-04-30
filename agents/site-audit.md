@@ -605,9 +605,8 @@ The site shows what Brian can do, not what he wants. Add one sentence to the Abo
 
 ---
 
-### 4.13 — WhatsApp should be primary CTA on Contact page for African market
-**File:** `src/app/contact/page.tsx:131–161`  
-WhatsApp is the primary professional communication channel in Kenya. Currently it is the third button. Reorder: WhatsApp → Email → View Work. The QuoteModal already gets this right (WhatsApp is the primary export action) — match it on the Contact page.
+### 4.13 — ✅ DONE: WhatsApp promoted to primary CTA on Contact page (2026-04-30)
+Reordered CTAs to: WhatsApp Me (solid `#25d366` bg, black text — primary) → Send an Email (ghost) → View My Work (dim ghost). File: `src/app/contact/page.tsx`.
 
 ---
 
@@ -730,7 +729,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 ### 🔴 Critical (Do This Week)
 1. Add "Available for work" badge to homepage — `page.tsx`
 2. Remove BMX Rider/Learner/Friend from typed strings — `page.tsx:76–83`
-3. ✅ Fix 3 dead dev project URLs — `devProjects.ts`
+3. ~~Fix 3 dead dev project URLs — `devProjects.ts`~~ ✅ 2026-04-30
 4. Delete dead UA Google Analytics script — `layout.tsx:230–236`
 5. Fix M-Pesa callback auth (fake payment injection) — `callback/route.ts`
 6. Fix unstyled CV/Hire Me buttons on About page — `about/page.tsx:479,483`
@@ -743,7 +742,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 11. Add `<link rel="preload">` for first background slide — `layout.tsx <head>`
 12. Replace `<a>` with `<Link>` for all internal navigation
 13. Add per-page canonical metadata (needs server shell pattern first)
-14. Add AVIF format to `next.config.js`
+14. ~~Add AVIF format to `next.config.js`~~ ✅ 2026-04-29
 15. Add `display: 'swap'` to Inter font — `layout.tsx:11`
 16. Fix Work heading mobile overflow (`text-[7rem]` → `clamp`) — `work/page.tsx:151`
 17. Add M-Pesa integration as a dev project card
@@ -753,14 +752,14 @@ Vercel injects it at edge, but add explicitly for clarity:
 
 ### 🟡 Medium (Next Quarter)
 21. Convert `work/design/[slug]` to SSG with `generateStaticParams` + `generateMetadata`
-22. Add `loading.tsx` and `error.tsx`
+22. ~~Add `loading.tsx` and `error.tsx`~~ ✅ 2026-04-29
 23. Add `focus-visible:` styles to all interactive elements
 24. Fix StackCard `div` missing `role="button"` + keyboard handler — `about/page.tsx:334`
 25. Fix `aria-live` on Typed.js target — `page.tsx:144`
 26. Add "Available for work" + availability statement to About page
 27. Add 1–2 client testimonials to About page or homepage
 28. Add "What I'm looking for" paragraph to About or Contact
-29. Move BMX from main nav to footer / About page
+29. ~~Move BMX from main nav to footer / About page~~ ✅ 2026-04-30
 30. Add `will-change-transform` to hover-animated cards — `work/page.tsx:17`
 31. Fix bio text contrast `text-white/50` → `text-white/65` — `page.tsx:155`
 32. Make slide dots clickable — `page.tsx:206`
@@ -779,16 +778,21 @@ Vercel injects it at edge, but add explicitly for clarity:
 43. Add `src/components/ui/` button using shadcn pattern, or remove unused shadcn deps
 44. Move `sass` from `dependencies` to `devDependencies`
 45. Fix `duration-1400` → `duration-[1400ms]` — `page.tsx:103`
-46. Remove orphan `.quote` class — `about/page.tsx:528`
+46. ~~Remove orphan `.quote` class — `about/page.tsx:528`~~ ✅ 2026-04-30 (replaced Steve Jobs quote with Charles Eames)
 47. Add "Currently" section to About page (building X, learning Y, open to Z)
 48. Add year labels to dev project cards
 49. Rewrite About page bio opening line
 50. Add USD pricing note to services for international clients
-51. Reorder nav: Home / Work / About / Contact / Blog / Shop / (BMX in footer)
+51. ~~Reorder nav: Home / Work / About / Contact / Blog / Shop / (BMX in footer)~~ ✅ 2026-04-30 (Blog removed — dead; BMX moved to footer; nav: Home / About Me / Work / Contact / Shop)
 52. Replace in-memory rate limiter with Upstash Redis (persists across instances)
 53. Use timing-safe comparison for orders API secret — `orders/route.ts`
 54. Remove deprecated `X-XSS-Protection` header — `next.config.js:9`
 55. Add explicit HSTS header — `next.config.js`
+
+**Also completed (not in numbered list):**
+- ✅ Social icons: `aria-label`, `aria-hidden` on `<i>`, touch targets 44px — `page.tsx` (2026-04-29) [was §3.8]
+- ✅ WhatsApp promoted to primary CTA on Contact page — `contact/page.tsx` (2026-04-30) [was §4.13]
+- ✅ About page Steve Jobs quote → Charles Eames — `about/page.tsx` (2026-04-30)
 
 ---
 

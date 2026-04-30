@@ -128,7 +128,7 @@ export default function Contact() {
           ))}
         </motion.div>
 
-        {/* CTAs */}
+        {/* CTAs — WhatsApp primary (Kenya market), then Email, then portfolio */}
         <motion.div
           className="flex gap-[0.85rem] flex-wrap justify-center"
           initial={{ opacity: 0, y: 20 }}
@@ -136,11 +136,13 @@ export default function Contact() {
           transition={{ duration: 0.6, delay: 1.1, ease: SPRING }}
         >
           <motion.a
-            href="/work"
-            className="inline-flex items-center gap-2 px-7 py-[0.8rem] bg-teal text-black font-bold text-[0.88rem] rounded-[7px] no-underline transition-opacity duration-200"
+            href="https://wa.me/254728822142"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-7 py-[0.8rem] bg-[#25d366] text-black font-bold text-[0.88rem] rounded-[7px] no-underline transition-opacity duration-200 hover:opacity-90"
             whileHover={{ scale: 1.04 }}
           >
-            View My Work <i className="fas fa-arrow-right" />
+            <i className="fab fa-whatsapp" /> WhatsApp Me
           </motion.a>
           <motion.a
             href="mailto:isale.bryan@gmail.com"
@@ -150,13 +152,11 @@ export default function Contact() {
             Send an Email
           </motion.a>
           <motion.a
-            href="https://wa.me/254728822142"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-[0.8rem] bg-[rgba(37,211,102,0.12)] border border-[rgba(37,211,102,0.35)] text-[#25d366] font-semibold text-[0.88rem] rounded-[7px] no-underline transition-[background] duration-200 hover:bg-[rgba(37,211,102,0.22)]"
+            href="/work"
+            className="inline-flex items-center gap-2 px-7 py-[0.8rem] border border-white/10 text-white/45 font-semibold text-[0.88rem] rounded-[7px] no-underline transition-[border-color,color] duration-200 hover:border-white/25 hover:text-white/70"
             whileHover={{ scale: 1.04 }}
           >
-            <i className="fab fa-whatsapp" /> WhatsApp
+            View My Work <i className="fas fa-arrow-right" />
           </motion.a>
         </motion.div>
 
