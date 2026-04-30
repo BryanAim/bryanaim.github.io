@@ -10,8 +10,6 @@ const navLinks = [
   { href: '/work',          label: 'Work',     icon: 'fas fa-briefcase' },
   { href: '/contact',       label: 'Contact',  icon: 'fas fa-envelope' },
   { href: '/shop',          label: 'Shop',     icon: 'fas fa-shopping-bag' },
-  { href: 'https://blog.isalebryan.dev/', label: 'My Blog',  icon: 'fas fa-pen-nib' },
-  { href: '/bmx',           label: 'BMX Life', icon: 'fas fa-bicycle' },
 ]
 
 const COLLAPSED = 64
