@@ -526,10 +526,8 @@ export default function About() {
         whileInView="show" viewport={{ once: true, margin: '-60px' }}
       >
         <blockquote className="quote italic text-[1.15rem] leading-[1.8] text-lime border-l-[3px] border-lime px-6 py-4 m-0">
-          &ldquo;Your work is going to fill a large part of your life, and the only way to be truly
-          satisfied is to do what you believe is great work. And the only way to do great work is to
-          love what you do. If you haven&apos;t found it yet, keep looking. Don&apos;t settle.&rdquo;
-          <cite className="block mt-3 not-italic text-[0.9rem] text-[#aaa] tracking-[0.05em]">— Steve Jobs</cite>
+          &ldquo;The details are not the details. They make the design.&rdquo;
+          <cite className="block mt-3 not-italic text-[0.9rem] text-[#aaa] tracking-[0.05em]">— Charles Eames</cite>
         </blockquote>
       </motion.div>
 
