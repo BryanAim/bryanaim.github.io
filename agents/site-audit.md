@@ -611,8 +611,8 @@ WhatsApp is the primary professional communication channel in Kenya. Currently i
 
 ---
 
-### 4.14 — BMX page is top-level nav item competing with Work and Contact
-"BMX Life" as a nav item equal in weight to "Work" signals lifestyle site to corporate recruiters. Move it to the footer, or inside the About page under "Beyond the Screen." The BMX content itself (learning journey, persistence, honesty) is actually a differentiator — it just needs to be deprioritized in the nav hierarchy.
+### 4.14 — ✅ DONE: BMX moved from nav to footer (2026-04-30)
+Removed "BMX Life" and dead "My Blog" from `navLinks` in `Header.tsx` (nav now: Home, About Me, Work, Contact, Shop). Footer in `layout.tsx` uses inline Tailwind flex with `justify-between` to show copyright left, BMX link right.
 
 ---
 
