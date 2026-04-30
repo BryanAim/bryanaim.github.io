@@ -143,8 +143,8 @@ import { LazyMotion, domAnimation } from 'framer-motion'
 
 ---
 
-### 1.11 — Remove dead `cdn.sanity.io` remote pattern
-**File:** `next.config.js:44` — Sanity is not used. Remove it.
+### 1.11 — ✅ DONE: Removed dead `cdn.sanity.io` remote pattern (2026-04-30)
+Deleted `{ protocol: 'https', hostname: 'cdn.sanity.io' }` from `remotePatterns` in `next.config.js`. Sanity is not used in this project.
 
 ---
 
@@ -252,12 +252,8 @@ All 13 internal `<a href>` instances replaced with `<Link>` from `next/link` acr
 
 ---
 
-### 2.7 — About page duplicates devProjects data
-**File:** `src/app/about/page.tsx`  
-The `webProjects` array inline is a partial copy of `devProjects.ts`. Import from the canonical source instead:
-```tsx
-import { devProjects } from '../work/devProjects'
-```
+### 2.7 — ✅ DONE: About page now imports from devProjects (2026-04-30)
+Deleted stale `webProjects` array and `Project` interface from `about/page.tsx`. Now imports `devProjects, DevProject` from `../work/devProjects`. `ProjectThumb` updated to use `DevProject` type with conditional `url` rendering (matches work page behaviour).
 
 ---
 
@@ -758,7 +754,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 35. Fix sitemap `lastModified` dates — `sitemap.ts`
 36. Add `startDelay: 800` to Typed.js config — `page.tsx:75`
 37. Add immutable cache headers for `/fonts/` and `/img/` — `next.config.js`
-38. Remove dead `cdn.sanity.io` remote pattern — `next.config.js:44`
+38. ~~Remove dead `cdn.sanity.io` remote pattern — `next.config.js:44`~~ ✅ 2026-04-30
 
 ### 🟢 Low (Nice to Have)
 39. Replace Font Awesome with `lucide-react` + inline SVGs for brand icons
@@ -783,6 +779,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 - ✅ Social icons: `aria-label`, `aria-hidden` on `<i>`, touch targets 44px — `page.tsx` (2026-04-29) [was §3.8]
 - ✅ WhatsApp promoted to primary CTA on Contact page — `contact/page.tsx` (2026-04-30) [was §4.13]
 - ✅ About page Steve Jobs quote → Charles Eames — `about/page.tsx` (2026-04-30)
+- ✅ About page `webProjects` stale copy replaced with `devProjects` import — `about/page.tsx` (2026-04-30) [was §2.7]
 
 ---
 
