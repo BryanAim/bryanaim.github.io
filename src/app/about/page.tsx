@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import DesignGallery from '../components/DesignGallery'
+import { devProjects, type DevProject } from '../work/devProjects'
 
 /* ─── Animation variants ─── */
 const SPRING = [0.16, 1, 0.3, 1] as const
@@ -27,7 +28,6 @@ const stagger = (delay = 0.1) => ({
 
 /* ─── Types ─── */
 interface Skill { name: string; level: number }
-interface Project { title: string; img: string; url: string; github?: string }
 interface Photo { src: string; caption: string }
 
 /* ─── Data ─── */
@@ -52,15 +52,6 @@ const designSkills: Skill[] = [
   { name: 'UI/UX Design', level: 80 },
   { name: 'Motion Graphics', level: 65 },
 ]
-const webProjects: Project[] = [
-  { title: 'WeatherNow', img: '/img/projects/weather.jpg', url: 'https://weathernow-afb00.web.app/', github: 'https://github.com/BryanAim/weather-app' },
-  { title: 'Covid Tracker', img: '/img/projects/corona.jpg', url: 'https://isalebryan.dev/everything-corona-virus/', github: 'https://github.com/BryanAim/everything-corona-virus' },
-  { title: 'VueGram', img: '/img/projects/vuegram.jpg', url: 'https://aim-vuegram.herokuapp.com/', github: 'https://github.com/BryanAim/vuegram' },
-  { title: 'NaxTechmakers', img: '/img/projects/naxtechmakers.jpg', url: 'http://naxtechmakers.com/', github: 'https://github.com/NakuruTechMakers/techiesofnakuru' },
-  { title: 'Personal Portfolio', img: '/img/projects/my-portfolio.jpg', url: 'https://isalebryan.dev', github: 'https://github.com/BryanAim/bryanaim.github.io' },
-  { title: 'Personal Library', img: '/img/projects/project1.jpg', url: 'https://github.com/BryanAim/FCC-personal-library', github: 'https://github.com/BryanAim/FCC-personal-library' },
-  { title: 'GSAP Scroll Animation', img: '/img/projects/project2.jpg', url: 'https://github.com/BryanAim/gsap-scroll-animation', github: 'https://github.com/BryanAim/gsap-scroll-animation' },
-]
 const communityPhotos: Photo[] = [
   { src: '/img/projects/community/speaking-at-event.jpeg', caption: 'Speaking at a peer education event' },
   { src: '/img/projects/community/indoor-audience.jpeg', caption: 'Engaged audience at an indoor session' },
@@ -82,7 +73,7 @@ const cards = [
     color: '#00ddd7', glow: 'rgba(0,221,215,0.3)',
     tagline: 'Building solutions across the full stack',
     description: 'Started with a Google × Andela scholarship in 2018. From slick frontends to solid backends, cloud infrastructure, AI tools, and everything in between.',
-    skills: webDevSkills, projects: webProjects, photos: null,
+    skills: webDevSkills, projects: devProjects, photos: null,
     bgImage: '/img/projects/design/compositions/enjoy-music.jpg',
     tags: ['Full-Stack', 'Open Source', 'Google Scholar'],
     socials: [
@@ -154,18 +145,20 @@ function SkillBar({ name, level, color, animate, delay }: { name: string; level:
 }
 
 /* ─── Project Thumb ─── */
-function ProjectThumb({ p, color }: { p: Project; color: string }) {
+function ProjectThumb({ p, color }: { p: DevProject; color: string }) {
   return (
     <div className="group relative block rounded-md overflow-hidden aspect-video cursor-default">
       <img src={p.img} alt={p.title} className="w-full h-full object-cover block transition-transform duration-[400ms] group-hover:scale-[1.06]" />
       <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-[0.4rem] opacity-0 transition-opacity duration-[250ms] group-hover:opacity-100">
         <span className="text-white text-[0.85rem] font-bold text-center mb-[0.3rem]">{p.title}</span>
         <div className="flex gap-[0.4rem]">
-          <a href={p.url} target="_blank" rel="noopener noreferrer"
-            className="about-project-gh inline-flex items-center gap-[0.3rem] text-[0.78rem] border px-[0.6rem] py-[0.2rem] rounded-full transition-colors duration-200"
-            style={{ color, borderColor: color } as React.CSSProperties}>
-            <i className="fas fa-eye" /> View
-          </a>
+          {p.url && (
+            <a href={p.url} target="_blank" rel="noopener noreferrer"
+              className="about-project-gh inline-flex items-center gap-[0.3rem] text-[0.78rem] border px-[0.6rem] py-[0.2rem] rounded-full transition-colors duration-200"
+              style={{ color, borderColor: color } as React.CSSProperties}>
+              <i className="fas fa-eye" /> View
+            </a>
+          )}
           {p.github && (
             <a href={p.github} target="_blank" rel="noopener noreferrer"
               className="about-project-gh inline-flex items-center gap-[0.3rem] text-[0.78rem] border px-[0.6rem] py-[0.2rem] rounded-full transition-colors duration-200"
