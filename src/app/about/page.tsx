@@ -346,15 +346,20 @@ function StackCard({
 
   return (
     <motion.div
-      className="group sticky h-[calc(100vh-120px)] rounded-[14px] overflow-hidden cursor-pointer border-t-[3px] shadow-[0_8px_32px_rgba(0,0,0,0.4)] mb-6 will-change-transform max-[768px]:h-[calc(85vh-80px)]"
+      role="button"
+      tabIndex={0}
+      aria-label={`Open ${card.title} details`}
+      className="group sticky h-[calc(100vh-120px)] rounded-[14px] overflow-hidden cursor-pointer border-t-[3px] shadow-[0_8px_32px_rgba(0,0,0,0.4)] mb-6 will-change-transform max-[768px]:h-[calc(85vh-80px)] focus-visible:outline-2 focus-visible:outline-offset-2"
       style={{
         top: stickyTop,
         zIndex: index + 1,
         '--ac-color': card.color,
         '--ac-glow': card.glow,
         borderColor: card.color,
+        outlineColor: card.color,
       } as React.CSSProperties}
       onClick={() => onOpen(card)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(card) } }}
       whileHover={{
         boxShadow: `0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px ${card.color}, 0 0 36px ${card.glow}`,
         transition: { duration: 0.2 },

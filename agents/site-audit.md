@@ -382,14 +382,8 @@ focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tea
 
 ---
 
-### 3.7 — StackCards in About are `div` with `onClick` but no ARIA
-**File:** `src/app/about/page.tsx:334–336`  
-Keyboard users cannot activate these cards.
-```tsx
-<motion.div role="button" tabIndex={0}
-  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onOpen(card)}
-  className="... focus-visible:outline-2" style={{ outlineColor: card.color }}>
-```
+### ~~3.7 — StackCards in About are `div` with `onClick` but no ARIA~~ ✅ 2026-05-01
+Added `role="button"`, `tabIndex={0}`, `aria-label="Open {title} details"`, `onKeyDown` (Enter/Space), and `focus-visible:outline-2` with `outlineColor: card.color`.
 
 ---
 
@@ -741,7 +735,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 21. Convert `work/design/[slug]` to SSG with `generateStaticParams` + `generateMetadata`
 22. ~~Add `loading.tsx` and `error.tsx`~~ ✅ 2026-04-29
 23. Add `focus-visible:` styles to all interactive elements
-24. Fix StackCard `div` missing `role="button"` + keyboard handler — `about/page.tsx:334`
+24. ~~Fix StackCard `div` missing `role="button"` + keyboard handler — `about/page.tsx:334`~~ ✅ 2026-05-01
 25. Fix `aria-live` on Typed.js target — `page.tsx:144`
 26. Add "Available for work" + availability statement to About page
 27. Add 1–2 client testimonials to About page or homepage
