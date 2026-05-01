@@ -124,11 +124,31 @@ const stats = [
 
 /* ─── Skill Bar ─── */
 function SkillBar({ name, level, color, animate, delay }: { name: string; level: number; color: string; animate: boolean; delay: number }) {
+  const tier = level >= 85 ? 'Expert' : level >= 70 ? 'Advanced' : level >= 55 ? 'Proficient' : 'Familiar'
+  const [typed, setTyped] = useState('')
+  const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    if (!animate) { setTyped(''); setDone(false); return }
+    let i = 0
+    const start = setTimeout(() => {
+      const tick = setInterval(() => {
+        i++
+        setTyped(tier.slice(0, i))
+        if (i >= tier.length) { clearInterval(tick); setDone(true) }
+      }, 48)
+      return () => clearInterval(tick)
+    }, delay * 1000 + 180)
+    return () => clearTimeout(start)
+  }, [animate, tier, delay])
+
   return (
     <div>
       <div className="flex justify-between text-[0.82rem] text-[#bbb] mb-[0.25rem]">
         <span>{name}</span>
-        <span style={{ color }}>{level}%</span>
+        <span style={{ color }} className="font-mono tracking-wider">
+          {typed}{!done && animate && <span className="opacity-70 animate-pulse">_</span>}
+        </span>
       </div>
       <div className="h-[6px] bg-white/[0.08] rounded-full overflow-hidden">
         <div

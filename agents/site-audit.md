@@ -559,8 +559,9 @@ The scroll hint invites scrolling but the homepage only has a footer below. Fix:
 
 ---
 
-### 4.9 — Skill percentages in About page stack card may harm hiring
-TypeScript 60%, Next.js 65% tells a recruiter you are partially competent. Either remove numbers (list technologies only) or replace with years: "TypeScript — 3 years" signals seniority without inviting comparison.
+### ~~4.9 — Skill percentages in About page stack card may harm hiring~~ ✅ 2026-05-01
+~~TypeScript 60%, Next.js 65% tells a recruiter you are partially competent. Either remove numbers (list technologies only) or replace with years: "TypeScript — 3 years" signals seniority without inviting comparison.~~
+Replaced raw percentages with animated tier labels (Familiar / Proficient / Advanced / Expert) that typewrite in alongside the bar fill.
 
 ---
 
@@ -750,7 +751,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 31. Fix bio text contrast `text-white/50` → `text-white/65` — `page.tsx:155`
 32. Make slide dots clickable — `page.tsx:206`
 33. Remove scroll hint or add below-fold content section
-34. Remove/update skill percentages in About stack cards
+34. ~~Remove/update skill percentages in About stack cards~~ ✅ 2026-05-01
 35. Fix sitemap `lastModified` dates — `sitemap.ts`
 36. Add `startDelay: 800` to Typed.js config — `page.tsx:75`
 37. Add immutable cache headers for `/fonts/` and `/img/` — `next.config.js`
