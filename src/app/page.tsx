@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Typed from 'typed.js'
 import Image from 'next/image'
 import Link from 'next/link'
+import { SOCIALS } from '@/lib/siteConfig'
 
 // Bio for each typed string — fires after typing finishes, before deletion starts
 // Typed string order: Full Stack Dev, Creative Designer, Community Builder, BMX Rider, Lifelong Learner, Friend
@@ -22,15 +23,6 @@ const BG_IMAGES = [
   '/img/projects/design/compositions/avril-music.jpg',
   '/img/projects/design/compositions/mike-explode.jpg',
   '/img/bmx/bmx23-bg.jpg',
-]
-
-const SOCIALS = [
-  { icon: 'fab fa-github',    url: 'https://github.com/BryanAim',             label: 'GitHub',    color: '#b1db00' },
-  { icon: 'fab fa-linkedin',  url: 'https://linkedin.com/in/brian-isale/',     label: 'LinkedIn',  color: '#b1db00' },
-  { icon: 'fab fa-behance',   url: 'https://behance.net/isalebryan',           label: 'Behance',   color: '#1769ff' },
-  { icon: 'fab fa-instagram', url: 'https://www.instagram.com/bryanisale/',    label: 'Instagram', color: '#e1306c' },
-  { icon: 'fab fa-twitter',   url: 'https://twitter.com/IsaleBryan',           label: 'Twitter',   color: '#1d9bf0' },
-  { icon: 'fab fa-dev',       url: 'https://dev.to/bryanaim',                  label: 'Dev.to',    color: '#b1db00' },
 ]
 
 /* ─── Scroll hint ─── */

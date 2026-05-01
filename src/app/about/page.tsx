@@ -5,6 +5,9 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import DesignGallery from '../components/DesignGallery'
 import { devProjects, type DevProject } from '../work/devProjects'
+import { SOCIALS } from '@/lib/siteConfig'
+
+const S = Object.fromEntries(SOCIALS.map(s => [s.label, s]))
 
 /* ─── Animation variants ─── */
 const SPRING = [0.16, 1, 0.3, 1] as const
@@ -76,11 +79,7 @@ const cards = [
     skills: webDevSkills, projects: devProjects, photos: null,
     bgImage: '/img/projects/design/compositions/enjoy-music.jpg',
     tags: ['Full-Stack', 'Open Source', 'Google Scholar'],
-    socials: [
-      { icon: 'fab fa-github', label: 'GitHub', url: 'https://github.com/BryanAim' },
-      { icon: 'fab fa-linkedin', label: 'LinkedIn', url: 'https://linkedin.com/in/brian-isale/' },
-      { icon: 'fab fa-dev', label: 'Dev.to', url: 'https://dev.to/bryanaim' },
-    ],
+    socials: [S['GitHub'], S['LinkedIn'], S['Dev.to']],
     hasCert: true,
   },
   {
@@ -91,11 +90,7 @@ const cards = [
     skills: designSkills, projects: null, photos: null,
     bgImage: '/img/bmx/design1-banner.jpg',
     tags: ['Brand Identity', 'Motion Graphics', 'UI/UX'],
-    socials: [
-      { icon: 'fab fa-behance', label: 'Behance', url: 'https://behance.net/isalebryan' },
-      { icon: 'fab fa-instagram', label: 'Instagram', url: 'https://www.instagram.com/isalebryan/' },
-      { icon: 'fab fa-linkedin', label: 'LinkedIn', url: 'https://linkedin.com/in/brian-isale/' },
-    ],
+    socials: [S['Behance'], S['Instagram'], S['LinkedIn']],
     hasCert: false,
   },
   {
@@ -106,10 +101,7 @@ const cards = [
     skills: null, projects: null, photos: communityPhotos,
     bgImage: '/img/heroes-school-address.jpeg',
     tags: ['HIV SEERs Kenya', 'Heroes for Change', '3,000+ Youth', 'Andela Mentor'],
-    socials: [
-      { icon: 'fab fa-facebook', label: 'Facebook', url: 'https://facebook.com/BryanAim' },
-      { icon: 'fab fa-linkedin', label: 'LinkedIn', url: 'https://linkedin.com/in/brian-isale/' },
-    ],
+    socials: [S['Facebook'], S['LinkedIn']],
     hasCert: false,
   },
 ]

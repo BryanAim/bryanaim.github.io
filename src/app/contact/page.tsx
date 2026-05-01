@@ -4,24 +4,13 @@ import { useRef, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion'
 import { services } from '../work/services'
 import QuoteModal from '../components/QuoteModal'
+import { SITE, SOCIALS as socials } from '@/lib/siteConfig'
 
 /* ─── Data ─── */
 const contactInfo = [
-  { icon: 'fas fa-envelope',       label: 'Email',    value: 'isale.bryan@gmail.com', href: 'mailto:isale.bryan@gmail.com',            color: '#00ddd7' },
-  { icon: 'fas fa-phone',          label: 'Phone',    value: '+254 728 822 142',       href: 'tel:+254728822142',                       color: '#b1db00' },
-  { icon: 'fas fa-map-marker-alt', label: 'Location', value: 'Nakuru, Kenya',          href: 'https://maps.google.com/?q=Nakuru,Kenya', color: '#ff8c42' },
-]
-
-const socials = [
-  { icon: 'fab fa-linkedin',  label: 'LinkedIn',    sub: 'brian-isale',  url: 'https://linkedin.com/in/brian-isale/',          color: '#b1db00' },
-  { icon: 'fab fa-github',    label: 'GitHub',      sub: 'BryanAim',     url: 'https://github.com/BryanAim',                   color: '#b1db00' },
-  { icon: 'fab fa-behance',   label: 'Behance',     sub: 'isalebryan',   url: 'https://behance.net/isalebryan',                color: '#1769ff' },
-  { icon: 'fab fa-instagram', label: 'Instagram',   sub: '@isalebryan',  url: 'https://www.instagram.com/isalebryan/',         color: '#e1306c' },
-  { icon: 'fab fa-dev',       label: 'Dev.to',      sub: 'bryanaim',     url: 'https://dev.to/bryanaim',                       color: '#e0e0e0' },
-  { icon: 'fab fa-twitter',   label: 'Twitter / X', sub: '@IsaleBryan',  url: 'https://twitter.com/IsaleBryan',                color: '#1d9bf0' },
-  { icon: 'fab fa-tiktok',    label: 'TikTok',      sub: '@bmxbrian',    url: 'https://tiktok.com/@bmxbrian',                  color: '#e0e0e0' },
-  { icon: 'fab fa-youtube',   label: 'YouTube',     sub: '@bryanaim',    url: 'https://youtube.com/@bryanaim',                 color: '#ff0000' },
-  { icon: 'fab fa-facebook',  label: 'Facebook',    sub: 'BryanAim',     url: 'https://facebook.com/BryanAim',                 color: '#1877f2' },
+  { icon: 'fas fa-envelope',       label: 'Email',    value: SITE.email,        href: `mailto:${SITE.email}`,   color: '#00ddd7' },
+  { icon: 'fas fa-phone',          label: 'Phone',    value: SITE.phoneDisplay, href: `tel:${SITE.phone}`,      color: '#b1db00' },
+  { icon: 'fas fa-map-marker-alt', label: 'Location', value: 'Nakuru, Kenya',   href: SITE.mapsUrl,             color: '#ff8c42' },
 ]
 
 const SPRING = [0.16, 1, 0.3, 1] as const
@@ -136,7 +125,7 @@ export default function Contact() {
           transition={{ duration: 0.6, delay: 1.1, ease: SPRING }}
         >
           <motion.a
-            href="https://wa.me/254728822142"
+            href={`https://wa.me/${SITE.waNumber}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-7 py-[0.8rem] bg-[#25d366] text-black font-bold text-[0.88rem] rounded-[7px] no-underline transition-opacity duration-200 hover:opacity-90"
@@ -145,7 +134,7 @@ export default function Contact() {
             <i className="fab fa-whatsapp" /> WhatsApp Me
           </motion.a>
           <motion.a
-            href="mailto:isale.bryan@gmail.com"
+            href={`mailto:${SITE.email}`}
             className="inline-flex items-center gap-2 px-7 py-[0.8rem] border border-white/18 text-white/75 font-semibold text-[0.88rem] rounded-[7px] no-underline transition-[border-color,color] duration-200 hover:border-white/40 hover:text-white"
             whileHover={{ scale: 1.04 }}
           >

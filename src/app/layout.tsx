@@ -8,6 +8,7 @@ import WhatsAppButton from './components/WhatsAppButton'
 import PageTransition from './components/PageTransition'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
+import { SITE, SOCIALS } from '@/lib/siteConfig'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -86,8 +87,8 @@ const personJsonLd = {
   jobTitle: ['Full Stack Developer', 'Creative Designer', 'Community Builder'],
   description:
     'Brian Isale is a Full Stack Developer and Creative Designer based in Nakuru, Kenya. A Google Africa Scholar (Andela, 2019), he builds modern web applications with Next.js, React, and Node.js, and crafts brand identities, motion graphics, and UI/UX designs. He mentors developers, runs community outreach programmes with HIV SEERs Kenya and Unilever Heroes for Change, and has reached 3,000+ youth across Nakuru.',
-  email: 'isale.bryan@gmail.com',
-  telephone: '+254728822142',
+  email: SITE.email,
+  telephone: SITE.phone,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Nakuru',
@@ -105,16 +106,7 @@ const personJsonLd = {
     { '@type': 'Organization', name: "Unilever Heroes for Change" },
     { '@type': 'Organization', name: 'Google Developer Groups' },
   ],
-  sameAs: [
-    'https://linkedin.com/in/brian-isale/',
-    'https://github.com/BryanAim',
-    'https://behance.net/isalebryan',
-    'https://twitter.com/IsaleBryan',
-    'https://dev.to/bryanaim',
-    'https://youtube.com/@bryanaim',
-    'https://www.instagram.com/bryanisale/',
-    'https://facebook.com/BryanAim',
-  ],
+  sameAs: SOCIALS.map(s => s.url),
   knowsAbout: [
     'HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React', 'Next.js',
     'Vue.js', 'Nuxt.js', 'Node.js', 'Python', 'Django', 'WordPress',
@@ -182,7 +174,7 @@ const faqJsonLd = {
       name: 'How can I contact Brian Isale?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'You can contact Brian Isale via email at isale.bryan@gmail.com, by phone at +254 728 822 142, or through his social profiles on LinkedIn (linkedin.com/in/brian-isale), GitHub (github.com/BryanAim), or Twitter/X (@IsaleBryan).',
+        text: `You can contact Brian Isale via email at ${SITE.email}, by phone at ${SITE.phoneDisplay}, or through his social profiles on LinkedIn (linkedin.com/in/brian-isale), GitHub (github.com/BryanAim), or Twitter/X (${SITE.twitterHandle}).`,
       },
     },
     {
@@ -190,7 +182,7 @@ const faqJsonLd = {
       name: 'Is Brian Isale available for freelance or contract work?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes, Brian Isale is open to freelance projects, contract work, and collaborations. He can be reached at isale.bryan@gmail.com or through the contact page on his portfolio at isalebryan.dev/contact.',
+        text: `Yes, Brian Isale is open to freelance projects, contract work, and collaborations. He can be reached at ${SITE.email} or through the contact page on his portfolio at ${SITE.url}/contact.`,
       },
     },
   ],

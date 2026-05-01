@@ -290,16 +290,8 @@ export default function Error({ reset }: { error: Error; reset: () => void }) {
 
 ---
 
-### 2.10 — Contact info is duplicated across 4 files (no single source of truth)
-Email, phone, and social URLs appear separately in `contact/page.tsx`, `layout.tsx` (JSON-LD), `about/page.tsx`, and `page.tsx`. Create `src/lib/siteConfig.ts`:
-```ts
-export const SITE = {
-  email: 'isale.bryan@gmail.com',
-  phone: '+254728822142',
-  whatsapp: 'https://wa.me/254728822142',
-}
-export const SOCIALS = [ /* single source */ ]
-```
+### ~~2.10 — Contact info is duplicated across 4 files (no single source of truth)~~ ✅ 2026-05-01
+Created `src/lib/siteConfig.ts` with `SITE` (email, phone, phoneDisplay, waNumber, waMessage, mapsUrl, twitterHandle, url) and `SOCIALS` array (9 platforms). All 5 consumers updated: `contact/page.tsx`, `page.tsx`, `about/page.tsx`, `layout.tsx` (JSON-LD email/telephone/sameAs/FAQ strings), `WhatsAppButton.tsx`. Also fixed Instagram inconsistency — canonical handle is now `isalebryan` everywhere.
 
 ---
 
@@ -735,7 +727,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 39. Replace Font Awesome with `lucide-react` + inline SVGs for brand icons
 40. Implement `LazyMotion + domAnimation` — saves ~15 KB
 41. Add `opengraph-image.tsx` generated OG banner
-42. Centralize contact/social config in `src/lib/siteConfig.ts`
+42. ~~Centralize contact/social config in `src/lib/siteConfig.ts`~~ ✅ 2026-05-01
 43. Add `src/components/ui/` button using shadcn pattern, or remove unused shadcn deps
 44. Move `sass` from `dependencies` to `devDependencies`
 45. Fix `duration-1400` → `duration-[1400ms]` — `page.tsx:103`

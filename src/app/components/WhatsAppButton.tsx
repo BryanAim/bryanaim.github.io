@@ -2,10 +2,9 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { SITE } from '@/lib/siteConfig'
 
-const WA_NUMBER = '254728822142'
-const WA_MESSAGE = "Hi Brian! I visited your website and I'd like to get in touch."
-const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`
+const WA_URL = `https://wa.me/${SITE.waNumber}?text=${encodeURIComponent(SITE.waMessage)}`
 
 export default function WhatsAppButton() {
   const [hovered, setHovered] = useState(false)
