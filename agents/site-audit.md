@@ -330,15 +330,8 @@ Applied `text-[clamp(3rem,10vw,7rem)]` to all 6 pages using this pattern: work, 
 
 ---
 
-### 3.3 — Portrait hidden on tablet (`max-lg:hidden`) — hero looks empty on iPad
-**File:** `src/app/page.tsx:219`  
-`max-lg:hidden` hides the portrait below 1024px, leaving the hero right side completely empty on tablets.
-```tsx
-// Before
-className="flex-shrink-0 w-72 aspect-square pointer-events-none max-lg:hidden"
-// After
-className="flex-shrink-0 w-72 max-lg:w-52 aspect-square pointer-events-none max-md:hidden"
-```
+### ~~3.3 — Portrait hidden on tablet (`max-lg:hidden`) — hero looks empty on iPad~~ ✅ 2026-05-01
+`max-lg:hidden` → `max-lg:w-52 max-md:hidden`: portrait now shows at 208px on tablets (768–1024px), hidden only on phones.
 
 ---
 

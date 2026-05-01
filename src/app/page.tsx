@@ -217,7 +217,7 @@ export default function Home() {
         </div>
 
         {/* Portrait — flex sibling, no absolute positioning */}
-        <div className="flex-shrink-0 w-72 aspect-square pointer-events-none max-lg:hidden" aria-hidden="true">
+        <div className="flex-shrink-0 w-72 max-lg:w-52 aspect-square pointer-events-none max-md:hidden" aria-hidden="true">
           <motion.div
             className="relative w-full h-full"
             initial={{ opacity: 0, scale: 0.9 }}
