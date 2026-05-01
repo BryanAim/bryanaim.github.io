@@ -42,7 +42,7 @@ export default function DesignProjectPage() {
   if (!project) {
     return (
       <main id="work" style={{ textAlign: 'center', paddingTop: '6rem' }}>
-        <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Project <span className="text-lime">Not Found</span></h1>
+        <h1 className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Project <span className="text-lime">Not Found</span></h1>
         <Link href="/work" className="block px-4 py-2 mb-[0.3rem] cursor-pointer border-0 bg-[#c4c4c4] text-[#333] transition-colors hover:bg-lime hover:text-black" style={{ marginTop: '2rem', display: 'inline-block' }}>
           ← Back to Work
         </Link>

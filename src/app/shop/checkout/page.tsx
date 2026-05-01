@@ -114,7 +114,7 @@ export default function Checkout() {
   if (stage === 'paid' && order) {
     return (
       <main id="checkout" className="print:bg-white print:text-black">
-        <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Pay<span className="text-lime">ment</span></h1>
+        <h1 className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Pay<span className="text-lime">ment</span></h1>
         <div className="bg-[#515151] border-b-[5px] border-[#b1db00] max-w-[560px] p-8 print:bg-white print:text-black print:border-[#ccc]">
           <div className="border-b border-[#666] mb-6 pb-4">
             <h2 className="text-[1.8rem] mb-2">Payment Successful!</h2>
@@ -163,7 +163,7 @@ export default function Checkout() {
   if (stage === 'waiting') {
     return (
       <main id="checkout">
-        <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Pay<span className="text-lime">ing…</span></h1>
+        <h1 className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Pay<span className="text-lime">ing…</span></h1>
         <div className="bg-[#515151] p-8 border-b-[5px] border-[#b1db00] max-w-[480px]">
           <div className="text-center py-8">
             <div className="w-14 h-14 border-[6px] border-[#555] border-t-[#b1db00] rounded-full mx-auto mb-6 animate-spin" />
@@ -181,7 +181,7 @@ export default function Checkout() {
   if (stage === 'error') {
     return (
       <main id="checkout">
-        <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Check<span className="text-lime">out</span></h1>
+        <h1 className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Check<span className="text-lime">out</span></h1>
         <div className="bg-[#515151] p-8 border-b-[5px] border-[#b1db00] max-w-[480px]">
           <p className="text-[#ff6b6b] mb-4">{errorMsg}</p>
           <button className="block px-4 py-2 mb-[0.3rem] cursor-pointer border-0 bg-black text-white transition-colors hover:bg-lime hover:text-black" onClick={() => setStage('form')}>Try Again</button>
@@ -196,7 +196,7 @@ export default function Checkout() {
       <nav className="mb-4">
         <Link href="/shop" className="text-[#888] text-[0.85rem] no-underline transition-colors duration-150 hover:text-lime">← Back to Shop</Link>
       </nav>
-      <h1 className="text-[7rem] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Check<span className="text-lime">out</span></h1>
+      <h1 className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4">Check<span className="text-lime">out</span></h1>
       <h2 className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold">Review your order and pay with M-Pesa</h2>
 
       {cart.length === 0 ? (

@@ -325,15 +325,8 @@ The "Download CV" and "Hire Me" buttons on the About page reference CSS classes 
 
 ---
 
-### 3.2 — Work page H1 overflows on mobile: `text-[7rem]`
-**File:** `src/app/work/page.tsx:151`  
-`text-[7rem]` with no clamp causes overflow on small screens.
-```tsx
-// Before
-className="text-[7rem] mb-[0.2rem] text-center font-semibold"
-// After
-className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold"
-```
+### ~~3.2 — Work page H1 overflows on mobile: `text-[7rem]`~~ ✅ 2026-05-01
+Applied `text-[clamp(3rem,10vw,7rem)]` to all 6 pages using this pattern: work, about, bmx, design/[slug], shop/custom, shop/checkout.
 
 ---
 
@@ -725,7 +718,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 13. Add per-page canonical metadata (needs server shell pattern first)
 14. ~~Add AVIF format to `next.config.js`~~ ✅ 2026-04-29
 15. Add `display: 'swap'` to Inter font — `layout.tsx:11`
-16. Fix Work heading mobile overflow (`text-[7rem]` → `clamp`) — `work/page.tsx:151`
+16. ~~Fix Work heading mobile overflow (`text-[7rem]` → `clamp`) — `work/page.tsx:151`~~ ✅ 2026-05-01
 17. Add M-Pesa integration as a dev project card
 18. Move portfolio site to position 1 in `devProjects.ts`, stop random shuffle
 19. Add `sizes` prop to portrait Image — `page.tsx:231`
