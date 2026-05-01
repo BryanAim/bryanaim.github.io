@@ -364,14 +364,8 @@ Screen readers announce each letter as it types. Fix: make the typed element `ar
 
 ---
 
-### 3.6 — No `focus-visible` styles on any interactive element
-All CTAs, cards, and buttons lack keyboard focus indicators. Add to all interactive elements:
-```tsx
-// CTA links
-focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime
-// Ghost/border buttons
-focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal
-```
+### ~~3.6 — No `focus-visible` styles on any interactive element~~ ✅ 2026-05-01
+Added global baseline in `globals.css`: `a:focus-visible, button:focus-visible, [role="button"]:focus-visible { outline: 2px solid #00ddd7; outline-offset: 3px; }`. Color overrides: `.wk-tag-btn` → lime, `.ct-social-card` → `var(--sc-color)`, `.wa-btn` → green.
 
 ---
 
@@ -727,7 +721,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 ### 🟡 Medium (Next Quarter)
 21. Convert `work/design/[slug]` to SSG with `generateStaticParams` + `generateMetadata`
 22. ~~Add `loading.tsx` and `error.tsx`~~ ✅ 2026-04-29
-23. Add `focus-visible:` styles to all interactive elements
+23. ~~Add `focus-visible:` styles to all interactive elements~~ ✅ 2026-05-01
 24. ~~Fix StackCard `div` missing `role="button"` + keyboard handler — `about/page.tsx:334`~~ ✅ 2026-05-01
 25. Fix `aria-live` on Typed.js target — `page.tsx:144`
 26. Add "Available for work" + availability statement to About page

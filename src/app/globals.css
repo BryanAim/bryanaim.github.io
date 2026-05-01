@@ -49,6 +49,17 @@
 }
 
 /* =====================
+   Keyboard focus baseline — covers every a / button / role=button
+   ===================== */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #00ddd7;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* =====================
    Side Nav (desktop)
    ===================== */
 :root {
@@ -661,6 +672,9 @@ main > * {
   border-color: #b1db00;
   color: #b1db00;
 }
+.wk-tag-btn:focus-visible {
+  outline-color: #b1db00;
+}
 
 /* ── Design Grid ── */
 .wk-design-grid {
@@ -1070,6 +1084,7 @@ main > * {
 }
 .ct-social-arrow { font-size: 0.7rem; color: #555; transition: color 0.25s ease, transform 0.25s ease; }
 .ct-social-card:hover .ct-social-arrow { color: var(--sc-color, #b1db00); transform: translateX(3px); }
+.ct-social-card:focus-visible { outline-color: var(--sc-color, #b1db00); }
 
 /* ── Service card hover — border-color uses runtime --ct-sv-color ── */
 .ct-service-card:hover { border-color: var(--ct-sv-color, rgba(255,255,255,0.2)); }
@@ -1389,6 +1404,10 @@ main > * {
   text-decoration: none;
   box-shadow: 0 4px 20px rgba(37,211,102,0.45);
   flex-shrink: 0;
+}
+.wa-btn:focus-visible {
+  outline-color: #25d366;
+  outline-offset: 4px;
 }
 .wa-label {
   background: #1a1a1a;
