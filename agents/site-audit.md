@@ -12,7 +12,7 @@
 | 1 | Add "Available for work" badge to homepage hero | 20 min | 🔴 Hiring |
 | 2 | Remove "BMX Rider / Lifelong Learner / Friend" from typed strings | 5 min | 🔴 Hiring |
 | 3 | ✅ Fix 3 dead dev project URLs (VueGram, Covid Tracker, NaxTechmakers HTTP) | 10 min | 🔴 Credibility |
-| 4 | Delete dead Google Analytics UA script from `layout.tsx:230–236` | 2 min | 🟠 Performance |
+| 4 | ✅ Delete dead Google Analytics UA script from `layout.tsx:230–236` | 2 min | 🟠 Performance |
 | 5 | Fix the M-Pesa callback with no authentication (fake payment injection possible) | 2 hrs | 🔴 Security |
 
 ---
