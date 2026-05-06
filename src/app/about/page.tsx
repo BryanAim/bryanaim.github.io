@@ -6,6 +6,8 @@ import { motion, AnimatePresence, useInView } from 'framer-motion'
 import DesignGallery from '../components/DesignGallery'
 import { devProjects, type DevProject } from '../work/devProjects'
 import { SOCIALS } from '@/lib/siteConfig'
+import { TestimonialsGrid } from '../components/TestimonialCard'
+import type { Testimonial } from '@/lib/db'
 
 const S = Object.fromEntries(SOCIALS.map(s => [s.label, s]))
 
@@ -428,8 +430,16 @@ function StatCounter({ value, suffix, label }: typeof stats[0]) {
 export default function About() {
   const [openCard, setOpenCard] = useState<typeof cards[0] | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
 
   useEffect(() => { setMounted(true) }, [])
+
+  useEffect(() => {
+    fetch('/api/testimonials')
+      .then(r => r.json())
+      .then((data: Testimonial[]) => setTestimonials(data.slice(0, 6)))
+      .catch(() => {})
+  }, [])
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -528,6 +538,23 @@ export default function About() {
         <AnimatePresence>
           {openCard && <CardModal card={openCard} onClose={() => setOpenCard(null)} />}
         </AnimatePresence>
+      )}
+
+      {/* ── Testimonials ── */}
+      {testimonials.length > 0 && (
+        <motion.section
+          className="mt-16 mb-4"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="text-[0.78rem] uppercase tracking-[4px] mb-2 text-lime">What clients say</p>
+          <h2 className="text-[1.8rem] font-extrabold mb-8 max-[768px]:text-[1.4rem]">
+            Client <span className="text-lime">Testimonials</span>
+          </h2>
+          <TestimonialsGrid testimonials={testimonials} />
+        </motion.section>
       )}
 
       {/* ── Quote ── */}

@@ -49,6 +49,26 @@ export async function ensureSchema() {
   await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS delivery_fee    NUMERIC DEFAULT 0`
   await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS design_ids      TEXT[]`
   await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS notes           TEXT`
+
+  // Testimonials — client feedback for design projects, dev work, and shop orders
+  await sql`
+    CREATE TABLE IF NOT EXISTS testimonials (
+      id             UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+      name           TEXT        NOT NULL,
+      role           TEXT,
+      company        TEXT,
+      text           TEXT        NOT NULL,
+      rating         INTEGER     CHECK (rating BETWEEN 1 AND 5),
+      project_slug   TEXT        NOT NULL,
+      photo_data     TEXT,
+      product_photos JSONB,
+      status         TEXT        NOT NULL DEFAULT 'published' CHECK (status IN ('published', 'hidden')),
+      ip_hash        TEXT,
+      created_at     TIMESTAMPTZ DEFAULT NOW()
+    )
+  `
+  // Migrate existing testimonials tables that may be missing newer columns
+  await sql`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS product_photos JSONB`
 }
 
 // ─── Designs ─────────────────────────────────────────────────────────────────
@@ -146,4 +166,86 @@ export async function getOrderByCheckoutId(checkoutRequestId: string) {
 
 export async function getAllOrders() {
   return sql`SELECT * FROM orders ORDER BY saved_at DESC`
+}
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+
+export interface Testimonial {
+  id: string
+  name: string
+  role: string | null
+  company: string | null
+  text: string
+  rating: number | null
+  project_slug: string
+  photo_data: string | null
+  product_photos: string[] | null
+  status: 'published' | 'hidden'
+  created_at: string
+}
+
+function hashIp(ip: string): string {
+  let h = 0
+  for (let i = 0; i < ip.length; i++) { h = Math.imul(31, h) + ip.charCodeAt(i) | 0 }
+  return Math.abs(h).toString(36)
+}
+
+export async function saveTestimonial(t: {
+  name: string; role?: string; company?: string; text: string
+  rating?: number; project_slug: string; photo_data?: string
+  product_photos?: string[]; ip: string
+}): Promise<string> {
+  await ensureSchema()
+  const rows = await sql`
+    INSERT INTO testimonials (name, role, company, text, rating, project_slug, photo_data, product_photos, ip_hash)
+    VALUES (
+      ${t.name}, ${t.role ?? null}, ${t.company ?? null}, ${t.text},
+      ${t.rating ?? null}, ${t.project_slug}, ${t.photo_data ?? null},
+      ${t.product_photos ? JSON.stringify(t.product_photos) : null}, ${hashIp(t.ip)}
+    ) RETURNING id
+  `
+  return rows[0].id as string
+}
+
+export async function getTestimonials(projectSlug?: string): Promise<Testimonial[]> {
+  await ensureSchema()
+  if (projectSlug) {
+    return sql`
+      SELECT id, name, role, company, text, rating, project_slug, photo_data, product_photos, status, created_at
+      FROM testimonials WHERE status = 'published' AND project_slug = ${projectSlug}
+      ORDER BY created_at DESC
+    ` as unknown as Testimonial[]
+  }
+  return sql`
+    SELECT id, name, role, company, text, rating, project_slug, photo_data, product_photos, status, created_at
+    FROM testimonials WHERE status = 'published' ORDER BY created_at DESC
+  ` as unknown as Testimonial[]
+}
+
+export async function getAllTestimonialsAdmin(): Promise<Testimonial[]> {
+  await ensureSchema()
+  return sql`
+    SELECT id, name, role, company, text, rating, project_slug, photo_data, product_photos, status, created_at
+    FROM testimonials ORDER BY created_at DESC
+  ` as unknown as Testimonial[]
+}
+
+export async function setTestimonialStatus(id: string, status: 'published' | 'hidden'): Promise<void> {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return
+  await sql`UPDATE testimonials SET status = ${status} WHERE id = ${id}`
+}
+
+export async function deleteTestimonial(id: string): Promise<void> {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return
+  await sql`DELETE FROM testimonials WHERE id = ${id}`
+}
+
+export async function countRecentByIp(ip: string, projectSlug: string): Promise<number> {
+  await ensureSchema()
+  const rows = await sql`
+    SELECT COUNT(*) AS count FROM testimonials
+    WHERE ip_hash = ${hashIp(ip)} AND project_slug = ${projectSlug}
+    AND created_at > NOW() - INTERVAL '24 hours'
+  `
+  return Number(rows[0].count)
 }

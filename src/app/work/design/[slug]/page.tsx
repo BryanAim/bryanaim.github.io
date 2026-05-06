@@ -1,6 +1,8 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import type { Testimonial } from '@/lib/db'
+import { TestimonialsGrid } from '../../../components/TestimonialCard'
 
 const VIDEO_EXTS = /\.(mp4|mov|webm)$/i
 const isVideo = (src: string) => VIDEO_EXTS.test(src)
@@ -34,6 +36,15 @@ export default function DesignProjectPage() {
 
   const [activeImg, setActiveImg] = useState(0)
   const [lightbox, setLightbox] = useState(false)
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
+
+  useEffect(() => {
+    if (!slug) return
+    fetch(`/api/testimonials?project=${slug}`)
+      .then(r => r.json())
+      .then((data: Testimonial[]) => setTestimonials(data))
+      .catch(() => {})
+  }, [slug])
 
   const currentIndex = designProjects.findIndex(p => p.slug === slug)
   const prevProject = currentIndex > 0 ? designProjects[currentIndex - 1] : null
@@ -413,6 +424,25 @@ export default function DesignProjectPage() {
           </a>
         </motion.div>
       </div>
+
+      {/* ── Testimonials for this project ── */}
+      {testimonials.length > 0 && (
+        <motion.section
+          className="mb-12 pt-12 border-t border-white/[0.07]"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+        >
+          <h3
+            className="text-[0.78rem] font-bold uppercase tracking-[3px] mb-6 flex items-center gap-2"
+            style={{ color: project?.color }}
+          >
+            <i className="fas fa-quote-left" /> Client Feedback
+          </h3>
+          <TestimonialsGrid testimonials={testimonials} />
+        </motion.section>
+      )}
 
       {/* ── Bottom Pagination ── */}
       <motion.div

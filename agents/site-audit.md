@@ -547,8 +547,8 @@ Add a dev project card:
 
 ---
 
-### 4.11 — No testimonials anywhere
-Zero client quotes on the entire site. One genuine testimonial does more credibility work than all the animations combined. Add to About page or homepage. Even one quote from a past client, mentee, or collaborator.
+### ✅ 4.11 — No testimonials anywhere *(fixed 2026-05-05)*
+Full testimonials system built: project-locked collection forms at `/testimonial/[slug]`, Neon Postgres storage, auto-publish with admin override at `/admin/testimonials`. Displays on home page (marquee strip), About page (grid), design project pages (project-specific), and shop page (product reviews). Shop slugs: `shop-stickers`, `shop-tshirts`, `shop-custom`. Requires `ADMIN_SECRET` env var.
 
 ---
 
@@ -710,7 +710,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 24. ~~Fix StackCard `div` missing `role="button"` + keyboard handler — `about/page.tsx:334`~~ ✅ 2026-05-01
 25. Fix `aria-live` on Typed.js target — `page.tsx:144`
 26. Add "Available for work" + availability statement to About page
-27. Add 1–2 client testimonials to About page or homepage
+27. ✅ Add testimonials system — done 2026-05-05
 28. Add "What I'm looking for" paragraph to About or Contact
 29. ~~Move BMX from main nav to footer / About page~~ ✅ 2026-04-30
 30. Add `will-change-transform` to hover-animated cards — `work/page.tsx:17`
@@ -747,6 +747,8 @@ Vercel injects it at edge, but add explicitly for clarity:
 - ✅ WhatsApp promoted to primary CTA on Contact page — `contact/page.tsx` (2026-04-30) [was §4.13]
 - ✅ About page Steve Jobs quote → Charles Eames — `about/page.tsx` (2026-04-30)
 - ✅ About page `webProjects` stale copy replaced with `devProjects` import — `about/page.tsx` (2026-04-30) [was §2.7]
+- ✅ Navigation progress bar added — `NavigationProgress.tsx` injected in `layout.tsx` (2026-05-05). Lime top-bar animates on every Next.js route transition; improves perceived performance and navigation feedback.
+- ✅ Product detail pages added — `/product/[slug]` for each shop item (2026-05-05). Linked from shop card and product modal via "View details →" and "View full page & reviews →". Enables per-product testimonial display and shareable product URLs.
 
 ---
 

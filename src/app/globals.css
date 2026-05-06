@@ -496,6 +496,17 @@ main > * {
   to { transform: rotate(360deg); }
 }
 
+@keyframes testimonials-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.testimonials-marquee {
+  display: flex;
+  width: max-content;
+  animation: testimonials-scroll 45s linear infinite;
+}
+.testimonials-marquee:hover { animation-play-state: paused; }
+
 /* About modal scrollbar */
 .about-modal-panel { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
 .about-modal-panel::-webkit-scrollbar { width: 4px; }

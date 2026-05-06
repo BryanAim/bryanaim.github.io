@@ -6,6 +6,7 @@ import Typed from 'typed.js'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SOCIALS } from '@/lib/siteConfig'
+import { TestimonialsStrip } from './components/TestimonialsStrip'
 
 // Bio for each typed string — fires after typing finishes, before deletion starts
 // Typed string order: Full Stack Dev, Creative Designer, Community Builder, BMX Rider, Lifelong Learner, Friend
@@ -87,7 +88,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main id="home" className="relative overflow-hidden px-0 py-0 min-h-screen flex items-center bg-none">
+    <main id="home" className="relative overflow-hidden px-0 py-0 bg-none">
       {/* ── Background slideshow ── */}
       <div className="fixed inset-0 z-0" aria-hidden="true">
         {BG_IMAGES.map((src, i) => (
@@ -104,7 +105,8 @@ export default function Home() {
       </div>
 
       {/* ── Hero row: content + portrait side by side ── */}
-      <div className="relative z-10 flex items-center justify-between gap-12 px-20 w-full max-lg:flex-col max-lg:gap-6 max-lg:px-8 max-sm:px-4 max-sm:pt-24 max-sm:text-center">
+      <div className="relative z-10 min-h-screen flex items-center">
+      <div className="flex items-center justify-between gap-12 px-20 w-full max-lg:flex-col max-lg:gap-6 max-lg:px-8 max-sm:px-4 max-sm:pt-24 max-sm:text-center">
         <div className="flex-1 max-w-2xl">
           <motion.p
             className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-white/40 mb-5 max-lg:justify-center"
@@ -232,6 +234,11 @@ export default function Home() {
             />
           </motion.div>
         </div>
+      </div>
+      </div>
+
+      <div className="relative z-10">
+        <TestimonialsStrip />
       </div>
 
       <ScrollHint />

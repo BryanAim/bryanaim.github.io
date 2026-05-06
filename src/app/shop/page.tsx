@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
+import { TestimonialsGrid } from '../components/TestimonialCard'
+import type { Testimonial } from '@/lib/db'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
@@ -76,6 +78,17 @@ export default function ShopPage() {
   const [addedFeedback, setAddedFeedback] = useState(false)
   const [modalImage, setModalImage] = useState<string>('')
   const [variantImages, setVariantImages] = useState<Record<string, string>>({})
+  const [shopTestimonials, setShopTestimonials] = useState<Testimonial[]>([])
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/testimonials?project=shop-stickers').then(r => r.json()),
+      fetch('/api/testimonials?project=shop-tshirts').then(r => r.json()),
+      fetch('/api/testimonials?project=shop-custom').then(r => r.json()),
+    ]).then(([a, b, c]: [Testimonial[], Testimonial[], Testimonial[]]) =>
+      setShopTestimonials([...a, ...b, ...c].slice(0, 6))
+    ).catch(() => {})
+  }, [])
 
   useEffect(() => {
     setMounted(true)
@@ -374,6 +387,13 @@ export default function ShopPage() {
                     ? `KES ${product.price.toLocaleString()}`
                     : `From KES ${catalogStickerPrice(product.price, STICKER_PRESETS[0]).toLocaleString()}`}
               </p>
+              <Link
+                href={`/product/${product.id}`}
+                className="inline-block mt-[0.4rem] text-[0.72rem] text-white/40 hover:text-lime transition-colors no-underline"
+                onClick={e => e.stopPropagation()}
+              >
+                View details →
+              </Link>
               {product.type === 'tshirt' && product.colorVariants && product.colorVariants.length > 0 && (
                 <div className="flex gap-[0.3rem] mt-2 flex-wrap">
                   {product.colorVariants.map(v => (
@@ -434,6 +454,17 @@ export default function ShopPage() {
           >→</button>
           <span className="text-[#666] text-[0.8rem] ml-2">{filtered.length} items · page {safePage}/{totalPages}</span>
         </div>
+      )}
+
+      {/* Shop reviews */}
+      {shopTestimonials.length > 0 && (
+        <section className="mt-8 mb-8 pt-10 border-t border-white/[0.07]">
+          <p className="text-[0.72rem] uppercase tracking-[4px] text-white/30 mb-2">Verified buyers</p>
+          <h2 className="text-[1.5rem] font-extrabold mb-6">
+            Customer <span className="text-lime">Reviews</span>
+          </h2>
+          <TestimonialsGrid testimonials={shopTestimonials} />
+        </section>
       )}
 
       {/* Product modal — rendered in portal to escape PageTransition transform */}
@@ -622,6 +653,14 @@ export default function ShopPage() {
                   </div>
                 </>
               )}
+
+              <Link
+                href={`/product/${selectedProduct.id}`}
+                className="text-[0.75rem] text-white/30 hover:text-lime transition-colors text-center no-underline"
+                onClick={() => setSelectedProduct(null)}
+              >
+                View full page &amp; reviews →
+              </Link>
 
               {addedFeedback
                 ? (
