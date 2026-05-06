@@ -376,12 +376,8 @@ The dots look clickable but do nothing. Make them interactive:
 
 ---
 
-### 3.10 — Typed.js cursor is oversized: `font-size: 1.8em`
-**File:** `src/app/globals.css:~372`  
-The blinking cursor is 1.8× the adjacent text size.
-```css
-.typed-cursor { font-size: 1.1em; }
-```
+### ✅ 3.10 — Typed.js cursor oversized *(fixed 2026-05-06)*
+Set `.typed-cursor { font-size: 1.1em; }` in `scss/main.scss`.
 
 ---
 
@@ -508,17 +504,8 @@ Add to the homepage bio or as a badge below the typed text:
 
 ---
 
-### 4.8 — Scroll hint with nothing below the fold
-**File:** `src/app/page.tsx:36–59`  
-The scroll hint invites scrolling but the homepage only has a footer below. Fix: either remove the `ScrollHint` component, or add a below-fold section:
-```tsx
-{/* Below hero fold */}
-<section className="relative z-10 px-20 py-16 grid grid-cols-3 gap-6 max-sm:grid-cols-1">
-  <a href="/work?tab=dev" className="...">Recent Dev Work →</a>
-  <a href="/work?tab=design" className="...">Design Portfolio →</a>
-  <a href="/contact" className="...">Let's Work Together →</a>
-</section>
-```
+### ✅ 4.8 — Scroll hint with nothing below the fold *(resolved 2026-05-06)*
+`TestimonialsStrip` now renders below the `min-h-screen` hero, giving the scroll hint a real destination. No code change needed — resolved by the testimonials system added 2026-05-05.
 
 ---
 
@@ -713,7 +700,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 30. Add `will-change-transform` to hover-animated cards — `work/page.tsx:17`
 31. Fix bio text contrast `text-white/50` → `text-white/65` — `page.tsx:155`
 32. Make slide dots clickable — `page.tsx:206`
-33. Remove scroll hint or add below-fold content section
+33. ~~Remove scroll hint or add below-fold content section~~ ✅ 2026-05-06 (TestimonialsStrip is the below-fold section)
 34. ~~Remove/update skill percentages in About stack cards~~ ✅ 2026-05-01
 35. Fix sitemap `lastModified` dates — `sitemap.ts`
 36. Add `startDelay: 800` to Typed.js config — `page.tsx:75`
