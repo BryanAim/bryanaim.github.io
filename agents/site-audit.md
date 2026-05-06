@@ -40,11 +40,8 @@ The 4 background slides use CSS `backgroundImage` on plain `<div>` elements. The
 
 ---
 
-### 1.2 — Dead Google Analytics UA script (remove immediately)
-**File:** `src/app/layout.tsx:230–236`  
-Universal Analytics (UA-157368874-1) shut down July 2023. This script downloads ~30 KB, executes on every page, runs a DNS lookup, and records nothing. `@vercel/analytics` already covers your needs.
-
-**Fix:** Delete lines 230–236 entirely.
+### ✅ 1.2 — Dead Google Analytics UA script removed *(fixed 2026-05-06)*
+Deleted UA-157368874-1 `<Script>` tags and the unused `next/script` import from `layout.tsx`. Saves ~30 KB download + DNS lookup on every page load. `@vercel/analytics` already covers analytics needs.
 
 ---
 
@@ -683,7 +680,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 1. Add "Available for work" badge to homepage — `page.tsx`
 2. Remove BMX Rider/Learner/Friend from typed strings — `page.tsx:76–83`
 3. ~~Fix 3 dead dev project URLs — `devProjects.ts`~~ ✅ 2026-04-30
-4. Delete dead UA Google Analytics script — `layout.tsx:230–236`
+4. ~~Delete dead UA Google Analytics script — `layout.tsx:230–236`~~ ✅ 2026-05-06
 5. Fix M-Pesa callback auth (fake payment injection) — `callback/route.ts`
 6. Fix unstyled CV/Hire Me buttons on About page — `about/page.tsx:479,483`
 
