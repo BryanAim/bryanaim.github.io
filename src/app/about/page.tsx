@@ -437,7 +437,7 @@ export default function About() {
   useEffect(() => {
     fetch('/api/testimonials')
       .then(r => r.json())
-      .then((data: Testimonial[]) => setTestimonials(data.slice(0, 6)))
+      .then((data: Testimonial[]) => setTestimonials(data))
       .catch(() => {})
   }, [])
 
