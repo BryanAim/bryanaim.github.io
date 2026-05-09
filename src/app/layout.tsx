@@ -193,7 +193,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Google Analytics — loaded via next/script so it executes on client navigation */}
         {/* Structured data — Person (AEO + GEO) */}
