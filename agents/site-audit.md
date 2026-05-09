@@ -175,13 +175,8 @@ Deleted stale `webProjects` array and `Project` interface from `about/page.tsx`.
 
 ---
 
-### 2.8 — `robots.ts` exists but verify it's working
-**File:** `src/app/robots.ts` — confirm it includes:
-```ts
-export default function robots() {
-  return { rules: { userAgent: '*', allow: '/' }, sitemap: 'https://isalebryan.dev/sitemap.xml' }
-}
-```
+### ✅ 2.8 — `robots.ts` verified and exceeds requirements *(checked 2026-05-09)*
+Rules: `*` allows `/`, disallows `/api/` and `/shop/checkout`. Explicit allow rules for GPTBot, Claude-Web, Anthropic-AI, PerplexityBot, and Googlebot (GEO optimized). Sitemap and host declared correctly.
 
 ---
 
@@ -255,15 +250,8 @@ Applied `text-[clamp(3rem,10vw,7rem)]` to all 6 pages using this pattern: work, 
 
 ---
 
-### 3.5 — `aria-live` on Typed.js announces every character to screen readers
-**File:** `src/app/page.tsx:144`  
-Screen readers announce each letter as it types. Fix: make the typed element `aria-hidden`, add a separate SR-only element updated per complete string:
-```tsx
-<span ref={typeRef} className="text-lg text-white/75 font-medium" aria-hidden="true" />
-<span className="sr-only" aria-live="polite" aria-atomic="true">
-  {['Full Stack Developer','Creative Designer','Community Builder'][bioIndex % 3]}
-</span>
-```
+### ✅ 3.5 — Typed.js aria-live fixed *(fixed 2026-05-09)*
+`typeRef` span now has `aria-hidden="true"`. A separate `sr-only` span with `aria-live="polite" aria-atomic="true"` announces the full string (from `TYPED_STRINGS[bioIndex]`) only after typing completes, driven by `onStringTyped`.
 
 ---
 
@@ -608,7 +596,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 22. ~~Add `loading.tsx` and `error.tsx`~~ ✅ 2026-04-29
 23. ~~Add `focus-visible:` styles to all interactive elements~~ ✅ 2026-05-01
 24. ~~Fix StackCard `div` missing `role="button"` + keyboard handler — `about/page.tsx:334`~~ ✅ 2026-05-01
-25. Fix `aria-live` on Typed.js target — `page.tsx:144`
+25. ~~Fix `aria-live` on Typed.js target~~ ✅ 2026-05-09
 26. Add "Available for work" + availability statement to About page
 27. ✅ Add testimonials system — done 2026-05-05
 28. Add "What I'm looking for" paragraph to About or Contact

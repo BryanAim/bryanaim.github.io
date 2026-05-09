@@ -8,8 +8,16 @@ import Link from 'next/link'
 import { SOCIALS } from '@/lib/siteConfig'
 import { TestimonialsStrip } from './components/TestimonialsStrip'
 
+const TYPED_STRINGS = [
+  'Full Stack Developer.',
+  'Creative Designer.',
+  'Community Builder.',
+  'BMX Rider.',
+  'Lifelong Learner.',
+  'Friend.',
+]
+
 // Bio for each typed string — fires after typing finishes, before deletion starts
-// Typed string order: Full Stack Dev, Creative Designer, Community Builder, BMX Rider, Lifelong Learner, Friend
 const TYPED_BIOS = [
   "Writing clean code and shipping fast products. From Google Africa Scholar to full-stack developer — the terminal is home.",
   "Where art meets technology. Crafting brand identities, motion graphics, and interfaces that actually mean something.",
@@ -67,14 +75,7 @@ export default function Home() {
   // Bio syncs to Typed.js — updates only after a string is fully typed
   useEffect(() => {
     const typed = new Typed(typeRef.current, {
-      strings: [
-        'Full Stack Developer.',
-        'Creative Designer.',
-        'Community Builder.',
-        'BMX Rider.',
-        'Lifelong Learner.',
-        'Friend.^1500',
-      ],
+      strings: [...TYPED_STRINGS.slice(0, -1), 'Friend.^1500'],
       typeSpeed: 70,
       backSpeed: 35,
       backDelay: 2200, // hold the typed string long enough to read the bio
@@ -136,7 +137,8 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.7 }}
           >
             <span className="text-xl font-bold text-teal flex-shrink-0" aria-hidden="true">›</span>
-            <span ref={typeRef} className="text-lg text-white/75 font-medium" aria-live="polite" aria-atomic="true" />
+            <span ref={typeRef} className="text-lg text-white/75 font-medium" aria-hidden="true" />
+            <span className="sr-only" aria-live="polite" aria-atomic="true">{TYPED_STRINGS[bioIndex]}</span>
           </motion.div>
 
           {/* Bio — synced to Typed.js string completion */}
