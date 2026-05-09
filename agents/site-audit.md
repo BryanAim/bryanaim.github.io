@@ -45,14 +45,9 @@ Deleted UA-157368874-1 `<Script>` tags and the unused `next/script` import from 
 
 ---
 
-### 1.3 — Inter font missing `display: 'swap'`
-**File:** `src/app/layout.tsx:11`
-```tsx
-// Before
-const inter = Inter({ subsets: ['latin'] })
-// After
-const inter = Inter({ subsets: ['latin'], display: 'swap' })
-```
+### ✅ 1.3 — Inter font `display: 'swap'` added *(fixed 2026-05-09)*
+**File:** `src/app/layout.tsx`  
+`Inter({ subsets: ['latin'], display: 'swap' })` — prevents invisible text during font load.
 
 ---
 
@@ -91,39 +86,14 @@ Long-term: migrate to `lucide-react` (already in `package.json`) for tree-shaken
 
 ---
 
-### 1.8 — Font webfonts have no long-term cache headers
+### ✅ 1.8 — Cache headers added for fonts and images *(fixed 2026-05-09)*
 **File:** `next.config.js`  
-Add to `headers()`:
-```js
-{ source: '/fonts/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
-{ source: '/img/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }] },
-```
+`/fonts/(.*)` → `immutable, max-age=31536000`. `/img/(.*)` → `max-age=86400, stale-while-revalidate=604800`.
 
 ---
 
-### 1.9 — All pages are `'use client'` — no SSG anywhere
-Every page ships as a client bundle with no static HTML shell. Highest-impact architectural change available:
-
-**SSG candidates:**
-- `work/design/[slug]/page.tsx` — 80+ pages, currently all blank JS shells. Converting to SSG with `generateStaticParams` gives Google 80+ indexed pages with unique content and near-zero TTFB.
-- `about/page.tsx`, `contact/page.tsx`, `bmx/page.tsx` — all static data, no server-side data needs.
-
-**Pattern (server shell + client island):**
-```tsx
-// work/design/[slug]/page.tsx — SERVER component
-export function generateStaticParams() {
-  return designProjects.map(p => ({ slug: p.slug }))
-}
-export async function generateMetadata({ params }) {
-  const p = designProjects.find(x => x.slug === (await params).slug)
-  return { title: p?.title, description: p?.description.slice(0, 120), alternates: { canonical: `https://isalebryan.dev/work/design/${p?.slug}` } }
-}
-export default async function Page({ params }) {
-  const project = designProjects.find(p => p.slug === (await params).slug)
-  if (!project) notFound()
-  return <DesignProjectClient slug={project.slug} />
-}
-```
+### ✅ 1.9 — Server shell pattern applied to all routes *(fixed 2026-05-09)*
+All main pages (`about`, `work`, `contact`, `bmx`, `shop`, home) are now server components with `export const metadata`. `work/design/[slug]/page.tsx` has `generateStaticParams` for SSG of all 80+ design pages, with `generateMetadata` per slug. Interactive sections are isolated in `*Client.tsx` files.
 
 ---
 
@@ -167,29 +137,10 @@ Every page now has its own `export const metadata` (or `generateMetadata` for de
 
 ---
 
-### 2.3 — OG image declared wrong dimensions
-**File:** `src/app/layout.tsx:46–49`  
-`portrait.jpg` is declared `1200×630` but is actually `800×1000`. LinkedIn/Twitter crops it incorrectly on every share.
-
-**Option A (quick):** Fix the declared dimensions to `800×1000`.  
-**Option B (best):** Generate a real 1200×630 OG banner at `src/app/opengraph-image.tsx`:
-```tsx
-import { ImageResponse } from 'next/og'
-export const size = { width: 1200, height: 630 }
-export const contentType = 'image/png'
-export default function Image() {
-  return new ImageResponse(
-    <div style={{ background: '#111', width: '100%', height: '100%', display: 'flex', alignItems: 'center', padding: 60, gap: 60 }}>
-      <img src="https://isalebryan.dev/img/portrait.jpg" width={300} height={375} style={{ borderRadius: '50%', objectFit: 'cover', objectPosition: 'top' }} alt="" />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <span style={{ fontSize: 64, fontWeight: 900, color: '#b1db00' }}>Brian Isale</span>
-        <span style={{ fontSize: 26, color: '#fff' }}>Full Stack Developer & Creative Designer</span>
-        <span style={{ fontSize: 20, color: '#666' }}>Nakuru, Kenya · Google Africa Scholar</span>
-      </div>
-    </div>
-  )
-}
-```
+### ✅ 2.3 — OG image dimensions corrected *(fixed 2026-05-09)*
+**File:** `src/app/layout.tsx`  
+Declared dimensions changed from `1200×630` to `800×1000` to match the actual `portrait.jpg` dimensions. LinkedIn/Twitter will now crop correctly.  
+*(Option B — a generated 1200×630 banner via `opengraph-image.tsx` — remains a future upgrade for ideal sharing preview.)*
 
 ---
 
@@ -645,12 +596,12 @@ Vercel injects it at edge, but add explicitly for clarity:
 7. Add contact form — new component + `/api/contact` route
 8. Add CV download button to homepage hero — `page.tsx`
 9. Change Work page default tab from `'services'` to `'dev'` — `work/page.tsx:122`
-10. Fix OG image dimensions (create real 1200×630 banner) — `layout.tsx:46`
+10. ~~Fix OG image dimensions — `layout.tsx:46`~~ ✅ 2026-05-09 (declared 800×1000 to match actual portrait.jpg)
 11. Add `<link rel="preload">` for first background slide — `layout.tsx <head>`
 12. ~~Replace `<a>` with `<Link>` for all internal navigation~~ ✅ 2026-04-30
 13. ~~Add per-page canonical metadata~~ ✅ 2026-05-09
 14. ~~Add AVIF format to `next.config.js`~~ ✅ 2026-04-29
-15. Add `display: 'swap'` to Inter font — `layout.tsx:11`
+15. ~~Add `display: 'swap'` to Inter font — `layout.tsx:11`~~ ✅ 2026-05-09
 16. ~~Fix Work heading mobile overflow (`text-[7rem]` → `clamp`) — `work/page.tsx:151`~~ ✅ 2026-05-01
 17. Add M-Pesa integration as a dev project card
 18. Move portfolio site to position 1 in `devProjects.ts`, stop random shuffle
@@ -658,7 +609,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 20. Add rate limiting to STK push endpoint — `stkpush/route.ts`
 
 ### 🟡 Medium (Next Quarter)
-21. Convert `work/design/[slug]` to SSG with `generateStaticParams` + `generateMetadata`
+21. ~~Convert `work/design/[slug]` to SSG with `generateStaticParams` + `generateMetadata`~~ ✅ 2026-05-09
 22. ~~Add `loading.tsx` and `error.tsx`~~ ✅ 2026-04-29
 23. ~~Add `focus-visible:` styles to all interactive elements~~ ✅ 2026-05-01
 24. ~~Fix StackCard `div` missing `role="button"` + keyboard handler — `about/page.tsx:334`~~ ✅ 2026-05-01
@@ -674,7 +625,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 34. ~~Remove/update skill percentages in About stack cards~~ ✅ 2026-05-01
 35. ~~Fix sitemap `lastModified` dates — `sitemap.ts`~~ ✅ 2026-05-09
 36. Add `startDelay: 800` to Typed.js config — `page.tsx:75`
-37. Add immutable cache headers for `/fonts/` and `/img/` — `next.config.js`
+37. ~~Add immutable cache headers for `/fonts/` and `/img/` — `next.config.js`~~ ✅ 2026-05-09
 38. ~~Remove dead `cdn.sanity.io` remote pattern — `next.config.js:44`~~ ✅ 2026-04-30
 
 ### 🟢 Low (Nice to Have)
