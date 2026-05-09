@@ -290,12 +290,8 @@ Set `.typed-cursor { font-size: 1.1em; }` in `scss/main.scss`.
 
 ---
 
-### 3.11 — Typed.js has no `startDelay` — first 5-second scan sees partial text
-A visitor who lands on the homepage sees the typed animation mid-word for the first 1.5 seconds. Add:
-```tsx
-// page.tsx — Typed config
-startDelay: 800,  // show cursor for 0.8s before typing begins
-```
+### ✅ 3.11 — Typed.js `startDelay: 800` added *(fixed 2026-05-09)*
+Cursor holds for 800ms before typing begins. The bio text (`TYPED_BIOS[0]`) is shown immediately at `bioIndex = 0`, which correctly matches the first string — no mismatch during the delay.
 
 ---
 
@@ -607,7 +603,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 33. ~~Remove scroll hint or add below-fold content section~~ ✅ 2026-05-06 (TestimonialsStrip is the below-fold section)
 34. ~~Remove/update skill percentages in About stack cards~~ ✅ 2026-05-01
 35. ~~Fix sitemap `lastModified` dates — `sitemap.ts`~~ ✅ 2026-05-09
-36. Add `startDelay: 800` to Typed.js config — `page.tsx:75`
+36. ~~Add `startDelay: 800` to Typed.js config~~ ✅ 2026-05-09
 37. ~~Add immutable cache headers for `/fonts/` and `/img/` — `next.config.js`~~ ✅ 2026-05-09
 38. ~~Remove dead `cdn.sanity.io` remote pattern — `next.config.js:44`~~ ✅ 2026-04-30
 

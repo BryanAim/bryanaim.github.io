@@ -76,6 +76,7 @@ export default function Home() {
   useEffect(() => {
     const typed = new Typed(typeRef.current, {
       strings: [...TYPED_STRINGS.slice(0, -1), 'Friend.^1500'],
+      startDelay: 800,
       typeSpeed: 70,
       backSpeed: 35,
       backDelay: 2200, // hold the typed string long enough to read the bio
