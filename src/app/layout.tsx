@@ -10,7 +10,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import { SITE, SOCIALS } from '@/lib/siteConfig'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 // ── SEO Metadata ─────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
@@ -45,8 +45,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/img/portrait.jpg',
-        width: 1200,
-        height: 630,
+        width: 800,
+        height: 1000,
         alt: 'Brian Isale — Full Stack Developer & Creative Designer',
       },
     ],
