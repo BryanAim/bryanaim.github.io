@@ -157,36 +157,13 @@ npm uninstall lucide-react
 
 ## 2. SEO & NEXT.JS TECHNICAL
 
-### 2.1 — Per-page metadata missing (all pages get root description)
-Every page (`/about`, `/work`, `/contact`, `/bmx`, all 80+ design slug pages) currently shows the root layout description in Google search results. Fix requires the server shell pattern (see 1.9).
-
-**Metadata to add per page:**
-```tsx
-// about/page.tsx wrapper
-export const metadata: Metadata = {
-  title: 'About',
-  description: 'Brian Isale — Full Stack Developer & Creative Designer, Nakuru Kenya. Google Africa Scholar, 6+ years experience.',
-  alternates: { canonical: 'https://isalebryan.dev/about' },
-}
-// work/page.tsx wrapper
-export const metadata: Metadata = {
-  title: 'Work',
-  description: 'Design portfolio and development projects — logos, brand identities, and full-stack web applications by Brian Isale.',
-  alternates: { canonical: 'https://isalebryan.dev/work' },
-}
-// contact/page.tsx wrapper
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Get in touch with Brian Isale for web development, brand design, or collaboration. Based in Nakuru, Kenya.',
-  alternates: { canonical: 'https://isalebryan.dev/contact' },
-}
-```
+### ✅ 2.1 — Per-page metadata added *(fixed 2026-05-09)*
+Every page now has its own `export const metadata` (or `generateMetadata` for design slug pages). All static routes, shop routes, and 80+ design project pages have unique titles, descriptions, and canonical URLs.
 
 ---
 
-### 2.2 — Root `alternates.canonical` harms inner pages
-**File:** `src/app/layout.tsx:72`  
-`alternates: { canonical: 'https://isalebryan.dev' }` at root layout level applies to ALL pages, telling Google every page is canonically the homepage. Remove from root once per-page canonicals are added.
+### ✅ 2.2 — Root `alternates.canonical` removed *(fixed 2026-05-09)*
+`alternates: { canonical: 'https://isalebryan.dev' }` no longer exists in `src/app/layout.tsx`. Per-page canonicals (added in 2.1) now correctly identify each page.
 
 ---
 
@@ -216,16 +193,9 @@ export default function Image() {
 
 ---
 
-### 2.4 — Sitemap `lastModified` stamps every URL with today's date
+### ✅ 2.4 — Sitemap `lastModified` fixed *(fixed 2026-05-09)*
 **File:** `src/app/sitemap.ts`  
-Using `new Date()` for all entries triggers unnecessary recrawls on every deploy. Use real dates:
-```ts
-const STATIC_DATES: Record<string, string> = {
-  '/': '2026-04-29', '/about': '2026-04-29', '/work': '2026-04-15',
-  '/contact': '2026-01-01', '/shop': '2026-03-01',
-}
-// For design projects: new Date(`${p.year}-01-01`)
-```
+Replaced all `new Date()` calls with real hardcoded dates per route. Design project slugs now use `new Date(\`${project.year}-01-01\`)` from the project data. Static routes use dates matching their last meaningful content change.
 
 ---
 
@@ -678,7 +648,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 10. Fix OG image dimensions (create real 1200×630 banner) — `layout.tsx:46`
 11. Add `<link rel="preload">` for first background slide — `layout.tsx <head>`
 12. ~~Replace `<a>` with `<Link>` for all internal navigation~~ ✅ 2026-04-30
-13. Add per-page canonical metadata (needs server shell pattern first)
+13. ~~Add per-page canonical metadata~~ ✅ 2026-05-09
 14. ~~Add AVIF format to `next.config.js`~~ ✅ 2026-04-29
 15. Add `display: 'swap'` to Inter font — `layout.tsx:11`
 16. ~~Fix Work heading mobile overflow (`text-[7rem]` → `clamp`) — `work/page.tsx:151`~~ ✅ 2026-05-01
@@ -702,7 +672,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 32. Make slide dots clickable — `page.tsx:206`
 33. ~~Remove scroll hint or add below-fold content section~~ ✅ 2026-05-06 (TestimonialsStrip is the below-fold section)
 34. ~~Remove/update skill percentages in About stack cards~~ ✅ 2026-05-01
-35. Fix sitemap `lastModified` dates — `sitemap.ts`
+35. ~~Fix sitemap `lastModified` dates — `sitemap.ts`~~ ✅ 2026-05-09
 36. Add `startDelay: 800` to Typed.js config — `page.tsx:75`
 37. Add immutable cache headers for `/fonts/` and `/img/` — `next.config.js`
 38. ~~Remove dead `cdn.sanity.io` remote pattern — `next.config.js:44`~~ ✅ 2026-04-30
