@@ -311,18 +311,13 @@ startDelay: 800,  // show cursor for 0.8s before typing begins
 
 ---
 
-### 3.12 — `duration-1400` should use explicit arbitrary syntax
-**File:** `src/app/page.tsx:103`  
-```tsx
-// Before: duration-1400
-// After: duration-[1400ms]
-```
+### ~~3.12 — `duration-1400` should use explicit arbitrary syntax~~ N/A
+Tailwind v4 supports bare numeric durations natively — `duration-1400` is the canonical form and the linter confirms it. No change needed.
 
 ---
 
-### 3.13 — Font family conflict in globals.css
-**File:** `src/app/globals.css:~362`  
-Verify there is no `font-family: 'Nunito'` override conflicting with the Inter font loaded via `next/font`. If Nunito exists in CSS it must be removed or explicitly loaded.
+### ✅ 3.13 — Font family conflict resolved: Nunito via `next/font` *(fixed 2026-05-09)*
+Replaced `Inter` with `Nunito` in `layout.tsx` (loaded via `next/font/google`, `variable: '--font-nunito'`, `display: 'swap'`). Applied as `nunito.variable` on `<body>`. Updated `globals.css`: `--font-family-sans` now references `var(--font-nunito)` and `body { font-family: var(--font-family-sans) }` — no more hardcoded string or missing font reference.
 
 ---
 
@@ -635,7 +630,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 42. ~~Centralize contact/social config in `src/lib/siteConfig.ts`~~ ✅ 2026-05-01
 43. Add `src/components/ui/` button using shadcn pattern, or remove unused shadcn deps
 44. Move `sass` from `dependencies` to `devDependencies`
-45. Fix `duration-1400` → `duration-[1400ms]` — `page.tsx:103`
+45. ~~Fix `duration-1400` → `duration-[1400ms]`~~ N/A — Tailwind v4 accepts bare numerics; `duration-1400` is canonical
 46. ~~Remove orphan `.quote` class — `about/page.tsx:528`~~ ✅ 2026-04-30 (replaced Steve Jobs quote with Charles Eames)
 47. Add "Currently" section to About page (building X, learning Y, open to Z)
 48. Add year labels to dev project cards

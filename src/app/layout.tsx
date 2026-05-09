@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Nunito } from 'next/font/google'
 import './globals.css'
 import Header from './components/Header'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import { SITE, SOCIALS } from '@/lib/siteConfig'
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' })
+const nunito = Nunito({ subsets: ['latin'], display: 'swap', variable: '--font-nunito' })
 
 // ── SEO Metadata ─────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
@@ -209,7 +209,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="stylesheet" href="/fonts/css/all.min.css" />
       </head>
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={nunito.variable} suppressHydrationWarning>
         <NavigationProgress />
         <Header />
         <div id="content-wrap">
