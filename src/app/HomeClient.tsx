@@ -170,7 +170,7 @@ export default function Home() {
             <AnimatePresence mode="wait">
               <motion.p
                 key={bioIndex}
-                className="text-sm max-sm:text-xs leading-relaxed text-white/50 max-w-xl max-sm:max-w-xs max-sm:mx-auto"
+                className="text-sm max-sm:text-xs leading-relaxed text-white/65 max-w-xl max-sm:max-w-xs max-sm:mx-auto"
                 initial={{ opacity: 0, y: 2 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -1.5 }}
