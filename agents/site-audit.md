@@ -1,4 +1,4 @@
-# isalebryan.dev — Full Site Audit
+﻿# isalebryan.dev — Full Site Audit
 **Date:** 2026-04-29  
 **Audited by:** 6 specialist AI agents (Performance, UI/Design, Next.js/SEO, Code Quality, Security, UX/Conversion)  
 **Site:** https://isalebryan.dev
@@ -48,14 +48,9 @@ Added `sizes="(max-width: 1023px) 208px, 288px"` — matches `max-lg:w-52` (208p
 
 ---
 
-### 1.6 — Font Awesome is render-blocking
-**File:** `src/app/layout.tsx:218`  
-`<link rel="stylesheet" href="/fonts/css/all.min.css" />` in `<head>` blocks rendering. It loads 53 KB CSS + ~252 KB of webfonts. Short-term fix:
-```html
-<link rel="stylesheet" href="/fonts/css/all.min.css" media="print" onLoad="this.media='all'" />
-<noscript><link rel="stylesheet" href="/fonts/css/all.min.css" /></noscript>
-```
-Long-term: migrate to `lucide-react` (already in `package.json`) for tree-shaken icons. Keep brand icons (GitHub, LinkedIn, etc.) as inline SVGs.
+### ✅ 1.6 — Font Awesome render-blocking fixed *(fixed 2026-05-11)*
+**File:** `src/app/layout.tsx:211-214`
+Replaced blocking link with: (1) preload hint to start the fetch early, (2) tiny inline script that creates the link with `media="print"` and flips to `"all"` on load — CSS never blocks render, (3) noscript fallback. `unsafe-inline` already on CSP script-src.
 
 ---
 

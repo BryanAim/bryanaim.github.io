@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 import './globals.css'
 import Header from './components/Header'
@@ -208,7 +208,10 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="stylesheet" href="/fonts/css/all.min.css" />
+        {/* Font Awesome — non-blocking: preload starts fetch, script applies async */}
+        <link rel="preload" href="/fonts/css/all.min.css" as="style" />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href='/fonts/css/all.min.css';l.media='print';l.onload=function(){this.media='all'};document.head.appendChild(l)})()` }} />
+        <noscript><link rel="stylesheet" href="/fonts/css/all.min.css" /></noscript>
       </head>
       <body className={nunito.variable} suppressHydrationWarning>
         <MotionProvider>
