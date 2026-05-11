@@ -195,13 +195,9 @@ Applied `text-[clamp(3rem,10vw,7rem)]` to all 6 pages using this pattern: work, 
 
 ---
 
-### 3.4 — Bio text contrast fails WCAG AA at `text-white/50`
-**File:** `src/app/page.tsx:155`  
-50% white on the dark overlay is ~3.5:1 contrast — below the 4.5:1 WCAG AA minimum for body text at 14px.
-```tsx
-// Before: text-white/50
-// After: text-white/65
-```
+### ✅ 3.4 — Bio text contrast fixed *(fixed 2026-05-11)*
+**File:** `src/app/HomeClient.tsx:173`  
+`text-white/50` → `text-white/65` on the rotating bio paragraph. Contrast bumped from ~3.5:1 to ~5.0:1, clearing WCAG AA 4.5:1 for body text.
 
 ---
 
