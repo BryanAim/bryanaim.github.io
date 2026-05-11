@@ -256,17 +256,9 @@ Added `aria-label={s.label}`, removed redundant `title`, added `aria-hidden="tru
 
 ---
 
-### 3.9 — Slide dots are `pointer-events-none` — missed interactivity opportunity
-**File:** `src/app/page.tsx:206`  
-The dots look clickable but do nothing. Make them interactive:
-```tsx
-<motion.div className="flex gap-2 mt-4 max-sm:justify-center" aria-label="Background slides">
-  {BG_IMAGES.map((_, i) => (
-    <button key={i} onClick={() => setBgIndex(i)} aria-label={`Slide ${i + 1}`}
-      className={`h-1 rounded transition-all duration-400 cursor-pointer ${i === bgIndex ? 'w-9 bg-lime' : 'w-5 bg-white/20 hover:bg-white/40'}`} />
-  ))}
-</motion.div>
-```
+### ✅ 3.9 — Slide dots made interactive *(fixed 2026-05-11)*
+**File:** `src/app/HomeClient.tsx`  
+Removed `pointer-events-none`/`aria-hidden` from container. Each dot is now a `<button>` with `onClick={() => goToSlide(i)}`, `aria-label`, `aria-current`, hover opacity, and `focus-visible` outline in lime. `goToSlide` resets the 7s auto-advance interval via `intervalRef` so the timer restarts from the clicked slide.
 
 ---
 
