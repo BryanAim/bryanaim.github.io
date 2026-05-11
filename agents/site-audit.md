@@ -84,13 +84,8 @@ Deleted `{ protocol: 'https', hostname: 'cdn.sanity.io' }` from `remotePatterns`
 
 ---
 
-### 1.12 — Unused dependencies inflating bundle
-`lucide-react` v1.7.0 is installed and unused (Font Awesome handles all icons). `class-variance-authority`, `@radix-ui/react-slot` are shadcn scaffolding that was never used (a `src/components/ui/button.tsx` exists but is not imported by any page). `sass` is in `dependencies` but should be `devDependencies`.
-
-```bash
-npm uninstall lucide-react
-# audit: grep -r "from 'class-variance-authority'\|from '@radix-ui/react-slot'" src/
-```
+### ✅ 1.12 — Unused dependencies removed *(fixed 2026-05-11)*
+Uninstalled `lucide-react`, `class-variance-authority`, `@radix-ui/react-slot`, `sass` (4 packages, 0 KB savings at install, ~15 KB less in client bundle). Deleted unused `src/components/ui/button.tsx` and `card.tsx`. `badge.tsx` kept — used by `ShopClient.tsx`; `clsx`/`tailwind-merge` kept as `badge.tsx` depends on `cn`.
 
 ---
 
