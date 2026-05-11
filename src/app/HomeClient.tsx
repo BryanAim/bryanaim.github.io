@@ -101,12 +101,23 @@ export default function Home() {
   const typeRef = useRef<HTMLSpanElement>(null)
   const [bgIndex, setBgIndex] = useState(0)
   const [bioIndex, setBioIndex] = useState(0)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const startInterval = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current)
+    intervalRef.current = setInterval(() => setBgIndex(c => (c + 1) % BG_IMAGES.length), 7000)
+  }
 
   // Background cycles independently — slow enough to read
   useEffect(() => {
-    const id = setInterval(() => setBgIndex(c => (c + 1) % BG_IMAGES.length), 7000)
-    return () => clearInterval(id)
+    startInterval()
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
   }, [])
+
+  const goToSlide = (i: number) => {
+    setBgIndex(i)
+    startInterval()
+  }
 
   // Bio syncs to Typed.js — updates only after a string is fully typed
   useEffect(() => {
@@ -224,14 +235,21 @@ export default function Home() {
 
           {/* ── Slide dots ── */}
           <motion.div
-            className="flex gap-2 mt-3 pointer-events-none max-sm:justify-center"
-            aria-hidden="true"
+            className="flex gap-2 mt-3 max-sm:justify-center"
+            role="group"
+            aria-label="Background slide controls"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.5 }}
           >
             {BG_IMAGES.map((_, i) => (
-              <div key={i} className={`h-1 rounded transition-all duration-400 ${i === bgIndex ? 'w-9 bg-lime' : 'w-5 bg-white/20'}`} />
+              <button
+                key={i}
+                onClick={() => goToSlide(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                aria-current={i === bgIndex ? 'true' : undefined}
+                className={`h-1 rounded transition-all duration-400 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime ${i === bgIndex ? 'w-9 bg-lime' : 'w-5 bg-white/20 hover:bg-white/40'}`}
+              />
             ))}
           </motion.div>
         </div>

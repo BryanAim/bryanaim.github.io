@@ -584,7 +584,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 29. ~~Move BMX from main nav to footer / About page~~ ✅ 2026-04-30
 30. Add `will-change-transform` to hover-animated cards — `work/page.tsx:17`
 31. ~~Fix bio text contrast `text-white/50` → `text-white/65` — `page.tsx:155`~~ ✅ 2026-05-11
-32. Make slide dots clickable — `page.tsx:206`
+32. ~~Make slide dots clickable — `page.tsx:206`~~ ✅ 2026-05-11
 33. ~~Remove scroll hint or add below-fold content section~~ ✅ 2026-05-06 (TestimonialsStrip is the below-fold section)
 34. ~~Remove/update skill percentages in About stack cards~~ ✅ 2026-05-01
 35. ~~Fix sitemap `lastModified` dates — `sitemap.ts`~~ ✅ 2026-05-09
