@@ -27,7 +27,7 @@ export function TestimonialsStrip() {
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.7 }}
     >
-      <p className="text-[0.72rem] uppercase tracking-[4px] text-white/30 text-center mb-8">
+      <p className="text-[0.72rem] uppercase tracking-[4px] text-white text-center mb-8">
         What clients say
       </p>
       <div className="relative overflow-hidden">
