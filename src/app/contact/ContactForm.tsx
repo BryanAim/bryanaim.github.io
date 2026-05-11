@@ -1,7 +1,7 @@
-'use client'
+﻿'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 
 const SUBJECTS = ['Job Opportunity', 'Freelance Project', 'Collaboration', 'General Inquiry'] as const
 type Subject = typeof SUBJECTS[number]
@@ -36,7 +36,7 @@ function SubjectSelect({ value, onChange }: { value: Subject; onChange: (v: Subj
 
       <AnimatePresence>
         {open && (
-          <motion.ul
+          <m.ul
             role="listbox"
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
@@ -59,7 +59,7 @@ function SubjectSelect({ value, onChange }: { value: Subject; onChange: (v: Subj
                 {s}
               </li>
             ))}
-          </motion.ul>
+          </m.ul>
         )}
       </AnimatePresence>
     </div>
@@ -97,7 +97,7 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <motion.div
+      <m.div
         className="flex flex-col items-center gap-3 py-12 text-center"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -110,7 +110,7 @@ export function ContactForm() {
         <p className="text-white/50 text-[0.875rem] max-w-xs">
           I&apos;ll be in touch soon — usually within a day or two.
         </p>
-      </motion.div>
+      </m.div>
     )
   }
 
@@ -156,7 +156,7 @@ export function ContactForm() {
         <p className="text-[0.8rem] text-red-400">{errorMsg}</p>
       )}
 
-      <motion.button
+      <m.button
         type="submit"
         disabled={status === 'submitting'}
         className="self-start inline-flex items-center gap-2 px-7 py-[0.8rem] bg-teal text-black font-bold text-[0.88rem] rounded-[7px] transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -165,7 +165,7 @@ export function ContactForm() {
         {status === 'submitting'
           ? <><i className="fas fa-spinner fa-spin" /> Sending…</>
           : <><i className="fas fa-paper-plane" /> Send Message</>}
-      </motion.button>
+      </m.button>
     </form>
   )
 }

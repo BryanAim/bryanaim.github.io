@@ -1,7 +1,7 @@
-'use client'
+﻿'use client'
 import { useParams, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { designProjects } from '../../../work/designProjects'
 import { Suspense } from 'react'
 
@@ -23,14 +23,14 @@ function SuccessContent() {
 
   return (
     <main className="min-h-screen flex items-center justify-center px-6">
-      <motion.div
+      <m.div
         className="text-center max-w-[480px]"
         initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Checkmark */}
-        <motion.div
+        <m.div
           className="w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-8 border-2"
           style={{ borderColor: projectColor, color: projectColor, background: `${projectColor}15` }}
           initial={{ scale: 0, rotate: -20 }}
@@ -38,18 +38,18 @@ function SuccessContent() {
           transition={{ delay: 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <i className="fas fa-check" />
-        </motion.div>
+        </m.div>
 
-        <motion.h1
+        <m.h1
           className="text-[1.8rem] font-extrabold mb-3"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
           Thank you, <span style={{ color: projectColor }}>{name}!</span>
-        </motion.h1>
+        </m.h1>
 
-        <motion.p
+        <m.p
           className="text-white/55 leading-[1.75] text-[0.95rem] mb-8"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -57,9 +57,9 @@ function SuccessContent() {
         >
           Your testimonial for <strong className="text-white/80">{projectTitle}</strong> has been
           published on the portfolio. It means a lot — genuinely.
-        </motion.p>
+        </m.p>
 
-        <motion.div
+        <m.div
           className="flex gap-3 justify-center flex-wrap"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,8 +79,8 @@ function SuccessContent() {
           >
             Home
           </Link>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </main>
   )
 }

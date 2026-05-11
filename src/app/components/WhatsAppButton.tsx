@@ -1,7 +1,7 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { SITE } from '@/lib/siteConfig'
 
 const WA_URL = `https://wa.me/${SITE.waNumber}?text=${encodeURIComponent(SITE.waMessage)}`
@@ -13,7 +13,7 @@ export default function WhatsAppButton() {
     <div className="wa-wrap">
       <AnimatePresence>
         {hovered && (
-          <motion.span
+          <m.span
             className="wa-label"
             initial={{ opacity: 0, x: 10, scale: 0.95 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -21,11 +21,11 @@ export default function WhatsAppButton() {
             transition={{ duration: 0.18, ease: 'easeOut' }}
           >
             Chat on WhatsApp
-          </motion.span>
+          </m.span>
         )}
       </AnimatePresence>
 
-      <motion.a
+      <m.a
         href={WA_URL}
         target="_blank"
         rel="noopener noreferrer"
@@ -40,7 +40,7 @@ export default function WhatsAppButton() {
         whileTap={{ scale: 0.95 }}
       >
         <i className="fab fa-whatsapp" />
-      </motion.a>
+      </m.a>
     </div>
   )
 }

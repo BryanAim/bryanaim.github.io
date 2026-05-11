@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 
 const navLinks = [
@@ -33,7 +33,7 @@ export default function Header() {
       {/* ══════════════════════════════════
           DESKTOP — collapsible side nav
           ══════════════════════════════════ */}
-      <motion.nav
+      <m.nav
         className="side-nav"
         aria-label="Main navigation"
         initial={false}
@@ -47,7 +47,7 @@ export default function Header() {
           <span className="side-nav-logo-b">B</span>
           <AnimatePresence>
             {hovered && (
-              <motion.span
+              <m.span
                 className="side-nav-logo-rest"
                 key="logo-rest"
                 initial={{ opacity: 0, x: -6, width: 0 }}
@@ -56,7 +56,7 @@ export default function Header() {
                 transition={{ duration: 0.22, ease: 'easeOut' }}
               >
                 rian.
-              </motion.span>
+              </m.span>
             )}
           </AnimatePresence>
         </Link>
@@ -77,7 +77,7 @@ export default function Header() {
                 >
                   {/* Shared-element active background */}
                   {isActive && (
-                    <motion.span
+                    <m.span
                       className="side-nav-active-bg"
                       layoutId="activeNavBg"
                       transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
@@ -89,7 +89,7 @@ export default function Header() {
                     <i className={icon} aria-hidden="true" />
                     {/* Active dot — shown when collapsed */}
                     {isActive && !hovered && (
-                      <motion.span
+                      <m.span
                         className="side-nav-active-dot"
                         layoutId="activeDot"
                         initial={{ scale: 0 }}
@@ -102,7 +102,7 @@ export default function Header() {
                   {/* Label — animates in on expand */}
                   <AnimatePresence>
                     {hovered && (
-                      <motion.span
+                      <m.span
                         key={`label-${href}`}
                         className="side-nav-label"
                         initial={{ opacity: 0, x: -8 }}
@@ -115,7 +115,7 @@ export default function Header() {
                         }}
                       >
                         {label}
-                      </motion.span>
+                      </m.span>
                     )}
                   </AnimatePresence>
                 </Link>
@@ -125,12 +125,12 @@ export default function Header() {
         </ul>
 
         {/* ── Bottom accent line ── */}
-        <motion.div
+        <m.div
           className="side-nav-bottom-line"
           animate={{ scaleX: hovered ? 1 : 0.3, opacity: hovered ? 1 : 0.4 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
         />
-      </motion.nav>
+      </m.nav>
 
       {/* ══════════════════════════════════
           MOBILE — hamburger + overlay nav

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useParams, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import type { Testimonial } from '@/lib/db'
@@ -6,7 +6,7 @@ import { TestimonialsGrid } from '../../../components/TestimonialCard'
 
 const VIDEO_EXTS = /\.(mp4|mov|webm)$/i
 const isVideo = (src: string) => VIDEO_EXTS.test(src)
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { designProjects, Category } from '../../designProjects'
 import Link from 'next/link'
 
@@ -71,7 +71,7 @@ export default function DesignProjectClient() {
   return (
     <main id="work" className="pb-20">
       {/* ── Breadcrumb + Top pagination ── */}
-      <motion.div
+      <m.div
         className="flex items-center gap-2 text-[0.82rem] text-white/40 mb-8 flex-wrap"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -122,10 +122,10 @@ export default function DesignProjectClient() {
             </span>
           )}
         </div>
-      </motion.div>
+      </m.div>
 
       {/* ── Hero Image + Gallery ── */}
-      <motion.div
+      <m.div
         className="mb-12"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -139,7 +139,7 @@ export default function DesignProjectClient() {
         >
           <AnimatePresence mode="wait">
             {isVideo(currentImage.src) ? (
-              <motion.video
+              <m.video
                 key={activeImg}
                 src={currentImage.src}
                 className="w-full h-full object-contain bg-black/40 block max-h-[520px]"
@@ -151,7 +151,7 @@ export default function DesignProjectClient() {
                 transition={{ duration: 0.25 }}
               />
             ) : (
-              <motion.img
+              <m.img
                 key={activeImg}
                 src={currentImage.src}
                 alt={currentImage.label ?? project.title}
@@ -209,12 +209,12 @@ export default function DesignProjectClient() {
             ))}
           </div>
         )}
-      </motion.div>
+      </m.div>
 
       {/* ── Lightbox ── */}
       <AnimatePresence>
         {lightbox && (
-          <motion.div
+          <m.div
             className="fixed inset-0 bg-black/[0.93] z-[9999] flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -244,7 +244,7 @@ export default function DesignProjectClient() {
               </>
             )}
             {isVideo(currentImage.src) ? (
-              <motion.video
+              <m.video
                 key={activeImg}
                 src={currentImage.src}
                 className="max-w-[90vw] max-h-[88vh] object-contain rounded-[6px] shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
@@ -258,7 +258,7 @@ export default function DesignProjectClient() {
                 transition={{ duration: 0.2 }}
               />
             ) : (
-              <motion.img
+              <m.img
                 key={activeImg}
                 src={currentImage.src}
                 alt={currentImage.label ?? project.title}
@@ -275,14 +275,14 @@ export default function DesignProjectClient() {
                 {currentImage.label}
               </p>
             )}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       {/* ── Content ── */}
       <div className="grid grid-cols-[280px_1fr] gap-12 mb-16 max-[900px]:grid-cols-1">
         {/* Left: Meta */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -350,10 +350,10 @@ export default function DesignProjectClient() {
               ))}
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Right: Description */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -422,12 +422,12 @@ export default function DesignProjectClient() {
             <span>View Full Portfolio on Behance</span>
             <i className="fas fa-arrow-right dp-cta-arrow" />
           </a>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* ── Testimonials for this project ── */}
       {testimonials.length > 0 && (
-        <motion.section
+        <m.section
           className="mb-12 pt-12 border-t border-white/[0.07]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -441,11 +441,11 @@ export default function DesignProjectClient() {
             <i className="fas fa-quote-left" /> Client Feedback
           </h3>
           <TestimonialsGrid testimonials={testimonials} />
-        </motion.section>
+        </m.section>
       )}
 
       {/* ── Bottom Pagination ── */}
-      <motion.div
+      <m.div
         className="grid grid-cols-2 max-sm:grid-cols-1 gap-4 my-12 pt-10 border-t border-white/[0.07]"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -490,11 +490,11 @@ export default function DesignProjectClient() {
             </div>
           </Link>
         ) : <div />}
-      </motion.div>
+      </m.div>
 
       {/* ── Related Projects ── */}
       {related.length > 0 && (
-        <motion.section
+        <m.section
           className="pt-12 border-t border-white/[0.07]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -509,7 +509,7 @@ export default function DesignProjectClient() {
               WebKit corner-bleed concern with scale inside overflow:hidden + rounded */}
           <div className="grid grid-cols-3 max-[900px]:grid-cols-2 max-sm:grid-cols-1 gap-[1.2rem]">
             {related.map((rp, i) => (
-              <motion.div
+              <m.div
                 key={rp.slug}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -536,10 +536,10 @@ export default function DesignProjectClient() {
                     <p className="text-[0.85rem] text-white/80 mt-[0.2rem] mb-0 font-semibold">{rp.title}</p>
                   </div>
                 </Link>
-              </motion.div>
+              </m.div>
             ))}
           </div>
-        </motion.section>
+        </m.section>
       )}
     </main>
   )

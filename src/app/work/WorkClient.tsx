@@ -1,9 +1,9 @@
-'use client'
+﻿'use client'
 
 import { useState, useMemo, useEffect, Suspense } from 'react'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { designProjects as allDesignProjects } from './designProjects'
 import { devProjects, DevProject } from './devProjects'
 import QuoteModal from '../components/QuoteModal'
@@ -14,7 +14,7 @@ const SPRING = [0.16, 1, 0.3, 1] as const
 /* ─── Dev project card ─── */
 function DevCard({ p }: { p: DevProject }) {
   return (
-    <motion.div
+    <m.div
       className="group bg-white/[0.04] border border-white/[0.08] rounded-[10px] overflow-hidden transition-[border-color] duration-200 cursor-default"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -61,14 +61,14 @@ function DevCard({ p }: { p: DevProject }) {
           ))}
         </div>
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 
 /* ─── Service card ─── */
 function ServiceCard({ s, index, onQuote }: { s: (typeof services)[0]; index: number; onQuote: () => void }) {
   return (
-    <motion.div
+    <m.div
       className="sv-card bg-white/[0.04] border border-white/[0.08] rounded-xl p-6 flex flex-col gap-3 cursor-default"
       style={{ '--sv-color': s.color } as React.CSSProperties}
       initial={{ opacity: 0, y: 32 }}
@@ -107,7 +107,7 @@ function ServiceCard({ s, index, onQuote }: { s: (typeof services)[0]; index: nu
       >
         Get a quote <i className="fas fa-calculator" />
       </button>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -150,25 +150,25 @@ function WorkInner() {
   return (
     <main id="work-page">
       {/* ── Heading ── */}
-      <motion.h1
+      <m.h1
         className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
         My <span className="text-lime">Work</span>
-      </motion.h1>
-      <motion.h2
+      </m.h1>
+      <m.h2
         className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
       >
         Development · Design · Services
-      </motion.h2>
+      </m.h2>
 
       {/* ── Tabs ── */}
-      <motion.div
+      <m.div
         className="flex gap-2 mx-8 mt-8 flex-nowrap overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden max-sm:mx-4 max-sm:mt-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -230,12 +230,12 @@ function WorkInner() {
             {devProjects.length}
           </span>
         </button>
-      </motion.div>
+      </m.div>
 
       {/* ── Tab content ── */}
       <AnimatePresence mode="wait">
         {tab === 'dev' && (
-          <motion.section
+          <m.section
             key="dev"
             className="px-8 pt-8 pb-16 max-sm:px-4 max-sm:pt-6 max-sm:pb-12"
             initial={{ opacity: 0, y: 24 }}
@@ -256,10 +256,10 @@ function WorkInner() {
                 <i className="fab fa-github" /> More on GitHub
               </a>
             </div>
-          </motion.section>
+          </m.section>
         )}
         {tab === 'design' && (
-          <motion.section
+          <m.section
             key="design"
             className="px-8 pt-8 pb-16 max-sm:px-4 max-sm:pt-6 max-sm:pb-12"
             initial={{ opacity: 0, y: 24 }}
@@ -278,10 +278,10 @@ function WorkInner() {
                 <i className="fab fa-behance" /> Full portfolio on Behance
               </a>
             </div>
-          </motion.section>
+          </m.section>
         )}
         {tab === 'services' && (
-          <motion.section
+          <m.section
             key="services"
             className="px-8 pt-8 pb-16 max-sm:px-4 max-sm:pt-6 max-sm:pb-12"
             initial={{ opacity: 0, y: 24 }}
@@ -313,7 +313,7 @@ function WorkInner() {
                 </a>
               </p>
             </div>
-          </motion.section>
+          </m.section>
         )}
       </AnimatePresence>
 

@@ -1,7 +1,7 @@
-'use client'
+﻿'use client'
 
 import { useRef, useState } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion'
+import { m, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion'
 import { services } from '../work/services'
 import QuoteModal from '../components/QuoteModal'
 import { SITE, SOCIALS as socials } from '@/lib/siteConfig'
@@ -33,7 +33,7 @@ function DrawLine({ color = '#00ddd7' }: { color?: string }) {
   const inView = useInView(ref, { once: true, margin: '-40px' })
   return (
     <div ref={ref} className="ct-draw-line-wrap">
-      <motion.div
+      <m.div
         className="ct-draw-line"
         style={{ background: `linear-gradient(90deg, ${color}, transparent)` }}
         initial={{ scaleX: 0, originX: 0 }}
@@ -65,18 +65,18 @@ export default function Contact() {
       <section className="ct-hero flex-col items-center text-center">
 
         <div className="overflow-hidden leading-none mb-8">
-          <motion.h1
+          <m.h1
             className="text-[clamp(3.2rem,9vw,7rem)] font-semibold leading-none tracking-tight whitespace-nowrap"
             variants={curtain(0)}
             initial="hidden"
             animate="show"
           >
             <span className="text-teal">Let&apos;s </span><span className="text-lime">Connect.</span>
-          </motion.h1>
+          </m.h1>
         </div>
 
         {/* Subtitle */}
-        <motion.p
+        <m.p
           className="text-[1.05rem] leading-[1.7] text-[#aaa] max-w-120 mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -84,17 +84,17 @@ export default function Contact() {
         >
           Got a project in mind, a collaboration, or just want to say hey?<br />
           I&apos;m always open to a good conversation.
-        </motion.p>
+        </m.p>
 
         {/* Contact cards — row on desktop, stack on mobile */}
-        <motion.div
+        <m.div
           className="flex flex-row flex-wrap justify-center gap-3 w-full mb-10"
           initial="hidden"
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.5 } } }}
         >
           {contactInfo.map((c) => (
-            <motion.a
+            <m.a
               key={c.label}
               href={c.href}
               target={c.href.startsWith('http') ? '_blank' : undefined}
@@ -114,18 +114,18 @@ export default function Contact() {
                 <p className="text-[0.72rem] uppercase tracking-[1.5px] text-lime mb-[0.2rem]">{c.label}</p>
                 <p className="text-[0.95rem] text-[#e0e0e0] font-semibold">{c.value}</p>
               </div>
-            </motion.a>
+            </m.a>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* CTAs — WhatsApp primary (Kenya market), then Email, then portfolio */}
-        <motion.div
+        <m.div
           className="flex gap-[0.85rem] flex-wrap justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.1, ease: SPRING }}
         >
-          <motion.a
+          <m.a
             href={`https://wa.me/${SITE.waNumber}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -133,22 +133,22 @@ export default function Contact() {
             whileHover={{ scale: 1.04 }}
           >
             <i className="fab fa-whatsapp" /> WhatsApp Me
-          </motion.a>
-          <motion.a
+          </m.a>
+          <m.a
             href={`mailto:${SITE.email}`}
             className="inline-flex items-center gap-2 px-7 py-[0.8rem] border border-white/18 text-white/75 font-semibold text-[0.88rem] rounded-[7px] no-underline transition-[border-color,color] duration-200 hover:border-white/40 hover:text-white"
             whileHover={{ scale: 1.04 }}
           >
             Send an Email
-          </motion.a>
-          <motion.a
+          </m.a>
+          <m.a
             href="/work"
             className="inline-flex items-center gap-2 px-7 py-[0.8rem] border border-white/10 text-white/45 font-semibold text-[0.88rem] rounded-[7px] no-underline transition-[border-color,color] duration-200 hover:border-white/25 hover:text-white/70"
             whileHover={{ scale: 1.04 }}
           >
             View My Work <i className="fas fa-arrow-right" />
-          </motion.a>
-        </motion.div>
+          </m.a>
+        </m.div>
 
       </section>
 
@@ -157,7 +157,7 @@ export default function Contact() {
       ══════════════════════════════════ */}
       <section className="px-5 pb-12 min-[600px]:px-8 min-[600px]:pb-16 min-[900px]:px-16">
         <div className="mb-8">
-          <motion.h2
+          <m.h2
             className="text-2xl font-bold mb-[1.2rem] uppercase tracking-[1px]"
             variants={curtain(0)}
             initial="hidden"
@@ -165,10 +165,10 @@ export default function Contact() {
             viewport={{ once: true, margin: '-60px' }}
           >
             Drop me <span className="text-teal">a line</span>
-          </motion.h2>
+          </m.h2>
           <DrawLine color="#b1db00" />
         </div>
-        <motion.p
+        <m.p
           className="text-white/40 text-[0.875rem] mb-6 -mt-3"
           variants={riseUp(0.1)}
           initial="hidden"
@@ -176,15 +176,15 @@ export default function Contact() {
           viewport={{ once: true, margin: '-40px' }}
         >
           Prefer a form? I&apos;ll reply to your email directly.
-        </motion.p>
-        <motion.div
+        </m.p>
+        <m.div
           variants={riseUp(0.15)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-40px' }}
         >
           <ContactForm />
-        </motion.div>
+        </m.div>
       </section>
 
       {/* ══════════════════════════════════
@@ -192,7 +192,7 @@ export default function Contact() {
       ══════════════════════════════════ */}
       <section className="px-5 pb-12 min-[600px]:px-8 min-[600px]:pb-16 min-[900px]:px-16">
         <div className="mb-8">
-          <motion.h2
+          <m.h2
             className="text-2xl font-bold mb-[1.2rem] uppercase tracking-[1px]"
             variants={curtain(0)}
             initial="hidden"
@@ -200,11 +200,11 @@ export default function Contact() {
             viewport={{ once: true, margin: '-60px' }}
           >
             Let&apos;s <span className="text-lime">Work Together</span>
-          </motion.h2>
+          </m.h2>
           <DrawLine color="#00ddd7" />
         </div>
 
-        <motion.p
+        <m.p
           className="text-white/40 text-[0.875rem] mb-6 -mt-3"
           variants={riseUp(0.1)}
           initial="hidden"
@@ -212,9 +212,9 @@ export default function Contact() {
           viewport={{ once: true, margin: '-40px' }}
         >
           Pick a service and get an instant quote, or browse the shop.
-        </motion.p>
+        </m.p>
 
-        <motion.div
+        <m.div
           className="grid grid-cols-2 min-[640px]:grid-cols-3 max-[639px]:grid-cols-1 gap-3"
           initial="hidden"
           whileInView="show"
@@ -222,7 +222,7 @@ export default function Contact() {
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
         >
           {services.map((s) => (
-            <motion.button
+            <m.button
               key={s.serviceId}
               className="ct-service-card group flex flex-col gap-[0.55rem] p-4 bg-white/[0.03] border border-white/[0.08] rounded-xl cursor-pointer text-left w-full transition-[border-color] duration-[250ms]"
               style={{ '--ct-sv-color': s.color } as React.CSSProperties}
@@ -246,12 +246,12 @@ export default function Contact() {
               <span className="text-[0.72rem] font-semibold flex items-center gap-[0.35rem] mt-[0.15rem]" style={{ color: s.color }}>
                 Get a quote <i className="fas fa-arrow-right text-[0.6rem] transition-transform duration-200 group-hover:translate-x-[3px]" />
               </span>
-            </motion.button>
+            </m.button>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Shop divider */}
-        <motion.div
+        <m.div
           className="flex items-center gap-4 my-7 mb-5 text-white/20 text-[0.72rem] uppercase tracking-[0.8px] before:content-[''] before:flex-1 before:h-px before:bg-white/[0.08] after:content-[''] after:flex-1 after:h-px after:bg-white/[0.08]"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -259,9 +259,9 @@ export default function Contact() {
           transition={{ delay: 0.3 }}
         >
           <span>or shop the collection</span>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           className="grid grid-cols-2 max-[480px]:grid-cols-1 gap-3"
           initial="hidden"
           whileInView="show"
@@ -272,7 +272,7 @@ export default function Contact() {
             { icon: 'fas fa-store',   label: 'Browse the Shop', desc: 'Stickers, tees, prints, and more. Ready to order.', color: '#b1db00', href: '/shop',        cta: 'Visit shop' },
             { icon: 'fas fa-pen-nib', label: 'Custom Order',    desc: "Upload your own artwork or brief and I'll make it happen.", color: '#00ddd7', href: '/shop/custom', cta: 'Start custom order' },
           ] as const).map((item) => (
-            <motion.a
+            <m.a
               key={item.href}
               href={item.href}
               className="ct-shop-card group flex flex-col gap-[0.7rem] p-5 bg-white/[0.03] border border-white/[0.08] rounded-[14px] no-underline text-inherit transition-[border-color] duration-[250ms]"
@@ -293,9 +293,9 @@ export default function Contact() {
               <span className="text-[0.75rem] font-bold inline-flex items-center gap-[0.4rem] mt-[0.2rem]" style={{ color: item.color }}>
                 {item.cta} <i className="fas fa-long-arrow-alt-right transition-transform duration-200 group-hover:translate-x-[4px]" />
               </span>
-            </motion.a>
+            </m.a>
           ))}
-        </motion.div>
+        </m.div>
       </section>
 
       <AnimatePresence>
@@ -315,7 +315,7 @@ export default function Contact() {
       <div ref={socialRailRef} className="ct-socials-rail-wrap">
         <section className="ct-socials-section ct-socials-sticky">
           <div className="mb-8">
-            <motion.h2
+            <m.h2
               className="text-2xl font-bold mb-[1.2rem] uppercase tracking-[1px]"
               variants={curtain(0)}
               initial="hidden"
@@ -323,12 +323,12 @@ export default function Contact() {
               viewport={{ once: true, margin: '-60px' }}
             >
               Find me <span className="text-lime">online</span>
-            </motion.h2>
+            </m.h2>
             <DrawLine color="#b1db00" />
           </div>
 
           <div className="overflow-hidden mt-2 max-[767px]:hidden">
-            <motion.div className="flex gap-4 w-max py-2" style={{ x: railX }}>
+            <m.div className="flex gap-4 w-max py-2" style={{ x: railX }}>
               {socials.map((s) => (
                 <a
                   key={s.label}
@@ -346,7 +346,7 @@ export default function Contact() {
                   <i className="fas fa-arrow-right ct-social-arrow" />
                 </a>
               ))}
-            </motion.div>
+            </m.div>
           </div>
 
           {/* Mobile: simple grid */}

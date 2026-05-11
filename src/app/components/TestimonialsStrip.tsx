@@ -1,6 +1,6 @@
-'use client'
+﻿'use client'
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { TestimonialStripeCard } from './TestimonialCard'
 import type { Testimonial } from '@/lib/db'
 
@@ -20,7 +20,7 @@ export function TestimonialsStrip() {
   const doubled = [...testimonials, ...testimonials]
 
   return (
-    <motion.section
+    <m.section
       className="py-16 border-t border-white/[0.06] overflow-hidden"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -40,6 +40,6 @@ export function TestimonialsStrip() {
           ))}
         </div>
       </div>
-    </motion.section>
+    </m.section>
   )
 }

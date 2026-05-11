@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 
 /* ─── Types ─── */
 interface QuoteOption {
@@ -502,7 +502,7 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
   })
 
   return createPortal(
-    <motion.div
+    <m.div
       className="fixed inset-0 z-[1100] flex items-center justify-center bg-black/70 backdrop-blur p-4 max-[600px]:p-2"
       onClick={onClose}
       initial={{ opacity: 0 }}
@@ -510,7 +510,7 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <motion.div
+      <m.div
         className="flex w-full max-w-[540px] max-h-[90vh] flex-col overflow-hidden rounded-[14px] border border-white/10 bg-[#111]"
         onClick={e => e.stopPropagation()}
         initial={{ y: 60, opacity: 0 }}
@@ -544,7 +544,7 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
 
         {/* Progress bar */}
         <div className="h-[3px] shrink-0 bg-white/[0.08]">
-          <motion.div
+          <m.div
             className="h-full rounded-[0_2px_2px_0]"
             style={{ background: color }}
             animate={{ width: `${((isLast ? steps.length : step) / steps.length) * 100}%` }}
@@ -555,7 +555,7 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
         {/* Live price pill */}
         <div className="flex shrink-0 items-center justify-between border-b border-white/[0.06] bg-white/[0.03] px-[1.4rem] py-[0.65rem]">
           <span className="text-[0.78rem] uppercase tracking-[0.06em] text-[#777]">Estimated total</span>
-          <motion.span
+          <m.span
             className="text-[1.1rem] font-extrabold"
             key={total}
             initial={{ opacity: 0, y: -6 }}
@@ -563,14 +563,14 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
             style={{ color }}
           >
             {fmt(total)}
-          </motion.span>
+          </m.span>
         </div>
 
         {/* Body */}
         <div className="flex-1 overflow-y-auto px-[1.4rem] py-5">
           <AnimatePresence mode="wait">
             {!isLast ? (
-              <motion.div
+              <m.div
                 key={step}
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -618,9 +618,9 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
                     )
                   })}
                 </div>
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.div
+              <m.div
                 key="proposal"
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -679,7 +679,7 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
                     <i className="fas fa-download" /> Download PDF
                   </button>
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>
@@ -714,8 +714,8 @@ export default function QuoteModal({ serviceId, serviceName, color, onClose }: Q
             </button>
           </div>
         )}
-      </motion.div>
-    </motion.div>,
+      </m.div>
+    </m.div>,
     document.body,
   )
 }

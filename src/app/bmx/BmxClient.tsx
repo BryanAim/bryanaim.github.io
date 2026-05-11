@@ -1,5 +1,5 @@
-'use client'
-import { AnimatePresence, motion, useMotionValue, useTransform, useInView, useScroll, useSpring } from 'framer-motion'
+﻿'use client'
+import { AnimatePresence, m, useMotionValue, useTransform, useInView, useScroll, useSpring } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -219,7 +219,7 @@ function HPhaseCard({ phase, index, scrollYProgress }: {
   const scale = useTransform(scrollYProgress, inputRange, inputRange.map(v => v === cardCenter ? 1.05 : 0.95))
 
   return (
-    <motion.div className="w-[240px] md:w-[420px] flex-shrink-0 flex flex-col items-center" style={{ opacity, scale }}>
+    <m.div className="w-[240px] md:w-[420px] flex-shrink-0 flex flex-col items-center" style={{ opacity, scale }}>
       <div className="w-full bg-white/[0.03] border border-white/[0.08] border-t-[3px] rounded-xl px-[1.2rem] py-[1.1rem] mb-[14px] transition-colors hover:bg-white/[0.07]" style={{ borderColor: `${phase.color}50` }}>
         <div className="mb-2">
           <span className="text-[0.82rem] font-extrabold tracking-[2px] uppercase" style={{ color: phase.color }}>{phase.phase}</span>
@@ -243,7 +243,7 @@ function HPhaseCard({ phase, index, scrollYProgress }: {
         style={{ background: phase.color, boxShadow: `0 0 14px ${phase.color}70` }}
       />
       <span className="mt-2 text-[0.67rem] font-mono tracking-[0.5px] text-center whitespace-nowrap" style={{ color: `${phase.color}99` }}>{phase.period}</span>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -269,35 +269,35 @@ function SkillsTimeline() {
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col p-0">
 
         <div className="pt-[5vh] md:pt-[8vh] px-6 md:px-[60px] shrink-0">
-          <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-4" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-4" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <span className="text-lime mr-2">—</span> Skills Progression
-          </motion.div>
-          <motion.p className="text-[0.88rem] text-white max-w-lg mb-0" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          </m.div>
+          <m.p className="text-[0.88rem] text-white max-w-lg mb-0" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
             One year in. From never touching a BMX to bunny hops and backwards riding
-          </motion.p>
+          </m.p>
         </div>
 
         <div className="flex-1 flex flex-col justify-center">
           <div className="flex items-center gap-2 text-[0.7rem] tracking-[2.5px] uppercase text-lime px-6 md:px-[60px] mb-4 mt-2 shrink-0">
-            <motion.span
+            <m.span
               animate={{ y: [0, 5, 0] }}
               transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
             >
               ↓
-            </motion.span>
+            </m.span>
             <span>scroll to explore</span>
           </div>
 
-          <motion.div className="flex items-start gap-5 md:gap-[32px] px-5 md:px-[calc(50vw-210px)] pb-[52px] w-max relative will-change-transform" style={{ x }}>
+          <m.div className="flex items-start gap-5 md:gap-[32px] px-5 md:px-[calc(50vw-210px)] pb-[52px] w-max relative will-change-transform" style={{ x }}>
             <div className="absolute inset-x-0 bottom-[38px] h-0.5 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 3%, rgba(255,255,255,0.1) 97%, transparent 100%)' }} />
             {progression.map((phase, i) => (
               <HPhaseCard key={phase.period} phase={phase} index={i} scrollYProgress={scrollYProgress} />
             ))}
-          </motion.div>
+          </m.div>
         </div>
 
         <div className="mx-5 md:mx-[60px] mb-4 md:mb-6 h-0.5 bg-white/[0.07] rounded-sm overflow-hidden shrink-0">
-          <motion.div
+          <m.div
             className="h-full rounded-sm"
             style={{ scaleX: scrollYProgress, transformOrigin: 'left', background: 'linear-gradient(90deg, #b1db00, #00ddd7, #f472b6, #ff8c42)' }}
           />
@@ -337,18 +337,18 @@ function GearSetup() {
 
   return (
     <div className="mb-16 py-12 -mx-6 md:-mx-16 border-t border-b border-white/[0.06] overflow-hidden flex flex-col gap-[1.25rem]">
-      <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-2 px-6 md:px-16" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+      <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-2 px-6 md:px-16" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
         <span className="text-lime mr-2">—</span> The Setup
-      </motion.div>
+      </m.div>
       <div className="overflow-visible w-full relative">
-        <motion.div className="flex gap-4 md:gap-5 w-max px-6 md:px-16" style={{ x: smooth1 }}>
+        <m.div className="flex gap-4 md:gap-5 w-max px-6 md:px-16" style={{ x: smooth1 }}>
           {renderCards(row1Items)}
-        </motion.div>
+        </m.div>
       </div>
       <div className="overflow-visible w-full relative">
-        <motion.div className="flex gap-4 md:gap-5 w-max px-6 md:px-16" style={{ x: smooth2, marginLeft: '-150px' }}>
+        <m.div className="flex gap-4 md:gap-5 w-max px-6 md:px-16" style={{ x: smooth2, marginLeft: '-150px' }}>
           {renderCards(row2Items)}
-        </motion.div>
+        </m.div>
       </div>
     </div>
   )
@@ -357,7 +357,7 @@ function GearSetup() {
 /* ─── Video Snippet Slot ─── */
 function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
   return (
-    <motion.div
+    <m.div
       className="w-full md:w-[calc(33%-0.4rem)] md:min-w-[120px] lg:w-[140px] shrink-0 border border-white/[0.08] rounded-lg overflow-hidden flex flex-col gap-[0.3rem] transition-all"
       style={{ borderColor: `${color}44` }}
       variants={fadeUp}
@@ -383,7 +383,7 @@ function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
         </div>
       )}
       <p className="text-[0.62rem] px-[0.4rem] py-[0.25rem] leading-[1.4] m-0 font-semibold" style={{ color }}>{clip.label}</p>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -397,7 +397,7 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
   const [videosOpen, setVideosOpen] = useState(false)
 
   return (
-    <motion.div
+    <m.div
       className={`sticky h-auto lg:h-[calc(100vh-120px)] min-h-[60vh] md:min-h-[70vh] rounded-[14px] overflow-hidden border-t-[3px] shadow-[0_8px_32px_rgba(0,0,0,0.4)] mb-6 will-change-transform bg-[#0c0c0c]${isPast ? ' opacity-75' : ''}`}
       style={{
         top: stickyTop,
@@ -463,7 +463,7 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
           ))}
         </div>
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -490,7 +490,7 @@ function GalXCell({ photo, onSelect, tileIndex }: { photo: typeof photos[0]; onS
   function onMouseLeave() { mx.set(0); my.set(0) }
 
   return (
-    <motion.div
+    <m.div
       className="relative rounded-[10px] overflow-hidden cursor-zoom-in group"
       layoutId={`bmx-photo-${tileIndex % photos.length}`}
       style={{ rotateX, rotateY: useTransform(rotateY, v => v + curveY), transformPerspective: 700 }}
@@ -500,7 +500,7 @@ function GalXCell({ photo, onSelect, tileIndex }: { photo: typeof photos[0]; onS
       whileHover={{ scale: 1.07, zIndex: 10 }}
       transition={{ scale: { duration: 0.18 } }}
     >
-      <motion.img
+      <m.img
         layoutId={`bmx-photo-img-${tileIndex % photos.length}`}
         src={photo.src}
         alt={photo.caption}
@@ -510,7 +510,7 @@ function GalXCell({ photo, onSelect, tileIndex }: { photo: typeof photos[0]; onS
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10 flex items-end p-[0.9rem] opacity-0 group-hover:opacity-100 transition-opacity">
         <span className="text-[0.82rem] text-white font-semibold">{photo.caption}</span>
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -548,7 +548,7 @@ function GalleryX({ onSelect }: { onSelect: (i: number) => void }) {
   return (
     // height as inline style ensures it's present at paint time before useEffect measures
     <div ref={containerRef} className="relative overflow-hidden rounded-xl select-none" style={{ height: '75vh', perspective: '1200px' }}>
-      <motion.div
+      <m.div
         className="grid grid-cols-[repeat(8,320px)] auto-rows-[240px] gap-3 w-max p-1"
         drag
         dragConstraints={constraints}
@@ -560,7 +560,7 @@ function GalleryX({ onSelect }: { onSelect: (i: number) => void }) {
         {tiles.map((p, i) => (
           <GalXCell key={i} photo={p} tileIndex={i} onSelect={onSelect} />
         ))}
-      </motion.div>
+      </m.div>
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[0.72rem] text-lime tracking-[2px] uppercase pointer-events-none">drag to explore</div>
     </div>
   )
@@ -591,7 +591,7 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
   if (!mounted) return null
 
   return createPortal(
-    <motion.div
+    <m.div
       className="fixed inset-0 z-[999] bg-black/[0.88] backdrop-blur-[10px] flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -599,29 +599,29 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
       transition={{ duration: 0.2 }}
       onClick={onClose}
     >
-      <motion.div
+      <m.div
         className="relative max-w-[min(90vw,900px)] max-h-[90vh] rounded-2xl overflow-hidden bg-[#111]"
         style={{ boxShadow: '0 40px 120px rgba(0,0,0,0.7)' }}
         layoutId={`bmx-photo-${index}`}
         onClick={e => e.stopPropagation()}
       >
-        <motion.img
+        <m.img
           layoutId={`bmx-photo-img-${index}`}
           src={photo.src}
           alt={photo.caption}
           className="block w-full max-h-[78vh] object-contain"
         />
-        <motion.p
+        <m.p
           className="px-[1.2rem] py-[0.9rem] text-[0.85rem] text-white/60 bg-black/40 m-0"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.18 }}
         >
           {photo.caption}
-        </motion.p>
-      </motion.div>
+        </m.p>
+      </m.div>
 
-      <motion.button
+      <m.button
         className="fixed top-6 right-6 bg-white/10 border border-white/[0.15] text-white w-10 h-10 rounded-full cursor-pointer text-base flex items-center justify-center z-[1000] transition-colors hover:bg-white/20"
         onClick={onClose}
         initial={{ opacity: 0, scale: 0.8 }}
@@ -630,10 +630,10 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
         whileHover={{ scale: 1.15 }}
       >
         ✕
-      </motion.button>
+      </m.button>
 
       {index > 0 && (
-        <motion.button
+        <m.button
           className="fixed top-1/2 -translate-y-1/2 left-4 hidden md:flex bg-white/[0.08] border border-white/[0.12] text-white w-12 h-16 rounded-xl cursor-pointer text-[2rem] items-center justify-center z-[1000] transition-colors leading-none hover:bg-white/[0.16]"
           onClick={e => { e.stopPropagation(); onPrev() }}
           initial={{ opacity: 0, x: -10 }}
@@ -642,10 +642,10 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
           whileHover={{ scale: 1.1, x: -3 }}
         >
           ‹
-        </motion.button>
+        </m.button>
       )}
       {index < total - 1 && (
-        <motion.button
+        <m.button
           className="fixed top-1/2 -translate-y-1/2 right-4 hidden md:flex bg-white/[0.08] border border-white/[0.12] text-white w-12 h-16 rounded-xl cursor-pointer text-[2rem] items-center justify-center z-[1000] transition-colors leading-none hover:bg-white/[0.16]"
           onClick={e => { e.stopPropagation(); onNext() }}
           initial={{ opacity: 0, x: 10 }}
@@ -654,18 +654,18 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
           whileHover={{ scale: 1.1, x: 3 }}
         >
           ›
-        </motion.button>
+        </m.button>
       )}
 
-      <motion.div
+      <m.div
         className="fixed bottom-6 left-1/2 -translate-x-1/2 text-[0.75rem] tracking-[2px] text-white/40 z-[1000]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.15 }}
       >
         {index + 1} / {total}
-      </motion.div>
-    </motion.div>,
+      </m.div>
+    </m.div>,
     document.body
   )
 }
@@ -681,25 +681,25 @@ export default function BMX() {
   return (
     <main id="bmx">
       {/* ── Hero heading ── */}
-      <motion.h1
+      <m.h1
         className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
         BMX <span className="text-lime">Life</span>
-      </motion.h1>
-      <motion.h2
+      </m.h1>
+      <m.h2
         className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
       >
         Streets are my playground. Always learning, always riding
-      </motion.h2>
+      </m.h2>
 
       {/* ── Intro banner (parallax) ── */}
-      <motion.div
+      <m.div
         ref={heroRef}
         className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 md:gap-12 items-center my-8 mb-14"
         variants={fadeUp} initial="hidden"
@@ -710,7 +710,7 @@ export default function BMX() {
           className="relative rounded-[14px] overflow-hidden aspect-[4/3] border-2 border-pink-400/30 group"
           style={{ boxShadow: '0 16px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(244,114,182,0.2)' }}
         >
-          <motion.img src="/img/bmx/bmx2.jpg" alt="BMX bike" className="w-full h-full object-cover transition-transform duration-[0.6s] ease-in-out group-hover:scale-[1.04]" style={{ y: heroImgY }} />
+          <m.img src="/img/bmx/bmx2.jpg" alt="BMX bike" className="w-full h-full object-cover transition-transform duration-[0.6s] ease-in-out group-hover:scale-[1.04]" style={{ y: heroImgY }} />
         </div>
         <div>
           <h3 className="text-[2rem] font-extrabold mb-4 text-[#e0e0e0]">Why <span className="text-lime">BMX?</span></h3>
@@ -730,7 +730,7 @@ export default function BMX() {
             <span className="px-3 py-[0.25rem] border rounded-full text-[0.78rem] font-semibold tracking-[0.5px]" style={{ borderColor: '#ff8c42', color: '#ff8c42' }}>Since Mar 2025</span>
           </div>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* ── The Setup (gear ticker) ── */}
       <GearSetup />
@@ -740,15 +740,15 @@ export default function BMX() {
 
       {/* ── 2026 Quarterly Goals ── */}
       <div className="mb-16">
-        <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <span className="text-lime mr-2">—</span> 2026 Trick Roadmap
-        </motion.div>
-        <motion.p
+        </m.div>
+        <m.p
           className="text-[0.88rem] text-white mb-6"
           variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
         >
           Quarter by quarter. One main trick, supporting tricks, and clips as I go
-        </motion.p>
+        </m.p>
         <div className="flex flex-col pb-[40vh] overflow-visible">
           {quarters2026.map((q, i) => (
             <RoadmapStackCard key={q.q} quarter={q} index={i} total={quarters2026.length} />
@@ -758,9 +758,9 @@ export default function BMX() {
 
       {/* ── Photo Gallery ── */}
       <div className="mb-16">
-        <motion.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <span className="text-lime mr-2">—</span> Gallery
-        </motion.div>
+        </m.div>
         <GalleryX onSelect={setSelectedPhoto} />
       </div>
 
@@ -778,7 +778,7 @@ export default function BMX() {
       </AnimatePresence>
 
       {/* ── Follow ── */}
-      <motion.div
+      <m.div
         className="text-center py-12 pb-8 border-t border-white/[0.06]"
         variants={fadeUp} initial="hidden"
         whileInView="show" viewport={{ once: true }}
@@ -795,7 +795,7 @@ export default function BMX() {
             <i className="fab fa-youtube" /> YouTube
           </a>
         </div>
-      </motion.div>
+      </m.div>
     </main>
   )
 }

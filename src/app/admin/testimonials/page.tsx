@@ -1,6 +1,6 @@
-'use client'
+﻿'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { designProjects } from '../../work/designProjects'
 import { PRODUCTS } from '@/lib/products'
 import type { Testimonial } from '@/lib/db'
@@ -54,7 +54,7 @@ function PasswordGate({ onAuth }: { onAuth: (token: string) => void }) {
 
   return (
     <main className="min-h-screen flex items-center justify-center px-4">
-      <motion.div className="w-full max-w-sm" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <m.div className="w-full max-w-sm" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-xl bg-lime/10 border border-lime/20 flex items-center justify-center text-2xl text-lime mx-auto mb-4">
             <i className="fas fa-lock" />
@@ -71,7 +71,7 @@ function PasswordGate({ onAuth }: { onAuth: (token: string) => void }) {
             {loading ? <i className="fas fa-circle-notch fa-spin" /> : 'Enter'}
           </button>
         </form>
-      </motion.div>
+      </m.div>
     </main>
   )
 }
@@ -236,7 +236,7 @@ function Dashboard({ token }: { token: string }) {
               <div className="flex flex-col gap-3">
                 <AnimatePresence initial={false}>
                   {displayed.map(t => (
-                    <motion.div
+                    <m.div
                       key={t.id}
                       layout
                       initial={{ opacity: 0, height: 0 }}
@@ -334,7 +334,7 @@ function Dashboard({ token }: { token: string }) {
                           </div>
                         )}
                       </div>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </AnimatePresence>
               </div>

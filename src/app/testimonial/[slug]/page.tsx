@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 import { useParams, useRouter } from 'next/navigation'
 import { useState, useRef, useCallback } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { designProjects } from '../../work/designProjects'
 import { compressImage } from '@/lib/imageCompress'
 
@@ -194,7 +194,7 @@ export default function TestimonialForm() {
 
   return (
     <main className="min-h-screen py-12 px-4 flex items-start justify-center">
-      <motion.div
+      <m.div
         className="w-full max-w-[560px]"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -309,12 +309,12 @@ export default function TestimonialForm() {
 
           <AnimatePresence>
             {error && (
-              <motion.p
+              <m.p
                 className="text-red-400 text-[0.85rem] bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
                 initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
               >
                 <i className="fas fa-exclamation-circle mr-2" />{error}
-              </motion.p>
+              </m.p>
             )}
           </AnimatePresence>
 
@@ -340,7 +340,7 @@ export default function TestimonialForm() {
             One submission per project per 24 hours.
           </p>
         </form>
-      </motion.div>
+      </m.div>
     </main>
   )
 }

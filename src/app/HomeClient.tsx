@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import Typed from 'typed.js'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -45,7 +45,7 @@ function HomeBg({ bgIndex }: { bgIndex: number }) {
   return createPortal(
     <div className="fixed inset-0 z-0" aria-hidden="true">
       {BG_IMAGES.map((src, i) => (
-        <motion.div
+        <m.div
           key={src}
           className="home-bg-slide absolute inset-0 overflow-hidden"
           animate={{ opacity: i === bgIndex ? 1 : 0 }}
@@ -59,7 +59,7 @@ function HomeBg({ bgIndex }: { bgIndex: number }) {
             className="object-cover object-center"
             priority={i === 0}
           />
-        </motion.div>
+        </m.div>
       ))}
       <div
         className="absolute inset-0"
@@ -81,7 +81,7 @@ function ScrollHint() {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.div
+        <m.div
           className="home-scroll-hint"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -90,7 +90,7 @@ function ScrollHint() {
         >
           <span>Scroll</span>
           <div className="home-scroll-line" />
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   )
@@ -144,7 +144,7 @@ export default function Home() {
       <div className="relative z-10 min-h-screen flex items-center">
       <div className="flex items-center justify-between gap-12 px-20 w-full max-lg:flex-col max-lg:gap-6 max-lg:px-8 max-sm:px-6 max-sm:pt-20 max-sm:pb-10 max-sm:text-center">
         <div className="flex-1 max-w-2xl">
-          <motion.p
+          <m.p
             className="flex items-center gap-2 text-[10px] max-sm:text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4 max-lg:justify-center"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -152,9 +152,9 @@ export default function Home() {
           >
             <span className="inline-block w-6 h-px bg-lime/60 flex-shrink-0 max-sm:hidden" />
             Based in Nakuru, Kenya
-          </motion.p>
+          </m.p>
 
-          <motion.h1
+          <m.h1
             className="font-black leading-tight tracking-tighter text-white mb-4"
             style={{ fontSize: 'clamp(2.8rem, 10vw, 6.5rem)' }}
             initial={{ opacity: 0, y: 50 }}
@@ -163,9 +163,9 @@ export default function Home() {
           >
             Isale<br />
             <span className="block text-lime">Brian.</span>
-          </motion.h1>
+          </m.h1>
 
-          <motion.div
+          <m.div
             className="flex items-center gap-2 mb-5 min-h-8 max-sm:justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -174,12 +174,12 @@ export default function Home() {
             <span className="text-xl font-bold text-teal flex-shrink-0" aria-hidden="true">›</span>
             <span ref={typeRef} className="text-base max-sm:text-sm text-white/75 font-medium" aria-hidden="true" />
             <span className="sr-only" aria-live="polite" aria-atomic="true">{TYPED_STRINGS[bioIndex]}</span>
-          </motion.div>
+          </m.div>
 
           {/* Bio — synced to Typed.js string completion */}
           <div className="min-h-16 mb-7 max-sm:min-h-14">
             <AnimatePresence mode="wait">
-              <motion.p
+              <m.p
                 key={bioIndex}
                 className="text-sm max-sm:text-xs leading-relaxed text-white/65 max-w-xl max-sm:max-w-xs max-sm:mx-auto"
                 initial={{ opacity: 0, y: 2 }}
@@ -188,11 +188,11 @@ export default function Home() {
                 transition={{ duration: 0.5, ease: 'easeOut' }}
               >
                 {TYPED_BIOS[bioIndex]}
-              </motion.p>
+              </m.p>
             </AnimatePresence>
           </div>
 
-          <motion.div
+          <m.div
             className="flex flex-wrap gap-3 mb-8 max-sm:flex-col max-sm:items-center"
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
@@ -207,16 +207,16 @@ export default function Home() {
             <Link href="/contact" className="inline-flex items-center justify-center px-5 py-2.5 border border-white/20 text-white font-bold text-xs uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/6">
               Get in touch
             </Link>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             className="flex flex-wrap gap-1 max-sm:justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.3 }}
           >
             {SOCIALS.map((s, i) => (
-              <motion.a
+              <m.a
                 key={s.label}
                 href={s.url}
                 target="_blank"
@@ -229,12 +229,12 @@ export default function Home() {
                 whileHover={{ y: -0.75, color: s.color }}
               >
                 <i className={s.icon} aria-hidden="true" />
-              </motion.a>
+              </m.a>
             ))}
-          </motion.div>
+          </m.div>
 
           {/* ── Slide dots ── */}
-          <motion.div
+          <m.div
             className="flex gap-2 mt-3 max-sm:justify-center"
             role="group"
             aria-label="Background slide controls"
@@ -251,12 +251,12 @@ export default function Home() {
                 className={`h-1 rounded transition-all duration-400 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime ${i === bgIndex ? 'w-9 bg-lime' : 'w-5 bg-white/20 hover:bg-white/40'}`}
               />
             ))}
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Portrait — flex sibling, no absolute positioning */}
         <div className="flex-shrink-0 w-72 max-lg:w-52 aspect-square pointer-events-none max-md:hidden" aria-hidden="true">
-          <motion.div
+          <m.div
             className="relative w-full h-full"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -277,7 +277,7 @@ export default function Home() {
               sizes="(max-width: 1023px) 208px, 288px"
               priority
             />
-          </motion.div>
+          </m.div>
         </div>
       </div>
       </div>

@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { useParams, useSearchParams } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import {
   PRODUCTS, StickerProduct, TshirtProduct, HelmProduct, CatalogProduct, TshirtColorVariant,
 } from '@/lib/products'
@@ -128,7 +128,7 @@ function ReviewForm({ projectSlug, onSubmitted }: { projectSlug: string; onSubmi
 
   if (done) {
     return (
-      <motion.div
+      <m.div
         className="text-center py-10"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -137,7 +137,7 @@ function ReviewForm({ projectSlug, onSubmitted }: { projectSlug: string; onSubmi
         <div className="text-4xl mb-3">🎉</div>
         <p className="text-white font-bold text-lg mb-1">Thanks for your review!</p>
         <p className="text-white/50 text-[0.85rem]">It&apos;s live on the site now.</p>
-      </motion.div>
+      </m.div>
     )
   }
 
@@ -186,10 +186,10 @@ function ReviewForm({ projectSlug, onSubmitted }: { projectSlug: string; onSubmi
 
       <AnimatePresence>
         {error && (
-          <motion.p className="text-red-400 text-[0.85rem] bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
+          <m.p className="text-red-400 text-[0.85rem] bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
             initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
             <i className="fas fa-exclamation-circle mr-2" />{error}
-          </motion.p>
+          </m.p>
         )}
       </AnimatePresence>
 
@@ -309,7 +309,7 @@ export default function ProductPage() {
       </nav>
 
       {/* Product hero */}
-      <motion.div
+      <m.div
         className="grid grid-cols-2 gap-10 mb-16 max-md:grid-cols-1"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -495,7 +495,7 @@ export default function ProductPage() {
             <Link href="/shop/checkout" className="text-lime/60 hover:text-lime transition-colors">Checkout →</Link>
           </p>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Reviews */}
       <section className="border-t border-white/[0.07] pt-12">

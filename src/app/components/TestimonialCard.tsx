@@ -1,7 +1,7 @@
-'use client'
+﻿'use client'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import type { Testimonial } from '@/lib/db'
 
 function InitialsAvatar({ name, size = 40 }: { name: string; size?: number }) {
@@ -33,7 +33,7 @@ function Stars({ rating, size = '0.75rem' }: { rating: number | null; size?: str
 /* ─── Full Review Modal ─── */
 function ReviewModal({ t, onClose }: { t: Testimonial; onClose: () => void }) {
   return createPortal(
-    <motion.div
+    <m.div
       className="fixed inset-0 bg-black/80 z-[950] flex items-center justify-center p-6 backdrop-blur-[6px] max-[768px]:p-0 max-[768px]:items-end"
       onClick={onClose}
       initial={{ opacity: 0 }}
@@ -41,7 +41,7 @@ function ReviewModal({ t, onClose }: { t: Testimonial; onClose: () => void }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <motion.div
+      <m.div
         className="bg-[#1e1e1e] border border-white/[0.1] rounded-2xl w-full max-w-[520px] max-h-[88vh] overflow-y-auto shadow-[0_30px_80px_rgba(0,0,0,0.7)] max-[768px]:max-w-full max-[768px]:rounded-t-[20px] max-[768px]:rounded-b-none max-[768px]:max-h-[92vh]"
         onClick={e => e.stopPropagation()}
         initial={{ y: 48, opacity: 0, scale: 0.97 }}
@@ -92,8 +92,8 @@ function ReviewModal({ t, onClose }: { t: Testimonial; onClose: () => void }) {
             </div>
           </div>
         </div>
-      </motion.div>
-    </motion.div>,
+      </m.div>
+    </m.div>,
     document.body
   )
 }
@@ -105,7 +105,7 @@ function ProductReviewCard({ t, delay = 0 }: { t: Testimonial; delay?: number })
 
   return (
     <>
-      <motion.div
+      <m.div
         className="group relative rounded-xl overflow-hidden cursor-pointer aspect-square border border-white/[0.08] hover:border-lime/40 transition-colors duration-200"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -156,7 +156,7 @@ function ProductReviewCard({ t, delay = 0 }: { t: Testimonial; delay?: number })
             <i className="fas fa-expand-alt text-[0.65rem]" /> View review
           </div>
         </div>
-      </motion.div>
+      </m.div>
 
       <AnimatePresence>
         {open && <ReviewModal t={t} onClose={() => setOpen(false)} />}
@@ -171,7 +171,7 @@ export function TestimonialCard({ t, delay = 0 }: { t: Testimonial; delay?: numb
 
   return (
     <>
-      <motion.div
+      <m.div
         className="group flex flex-col gap-0 bg-white/[0.04] border border-white/[0.07] rounded-xl p-4 h-full cursor-pointer hover:border-white/[0.18] hover:bg-white/[0.06] transition-all duration-200"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -202,7 +202,7 @@ export function TestimonialCard({ t, delay = 0 }: { t: Testimonial; delay?: numb
           </div>
           <i className="fas fa-expand-alt text-white/20 text-[0.7rem] shrink-0 group-hover:text-white/50 transition-colors" />
         </div>
-      </motion.div>
+      </m.div>
 
       <AnimatePresence>
         {open && <ReviewModal t={t} onClose={() => setOpen(false)} />}

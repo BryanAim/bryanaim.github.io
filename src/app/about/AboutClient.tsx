@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { m, AnimatePresence, useInView } from 'framer-motion'
 import DesignGallery from '../components/DesignGallery'
 import { devProjects, type DevProject } from '../work/devProjects'
 import { SOCIALS } from '@/lib/siteConfig'
@@ -205,7 +205,7 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
   }, [onClose])
 
   return createPortal(
-    <motion.div
+    <m.div
       className="fixed inset-0 bg-black/[0.82] z-[900] flex items-center justify-center p-6 backdrop-blur-[6px] max-[768px]:p-0 max-[768px]:items-end"
       onClick={onClose}
       initial={{ opacity: 0 }}
@@ -213,7 +213,7 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
     >
-      <motion.div
+      <m.div
         className="about-modal-panel bg-[#252525] rounded-xl border border-white/[0.08] w-full max-w-[760px] max-h-[88vh] overflow-y-auto shadow-[0_30px_80px_rgba(0,0,0,0.7)] max-[768px]:max-w-full max-[768px]:rounded-t-[20px] max-[768px]:rounded-b-none max-[768px]:max-h-[92vh]"
         onClick={e => e.stopPropagation()}
         initial={{ y: 60, opacity: 0 }}
@@ -302,7 +302,7 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
               </div>
               <AnimatePresence>
                 {showCert && (
-                  <motion.img
+                  <m.img
                     src="/img/certificate-google-scholar.png"
                     alt="Google Africa Scholar Certificate"
                     className="w-full rounded-md border border-white/10"
@@ -325,8 +325,8 @@ function CardModal({ card, onClose }: { card: typeof cards[0]; onClose: () => vo
             ))}
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   , document.body)
 }
 
@@ -339,7 +339,7 @@ function StackCard({
   const stickyTop = 80 + index * 16
 
   return (
-    <motion.div
+    <m.div
       role="button"
       tabIndex={0}
       aria-label={`Open ${card.title} details`}
@@ -390,7 +390,7 @@ function StackCard({
           </div>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -416,13 +416,13 @@ function StatCounter({ value, suffix, label }: typeof stats[0]) {
   }, [inView, value])
 
   return (
-    <motion.div className="text-center" variants={fadeUp}>
+    <m.div className="text-center" variants={fadeUp}>
       <div className="text-[2.4rem] font-extrabold text-lime leading-none font-['Courier_New',monospace] max-[768px]:text-[1.8rem]">
         <span ref={ref}>0</span>
         <span className="text-[1.8rem] text-teal max-[768px]:text-[1.4rem]">{suffix}</span>
       </div>
       <p className="text-[0.78rem] text-[#999] uppercase tracking-[1.5px] mt-[0.3rem]">{label}</p>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -452,34 +452,34 @@ export default function About() {
   return (
     <main id="about">
       {/* ── Heading ── */}
-      <motion.h1
+      <m.h1
         className="text-[clamp(2.6rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-2"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
         About <span className="text-lime">Me</span>
-      </motion.h1>
-      <motion.h2
+      </m.h1>
+      <m.h2
         className="mb-12 max-sm:mb-10 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold text-sm max-sm:text-xs"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
       >
         Developer · Designer · Community Builder
-      </motion.h2>
+      </m.h2>
 
       {/* ── Bio ── */}
       <div className="flex gap-10 items-center mb-8 max-[768px]:flex-col max-[768px]:items-center max-[768px]:text-center max-[768px]:gap-5 max-[768px]:mb-6">
-        <motion.div
+        <m.div
           className="relative shrink-0"
           variants={fadeLeft} initial="hidden"
           whileInView="show" viewport={{ once: true, margin: '-80px' }}
         >
           <img src="/img/portrait.jpg" alt="Isale Brian" className="w-[190px] h-[190px] rounded-full border-4 border-lime block relative z-[1] object-cover max-[768px]:w-[110px] max-[768px]:h-[110px] max-[768px]:border-[3px]" />
           <div className="absolute -top-[10px] -left-[10px] w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-full border-2 border-dashed border-teal/35 [animation:portrait-ring-spin_18s_linear_infinite] pointer-events-none max-[768px]:w-[126px] max-[768px]:h-[126px] max-[768px]:-top-[8px] max-[768px]:-left-[8px]" />
-        </motion.div>
-        <motion.div
+        </m.div>
+        <m.div
           variants={fadeRight} initial="hidden"
           whileInView="show" viewport={{ once: true, margin: '-80px' }}
         >
@@ -504,27 +504,27 @@ export default function About() {
               Hire me
             </Link>
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* ── Stats ── */}
-      <motion.div
+      <m.div
         className="flex justify-around gap-4 bg-black/25 border border-lime/[0.15] rounded-lg px-8 py-6 mb-10 max-[768px]:grid max-[768px]:grid-cols-2 max-[768px]:gap-4 max-[768px]:px-4 max-[768px]:py-4"
         variants={stagger(0.12)} initial="hidden"
         whileInView="show" viewport={{ once: true, margin: '-60px' }}
       >
         {stats.map(s => <StatCounter key={s.label} {...s} />)}
-      </motion.div>
+      </m.div>
 
       {/* ── Sticky stack cards ── */}
       <div className="mt-2 mb-0">
-        <motion.p
+        <m.p
           className="text-[0.82rem] uppercase tracking-[4px] mb-6 text-lime max-[768px]:text-center"
           variants={fadeUp} initial="hidden"
           whileInView="show" viewport={{ once: true }}
         >
           What I&apos;m about. Scroll through ↓
-        </motion.p>
+        </m.p>
       </div>
 
       <div className="flex flex-col pb-[40vh] overflow-visible max-[768px]:pb-[20vh]">
@@ -542,7 +542,7 @@ export default function About() {
 
       {/* ── Testimonials ── */}
       {testimonials.length > 0 && (
-        <motion.section
+        <m.section
           className="mt-16 mb-4"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -554,11 +554,11 @@ export default function About() {
             Client <span className="text-lime">Testimonials</span>
           </h2>
           <TestimonialsGrid testimonials={testimonials} />
-        </motion.section>
+        </m.section>
       )}
 
       {/* ── Quote ── */}
-      <motion.div
+      <m.div
         className="mx-auto mt-16 mb-8 max-w-[720px] text-center"
         variants={fadeUp} initial="hidden"
         whileInView="show" viewport={{ once: true, margin: '-60px' }}
@@ -567,7 +567,7 @@ export default function About() {
           &ldquo;The details are not the details. They make the design.&rdquo;
           <cite className="block mt-3 not-italic text-[0.9rem] text-[#aaa] tracking-[0.05em]">— Charles Eames</cite>
         </blockquote>
-      </motion.div>
+      </m.div>
 
     </main>
   )

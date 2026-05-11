@@ -74,16 +74,8 @@ All main pages (`about`, `work`, `contact`, `bmx`, `shop`, home) are now server 
 
 ---
 
-### 1.10 — LazyMotion saves ~15 KB on every page
-Replace `motion.div` with `m.div` and wrap app in `LazyMotion`:
-```tsx
-// layout.tsx
-import { LazyMotion, domAnimation } from 'framer-motion'
-<LazyMotion features={domAnimation} strict>{children}</LazyMotion>
-```
-```tsx
-// all pages: import { m } from 'framer-motion'  →  <m.div ...>
-```
+### ✅ 1.10 — LazyMotion saves ~15 KB on every page *(fixed 2026-05-11)*
+Created `MotionProvider.tsx` (`'use client'`, `LazyMotion features={domMax}`) — uses `domMax` (not `domAnimation`) to preserve `layoutId` in `Header.tsx` and `BmxClient.tsx`. Wrapped all body content in `layout.tsx`. Replaced `motion` → `m` in all 19 framer-motion files (import + JSX).
 
 ---
 

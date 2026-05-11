@@ -1,11 +1,11 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { TestimonialsGrid } from '../components/TestimonialCard'
 import type { Testimonial } from '@/lib/db'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import {
   TshirtColor, CartItem, TSHIRT_COLORS, TSHIRT_SIZE_PRICES,
@@ -253,22 +253,22 @@ export default function ShopClient() {
 
   return (
     <main id="shop">
-      <motion.h1
+      <m.h1
         className="text-[clamp(2.8rem,16vw,7rem)] mb-[0.2rem] text-center"
         initial={{ opacity: 0, y: -50, filter: 'blur(4px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
         Janja&apos;s <span className="text-lime">Shop</span>
-      </motion.h1>
-      <motion.h2
+      </m.h1>
+      <m.h2
         className="mb-12 px-4 py-[0.2rem] bg-[rgba(73,73,73,0.5)] text-center"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
       >
         Stickers, T-Shirts &amp; Helmets — for devs, designers &amp; riders
-      </motion.h2>
+      </m.h2>
 
       {/* Search bar */}
       <div className="relative mb-6 max-w-[480px]">

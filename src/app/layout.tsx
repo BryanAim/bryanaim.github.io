@@ -6,6 +6,7 @@ import Link from 'next/link'
 import WhatsAppButton from './components/WhatsAppButton'
 import PageTransition from './components/PageTransition'
 import NavigationProgress from './components/NavigationProgress'
+import { MotionProvider } from './components/MotionProvider'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import { SITE, SOCIALS } from '@/lib/siteConfig'
@@ -210,15 +211,17 @@ export default function RootLayout({
         <link rel="stylesheet" href="/fonts/css/all.min.css" />
       </head>
       <body className={nunito.variable} suppressHydrationWarning>
-        <NavigationProgress />
-        <Header />
-        <div id="content-wrap">
-          <PageTransition>{children}</PageTransition>
-          <Footer />
-          <WhatsAppButton />
-        </div>
-        <SpeedInsights />
-        <Analytics />
+        <MotionProvider>
+          <NavigationProgress />
+          <Header />
+          <div id="content-wrap">
+            <PageTransition>{children}</PageTransition>
+            <Footer />
+            <WhatsAppButton />
+          </div>
+          <SpeedInsights />
+          <Analytics />
+        </MotionProvider>
 
       </body>
     </html>

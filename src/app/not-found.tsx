@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 
 const TERMINAL_LINES = [
   { text: '$ navigate to /secret-page', type: 'cmd' },
@@ -55,7 +55,7 @@ export default function NotFound() {
         <p className="nf-desc">This URL doesn&apos;t resolve to anything — but your next move does.</p>
 
         {/* Terminal */}
-        <motion.div
+        <m.div
           className="nf-terminal"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -75,10 +75,10 @@ export default function NotFound() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Actions */}
-        <motion.div
+        <m.div
           className="nf-actions"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -90,7 +90,7 @@ export default function NotFound() {
           <Link href="/work" className="nf-btn-ghost">
             <i className="fas fa-briefcase" /> View work
           </Link>
-        </motion.div>
+        </m.div>
       </div>
     </main>
   )
