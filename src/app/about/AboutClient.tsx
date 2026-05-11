@@ -453,7 +453,7 @@ export default function About() {
     <main id="about">
       {/* ── Heading ── */}
       <motion.h1
-        className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4"
+        className="text-[clamp(2.6rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-2"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
@@ -461,7 +461,7 @@ export default function About() {
         About <span className="text-lime">Me</span>
       </motion.h1>
       <motion.h2
-        className="mb-12 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold"
+        className="mb-12 max-sm:mb-10 py-[0.2rem] px-4 bg-[rgba(73,73,73,0.5)] text-center font-semibold text-sm max-sm:text-xs"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
@@ -470,37 +470,37 @@ export default function About() {
       </motion.h2>
 
       {/* ── Bio ── */}
-      <div className="flex gap-10 items-center mb-8 max-[768px]:flex-col max-[768px]:items-center max-[768px]:text-center">
+      <div className="flex gap-10 items-center mb-8 max-[768px]:flex-col max-[768px]:items-center max-[768px]:text-center max-[768px]:gap-5 max-[768px]:mb-6">
         <motion.div
           className="relative shrink-0"
           variants={fadeLeft} initial="hidden"
           whileInView="show" viewport={{ once: true, margin: '-80px' }}
         >
-          <img src="/img/portrait.jpg" alt="Isale Brian" className="w-[190px] h-[190px] rounded-full border-4 border-lime block relative z-[1] object-cover max-[768px]:w-[140px] max-[768px]:h-[140px]" />
-          <div className="absolute -top-[10px] -left-[10px] w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-full border-2 border-dashed border-teal/35 [animation:portrait-ring-spin_18s_linear_infinite] pointer-events-none max-[768px]:w-[158px] max-[768px]:h-[158px] max-[768px]:-top-[9px] max-[768px]:-left-[9px]" />
+          <img src="/img/portrait.jpg" alt="Isale Brian" className="w-[190px] h-[190px] rounded-full border-4 border-lime block relative z-[1] object-cover max-[768px]:w-[110px] max-[768px]:h-[110px] max-[768px]:border-[3px]" />
+          <div className="absolute -top-[10px] -left-[10px] w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-full border-2 border-dashed border-teal/35 [animation:portrait-ring-spin_18s_linear_infinite] pointer-events-none max-[768px]:w-[126px] max-[768px]:h-[126px] max-[768px]:-top-[8px] max-[768px]:-left-[8px]" />
         </motion.div>
         <motion.div
           variants={fadeRight} initial="hidden"
           whileInView="show" viewport={{ once: true, margin: '-80px' }}
         >
-          <h3 className="text-[1.6rem] font-bold mb-[0.8rem] uppercase tracking-[2px]">The <span className="text-lime">Story</span></h3>
-          <p className="text-[1.05rem] leading-[1.85] text-[#d8d8d8] mb-[1.2rem]">
+          <h3 className="text-[1.6rem] max-sm:text-[1.15rem] font-bold mb-[0.6rem] uppercase tracking-[2px]">The <span className="text-lime">Story</span></h3>
+          <p className="text-[1.05rem] max-sm:text-[0.88rem] leading-[1.85] max-sm:leading-[1.7] text-[#d8d8d8] mb-[1rem]">
             Art and technology enthusiast on a mission. I build modern solutions to everyday
             problems. I genuinely believe technology is Africa&apos;s greatest lever for
             change. When I&apos;m not shipping code or crafting visuals, you&apos;ll find me at
             community events, developer meetups, or pushing limits on my BMX bike.
           </p>
-          <div className="flex flex-wrap gap-2 mb-[1.2rem] max-[768px]:justify-center">
-            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.85rem] py-[0.3rem] rounded-full text-[0.82rem] font-semibold tracking-[0.3px]">🌍 Based in Kenya</span>
-            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.85rem] py-[0.3rem] rounded-full text-[0.82rem] font-semibold tracking-[0.3px]">💡 Lifelong Learner</span>
-            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.85rem] py-[0.3rem] rounded-full text-[0.82rem] font-semibold tracking-[0.3px]">🎓 Google Africa Scholar</span>
-            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.85rem] py-[0.3rem] rounded-full text-[0.82rem] font-semibold tracking-[0.3px]">🏆 Certified Mentor</span>
+          <div className="flex flex-wrap gap-2 mb-[1rem] max-[768px]:justify-center">
+            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.65rem] py-[0.22rem] rounded-full text-[0.75rem] max-sm:text-[0.7rem] font-semibold tracking-[0.3px]">🌍 Based in Kenya</span>
+            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.65rem] py-[0.22rem] rounded-full text-[0.75rem] max-sm:text-[0.7rem] font-semibold tracking-[0.3px]">💡 Lifelong Learner</span>
+            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.65rem] py-[0.22rem] rounded-full text-[0.75rem] max-sm:text-[0.7rem] font-semibold tracking-[0.3px]">🎓 Google Africa Scholar</span>
+            <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.65rem] py-[0.22rem] rounded-full text-[0.75rem] max-sm:text-[0.7rem] font-semibold tracking-[0.3px]">🏆 Certified Mentor</span>
           </div>
-          <div className="flex gap-3 flex-wrap max-[600px]:flex-col">
-            <a href="/isale_brian_cv.pdf" download className="home-cta-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
+          <div className="flex gap-3 flex-wrap max-[600px]:justify-center">
+            <a href="/isale_brian_cv.pdf" download className="home-cta-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem' }}>
               <i className="fas fa-download" /> Download CV
             </a>
-            <Link href="/work?tab=services" className="home-cta-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
+            <Link href="/work?tab=services" className="home-cta-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem' }}>
               Hire me
             </Link>
           </div>
@@ -509,7 +509,7 @@ export default function About() {
 
       {/* ── Stats ── */}
       <motion.div
-        className="flex justify-around gap-4 bg-black/25 border border-lime/[0.15] rounded-lg px-8 py-6 mb-10 max-[768px]:flex-wrap max-[768px]:gap-6 max-[768px]:px-4 max-[768px]:py-4"
+        className="flex justify-around gap-4 bg-black/25 border border-lime/[0.15] rounded-lg px-8 py-6 mb-10 max-[768px]:grid max-[768px]:grid-cols-2 max-[768px]:gap-4 max-[768px]:px-4 max-[768px]:py-4"
         variants={stagger(0.12)} initial="hidden"
         whileInView="show" viewport={{ once: true, margin: '-60px' }}
       >
