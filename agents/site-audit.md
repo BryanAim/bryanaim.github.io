@@ -492,7 +492,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 16. ~~Fix Work heading mobile overflow (`text-[7rem]` → `clamp`) — `work/page.tsx:151`~~ ✅ 2026-05-01
 17. Add M-Pesa integration as a dev project card
 18. Move portfolio site to position 1 in `devProjects.ts`, stop random shuffle
-19. Add `sizes` prop to portrait Image — `page.tsx:231`
+19. ~~Add `sizes` prop to portrait Image — `page.tsx:231`~~ ✅ 2026-05-11
 20. Add rate limiting to STK push endpoint — `stkpush/route.ts`
 
 ### 🟡 Medium (Next Quarter)
@@ -517,11 +517,11 @@ Vercel injects it at edge, but add explicitly for clarity:
 
 ### 🟢 Low (Nice to Have)
 39. Replace Font Awesome with `lucide-react` + inline SVGs for brand icons
-40. Implement `LazyMotion + domAnimation` — saves ~15 KB
+40. ~~Implement `LazyMotion + domAnimation` — saves ~15 KB~~ ✅ 2026-05-11 (used `domMax` to preserve `layoutId`)
 41. Add `opengraph-image.tsx` generated OG banner
 42. ~~Centralize contact/social config in `src/lib/siteConfig.ts`~~ ✅ 2026-05-01
-43. Add `src/components/ui/` button using shadcn pattern, or remove unused shadcn deps
-44. Move `sass` from `dependencies` to `devDependencies`
+43. ~~Add `src/components/ui/` button using shadcn pattern, or remove unused shadcn deps~~ ✅ 2026-05-11 (removed `class-variance-authority`, `@radix-ui/react-slot`, deleted `button.tsx` + `card.tsx`)
+44. ~~Move `sass` from `dependencies` to `devDependencies`~~ ✅ 2026-05-11 (uninstalled entirely — no `.scss` files)
 45. ~~Fix `duration-1400` → `duration-[1400ms]`~~ N/A — Tailwind v4 accepts bare numerics; `duration-1400` is canonical
 46. ~~Remove orphan `.quote` class — `about/page.tsx:528`~~ ✅ 2026-04-30 (replaced Steve Jobs quote with Charles Eames)
 47. Add "Currently" section to About page (building X, learning Y, open to Z)
