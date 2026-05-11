@@ -7,6 +7,7 @@ import WhatsAppButton from './components/WhatsAppButton'
 import PageTransition from './components/PageTransition'
 import NavigationProgress from './components/NavigationProgress'
 import { MotionProvider } from './components/MotionProvider'
+import { FontAwesomeLoader } from './components/FontAwesomeLoader'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import { SITE, SOCIALS } from '@/lib/siteConfig'
@@ -208,13 +209,11 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
-        {/* Font Awesome — non-blocking: preload starts fetch, script applies async */}
         <link rel="preload" href="/fonts/css/all.min.css" as="style" />
-        <script dangerouslySetInnerHTML={{ __html: `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href='/fonts/css/all.min.css';l.media='print';l.onload=function(){this.media='all'};document.head.appendChild(l)})()` }} />
-        <noscript><link rel="stylesheet" href="/fonts/css/all.min.css" /></noscript>
       </head>
       <body className={nunito.variable} suppressHydrationWarning>
         <MotionProvider>
+          <FontAwesomeLoader />
           <NavigationProgress />
           <Header />
           <div id="content-wrap">
