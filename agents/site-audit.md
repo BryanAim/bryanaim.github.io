@@ -325,34 +325,9 @@ Random shuffle buries the portfolio site (your strongest, most recent work). Fix
 
 ---
 
-### 4.5 — No contact form — meaningful barrier for international clients
-The contact page has email, phone, and WhatsApp but no form. Corporate hiring managers and international clients won't compose a cold email from scratch. A simple form:
-
-```tsx
-// src/app/contact/ContactForm.tsx
-'use client'
-export function ContactForm() {
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const data = Object.fromEntries(new FormData(e.currentTarget))
-    await fetch('/api/contact', { method: 'POST', body: JSON.stringify(data) })
-  }
-  return (
-    <form onSubmit={submit} className="flex flex-col gap-4">
-      <input name="name" placeholder="Your name" required className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-teal" />
-      <input name="email" type="email" placeholder="Email" required className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-teal" />
-      <select name="subject" className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white">
-        <option>Job Opportunity</option>
-        <option>Freelance Project</option>
-        <option>Collaboration</option>
-        <option>Other</option>
-      </select>
-      <textarea name="message" rows={4} placeholder="Message" required className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white resize-none" />
-      <button type="submit" className="px-6 py-3 bg-teal text-black font-black text-sm uppercase rounded-md hover:opacity-90">Send Message</button>
-    </form>
-  )
-}
-```
+### ✅ 4.5 — Contact form added *(fixed 2026-05-11)*
+**Files:** `src/app/contact/ContactForm.tsx`, `src/app/api/contact/route.ts`, `src/app/contact/ContactClient.tsx`
+Fields: name, email, subject (Job Opportunity / Freelance Project / Collaboration / General Inquiry), message. Honeypot spam guard + IP rate limit (max 3/IP/24h). Submissions stored in Neon `contact_submissions` table (auto-created). Inline success/error states; no redirect. Section inserted between hero and "Let's Work Together".
 
 ---
 
@@ -549,7 +524,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 6. Fix unstyled CV/Hire Me buttons on About page — `about/page.tsx:479,483`
 
 ### 🟠 High (Do This Month)
-7. Add contact form — new component + `/api/contact` route
+7. ~~Add contact form — new component + `/api/contact` route~~ ✅ 2026-05-11
 8. Add CV download button to homepage hero — `page.tsx`
 9. Change Work page default tab from `'services'` to `'dev'` — `work/page.tsx:122`
 10. ~~Fix OG image dimensions — `layout.tsx:46`~~ ✅ 2026-05-09 (declared 800×1000 to match actual portrait.jpg)

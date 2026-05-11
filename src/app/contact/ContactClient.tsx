@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'fra
 import { services } from '../work/services'
 import QuoteModal from '../components/QuoteModal'
 import { SITE, SOCIALS as socials } from '@/lib/siteConfig'
+import { ContactForm } from './ContactForm'
 
 /* ─── Data ─── */
 const contactInfo = [
@@ -149,6 +150,41 @@ export default function Contact() {
           </motion.a>
         </motion.div>
 
+      </section>
+
+      {/* ══════════════════════════════════
+          CONTACT FORM
+      ══════════════════════════════════ */}
+      <section className="px-5 pb-12 min-[600px]:px-8 min-[600px]:pb-16 min-[900px]:px-16">
+        <div className="mb-8">
+          <motion.h2
+            className="text-2xl font-bold mb-[1.2rem] uppercase tracking-[1px]"
+            variants={curtain(0)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+          >
+            Drop me <span className="text-teal">a line</span>
+          </motion.h2>
+          <DrawLine color="#b1db00" />
+        </div>
+        <motion.p
+          className="text-white/40 text-[0.875rem] mb-6 -mt-3"
+          variants={riseUp(0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-40px' }}
+        >
+          Prefer a form? I&apos;ll reply to your email directly.
+        </motion.p>
+        <motion.div
+          variants={riseUp(0.15)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-40px' }}
+        >
+          <ContactForm />
+        </motion.div>
       </section>
 
       {/* ══════════════════════════════════
