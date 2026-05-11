@@ -47,11 +47,19 @@ function HomeBg({ bgIndex }: { bgIndex: number }) {
       {BG_IMAGES.map((src, i) => (
         <motion.div
           key={src}
-          className="home-bg-slide absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${src}')` }}
+          className="home-bg-slide absolute inset-0 overflow-hidden"
           animate={{ opacity: i === bgIndex ? 1 : 0 }}
           transition={{ duration: 1.4 }}
-        />
+        >
+          <Image
+            src={src}
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority={i === 0}
+          />
+        </motion.div>
       ))}
       <div
         className="absolute inset-0"

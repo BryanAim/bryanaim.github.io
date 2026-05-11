@@ -19,24 +19,9 @@
 
 ## 1. PERFORMANCE
 
-### 1.1 — Background slideshow bypasses Next.js Image optimizer
-**File:** `src/app/page.tsx:99–111`  
-The 4 background slides use CSS `backgroundImage` on plain `<div>` elements. The browser cannot preload these. The first slide is almost certainly the LCP element on desktop.
-
-**Quick fix (1 line):** Add a preload hint for the first slide in `layout.tsx <head>`:
-```tsx
-<link rel="preload" as="image" href="/img/background.jpg" fetchPriority="high" />
-```
-
-**Full fix:** Convert slides to `<Image fill>`:
-```tsx
-{BG_IMAGES.map((src, i) => (
-  <div key={src} className="home-bg-slide absolute inset-0 transition-opacity duration-[1400ms]"
-    style={{ opacity: i === bgIndex ? 1 : 0 }}>
-    <Image src={src} alt="" fill priority={i === 0} sizes="100vw" className="object-cover" />
-  </div>
-))}
-```
+### ✅ 1.1 — Background slideshow migrated to `<Image fill>` *(fixed 2026-05-11)*
+**File:** `src/app/HomeClient.tsx`  
+CSS `backgroundImage` on plain `<div>` replaced with `<Image fill sizes="100vw" priority={i === 0}>` inside each `motion.div` slide. Next.js now serves optimised WebP/AVIF at the correct viewport size. First slide gets `priority` for LCP; others lazy-load.
 
 ---
 
