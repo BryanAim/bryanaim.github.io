@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Typed from 'typed.js'
 import Image from 'next/image'
@@ -33,6 +34,33 @@ const BG_IMAGES = [
   '/img/projects/design/compositions/mike-explode.jpg',
   '/img/bmx/bmx23-bg.jpg',
 ]
+
+/* ─── Background portal — rendered into document.body to escape PageTransition's
+   transform containing block, which breaks position:fixed on descendant elements ─── */
+function HomeBg({ bgIndex }: { bgIndex: number }) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return null
+
+  return createPortal(
+    <div className="fixed inset-0 z-0" aria-hidden="true">
+      {BG_IMAGES.map((src, i) => (
+        <motion.div
+          key={src}
+          className="home-bg-slide absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url('${src}')` }}
+          animate={{ opacity: i === bgIndex ? 1 : 0 }}
+          transition={{ duration: 1.4 }}
+        />
+      ))}
+      <div
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(105deg, rgba(34,34,34,0.96) 0%, rgba(34,34,34,0.82) 45%, rgba(34,34,34,0.35) 100%)' }}
+      />
+    </div>,
+    document.body
+  )
+}
 
 /* ─── Scroll hint ─── */
 function ScrollHint() {
@@ -91,20 +119,7 @@ export default function Home() {
 
   return (
     <main id="home" className="relative overflow-hidden px-0 py-0 bg-none">
-      {/* ── Background slideshow ── */}
-      <div className="fixed inset-0 z-0" aria-hidden="true">
-        {BG_IMAGES.map((src, i) => (
-          <div
-            key={src}
-            className="home-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-1400"
-            style={{ backgroundImage: `url('${src}')`, opacity: i === bgIndex ? 1 : 0 }}
-          />
-        ))}
-        <div
-          className="absolute inset-0"
-          style={{ background: 'linear-gradient(105deg, rgba(34,34,34,0.96) 0%, rgba(34,34,34,0.82) 45%, rgba(34,34,34,0.35) 100%)' }}
-        />
-      </div>
+      <HomeBg bgIndex={bgIndex} />
 
       {/* ── Hero row: content + portrait side by side ── */}
       <div className="relative z-10 min-h-screen flex items-center">
