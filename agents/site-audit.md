@@ -179,23 +179,9 @@ Created `src/lib/siteConfig.ts` with `SITE` (email, phone, phoneDisplay, waNumbe
 
 ## 3. UI, AESTHETICS & VISUAL DESIGN
 
-### 3.1 — RENDERING BUG: `home-cta-primary` and `home-cta-ghost` classes don't exist
-**File:** `src/app/about/page.tsx:479,483`  
-The "Download CV" and "Hire Me" buttons on the About page reference CSS classes that don't exist in `globals.css`. These buttons are completely unstyled.
-
-**Fix:** Replace with inline Tailwind:
-```tsx
-// Download CV button
-<a href="/isale_brian_cv.pdf" download
-  className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-black font-black text-sm uppercase tracking-widest rounded-md hover:bg-[#c8f000] transition-colors">
-  <i className="fas fa-download text-xs" /> Download CV
-</a>
-// Hire Me button
-<a href="/contact"
-  className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md hover:border-teal hover:text-teal transition-colors">
-  Hire Me <i className="fas fa-arrow-right text-xs" />
-</a>
-```
+### ✅ 3.1 — RENDERING BUG: `home-cta-primary` and `home-cta-ghost` fixed *(fixed 2026-05-11)*
+**File:** `src/app/about/AboutClient.tsx`  
+Replaced dead CSS classes with inline Tailwind. "Download CV" → `bg-lime text-black font-black uppercase tracking-widest rounded-md hover:bg-[#c8f000]`. "Hire Me" → `border border-white/20 text-white uppercase tracking-widest rounded-md hover:border-teal hover:text-teal`. Inline `style` props removed.
 
 ---
 
@@ -505,7 +491,7 @@ Vercel injects it at edge, but add explicitly for clarity:
 3. ~~Fix 3 dead dev project URLs — `devProjects.ts`~~ ✅ 2026-04-30
 4. ~~Delete dead UA Google Analytics script — `layout.tsx:230–236`~~ ✅ 2026-05-06
 5. Fix M-Pesa callback auth (fake payment injection) — `callback/route.ts`
-6. Fix unstyled CV/Hire Me buttons on About page — `about/page.tsx:479,483`
+6. ~~Fix unstyled CV/Hire Me buttons on About page — `about/page.tsx:479,483`~~ ✅ 2026-05-11
 
 ### 🟠 High (Do This Month)
 7. ~~Add contact form — new component + `/api/contact` route~~ ✅ 2026-05-11

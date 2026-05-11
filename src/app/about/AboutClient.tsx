@@ -496,12 +496,19 @@ export default function About() {
             <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.65rem] py-[0.22rem] rounded-full text-[0.75rem] max-sm:text-[0.7rem] font-semibold tracking-[0.3px]">🎓 Google Africa Scholar</span>
             <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.65rem] py-[0.22rem] rounded-full text-[0.75rem] max-sm:text-[0.7rem] font-semibold tracking-[0.3px]">🏆 Certified Mentor</span>
           </div>
-          <div className="flex gap-3 flex-wrap max-[600px]:justify-center">
-            <a href="/isale_brian_cv.pdf" download className="home-cta-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem' }}>
-              <i className="fas fa-download" /> Download CV
+          <div className="flex gap-3 flex-wrap mt-3 max-[600px]:justify-center">
+            <a
+              href="/isale_brian_cv.pdf"
+              download
+              className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-black font-black text-sm uppercase tracking-widest rounded-md hover:bg-[#c8f000] transition-colors"
+            >
+              <i className="fas fa-download text-xs" /> Download CV
             </a>
-            <Link href="/work?tab=services" className="home-cta-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem' }}>
-              Hire me
+            <Link
+              href="/work?tab=services"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md hover:border-teal hover:text-teal transition-colors"
+            >
+              Hire Me <i className="fas fa-arrow-right text-xs" />
             </Link>
           </div>
         </m.div>
