@@ -42,12 +42,9 @@ Replaced with `<Image fill sizes="(max-width: 768px) 100vw, 33vw">` from `next/i
 
 ---
 
-### 1.5 — Portrait image missing `sizes` prop
-**File:** `src/app/page.tsx:231`  
-Without `sizes`, Next.js defaults to `100vw` and serves an 800px image for a 288px container — 3× wasted bandwidth on mobile.
-```tsx
-<Image src="/img/portrait.jpg" alt="Brian Isale" fill sizes="288px" priority className="object-cover object-top rounded-full" />
-```
+### ✅ 1.5 — Portrait image missing `sizes` prop *(fixed 2026-05-11)*
+**File:** `src/app/HomeClient.tsx`  
+Added `sizes="(max-width: 1023px) 208px, 288px"` — matches `max-lg:w-52` (208px) and `w-72` (288px) container breakpoints. Next.js now serves the correct image size instead of defaulting to `100vw`.
 
 ---
 

@@ -274,6 +274,7 @@ export default function Home() {
               style={{ boxShadow: '0 0 0 5px rgba(177,219,0,0.15), 0 0 0 12px rgba(177,219,0,0.05), 0 24px 64px rgba(0,0,0,0.65)' }}
               width={800}
               height={1000}
+              sizes="(max-width: 1023px) 208px, 288px"
               priority
             />
           </motion.div>
