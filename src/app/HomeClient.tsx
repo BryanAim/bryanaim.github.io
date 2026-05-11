@@ -123,21 +123,21 @@ export default function Home() {
 
       {/* ── Hero row: content + portrait side by side ── */}
       <div className="relative z-10 min-h-screen flex items-center">
-      <div className="flex items-center justify-between gap-12 px-20 w-full max-lg:flex-col max-lg:gap-6 max-lg:px-8 max-sm:px-4 max-sm:pt-24 max-sm:text-center">
+      <div className="flex items-center justify-between gap-12 px-20 w-full max-lg:flex-col max-lg:gap-6 max-lg:px-8 max-sm:px-6 max-sm:pt-20 max-sm:pb-10 max-sm:text-center">
         <div className="flex-1 max-w-2xl">
           <motion.p
-            className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-white/40 mb-5 max-lg:justify-center"
+            className="flex items-center gap-2 text-[10px] max-sm:text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4 max-lg:justify-center"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           >
-            <span className="inline-block w-8 h-px bg-lime flex-shrink-0" />
+            <span className="inline-block w-6 h-px bg-lime/60 flex-shrink-0 max-sm:hidden" />
             Based in Nakuru, Kenya
           </motion.p>
 
           <motion.h1
-            className="text-6xl font-black leading-tight tracking-tighter text-white mb-5 max-2xl:text-5xl max-lg:text-5xl max-sm:text-4xl"
-            style={{ fontSize: 'clamp(3.2rem, 8vw, 6.5rem)' }}
+            className="font-black leading-tight tracking-tighter text-white mb-4"
+            style={{ fontSize: 'clamp(2.8rem, 10vw, 6.5rem)' }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
@@ -147,22 +147,22 @@ export default function Home() {
           </motion.h1>
 
           <motion.div
-            className="flex items-center gap-2 mb-6 min-h-8"
+            className="flex items-center gap-2 mb-5 min-h-8 max-sm:justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
             <span className="text-xl font-bold text-teal flex-shrink-0" aria-hidden="true">›</span>
-            <span ref={typeRef} className="text-lg text-white/75 font-medium" aria-hidden="true" />
+            <span ref={typeRef} className="text-base max-sm:text-sm text-white/75 font-medium" aria-hidden="true" />
             <span className="sr-only" aria-live="polite" aria-atomic="true">{TYPED_STRINGS[bioIndex]}</span>
           </motion.div>
 
           {/* Bio — synced to Typed.js string completion */}
-          <div className="min-h-20 mb-8">
+          <div className="min-h-16 mb-7 max-sm:min-h-14">
             <AnimatePresence mode="wait">
               <motion.p
                 key={bioIndex}
-                className="text-sm leading-relaxed text-white/50 max-w-xl"
+                className="text-sm max-sm:text-xs leading-relaxed text-white/50 max-w-xl max-sm:max-w-xs max-sm:mx-auto"
                 initial={{ opacity: 0, y: 2 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -1.5 }}
@@ -174,24 +174,24 @@ export default function Home() {
           </div>
 
           <motion.div
-            className="flex flex-wrap gap-4 mb-10 max-sm:flex-col max-sm:items-center"
+            className="flex flex-wrap gap-3 mb-8 max-sm:flex-col max-sm:items-center"
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.05, ease: 'easeOut' }}
           >
-            <Link href="/about" className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-black font-black text-sm uppercase tracking-widest rounded-md transition-all duration-200 hover:bg-[#c8f000] hover:-translate-y-0.5 hover:shadow-lg" style={{boxShadow: 'none'}}>
+            <Link href="/about" className="inline-flex items-center gap-2 px-5 py-2.5 bg-lime text-black font-black text-xs uppercase tracking-widest rounded-md transition-all duration-200 hover:bg-[#c8f000] hover:-translate-y-0.5 hover:shadow-lg" style={{boxShadow: 'none'}}>
               About Me <i className="fas fa-arrow-right text-xs transition-transform duration-200" />
             </Link>
-            <Link href="/work#services" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/6">
+            <Link href="/work#services" className="inline-flex items-center justify-center px-5 py-2.5 border border-white/20 text-white font-bold text-xs uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/6">
               Services
             </Link>
-            <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/6">
+            <Link href="/contact" className="inline-flex items-center justify-center px-5 py-2.5 border border-white/20 text-white font-bold text-xs uppercase tracking-widest rounded-md bg-black/40 backdrop-blur transition-all duration-200 hover:border-teal hover:text-teal hover:bg-teal/6">
               Get in touch
             </Link>
           </motion.div>
 
           <motion.div
-            className="flex gap-1"
+            className="flex flex-wrap gap-1 max-sm:justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.3 }}
@@ -203,7 +203,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={s.label}
-                className="w-11 h-11 inline-flex items-center justify-center text-base text-white/35 rounded-lg transition-all duration-200 hover:bg-white/[0.07]"
+                className="w-10 h-10 inline-flex items-center justify-center text-sm text-white/35 rounded-lg transition-all duration-200 hover:bg-white/[0.07]"
                 initial={{ opacity: 0, y: 2.5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3 + i * 0.07, duration: 0.35 }}
@@ -216,7 +216,7 @@ export default function Home() {
 
           {/* ── Slide dots ── */}
           <motion.div
-            className="flex gap-2 mt-4 pointer-events-none max-sm:justify-center"
+            className="flex gap-2 mt-3 pointer-events-none max-sm:justify-center"
             aria-hidden="true"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
