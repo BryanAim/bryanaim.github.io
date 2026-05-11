@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo, useEffect, Suspense } from 'react'
+import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { designProjects as allDesignProjects } from './designProjects'
@@ -22,7 +23,7 @@ function DevCard({ p }: { p: DevProject }) {
       whileHover={{ y: -4, boxShadow: '0 20px 50px rgba(0,0,0,0.45), 0 0 0 1px rgba(0,221,215,0.3)' }}
     >
       <div className="relative aspect-video overflow-hidden">
-        <img src={p.img} alt={p.title} className="wk-dev-img w-full h-full object-cover" />
+        <Image src={p.img} alt={p.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="wk-dev-img object-cover" />
         <div className="absolute inset-0 bg-black/60 flex items-center justify-center gap-3 opacity-0 transition-opacity duration-[250ms] group-hover:opacity-100">
           {p.url && (
             <a

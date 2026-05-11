@@ -36,14 +36,9 @@ Deleted UA-157368874-1 `<Script>` tags and the unused `next/script` import from 
 
 ---
 
-### 1.4 — Dev project cards use raw `<img>`
-**File:** `src/app/work/page.tsx:25`  
-Replace with `next/image` for WebP optimization and correct CLS sizing:
-```tsx
-<div className="relative aspect-video overflow-hidden">
-  <Image src={p.img} alt={p.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
-</div>
-```
+### ✅ 1.4 — Dev project cards use raw `<img>` *(fixed 2026-05-11)*
+**File:** `src/app/work/WorkClient.tsx:25`  
+Replaced with `<Image fill sizes="(max-width: 768px) 100vw, 33vw">` from `next/image`. Kept `wk-dev-img` class for WebKit scale-on-hover (avoids corner-bleed on `overflow-hidden` + `rounded`).
 
 ---
 
