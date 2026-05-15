@@ -351,6 +351,22 @@ export default function ProductPage() {
             <h1 className="text-[clamp(1.6rem,5vw,2.4rem)] font-extrabold text-lime leading-tight m-0">
               {product.name}
             </h1>
+            {testimonials.length > 0 && (() => {
+              const rated = testimonials.filter(t => t.rating != null)
+              const avg = rated.length > 0 ? rated.reduce((s, t) => s + t.rating!, 0) / rated.length : null
+              return (
+                <a href="#reviews" className="inline-flex items-center gap-1.5 mt-2 no-underline group">
+                  {avg != null && (
+                    <span className="text-yellow-400/90 text-[0.9rem] font-bold group-hover:text-yellow-300 transition-colors">
+                      ★ {avg.toFixed(1)}
+                    </span>
+                  )}
+                  <span className="text-white/40 text-[0.82rem] group-hover:text-white/60 transition-colors underline underline-offset-2">
+                    {testimonials.length} {testimonials.length === 1 ? 'review' : 'reviews'}
+                  </span>
+                </a>
+              )
+            })()}
           </div>
 
           <p className="text-[1.3rem] font-bold text-white">

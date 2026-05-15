@@ -79,15 +79,30 @@ export default function ShopClient() {
   const [modalImage, setModalImage] = useState<string>('')
   const [variantImages, setVariantImages] = useState<Record<string, string>>({})
   const [shopTestimonials, setShopTestimonials] = useState<Testimonial[]>([])
+  const [productRatings, setProductRatings] = useState<Record<string, { count: number; avg: number | null }>>({})
 
   useEffect(() => {
     Promise.all([
       fetch('/api/testimonials?project=shop-stickers').then(r => r.json()),
       fetch('/api/testimonials?project=shop-tshirts').then(r => r.json()),
       fetch('/api/testimonials?project=shop-custom').then(r => r.json()),
-    ]).then(([a, b, c]: [Testimonial[], Testimonial[], Testimonial[]]) =>
+      fetch('/api/testimonials').then(r => r.json()),
+    ]).then(([a, b, c, all]: [Testimonial[], Testimonial[], Testimonial[], Testimonial[]]) => {
       setShopTestimonials([...a, ...b, ...c].slice(0, 6))
-    ).catch(() => {})
+      const map: Record<string, { count: number; ratedCount: number; sum: number }> = {}
+      for (const t of all) {
+        if (!t.project_slug.startsWith('product-')) continue
+        const id = t.project_slug.slice('product-'.length)
+        if (!map[id]) map[id] = { count: 0, ratedCount: 0, sum: 0 }
+        map[id].count++
+        if (t.rating != null) { map[id].ratedCount++; map[id].sum += t.rating }
+      }
+      setProductRatings(Object.fromEntries(
+        Object.entries(map).map(([id, { count, ratedCount, sum }]) => [
+          id, { count, avg: ratedCount > 0 ? sum / ratedCount : null }
+        ])
+      ))
+    }).catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -387,6 +402,14 @@ export default function ShopClient() {
                     ? `KES ${product.price.toLocaleString()}`
                     : `From KES ${catalogStickerPrice(product.price, STICKER_PRESETS[0]).toLocaleString()}`}
               </p>
+              {productRatings[product.id] && (() => {
+                const { count, avg } = productRatings[product.id]
+                return (
+                  <p className="text-[0.72rem] text-yellow-400/90 mt-[0.35rem] leading-none">
+                    {avg != null ? `★ ${avg.toFixed(1)} · ` : ''}{count} {count === 1 ? 'review' : 'reviews'}
+                  </p>
+                )
+              })()}
               <Link
                 href={`/product/${product.id}`}
                 className="inline-block mt-[0.4rem] text-[0.72rem] text-white/40 hover:text-lime transition-colors no-underline"
@@ -556,6 +579,14 @@ export default function ShopClient() {
             <div className="p-6 flex flex-col gap-4">
               <p className="text-[0.75rem] uppercase tracking-[0.1em] text-teal">{categoryLabel(selectedProduct)}</p>
               <h2 className="text-lime text-[1.4rem] font-bold leading-[1.2]">{selectedProduct.name}</h2>
+              {productRatings[selectedProduct.id] && (() => {
+                const { count, avg } = productRatings[selectedProduct.id]
+                return (
+                  <p className="text-[0.75rem] text-yellow-400/90 -mt-2 leading-none">
+                    {avg != null ? `★ ${avg.toFixed(1)} · ` : ''}{count} {count === 1 ? 'review' : 'reviews'}
+                  </p>
+                )
+              })()}
               <p className="text-[1.3rem] text-white font-bold">KES {modalPrice.toLocaleString()}</p>
               <p className="text-[#ccc] text-[0.9rem] leading-[1.5]">{selectedProduct.description}</p>
 
