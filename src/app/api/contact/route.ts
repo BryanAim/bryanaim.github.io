@@ -21,6 +21,7 @@ async function ensureSchema() {
       created_at TIMESTAMPTZ DEFAULT NOW()
     )
   `
+  await sql`CREATE INDEX IF NOT EXISTS idx_contact_ip_created ON contact_submissions(ip_hash, created_at)`
 }
 
 function hashIp(ip: string): string {

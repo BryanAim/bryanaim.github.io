@@ -83,24 +83,12 @@ export default function ShopClient() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/testimonials?project=shop-stickers').then(r => r.json()),
-      fetch('/api/testimonials?project=shop-tshirts').then(r => r.json()),
-      fetch('/api/testimonials?project=shop-custom').then(r => r.json()),
-      fetch('/api/testimonials').then(r => r.json()),
-    ]).then(([a, b, c, all]: [Testimonial[], Testimonial[], Testimonial[], Testimonial[]]) => {
-      setShopTestimonials([...a, ...b, ...c].slice(0, 6))
-      const map: Record<string, { count: number; ratedCount: number; sum: number }> = {}
-      for (const t of all) {
-        if (!t.project_slug.startsWith('product-')) continue
-        const id = t.project_slug.slice('product-'.length)
-        if (!map[id]) map[id] = { count: 0, ratedCount: 0, sum: 0 }
-        map[id].count++
-        if (t.rating != null) { map[id].ratedCount++; map[id].sum += t.rating }
-      }
+      fetch('/api/testimonials?projects=shop-stickers,shop-tshirts,shop-custom').then(r => r.json()),
+      fetch('/api/testimonials/ratings').then(r => r.json()),
+    ]).then(([shopT, ratings]: [Testimonial[], { product_id: string; count: number; avg_rating: number | null }[]]) => {
+      setShopTestimonials(shopT.slice(0, 6))
       setProductRatings(Object.fromEntries(
-        Object.entries(map).map(([id, { count, ratedCount, sum }]) => [
-          id, { count, avg: ratedCount > 0 ? sum / ratedCount : null }
-        ])
+        ratings.map(r => [r.product_id, { count: r.count, avg: r.avg_rating }])
       ))
     }).catch(() => {})
   }, [])

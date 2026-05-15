@@ -69,6 +69,11 @@ export async function ensureSchema() {
   `
   // Migrate existing testimonials tables that may be missing newer columns
   await sql`ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS product_photos JSONB`
+
+  // Indexes (IF NOT EXISTS via DO $$ blocks — idempotent)
+  await sql`CREATE INDEX IF NOT EXISTS idx_testimonials_slug_status ON testimonials(project_slug, status)`
+  await sql`CREATE INDEX IF NOT EXISTS idx_testimonials_status_created ON testimonials(status, created_at DESC)`
+  await sql`CREATE INDEX IF NOT EXISTS idx_testimonials_ip_rate_limit ON testimonials(ip_hash, project_slug, created_at)`
 }
 
 // ─── Designs ─────────────────────────────────────────────────────────────────
@@ -159,7 +164,7 @@ export async function confirmOrder(order: {
 
 export async function getOrderByCheckoutId(checkoutRequestId: string) {
   const rows = await sql`
-    SELECT * FROM orders WHERE checkout_request_id = ${checkoutRequestId}
+    SELECT id, status, receipt, checkout_request_id FROM orders WHERE checkout_request_id = ${checkoutRequestId}
   `
   return rows[0] ?? null
 }
@@ -207,19 +212,48 @@ export async function saveTestimonial(t: {
   return rows[0].id as string
 }
 
-export async function getTestimonials(projectSlug?: string): Promise<Testimonial[]> {
+export async function getTestimonials(projectSlug?: string, limit = 50): Promise<Testimonial[]> {
   await ensureSchema()
   if (projectSlug) {
     return sql`
       SELECT id, name, role, company, text, rating, project_slug, photo_data, product_photos, status, created_at
       FROM testimonials WHERE status = 'published' AND project_slug = ${projectSlug}
-      ORDER BY created_at DESC
+      ORDER BY created_at DESC LIMIT ${limit}
     ` as unknown as Testimonial[]
   }
   return sql`
     SELECT id, name, role, company, text, rating, project_slug, photo_data, product_photos, status, created_at
-    FROM testimonials WHERE status = 'published' ORDER BY created_at DESC
+    FROM testimonials WHERE status = 'published' ORDER BY created_at DESC LIMIT ${limit}
   ` as unknown as Testimonial[]
+}
+
+export async function getTestimonialsForSlugs(slugs: string[]): Promise<Testimonial[]> {
+  await ensureSchema()
+  return sql`
+    SELECT id, name, role, company, text, rating, project_slug, photo_data, product_photos, status, created_at
+    FROM testimonials WHERE status = 'published' AND project_slug = ANY(${slugs})
+    ORDER BY created_at DESC LIMIT 50
+  ` as unknown as Testimonial[]
+}
+
+export interface ProductRating {
+  product_id: string
+  count: number
+  avg_rating: number | null
+}
+
+export async function getProductRatings(): Promise<ProductRating[]> {
+  await ensureSchema()
+  const rows = await sql`
+    SELECT
+      REPLACE(project_slug, 'product-', '') AS product_id,
+      COUNT(*)::int                          AS count,
+      AVG(rating)                            AS avg_rating
+    FROM testimonials
+    WHERE status = 'published' AND project_slug LIKE 'product-%'
+    GROUP BY project_slug
+  `
+  return rows as unknown as ProductRating[]
 }
 
 export async function getAllTestimonialsAdmin(): Promise<Testimonial[]> {
