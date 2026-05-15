@@ -561,6 +561,47 @@ export default function ProductPage() {
           </div>
         )}
       </section>
+
+      {/* Related products */}
+      {(() => {
+        const related = PRODUCTS.filter(p => p.id !== product.id && p.category === product.category).slice(0, 4)
+        if (related.length === 0) return null
+        return (
+          <section className="border-t border-white/[0.07] pt-12 mt-4">
+            <p className="text-[0.72rem] uppercase tracking-[4px] text-white/30 mb-1">More like this</p>
+            <h2 className="text-[1.5rem] font-extrabold mb-8">
+              Related <span className="text-lime">Products</span>
+            </h2>
+            <div className="grid gap-5 [grid-template-columns:repeat(auto-fill,minmax(180px,1fr))]">
+              {related.map(p => (
+                <Link
+                  key={p.id}
+                  href={`/product/${p.id}`}
+                  className="bg-[#515151] border-b-4 border-lime block no-underline overflow-hidden transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
+                >
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    className={`w-full object-cover block border-b-2 border-[#333] pointer-events-none ${p.type === 'tshirt' ? 'aspect-3/4' : 'aspect-square'}`}
+                    draggable={false}
+                    onContextMenu={e => e.preventDefault()}
+                  />
+                  <div className="px-3 py-3">
+                    <h3 className="text-lime text-[0.88rem] font-bold leading-[1.3] mb-1">{p.name}</h3>
+                    <p className="text-white text-[0.82rem]">
+                      {p.type === 'tshirt'
+                        ? `From KES ${Math.min(...p.sizes.map(s => TSHIRT_SIZE_PRICES[s])).toLocaleString()}`
+                        : p.type === 'helmet'
+                          ? `KES ${p.price.toLocaleString()}`
+                          : `From KES ${catalogStickerPrice(p.price, STICKER_PRESETS[0]).toLocaleString()}`}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )
+      })()}
     </main>
   )
 }
