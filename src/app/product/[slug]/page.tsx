@@ -507,7 +507,7 @@ export default function ProductPage() {
           )}
 
           <p className="text-[0.72rem] text-white/30">
-            Delivery within Nakuru or Kenya-wide via courier.{' '}
+            Delivered Kenya-wide via courier. Pickup available in Nakuru.{' '}
             <Link href="/shop/checkout" className="text-lime/60 hover:text-lime transition-colors">Checkout →</Link>
           </p>
         </div>

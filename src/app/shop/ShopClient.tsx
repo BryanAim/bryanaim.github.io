@@ -88,7 +88,7 @@ export default function ShopClient() {
     ]).then(([shopT, ratings]: [Testimonial[], { product_id: string; count: number; avg_rating: number | null }[]]) => {
       setShopTestimonials(shopT.slice(0, 6))
       setProductRatings(Object.fromEntries(
-        ratings.map(r => [r.product_id, { count: r.count, avg: r.avg_rating }])
+        ratings.map(r => [r.product_id, { count: r.count, avg: r.avg_rating != null ? Number(r.avg_rating) : null }])
       ))
     }).catch(() => {})
   }, [])

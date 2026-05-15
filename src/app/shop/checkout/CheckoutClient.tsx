@@ -13,21 +13,24 @@ type Stage = 'form' | 'waiting' | 'paid' | 'error'
 interface Order {
   receipt: string; amount: number; phone: string
   mpesa_date: string; customer_name: string; customer_email: string
+  notes?: string
 }
 
-interface DeliveryOption { id: string; label: string; description: string; price: number }
+interface DeliveryOption { id: string; label: string; description: string; price: number; eta: string | null }
 
 const DELIVERY_OPTIONS: DeliveryOption[] = [
-  { id: 'meetup', label: 'Meetup in Town (CBD)',           description: 'Agreed spot in Nakuru CBD — coordinate via WhatsApp', price: 0   },
-  { id: 'near',   label: 'Delivery — nearby (0–5 km)',     description: 'Milimani, Section 58, Pipeline, Kaptembwo…',          price: 100 },
-  { id: 'mid',    label: 'Delivery — mid-range (5–15 km)', description: 'Lanet, Bahati, Nakuru East, London, Bondeni…',        price: 150 },
-  { id: 'far',    label: 'Delivery — outskirts (15+ km)',  description: 'Salgaa, Njoro, Molo, Subukia and beyond',             price: 200 },
+  { id: 'pickup',  label: 'Pickup - Nakuru CBD',           description: 'Agreed spot in Nakuru CBD - coordinate via WhatsApp',    price: 0,   eta: null        },
+  { id: 'near',    label: 'Nakuru - nearby (0–5 km)',      description: 'Milimani, Section 58, Pipeline, Kaptembwo…',             price: 100, eta: 'Same day'  },
+  { id: 'mid',     label: 'Nakuru - mid-range (5–15 km)', description: 'Lanet, Bahati, Nakuru East, London, Bondeni…',           price: 150, eta: 'Same day'  },
+  { id: 'far',     label: 'Nakuru - outskirts (15+ km)',  description: 'Salgaa, Njoro, Molo, Subukia and beyond',                price: 200, eta: '1–2 days'  },
+  { id: 'nairobi', label: 'Nairobi',                       description: 'Via road courier or bus parcel service',                 price: 300, eta: '1–2 days'  },
+  { id: 'kenya',   label: 'Rest of Kenya',                 description: 'Via Fargo / G4S courier - major towns countrywide',     price: 400, eta: '2–4 days'  },
 ]
 
 export default function Checkout() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [delivery, setDelivery] = useState<DeliveryOption>(DELIVERY_OPTIONS[0])
-  const [form, setForm] = useState({ name: '', email: '', phone: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', address: '' })
   const [stage, setStage] = useState<Stage>('form')
   const [errorMsg, setErrorMsg] = useState('')
   const [checkoutRequestId, setCheckoutRequestId] = useState('')
@@ -37,6 +40,11 @@ export default function Checkout() {
   useEffect(() => { setCart(loadCart()) }, [])
 
   const [expandedItem, setExpandedItem] = useState<string | null>(null)
+  const [nakuruOpen, setNakuruOpen] = useState(false)
+
+  const NAKURU_OPTIONS = DELIVERY_OPTIONS.filter(o => ['near', 'mid', 'far'].includes(o.id))
+  const TOP_OPTIONS    = DELIVERY_OPTIONS.filter(o => !['near', 'mid', 'far'].includes(o.id))
+  const isNakuruZone   = ['near', 'mid', 'far'].includes(delivery.id)
 
   const updateCart = (next: CartItem[]) => { setCart(next); saveCart(next) }
   const changeQty   = (cartId: string, delta: number) =>
@@ -90,6 +98,7 @@ export default function Checkout() {
           cart_json: cartForServer, delivery_option: delivery.id,
           delivery_fee: delivery.price,
           design_ids: designIds.length > 0 ? designIds : undefined,
+          notes: form.address || undefined,
         }),
       })
       const data = await res.json()
@@ -144,6 +153,12 @@ export default function Checkout() {
                   <tr>
                     <td className="py-2 px-[0.8rem] border-b border-[#666] text-[#aaa] w-[40%] print:text-black print:border-[#ccc]">Email</td>
                     <td className="py-2 px-[0.8rem] border-b border-[#666] print:text-black print:border-[#ccc]">{order.customer_email}</td>
+                  </tr>
+                )}
+                {order.notes && (
+                  <tr>
+                    <td className="py-2 px-[0.8rem] border-b border-[#666] text-[#aaa] w-[40%] print:text-black print:border-[#ccc]">Delivery Address</td>
+                    <td className="py-2 px-[0.8rem] border-b border-[#666] print:text-black print:border-[#ccc]">{order.notes}</td>
                   </tr>
                 )}
               </tbody>
@@ -344,31 +359,89 @@ export default function Checkout() {
 
             {/* Delivery */}
             <section className="bg-[#515151] border-b-[3px] border-[#b1db00] px-6 py-5 mb-5">
-              <h3 className="text-[#b1db00] text-[0.82rem] uppercase tracking-[0.09em] mb-4 flex items-center gap-[0.6rem]">
-                Delivery / Pickup — Nakuru
-              </h3>
+              <h3 className="text-[#b1db00] text-[0.82rem] uppercase tracking-[0.09em] mb-4">Delivery</h3>
               <div className="flex flex-col gap-2">
-                {DELIVERY_OPTIONS.map(opt => (
-                  <label
-                    key={opt.id}
-                    className={`flex items-center gap-3 py-3 px-4 bg-[#444] border-2 cursor-pointer transition-[border-color] duration-150 rounded-[2px] ${delivery.id === opt.id ? 'border-[#b1db00]' : 'border-[#555] hover:border-[#777]'}`}
-                  >
-                    <input
-                      type="radio" name="delivery" value={opt.id}
-                      checked={delivery.id === opt.id}
-                      onChange={() => setDelivery(opt)}
-                      className="w-4 h-4 shrink-0 cursor-pointer accent-[#b1db00]"
-                    />
-                    <div className="flex-1 flex flex-col gap-[0.15rem]">
+
+                {/* Pickup */}
+                {TOP_OPTIONS.filter(o => o.id === 'pickup').map(opt => (
+                  <label key={opt.id} className={`flex items-center gap-3 py-3 px-4 bg-[#444] border-2 cursor-pointer transition-[border-color] duration-150 rounded-[2px] ${delivery.id === opt.id ? 'border-[#b1db00]' : 'border-[#555] hover:border-[#777]'}`}>
+                    <input type="radio" name="delivery" value={opt.id} checked={delivery.id === opt.id} onChange={() => { setDelivery(opt); setNakuruOpen(false) }} className="w-4 h-4 shrink-0 cursor-pointer accent-[#b1db00]" />
+                    <div className="flex-1 flex flex-col gap-[0.1rem]">
                       <span className="text-white text-[0.88rem] font-bold">{opt.label}</span>
                       <span className="text-[#aaa] text-[0.75rem]">{opt.description}</span>
                     </div>
-                    <span className={`text-[0.88rem] font-bold whitespace-nowrap shrink-0 ${delivery.id === opt.id ? 'text-[#b1db00]' : 'text-[#ccc]'}`}>
-                      {opt.price === 0 ? 'Free' : `+ KES ${opt.price}`}
+                    <span className={`text-[0.88rem] font-bold shrink-0 ${delivery.id === opt.id ? 'text-[#b1db00]' : 'text-white'}`}>Free</span>
+                  </label>
+                ))}
+
+                {/* Nakuru accordion */}
+                <div className={`border-2 rounded-[2px] transition-[border-color] duration-150 ${isNakuruZone ? 'border-[#b1db00]' : 'border-[#555]'}`}>
+                  <button
+                    type="button"
+                    className="w-full flex items-center gap-3 py-3 px-4 bg-[#444] cursor-pointer text-left"
+                    onClick={() => setNakuruOpen(o => !o)}
+                  >
+                    <span className={`w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center ${isNakuruZone ? 'border-[#b1db00]' : 'border-[#666]'}`}>
+                      {isNakuruZone && <span className="w-2 h-2 rounded-full bg-[#b1db00] block" />}
                     </span>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-white text-[0.88rem] font-bold block">Nakuru &amp; Environs</span>
+                      {isNakuruZone
+                        ? <span className="text-[#b1db00] text-[0.75rem]">{delivery.label} — {delivery.eta}</span>
+                        : <span className="text-[#aaa] text-[0.75rem]">KES 100–200 · same/next day</span>
+                      }
+                    </div>
+                    <span className={`text-[0.88rem] font-bold shrink-0 mr-1 ${isNakuruZone ? 'text-[#b1db00]' : 'text-white'}`}>
+                      {isNakuruZone ? `+ KES ${delivery.price}` : ''}
+                    </span>
+                    <span className="text-[#888] text-[0.8rem] shrink-0">{nakuruOpen ? '▲' : '▼'}</span>
+                  </button>
+                  {nakuruOpen && (
+                    <div className="border-t border-[#555] flex flex-col">
+                      {NAKURU_OPTIONS.map(opt => (
+                        <label key={opt.id} className={`flex items-center gap-3 py-[0.6rem] px-4 cursor-pointer transition-colors duration-150 ${delivery.id === opt.id ? 'bg-[#3d3d3d]' : 'bg-[#3a3a3a] hover:bg-[#3d3d3d]'}`}>
+                          <input type="radio" name="delivery" value={opt.id} checked={delivery.id === opt.id} onChange={() => setDelivery(opt)} className="w-4 h-4 shrink-0 cursor-pointer accent-[#b1db00]" />
+                          <div className="flex-1 min-w-0">
+                            <span className={`text-[0.85rem] font-semibold block ${delivery.id === opt.id ? 'text-[#b1db00]' : 'text-white'}`}>{opt.label.replace('Nakuru — ', '')}</span>
+                            <span className="text-[#888] text-[0.72rem]">{opt.description}</span>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <span className={`text-[0.85rem] font-bold block ${delivery.id === opt.id ? 'text-[#b1db00]' : 'text-[#ccc]'}`}>+ KES {opt.price}</span>
+                            <span className="text-[#888] text-[0.7rem]">{opt.eta}</span>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Nairobi + Rest of Kenya */}
+                {TOP_OPTIONS.filter(o => o.id !== 'pickup').map(opt => (
+                  <label key={opt.id} className={`flex items-center gap-3 py-3 px-4 bg-[#444] border-2 cursor-pointer transition-[border-color] duration-150 rounded-[2px] ${delivery.id === opt.id ? 'border-[#b1db00]' : 'border-[#555] hover:border-[#777]'}`}>
+                    <input type="radio" name="delivery" value={opt.id} checked={delivery.id === opt.id} onChange={() => { setDelivery(opt); setNakuruOpen(false) }} className="w-4 h-4 shrink-0 cursor-pointer accent-[#b1db00]" />
+                    <div className="flex-1 flex flex-col gap-[0.1rem]">
+                      <span className="text-white text-[0.88rem] font-bold">{opt.label}</span>
+                      <span className="text-[#aaa] text-[0.75rem]">{opt.description}</span>
+                      {opt.eta && <span className="self-start bg-white/10 text-white/60 text-[0.7rem] px-2 py-0.5 rounded-full mt-[0.15rem]">{opt.eta}</span>}
+                    </div>
+                    <span className={`text-[0.88rem] font-bold shrink-0 ${delivery.id === opt.id ? 'text-[#b1db00]' : 'text-white'}`}>+ KES {opt.price}</span>
                   </label>
                 ))}
               </div>
+
+              {delivery.id !== 'pickup' && (
+                <div className="mt-4">
+                  <label className="block text-[#b1db00] text-[0.82rem] mb-[0.3rem]">Delivery address &amp; notes</label>
+                  <textarea
+                    rows={3}
+                    placeholder="Street, estate, town, county - any landmarks that help us find you"
+                    value={form.address}
+                    onChange={e => setForm({ ...form, address: e.target.value })}
+                    required
+                    className="w-full py-[0.6rem] px-[0.8rem] bg-[#444] border border-[#666] text-white text-base outline-none focus:border-[#b1db00] resize-y rounded-none"
+                  />
+                </div>
+              )}
             </section>
           </div>
 
