@@ -9,8 +9,8 @@
 
 | # | Fix | Time | Impact |
 |---|-----|------|--------|
-| 1 | Add "Available for work" badge to homepage hero | 20 min | 🔴 Hiring |
-| 2 | Remove "BMX Rider / Lifelong Learner / Friend" from typed strings | 5 min | 🔴 Hiring |
+| 1 | ~~Add "Available for work" badge to homepage hero~~ ✅ 2026-05-16 | 20 min | 🔴 Hiring |
+| 2 | ~~Remove "BMX Rider / Lifelong Learner / Friend" from typed strings~~ ✅ 2026-05-16 | 5 min | 🔴 Hiring |
 | 3 | ✅ Fix 3 dead dev project URLs (VueGram, Covid Tracker, NaxTechmakers HTTP) | 10 min | 🔴 Credibility |
 | 4 | ✅ Delete dead Google Analytics UA script from `layout.tsx:230–236` | 2 min | 🟠 Performance |
 | 5 | Fix the M-Pesa callback with no authentication (fake payment injection possible) | 2 hrs | 🔴 Security |
@@ -240,24 +240,19 @@ Replaced `Inter` with `Nunito` in `layout.tsx` (loaded via `next/font/google`, `
 
 ## 4. CONVERSION, UX & GETTING HIRED
 
-### 4.1 — No "Available for work" signal anywhere on the site (CRITICAL)
-A hiring manager reads the entire site and has no idea if Brian is available, employed, or just maintaining a portfolio. Add to the homepage hero:
-```tsx
-<span className="inline-flex items-center gap-1.5 text-xs text-emerald-400 border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 rounded-full mb-5">
-  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-  Available for work
-</span>
-```
-Remove it when not available. This is the highest-return 20 minutes you can spend.
+### ✅ 4.1 — "Available for freelance" signal added *(fixed 2026-05-16)*
+**Note:** Brian is full-time employed — framing is freelance clients, not job seeking. "Open to work" language is intentionally avoided.
+
+Two placements added:
+1. **Hero badge** (`HomeClient.tsx`) — pulsing lime dot + "Available for freelance projects" text above the CTA buttons, animated in with the rest of the hero.
+2. **About page callout** (`AboutClient.tsx`) — lime-bordered box with copy: *"Available for select freelance projects. I take on web development and brand design work on the side…"* + link to `/contact`. Positioned between the bio badges and the Download CV / Hire Me buttons.
 
 ---
 
-### 4.2 — "BMX Rider / Lifelong Learner / Friend" in the typed loop dilutes professional signal
-A recruiter who lands on the page during one of the 3 non-professional strings gets zero useful information in their first 5 seconds. Remove these strings from the homepage. Keep them for the About page where they add personality appropriately:
-```tsx
-// page.tsx — change strings to:
-strings: ['Full Stack Developer.', 'Creative Designer.', 'UI/UX Designer.', 'Google Africa Scholar.']
-```
+### ✅ 4.2 — Typed loop trimmed to professional strings only *(fixed 2026-05-16)*
+`TYPED_STRINGS` and `TYPED_BIOS` in `HomeClient.tsx` reduced to 3 entries: Full Stack Developer, Creative Designer, Community Builder. Personal strings removed from the loop entirely.
+
+Personal side preserved as a quiet one-liner: *"Off the clock: BMX rider, lifelong learner & friend →"* added below the slide dots, styled `text-white/30`, links to `/bmx`.
 
 ---
 
@@ -344,9 +339,10 @@ Full testimonials system built: project-locked collection forms at `/testimonial
 
 ---
 
-### 4.12 — No "What I'm looking for" statement
-The site shows what Brian can do, not what he wants. Add one sentence to the About page or Contact page:
-> "Currently open to full-time remote roles in full-stack development, and freelance contracts for web and design projects. Particularly interested in product teams building for African markets."
+### ✅ 4.12 — Freelance availability statement added *(fixed 2026-05-16)*
+**Context:** Brian is full-time employed; goal is freelance clients, not full-time roles. "Open to work" / job-seeker framing intentionally avoided everywhere.
+
+Addressed via §4.1 fix — the About page callout box and hero badge together serve as the availability statement. Copy reads: *"Available for select freelance projects — web development and brand design work on the side."*
 
 ---
 
@@ -472,8 +468,8 @@ Vercel injects it at edge, but add explicitly for clarity:
 ## 6. FULL PRIORITY LIST
 
 ### 🔴 Critical (Do This Week)
-1. Add "Available for work" badge to homepage — `page.tsx`
-2. Remove BMX Rider/Learner/Friend from typed strings — `page.tsx:76–83`
+1. ~~Add "Available for work" badge to homepage~~ ✅ 2026-05-16 (freelance framing, not job-seeker)
+2. ~~Remove BMX Rider/Learner/Friend from typed strings~~ ✅ 2026-05-16 (personal aside link added below slide dots)
 3. ~~Fix 3 dead dev project URLs — `devProjects.ts`~~ ✅ 2026-04-30
 4. ~~Delete dead UA Google Analytics script — `layout.tsx:230–236`~~ ✅ 2026-05-06
 5. Fix M-Pesa callback auth (fake payment injection) — `callback/route.ts`
@@ -501,9 +497,9 @@ Vercel injects it at edge, but add explicitly for clarity:
 23. ~~Add `focus-visible:` styles to all interactive elements~~ ✅ 2026-05-01
 24. ~~Fix StackCard `div` missing `role="button"` + keyboard handler — `about/page.tsx:334`~~ ✅ 2026-05-01
 25. ~~Fix `aria-live` on Typed.js target~~ ✅ 2026-05-09
-26. Add "Available for work" + availability statement to About page
+26. ~~Add "Available for work" + availability statement to About page~~ ✅ 2026-05-16
 27. ✅ Add testimonials system — done 2026-05-05
-28. Add "What I'm looking for" paragraph to About or Contact
+28. ~~Add "What I'm looking for" paragraph to About or Contact~~ ✅ 2026-05-16 (freelance callout on About page)
 29. ~~Move BMX from main nav to footer / About page~~ ✅ 2026-04-30
 30. Add `will-change-transform` to hover-animated cards — `work/page.tsx:17`
 31. ~~Fix bio text contrast `text-white/50` → `text-white/65` — `page.tsx:155`~~ ✅ 2026-05-11
@@ -541,6 +537,9 @@ Vercel injects it at edge, but add explicitly for clarity:
 - ✅ About page `webProjects` stale copy replaced with `devProjects` import — `about/page.tsx` (2026-04-30) [was §2.7]
 - ✅ Navigation progress bar added — `NavigationProgress.tsx` injected in `layout.tsx` (2026-05-05). Lime top-bar animates on every Next.js route transition; improves perceived performance and navigation feedback.
 - ✅ Product detail pages added — `/product/[slug]` for each shop item (2026-05-05). Linked from shop card and product modal via "View details →" and "View full page & reviews →". Enables per-product testimonial display and shareable product URLs.
+- ✅ Font Awesome upgraded v5 → v6 Free (2026-05-16): installed `@fortawesome/fontawesome-free`, copied CSS + webfonts to `public/fonts/`. Enables `fa-brands fa-x-twitter` and `fa-tiktok` icons. All existing `fab`/`fas`/`far` classes preserved via FA6 aliases.
+- ✅ `siteConfig.ts` — Twitter updated to X: icon `fa-brands fa-x-twitter`, handle `@bryanaim00`, URL `https://x.com/bryanaim00`; TikTok moved to end of SOCIALS (was causing blank-button gap between Twitter and YouTube in FA5). `SITE.twitterHandle` updated to `@bryanaim00` (2026-05-16).
+- ✅ `HomeClient.tsx` — portrait changed from `max-md:hidden` to `max-lg:hidden`; only shows on lg+ (1024px+) where side-by-side layout applies. Fixes messy stacked layout at 768–1023px range (2026-05-16).
 
 ---
 
