@@ -13,9 +13,6 @@ const TYPED_STRINGS = [
   'Full Stack Developer.',
   'Creative Designer.',
   'Community Builder.',
-  'BMX Rider.',
-  'Lifelong Learner.',
-  'Friend.',
 ]
 
 // Bio for each typed string — fires after typing finishes, before deletion starts
@@ -23,9 +20,6 @@ const TYPED_BIOS = [
   "Writing clean code and shipping fast products. From Google Africa Scholar to full-stack developer — the terminal is home.",
   "Where art meets technology. Crafting brand identities, motion graphics, and interfaces that actually mean something.",
   "Art and technology enthusiast on a mission. Building for Africa, mentoring the next generation, beyond the screen.",
-  "When the laptop closes, the bike comes out. Learning BMX on Nakuru's streets since 2025 — every slam is a lesson.",
-  "Always reading, always building, always questioning. Growth isn't a destination — it's a daily habit.",
-  "At the end of the day, people matter most. Developer, designer, rider — but first, a friend.",
 ]
 
 const BG_IMAGES = [
@@ -122,7 +116,7 @@ export default function Home() {
   // Bio syncs to Typed.js — updates only after a string is fully typed
   useEffect(() => {
     const typed = new Typed(typeRef.current, {
-      strings: [...TYPED_STRINGS.slice(0, -1), 'Friend.^1500'],
+      strings: TYPED_STRINGS,
       startDelay: 800,
       typeSpeed: 70,
       backSpeed: 35,
@@ -150,7 +144,7 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           >
-            <span className="inline-block w-6 h-px bg-lime/60 flex-shrink-0 max-sm:hidden" />
+            <span className="inline-block w-6 h-px bg-lime/60 shrink-0 max-sm:hidden" />
             Based in Nakuru, Kenya
           </m.p>
 
@@ -171,7 +165,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            <span className="text-xl font-bold text-teal flex-shrink-0" aria-hidden="true">›</span>
+            <span className="text-xl font-bold text-teal shrink-0" aria-hidden="true">›</span>
             <span ref={typeRef} className="text-base max-sm:text-sm text-white/75 font-medium" aria-hidden="true" />
             <span className="sr-only" aria-live="polite" aria-atomic="true">{TYPED_STRINGS[bioIndex]}</span>
           </m.div>
@@ -252,10 +246,25 @@ export default function Home() {
               />
             ))}
           </m.div>
+
+          {/* ── Personal aside ── */}
+          <m.div
+            className="mt-4 max-sm:justify-center flex"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.7 }}
+          >
+            <Link
+              href="/bmx"
+              className="text-[11px] text-white/30 hover:text-white/55 transition-colors duration-200 tracking-wide"
+            >
+              Off the clock: BMX rider, lifelong learner &amp; friend &rarr;
+            </Link>
+          </m.div>
         </div>
 
         {/* Portrait — flex sibling, no absolute positioning */}
-        <div className="flex-shrink-0 w-72 max-lg:w-52 aspect-square pointer-events-none max-md:hidden" aria-hidden="true">
+        <div className="shrink-0 w-72 aspect-square pointer-events-none max-lg:hidden" aria-hidden="true">
           <m.div
             className="relative w-full h-full"
             initial={{ opacity: 0, scale: 0.9 }}
