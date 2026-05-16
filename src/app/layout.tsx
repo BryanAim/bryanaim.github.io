@@ -232,9 +232,19 @@ export default function RootLayout({
 
 
 function Footer() {
+  const footerSocials = SOCIALS.filter(s => !['LinkedIn', 'GitHub', 'Behance'].includes(s.label))
   return (
-    <footer className="flex items-center justify-between px-8 py-4 text-xs text-white/30">
-      <span>&copy; {new Date().getFullYear()} - Brian Isale</span>
+    <footer className="flex items-center justify-between gap-4 px-8 py-4 text-xs text-white/30 flex-wrap">
+      <span>&copy; {new Date().getFullYear()} Brian Isale</span>
+      <div className="flex items-center gap-0.5">
+        {footerSocials.map(s => (
+          <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
+            aria-label={s.label}
+            className="w-8 h-8 inline-flex items-center justify-center text-xs text-white/25 rounded transition-colors duration-200 hover:text-white/55">
+            <i className={s.icon} aria-hidden="true" />
+          </a>
+        ))}
+      </div>
       <Link href="/bmx" className="inline-flex items-center gap-1.5 hover:text-white/60 transition-colors duration-200">
         <i className="fas fa-bicycle" aria-hidden="true" /> BMX Life
       </Link>

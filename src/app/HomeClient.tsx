@@ -186,14 +186,21 @@ export default function Home() {
             </AnimatePresence>
           </div>
 
+          {/* Mobile-only credential chips — portrait is hidden on <lg so show here instead */}
           <m.div
-            className="flex items-center gap-2 mb-4 max-sm:justify-center"
+            className="flex flex-wrap gap-2 mb-5 lg:hidden max-sm:justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.95 }}
+            transition={{ duration: 0.5, delay: 0.92 }}
           >
-            <span className="w-2 h-2 rounded-full bg-lime animate-pulse shrink-0" />
-            <span className="text-[11px] font-bold uppercase tracking-widest text-lime/70">Available for freelance projects</span>
+            <span className="inline-flex items-center gap-1.5 bg-black/40 border border-lime/25 rounded-full px-3 py-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-lime animate-pulse shrink-0" />
+              <span className="text-[10px] font-semibold text-lime/75 uppercase tracking-wider whitespace-nowrap">Available for freelance</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-black/40 border border-white/10 rounded-full px-3 py-1.5">
+              <i className="fab fa-google text-[0.6rem] text-white/40" aria-hidden="true" />
+              <span className="text-[10px] text-white/40 tracking-wide whitespace-nowrap">Google Africa Scholar</span>
+            </span>
           </m.div>
 
           <m.div
@@ -219,7 +226,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.3 }}
           >
-            {SOCIALS.map((s, i) => (
+            {SOCIALS.filter(s => ['LinkedIn', 'GitHub', 'Behance'].includes(s.label)).map((s, i) => (
               <m.a
                 key={s.label}
                 href={s.url}
@@ -274,9 +281,9 @@ export default function Home() {
         </div>
 
         {/* Portrait — flex sibling, no absolute positioning */}
-        <div className="shrink-0 w-72 aspect-square pointer-events-none max-lg:hidden" aria-hidden="true">
+        <div className="shrink-0 w-72 pointer-events-none max-lg:hidden py-6" aria-hidden="true">
           <m.div
-            className="relative w-full h-full"
+            className="relative w-full aspect-square"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -296,6 +303,56 @@ export default function Home() {
               sizes="(max-width: 1023px) 208px, 288px"
               priority
             />
+
+            {/* Curved arc text — SVG overlaid on portrait */}
+            <svg
+              className="absolute inset-0 w-full h-full overflow-visible"
+              viewBox="0 0 288 288"
+              aria-hidden="true"
+            >
+              <defs>
+                {/* Top arc: left→right clockwise = through the top, letters face outward */}
+                <path id="scholarArc" d="M -16,144 A 160,160 0 0,1 304,144" />
+                {/* Bottom arc: left→right counter-clockwise = through the bottom, reads left-to-right */}
+                <path id="freelanceArc" d="M -16,144 A 160,160 0 0,0 304,144" />
+              </defs>
+
+              <m.g
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1.2 }}
+              >
+                <text
+                  fontSize="10"
+                  fontWeight="600"
+                  letterSpacing="3"
+                  fill="rgba(255,255,255,0.35)"
+                  fontFamily="inherit"
+                >
+                  <textPath href="#scholarArc" startOffset="50%" textAnchor="middle">
+                    · GOOGLE AFRICA SCHOLAR · ANDELA 2019 ·
+                  </textPath>
+                </text>
+              </m.g>
+
+              <m.g
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1.4 }}
+              >
+                <text
+                  fontSize="10"
+                  fontWeight="700"
+                  letterSpacing="3"
+                  fill="rgba(177,219,0,0.65)"
+                  fontFamily="inherit"
+                >
+                  <textPath href="#freelanceArc" startOffset="50%" textAnchor="middle">
+                    · AVAILABLE FOR FREELANCE ·
+                  </textPath>
+                </text>
+              </m.g>
+            </svg>
           </m.div>
         </div>
       </div>

@@ -283,27 +283,12 @@ Fields: name, email, subject (Job Opportunity / Freelance Project / Collaboratio
 ---
 
 ### 4.6 — CV is buried on About page — not on homepage
-**File:** `src/app/page.tsx:163–178`  
-Recruiters look for a CV within the first 10 seconds. Add alongside the "About Me" CTA:
-```tsx
-<a href="/isale_brian_cv.pdf" download
-  className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white font-bold text-sm uppercase tracking-widest rounded-md bg-black/40 backdrop-blur hover:border-teal hover:text-teal transition-all">
-  <i className="fas fa-download text-xs" /> CV
-</a>
-```
+**Intentionally skipped** (2026-05-16): Brian is not job hunting — freelance clients don't need a CV on the homepage. A CV download on the hero signals "hire me full-time." CV stays on the About page where clients who want more background can find it.
 
 ---
 
-### 4.7 — Google Scholar credential is buried 3 clicks deep
-The Andela/Google credential is only visible inside a collapsible stack card modal on the About page. For a hiring-focused portfolio, surface it directly:
-
-Add to the homepage bio or as a badge below the typed text:
-```tsx
-<div className="flex items-center gap-2 text-xs text-white/40 mt-2">
-  <i className="fab fa-google text-[0.7rem]" />
-  Google Africa Scholar · Andela 2019
-</div>
-```
+### ✅ 4.7 — Google Scholar credential surfaced on homepage *(fixed 2026-05-16)*
+Implemented as SVG curved text arcing along the top of the portrait circle: `· GOOGLE AFRICA SCHOLAR · ANDELA 2019 ·` in `rgba(255,255,255,0.35)`. Paired with `· AVAILABLE FOR FREELANCE ·` curving along the bottom arc in lime. Both use a single `<path>` in SVG `<defs>` with a `<textPath>` overlay on the portrait. Mobile fallback: two pill badges shown `lg:hidden` between bio and CTAs. Credential also present as a badge on the About page bio.
 
 ---
 
