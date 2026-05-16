@@ -187,6 +187,16 @@ export default function Home() {
           </div>
 
           <m.div
+            className="flex items-center gap-2 mb-4 max-sm:justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.95 }}
+          >
+            <span className="w-2 h-2 rounded-full bg-lime animate-pulse shrink-0" />
+            <span className="text-[11px] font-bold uppercase tracking-widest text-lime/70">Available for freelance projects</span>
+          </m.div>
+
+          <m.div
             className="flex flex-wrap gap-3 mb-8 max-sm:flex-col max-sm:items-center"
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}

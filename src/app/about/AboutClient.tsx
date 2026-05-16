@@ -496,6 +496,15 @@ export default function About() {
             <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.65rem] py-[0.22rem] rounded-full text-[0.75rem] max-sm:text-[0.7rem] font-semibold tracking-[0.3px]">🎓 Google Africa Scholar</span>
             <span className="bg-lime/[0.12] border border-lime/40 text-lime px-[0.65rem] py-[0.22rem] rounded-full text-[0.75rem] max-sm:text-[0.7rem] font-semibold tracking-[0.3px]">🏆 Certified Mentor</span>
           </div>
+          <div className="flex items-start gap-3 bg-lime/6 border border-lime/25 rounded-lg px-4 py-3 mt-4 mb-1 max-[600px]:flex-col max-[600px]:items-center max-[600px]:text-center">
+            <span className="w-2 h-2 rounded-full bg-lime animate-pulse shrink-0 mt-1.25 max-[600px]:mt-0" />
+            <p className="text-[0.85rem] leading-[1.7] text-white/70">
+              <span className="font-bold text-lime">Available for select freelance projects.</span>{' '}
+              I take on web development and brand design work on the side - whether that&apos;s a new product, a rebrand, or a custom feature. If you have something in mind,{' '}
+              <Link href="/contact" className="text-teal underline underline-offset-2 hover:text-lime transition-colors">let&apos;s talk</Link>.
+            </p>
+          </div>
+
           <div className="flex gap-3 flex-wrap mt-3 max-[600px]:justify-center">
             <a
               href="/isale_brian_cv.pdf"
