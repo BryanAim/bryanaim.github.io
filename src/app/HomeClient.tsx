@@ -15,12 +15,6 @@ const TYPED_STRINGS = [
   'Community Builder.',
 ]
 
-// Bio for each typed string — fires after typing finishes, before deletion starts
-const TYPED_BIOS = [
-  "Writing clean code and shipping fast products. From Google Africa Scholar to full-stack developer — the terminal is home.",
-  "Where art meets technology. Crafting brand identities, motion graphics, and interfaces that actually mean something.",
-  "Art and technology enthusiast on a mission. Building for Africa, mentoring the next generation, beyond the screen.",
-]
 
 const BG_IMAGES = [
   '/img/background.jpg',
@@ -94,7 +88,6 @@ function ScrollHint() {
 export default function Home() {
   const typeRef = useRef<HTMLSpanElement>(null)
   const [bgIndex, setBgIndex] = useState(0)
-  const [bioIndex, setBioIndex] = useState(0)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const startInterval = () => {
@@ -113,19 +106,15 @@ export default function Home() {
     startInterval()
   }
 
-  // Bio syncs to Typed.js — updates only after a string is fully typed
   useEffect(() => {
     const typed = new Typed(typeRef.current, {
       strings: TYPED_STRINGS,
       startDelay: 800,
       typeSpeed: 70,
       backSpeed: 35,
-      backDelay: 2200, // hold the typed string long enough to read the bio
+      backDelay: 2200,
       loop: true,
       smartBackspace: true,
-      onStringTyped: (arrayPos) => {
-        setBioIndex(arrayPos % TYPED_BIOS.length)
-      },
     })
     return () => typed.destroy()
   }, [])
@@ -136,10 +125,10 @@ export default function Home() {
 
       {/* ── Hero row: content + portrait side by side ── */}
       <div className="relative z-10 min-h-screen flex items-center">
-      <div className="flex items-center justify-between gap-12 px-20 w-full max-lg:flex-col max-lg:gap-6 max-lg:px-8 max-sm:px-6 max-sm:pt-20 max-sm:pb-10 max-sm:text-center">
-        <div className="flex-1 max-w-2xl">
+      <div className="flex items-center justify-between gap-16 px-20 w-full max-xl:px-14 max-lg:flex-col max-lg:gap-6 max-lg:px-8 max-sm:px-6 max-sm:pt-20 max-sm:pb-10 max-sm:text-center">
+        <div className="flex-1 max-w-xl">
           <m.p
-            className="flex items-center gap-2 text-[10px] max-sm:text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4 max-lg:justify-center"
+            className="flex items-center gap-2 text-[10px] max-sm:text-[9px] font-bold uppercase tracking-widest text-white/35 mb-3 max-lg:justify-center"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
@@ -149,8 +138,8 @@ export default function Home() {
           </m.p>
 
           <m.h1
-            className="font-black leading-tight tracking-tighter text-white mb-4"
-            style={{ fontSize: 'clamp(2.8rem, 10vw, 6.5rem)' }}
+            className="font-black leading-tight tracking-tighter text-white mb-3"
+            style={{ fontSize: 'clamp(2.8rem, 8vw, 5.5rem)' }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
@@ -160,31 +149,16 @@ export default function Home() {
           </m.h1>
 
           <m.div
-            className="flex items-center gap-2 mb-5 min-h-8 max-sm:justify-center"
+            className="flex items-center gap-2 mb-3 min-h-8 max-sm:justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
             <span className="text-xl font-bold text-teal shrink-0" aria-hidden="true">›</span>
             <span ref={typeRef} className="text-base max-sm:text-sm text-white/75 font-medium" aria-hidden="true" />
-            <span className="sr-only" aria-live="polite" aria-atomic="true">{TYPED_STRINGS[bioIndex]}</span>
+            <span className="sr-only" aria-live="polite" aria-atomic="true">Brian Isale — Full Stack Developer, Creative Designer, Community Builder</span>
           </m.div>
 
-          {/* Bio — synced to Typed.js string completion */}
-          <div className="min-h-16 mb-7 max-sm:min-h-14">
-            <AnimatePresence mode="wait">
-              <m.p
-                key={bioIndex}
-                className="text-sm max-sm:text-xs leading-relaxed text-white/65 max-w-xl max-sm:max-w-xs max-sm:mx-auto"
-                initial={{ opacity: 0, y: 2 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -1.5 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-              >
-                {TYPED_BIOS[bioIndex]}
-              </m.p>
-            </AnimatePresence>
-          </div>
 
           {/* Mobile-only credential chips — portrait is hidden on <lg so show here instead */}
           <m.div
@@ -204,7 +178,7 @@ export default function Home() {
           </m.div>
 
           <m.div
-            className="flex flex-wrap gap-3 mb-8 max-sm:flex-col max-sm:items-center"
+            className="flex flex-wrap gap-3 mb-6 max-sm:flex-col max-sm:items-center"
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.05, ease: 'easeOut' }}
@@ -264,24 +238,10 @@ export default function Home() {
             ))}
           </m.div>
 
-          {/* ── Personal aside ── */}
-          <m.div
-            className="mt-4 max-sm:justify-center flex"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.7 }}
-          >
-            <Link
-              href="/bmx"
-              className="text-[11px] text-white/30 hover:text-white/55 transition-colors duration-200 tracking-wide"
-            >
-              Off the clock: BMX rider, lifelong learner &amp; friend &rarr;
-            </Link>
-          </m.div>
         </div>
 
         {/* Portrait — flex sibling, no absolute positioning */}
-        <div className="shrink-0 w-72 pointer-events-none max-lg:hidden py-6" aria-hidden="true">
+        <div className="shrink-0 w-80 pointer-events-none max-lg:hidden" aria-hidden="true">
           <m.div
             className="relative w-full aspect-square"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -300,21 +260,21 @@ export default function Home() {
               style={{ boxShadow: '0 0 0 5px rgba(177,219,0,0.15), 0 0 0 12px rgba(177,219,0,0.05), 0 24px 64px rgba(0,0,0,0.65)' }}
               width={800}
               height={1000}
-              sizes="(max-width: 1023px) 208px, 288px"
+              sizes="(max-width: 1023px) 208px, 320px"
               priority
             />
 
             {/* Curved arc text — SVG overlaid on portrait */}
             <svg
               className="absolute inset-0 w-full h-full overflow-visible"
-              viewBox="0 0 288 288"
+              viewBox="0 0 320 320"
               aria-hidden="true"
             >
               <defs>
                 {/* Top arc: left→right clockwise = through the top, letters face outward */}
-                <path id="scholarArc" d="M -16,144 A 160,160 0 0,1 304,144" />
+                <path id="scholarArc" d="M -16,160 A 176,176 0 0,1 336,160" />
                 {/* Bottom arc: left→right counter-clockwise = through the bottom, reads left-to-right */}
-                <path id="freelanceArc" d="M -16,144 A 160,160 0 0,0 304,144" />
+                <path id="freelanceArc" d="M -16,160 A 176,176 0 0,0 336,160" />
               </defs>
 
               <m.g
