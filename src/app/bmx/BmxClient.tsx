@@ -192,10 +192,18 @@ const clips = [
 ]
 
 const gear = [
-  { label: 'Frame', value: 'Redline Lieutenant BMX', icon: '🚲' },
-  { label: 'Bars', value: '9" rise chromoly', icon: '⬛' },
-  { label: 'Tyres', value: 'HARTEX 2.4', icon: '⭕' },
-  { label: 'Pegs', value: '4x chromoly steel', icon: '🔩' },
+  { label: 'Frame', value: 'Radio Darko, 20.5" top tube, chrome', icon: '🚲' },
+  { label: 'Fork', value: 'Wethepeople Justice, black, 4130 chromoly, 22mm offset', icon: '🍴' },
+  { label: 'Bars & Stem', value: 'Wethepeople bars, Salt stem', icon: '⬛' },
+  { label: 'Front Rim', value: 'Salt Valon, 36 hole, ~446g', icon: '⚙️' },
+  { label: 'Rear Rim', value: 'Saltplus Summit, 36mm wide, 36 hole', icon: '⚙️' },
+  { label: 'Front Tyre', value: 'Eastern Curb Monkey 20x2.40', icon: '⭕' },
+  { label: 'Rear Tyre', value: 'Demolition Momentum 20x2.35, ~538g', icon: '⭕' },
+  { label: 'Hubs', value: 'Salt sealed front, Salt cassette rear', icon: '🔘' },
+  { label: 'Sprocket', value: '28T Premium', icon: '⛓️' },
+  { label: 'Bearings', value: 'Sealed everything: BB, headset, hubs', icon: '🛡️' },
+  { label: 'Pedals', value: 'Rant plastic', icon: '🦶' },
+  { label: 'Pegs', value: '2x plastic', icon: '🔩' },
   { label: 'Brakes', value: 'None', icon: '✋' },
   { label: 'Riding style', value: 'Street only, no parks nearby', icon: '🏙️' },
 ]
@@ -318,8 +326,9 @@ function GearSetup() {
   const smooth2 = useSpring(x2, { damping: 50, stiffness: 200, mass: 0.5 })
 
   // Duplicate items enough times to outlast maximum page scroll
-  const row1Items = Array(15).fill(gear.slice(0, 3)).flat()
-  const row2Items = Array(15).fill(gear.slice(3, 6)).flat()
+  const half = Math.ceil(gear.length / 2)
+  const row1Items = Array(8).fill(gear.slice(0, half)).flat()
+  const row2Items = Array(8).fill(gear.slice(half)).flat()
 
   const renderCards = (items: typeof gear) =>
     items.map((g, i) => (
