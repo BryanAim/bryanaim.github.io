@@ -13,8 +13,7 @@ const CHANNEL_ID = 'UCiGJdxB42CSX9Ul6M7Mnybw'
 /* Order matters: first match wins, so "Fakie 180" lands on 180 and "Footjam fakies" on Fakies.
    quarter = which 2026 roadmap card the clip belongs on (undefined = feed only). */
 const TRICK_RULES: { re: RegExp; label: string; quarter?: number }[] = [
-  { re: /\b180s?\b|nose manual/i, label: '180s', quarter: 4 },
-  { re: /half[\s-]?cabs?/i, label: 'Half cabs', quarter: 3 },
+  { re: /\b180s?\b|nose manual|half[\s-]?cabs?/i, label: '180s', quarter: 4 },
   { re: /foot[\s-]?plants?/i, label: 'Footplants', quarter: 3 },
   { re: /fakies|fakie/i, label: 'Fakies', quarter: 3 },
   { re: /bar[\s-]?spins?|barspins?/i, label: 'Barspins', quarter: 2 },
@@ -28,8 +27,17 @@ const TRICK_RULES: { re: RegExp; label: string; quarter?: number }[] = [
 ]
 
 export function detectTrick(title: string): { label: string; quarter?: number } | null {
+  // Multi-trick sessions belong to no single trick
+  const trickHits = TRICK_RULES.filter(r => r.quarter || r.label === 'Tailwhips' || r.label === 'Bunny hops').filter(r => r.re.test(title))
+  if (/practice session/i.test(title) || trickHits.length >= 3) return { label: 'Session' }
   const hit = TRICK_RULES.find(r => r.re.test(title))
   return hit ? { label: hit.label, quarter: hit.quarter } : null
+}
+
+/* Live feed first (newest, dated), then older catalogue entries the feed no longer lists */
+export function mergeVideos(live: ChannelVideo[], archive: ChannelVideo[]): ChannelVideo[] {
+  const seen = new Set(live.map(v => v.id))
+  return [...live, ...archive.filter(v => !seen.has(v.id))]
 }
 
 export function cleanTitle(title: string): string {

@@ -2,7 +2,8 @@
 import { AnimatePresence, m, useMotionValue, useTransform, useInView, useScroll, useSpring } from 'framer-motion'
 import { createContext, useContext, useId, useMemo, useRef, useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { type ChannelVideo, cleanTitle, detectTrick } from './youtube'
+import { type ChannelVideo, cleanTitle, detectTrick, mergeVideos } from './youtube'
+import { CHANNEL_ARCHIVE } from './archive'
 
 /* Only one YouTube player plays at a time: each card claims the slot when played */
 const PlayerCtx = createContext<{ active: string | null; setActive: (k: string | null) => void }>({ active: null, setActive: () => {} })
@@ -25,16 +26,6 @@ const stagger = (delay = 0.1) => ({
   hidden: {},
   show: { transition: { staggerChildren: delay } },
 })
-
-/* ─── Current quarter detection ─── */
-function getCurrentQuarter(): number {
-  const month = new Date().getMonth() // 0-indexed
-  if (month <= 2) return 1
-  if (month <= 5) return 2
-  if (month <= 8) return 3
-  return 4
-}
-const CURRENT_Q = getCurrentQuarter()
 
 /* ─── Data ─── */
 const progression = [
@@ -60,11 +51,11 @@ const progression = [
     note: 'Started exploring balance-focused movements. Shifting weight, standing on pegs while rolling, building the body awareness that makes harder tricks possible.',
   },
   {
-    period: 'Sep 2025 – Now',
-    phase: 'Getting Technical',
+    period: 'Sep 2025 – Oct 2026',
+    phase: 'One Year In',
     color: '#ff8c42',
-    tricks: ['Bunny hops ✓', 'Backwards riding ✓', 'Peg stands in motion ✓', 'Manuals', 'Fakies', 'Half cabs (day 1)'],
-    note: 'The foundation started paying off. Bunny hops felt impossible for weeks, then one day it just clicked. Backwards riding and peg stands in motion followed. Now on a new bike, grinding manuals and fakies and taking first swings at half cabs. Still a beginner, and owning it.',
+    tricks: ['Bunny hops ✓', 'Backwards riding ✓', 'Peg stands in motion ✓', 'Chicken barspins ✓'],
+    note: 'The foundation paid off. Bunny hops felt impossible for weeks, then one day it just clicked. Backwards riding, peg stands in motion and chicken barspins followed. Manuals and fakies are still being worked on, now on a new bike, with 180s and full barspins pencilled in for next year. Still a beginner, and owning it.',
   },
 ]
 
@@ -78,6 +69,7 @@ type Quarter = {
   mainNote: string
   otherTricks: string[]
   videos: VideoClip[]
+  status: { label: string; active?: boolean; dim?: boolean }
 }
 
 const quarters2026: Quarter[] = [
@@ -88,11 +80,8 @@ const quarters2026: Quarter[] = [
     mainTrick: 'Manuals',
     mainNote: 'Balance point is everything. Front end up, find the sweet spot, hold it. Working this daily on flat ground before adding distance.',
     otherTricks: ['Chicken Barspins', 'Footjams'],
-    videos: [
-      { youtubeId: 'QbgRtB4eHG4', label: 'Manual practice, flat ground' },
-      { youtubeId: 'RjamX-ao0A4', label: 'Pull-up bar tricks on BMX' },
-      { youtubeId: 'PALoD0ijUsM', label: 'Bunny hop practice' },
-    ],
+    videos: [],
+    status: { label: 'Almost there' },
   },
   {
     q: 2,
@@ -101,11 +90,8 @@ const quarters2026: Quarter[] = [
     mainTrick: 'Barspins',
     mainNote: 'The scary one. Building up off low hops first, hands learning to trust letting go. Flat-ground and curb setups only.',
     otherTricks: ['Crankflips', 'X-Up', 'Pick Up Barspins'],
-    videos: [
-      { youtubeId: 'DU2M_j67068', label: 'Barspin drills' },
-      { youtubeId: 'huO3YAudhJM', label: 'Crankflip attempts' },
-      { youtubeId: 'fvvah3dR48o', label: 'Bunny hops, building height' },
-    ],
+    videos: [],
+    status: { label: 'Maybe 2027', dim: true },
   },
   {
     q: 3,
@@ -113,12 +99,9 @@ const quarters2026: Quarter[] = [
     color: '#00ddd7',
     mainTrick: 'Fakies',
     mainNote: 'Getting comfortable rolling backwards into and out of them. Already ride backwards, so this is about controlled entries and clean exits.',
-    otherTricks: ['Halfcabs', 'Footplants'],
-    videos: [
-      { youtubeId: 'ndzq0-ooRzE', label: 'Trying fakies' },
-      { youtubeId: 'AB_rQSClML8', label: 'Riding backwards, fakie foundation' },
-      { youtubeId: 'wyxGPM5dDeY', label: 'Fakies in the rain' },
-    ],
+    otherTricks: ['Footplants'],
+    videos: [],
+    status: { label: 'Currently learning', active: true },
   },
   {
     q: 4,
@@ -126,12 +109,9 @@ const quarters2026: Quarter[] = [
     color: '#fbbf24',
     mainTrick: '180',
     mainNote: 'The first real spin. Half a rotation, commit to it, spot the landing, roll out clean. Starting on flat ground, then curb drops.',
-    otherTricks: ['Fakie 180', '180 to Manual', 'Nose Manual'],
-    videos: [
-      { label: '180 flat ground attempts' },
-      { label: 'Fakie 180 entry drills' },
-      { label: '180 to manual combos' },
-    ],
+    otherTricks: ['Fakie 180', '180 to Manual', 'Nose Manual', 'Half Cabs'],
+    videos: [],
+    status: { label: 'Maybe 2027', dim: true },
   },
 ]
 
@@ -143,23 +123,7 @@ const trickStatus = [
   { label: 'First attempts', color: '#f472b6', tricks: ['Tailwhips', 'Crankflips', 'Pickup barspins'] },
 ]
 
-/* Snapshot of the channel (21-10-2026), used only if the live YouTube feed can't be reached */
-const fallbackVideos: ChannelVideo[] = [
-  { id: 'dvSzNrbBW2k', title: 'Manuals practice on my new bike', date: '21-10-2026', short: true },
-  { id: 'a2DIaueou_Q', title: 'Manuals to bunnyhops getting better', date: '20-10-2026', short: false },
-  { id: 'FzPWdDTsBWM', title: 'Unable to do good fakies at this first spot', date: '19-10-2026', short: true },
-  { id: '66zpMRlnmco', title: 'Day 1 trying half cabs', date: '18-10-2026', short: true },
-  { id: 'wyxGPM5dDeY', title: 'Fakies in the rain', date: '17-10-2026', short: true },
-  { id: 'pssuexEj-_w', title: '06-10-2026 Practice Session - Manuals, Footjams, Tailwhips, Bunnyhops', date: '16-10-2026', short: false },
-  { id: 's17o5aCw-2s', title: 'Sundays are for fun', date: '16-10-2026', short: true },
-  { id: 'Qd4Dp9pQ6LU', title: 'The things I think of before every fakie', date: '15-10-2026', short: true },
-  { id: 'rYJ4IqoSthQ', title: 'Practicing tailwhips, any tips for staying over the front wheel?', date: '15-10-2026', short: false },
-  { id: 'HISQFe-Wi9s', title: '100 Fakies for 100 Subscribers... Until it rained (I landed 43)', date: '14-10-2026', short: true },
-  { id: 'lF50SDIzwgw', title: 'Tailwhip practice', date: '11-10-2026', short: true },
-  { id: 'KNxqW12cEQU', title: 'How I Fixed My "Dancing" BMX Back Wheel (Bent Rear Axle Swap)', date: '10-10-2026', short: false },
-]
-
-/* Quarter cards get the newest matching Shorts (matched by title), then fall back to the curated clips */
+/* Each quarter card gets the newest videos whose titles match its tricks, then placeholders */
 function withLiveClips(quarters: Quarter[], videos: ChannelVideo[]): Quarter[] {
   const byQuarter = new Map<number, VideoClip[]>()
   for (const v of videos) {
@@ -169,10 +133,9 @@ function withLiveClips(quarters: Quarter[], videos: ChannelVideo[]): Quarter[] {
     byQuarter.set(q, [...(byQuarter.get(q) ?? []), { youtubeId: v.id, label: cleanTitle(v.title) }])
   }
   return quarters.map(q => {
-    const live = (byQuarter.get(q.q) ?? []).slice(0, 3)
-    const liveIds = new Set(live.map(c => c.youtubeId))
-    const curated = q.videos.filter(c => !c.youtubeId || !liveIds.has(c.youtubeId))
-    return { ...q, videos: [...live, ...curated].slice(0, 3) }
+    const clips: VideoClip[] = (byQuarter.get(q.q) ?? []).slice(0, 3)
+    while (clips.length < 3) clips.push({ label: `${q.mainTrick} clip incoming` })
+    return { ...q, videos: clips }
   })
 }
 
@@ -236,22 +199,117 @@ const clips = [
   },
 ]
 
-const gear = [
-  { label: 'Frame', value: 'Radio Darko, 20.5" top tube, chrome', icon: '🚲' },
-  { label: 'Fork', value: 'Wethepeople Justice, black, 4130 chromoly, 22mm offset', icon: '🍴' },
-  { label: 'Bars & Stem', value: 'Wethepeople bars, Salt stem', icon: '⬛' },
-  { label: 'Front Rim', value: 'Salt Valon, 36 hole, ~446g', icon: '⚙️' },
-  { label: 'Rear Rim', value: 'Saltplus Summit, 36mm wide, 36 hole', icon: '⚙️' },
-  { label: 'Front Tyre', value: 'Eastern Curb Monkey 20x2.40', icon: '⭕' },
-  { label: 'Rear Tyre', value: 'Demolition Momentum 20x2.35, ~538g', icon: '⭕' },
-  { label: 'Hubs', value: 'Salt sealed front, Salt cassette rear', icon: '🔘' },
-  { label: 'Sprocket', value: '28T Premium', icon: '⛓️' },
-  { label: 'Bearings', value: 'Sealed everything: BB, headset, hubs', icon: '🛡️' },
-  { label: 'Pedals', value: 'Rant plastic', icon: '🦶' },
-  { label: 'Pegs', value: '2x plastic', icon: '🔩' },
-  { label: 'Brakes', value: 'None', icon: '✋' },
-  { label: 'Riding style', value: 'Street only, no parks nearby', icon: '🏙️' },
+/* Drop a photo of the bike at public/img/bmx/bike.jpg and it appears beside the specs */
+const BIKE_IMAGE = '/img/bmx/bike.jpg'
+
+const gearGroups = [
+  {
+    title: 'Frame & Fork',
+    icon: 'fas fa-bicycle',
+    color: '#b1db00',
+    rows: [
+      ['Frame', 'Radio Darko, 20.5" top tube, chrome'],
+      ['Fork', 'Wethepeople Justice, black, 4130 chromoly, 22mm offset'],
+    ],
+  },
+  {
+    title: 'Cockpit',
+    icon: 'fas fa-grip-lines',
+    color: '#00ddd7',
+    rows: [
+      ['Bars', 'Wethepeople'],
+      ['Stem', 'Salt'],
+      ['Brakes', 'None'],
+    ],
+  },
+  {
+    title: 'Wheels',
+    icon: 'fas fa-circle-notch',
+    color: '#f472b6',
+    rows: [
+      ['Front rim', 'Salt Valon, 36 hole, ~446g'],
+      ['Rear rim', 'Saltplus Summit, 36mm wide, 36 hole'],
+      ['Front tyre', 'Eastern Curb Monkey 20x2.40'],
+      ['Rear tyre', 'Demolition Momentum 20x2.35, ~538g'],
+      ['Hubs', 'Salt sealed front, Salt cassette rear'],
+    ],
+  },
+  {
+    title: 'Drive & Contact',
+    icon: 'fas fa-gears',
+    color: '#ff8c42',
+    rows: [
+      ['Sprocket', '28T Premium'],
+      ['Pedals', 'Rant plastic'],
+      ['Pegs', '2x plastic'],
+      ['Bearings', 'Sealed everything: BB, headset, hubs'],
+    ],
+  },
 ]
+
+/* ─── The Setup (bike photo + grouped spec sheet) ─── */
+function GearSetup() {
+  const [bikeImg, setBikeImg] = useState<'checking' | 'ok' | 'missing'>('checking')
+  useEffect(() => {
+    const probe = new Image()
+    probe.onload = () => setBikeImg('ok')
+    probe.onerror = () => setBikeImg('missing')
+    probe.src = BIKE_IMAGE
+  }, [])
+
+  return (
+    <div className="mb-16">
+      <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-3" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        <span className="text-lime mr-2">—</span> The Setup
+      </m.div>
+      <m.p className="text-[0.88rem] text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        A used custom build, brakeless and street-ready
+      </m.p>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-6 items-start">
+        <m.div
+          className="relative rounded-[14px] overflow-hidden border border-white/[0.1] bg-white/[0.03] aspect-[4/5] lg:sticky lg:top-24"
+          variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}
+        >
+          {bikeImg === 'ok' ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={BIKE_IMAGE} alt="My Radio Darko custom BMX" className="w-full h-full object-cover block" />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center p-6 border-2 border-dashed border-white/15 rounded-[14px]">
+              <i className="fas fa-bicycle text-[2.4rem] text-lime/60" />
+              <p className="m-0 text-[0.85rem] font-semibold text-white/70">Bike photo coming soon</p>
+              <p className="m-0 text-[0.7rem] text-white/35">Add <code>public/img/bmx/bike.jpg</code></p>
+            </div>
+          )}
+        </m.div>
+
+        <div>
+          <m.div className="grid grid-cols-1 md:grid-cols-2 gap-3" variants={stagger(0.08)} initial="hidden" whileInView="show" viewport={{ once: true }}>
+            {gearGroups.map(g => (
+              <m.div key={g.title} variants={fadeUp} className="rounded-xl border border-white/[0.08] border-t-[3px] bg-white/[0.03] p-4" style={{ borderTopColor: g.color }}>
+                <p className="m-0 mb-3 flex items-center gap-2 text-[0.72rem] font-extrabold tracking-[2px] uppercase" style={{ color: g.color }}>
+                  <i className={g.icon} /> {g.title}
+                </p>
+                <dl className="m-0 flex flex-col gap-[0.6rem]">
+                  {g.rows.map(([label, value]) => (
+                    <div key={label} className="flex flex-col gap-[0.1rem]">
+                      <dt className="text-[0.64rem] uppercase tracking-[1.5px] text-white/40">{label}</dt>
+                      <dd className="m-0 text-[0.88rem] font-medium leading-snug text-white/90">{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </m.div>
+            ))}
+          </m.div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <span className="border rounded-full px-3 py-[0.25rem] text-[0.75rem] font-semibold border-white/25 text-white/70">Street only, no parks nearby</span>
+            <span className="border rounded-full px-3 py-[0.25rem] text-[0.75rem] font-semibold border-white/25 text-white/70">Brakeless</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 /* ─── Horizontal Timeline Phase Card ─── */
 const CARD_WIDTH = 420
@@ -326,7 +384,7 @@ function SkillsTimeline() {
             <span className="text-lime mr-2">—</span> Skills Progression
           </m.div>
           <m.p className="text-[0.88rem] text-white max-w-lg mb-0" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-            One year in. From never touching a BMX to bunny hops and backwards riding
+            One year in. From never touching a BMX to bunny hops, backwards riding and chicken barspins
           </m.p>
         </div>
 
@@ -356,53 +414,6 @@ function SkillsTimeline() {
           />
         </div>
 
-      </div>
-    </div>
-  )
-}
-
-/* ─── The Setup (Animated Cards Ticker) ─── */
-function GearSetup() {
-  const { scrollY } = useScroll()
-  // x1 scrolls left, x2 scrolls right linearly with page scroll
-  const x1 = useTransform(scrollY, (v) => -v * 0.7)
-  const x2 = useTransform(scrollY, (v) => v * 0.7 - 500)
-  const smooth1 = useSpring(x1, { damping: 50, stiffness: 200, mass: 0.5 })
-  const smooth2 = useSpring(x2, { damping: 50, stiffness: 200, mass: 0.5 })
-
-  // Duplicate items enough times to outlast maximum page scroll
-  const half = Math.ceil(gear.length / 2)
-  const row1Items = Array(8).fill(gear.slice(0, half)).flat()
-  const row2Items = Array(8).fill(gear.slice(half)).flat()
-
-  const renderCards = (items: typeof gear) =>
-    items.map((g, i) => (
-      <div
-        key={i}
-        className="flex-shrink-0 w-[240px] md:w-[320px] flex flex-col bg-white/[0.03] border border-white/[0.08] rounded-xl p-5 hover:bg-white/[0.06] hover:border-lime/40 transition-all group"
-      >
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-[1.35rem] opacity-70 group-hover:opacity-100 transition-opacity">{g.icon}</span>
-          <span className="text-[0.7rem] font-bold tracking-[2px] uppercase text-white/40 group-hover:text-lime transition-colors">{g.label}</span>
-        </div>
-        <p className="text-[0.95rem] lg:text-[1.05rem] font-medium text-white/90 leading-snug whitespace-normal">{g.value}</p>
-      </div>
-    ))
-
-  return (
-    <div className="mb-16 py-12 -mx-6 md:-mx-16 border-t border-b border-white/[0.06] overflow-hidden flex flex-col gap-[1.25rem]">
-      <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-2 px-6 md:px-16" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-        <span className="text-lime mr-2">—</span> The Setup
-      </m.div>
-      <div className="overflow-visible w-full relative">
-        <m.div className="flex gap-4 md:gap-5 w-max px-6 md:px-16" style={{ x: smooth1 }}>
-          {renderCards(row1Items)}
-        </m.div>
-      </div>
-      <div className="overflow-visible w-full relative">
-        <m.div className="flex gap-4 md:gap-5 w-max px-6 md:px-16" style={{ x: smooth2, marginLeft: '-150px' }}>
-          {renderCards(row2Items)}
-        </m.div>
       </div>
     </div>
   )
@@ -533,71 +544,54 @@ function LatestUpdates({ videos }: { videos: ChannelVideo[] }) {
         ))}
       </m.div>
 
-      <UpdatesRail videos={videos.slice(0, 10)} />
+      <UpdatesRail videos={(videos.some(v => v.date) ? videos.filter(v => v.date) : videos).slice(0, 10)} />
     </div>
   )
 }
 
-/* ─── Horizontal feed: newest first, hover (or tap on touch) reveals title + actions ─── */
-function RailCard({ video }: { video: ChannelVideo }) {
-  const { playing, play } = usePlayer()
-  const trick = detectTrick(video.title)
-  const watchUrl = video.short ? `https://www.youtube.com/shorts/${video.id}` : `https://www.youtube.com/watch?v=${video.id}`
-
-  return (
-    <div className="group relative shrink-0 snap-start w-[170px] sm:w-[200px] h-[290px] rounded-xl overflow-hidden border border-white/[0.1] bg-black focus-within:border-lime hover:border-lime transition-colors">
-      {playing ? (
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`}
-          title={video.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="absolute inset-0 w-full h-full border-0 block"
-        />
-      ) : (
-        <>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" className={`absolute inset-0 w-full h-full object-cover block transition-transform duration-500 ${video.short ? 'group-hover:scale-[1.06]' : 'scale-[1.34] group-hover:scale-[1.42]'}`} />
-          <div className="absolute inset-x-0 top-0 flex items-center justify-between gap-2 p-2 bg-gradient-to-b from-black/80 to-transparent">
-            <span className="text-[0.66rem] tracking-[1.5px] text-white/80 font-mono">{video.date}</span>
-            {trick && <span className="text-[0.62rem] font-bold uppercase tracking-[1px] px-2 py-[0.1rem] rounded-full bg-lime text-[#0a0a0a]">{trick.label}</span>}
-          </div>
-          <div className="absolute inset-0 flex flex-col justify-end gap-2 p-3 bg-gradient-to-t from-black/95 via-black/70 to-black/10 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity">
-            <p className="m-0 text-[0.82rem] font-bold leading-snug text-white">{video.title}</p>
-            <div className="flex flex-col gap-[0.35rem]">
-              <button type="button" onClick={play} className="inline-flex items-center justify-center gap-2 px-3 py-[0.35rem] rounded-md border-0 bg-lime text-[#0a0a0a] text-[0.72rem] font-bold cursor-pointer">
-                <i className="fas fa-play" /> Play here
-              </button>
-              <a href={watchUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-3 py-[0.35rem] rounded-md border border-white/30 text-white text-[0.72rem] font-bold no-underline hover:bg-white/10">
-                <i className="fab fa-youtube" /> Open on YouTube
-              </a>
-            </div>
-          </div>
-        </>
-      )}
-    </div>
-  )
-}
-
+/* ─── Horizontal text feed, newest first. Each entry is a video: the play hint shows on hover, focus and touch ─── */
 function UpdatesRail({ videos }: { videos: ChannelVideo[] }) {
   const railRef = useRef<HTMLDivElement>(null)
-  const scrollBy = (dir: number) => railRef.current?.scrollBy({ left: dir * 420, behavior: 'smooth' })
+  const scrollBy = (dir: number) => railRef.current?.scrollBy({ left: dir * 340, behavior: 'smooth' })
 
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <p className="m-0 text-[0.7rem] text-white/35 uppercase tracking-[2px]">Newest first</p>
+        <p className="m-0 text-[0.7rem] text-white/35 uppercase tracking-[2px]">Newest first. Each update is a video</p>
         <div className="hidden md:flex gap-2">
           <button type="button" aria-label="Scroll left" onClick={() => scrollBy(-1)} className="w-8 h-8 rounded-full border border-white/20 bg-white/[0.05] text-white cursor-pointer hover:bg-white/15">‹</button>
           <button type="button" aria-label="Scroll right" onClick={() => scrollBy(1)} className="w-8 h-8 rounded-full border border-white/20 bg-white/[0.05] text-white cursor-pointer hover:bg-white/15">›</button>
         </div>
       </div>
       <div ref={railRef} className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent]">
-        {videos.map(v => <RailCard key={v.id} video={v} />)}
+        {videos.map(v => {
+          const trick = detectTrick(v.title)
+          const watchUrl = v.short ? `https://www.youtube.com/shorts/${v.id}` : `https://www.youtube.com/watch?v=${v.id}`
+          return (
+            <a
+              key={v.id}
+              href={watchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Play video on YouTube"
+              className="group relative shrink-0 snap-start w-[230px] sm:w-[260px] flex flex-col gap-2 rounded-xl border border-white/[0.1] bg-white/[0.03] p-4 no-underline transition-colors hover:border-lime hover:bg-white/[0.07] focus-visible:border-lime"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[0.68rem] tracking-[2px] text-white/40 font-mono">{v.date}</span>
+                {trick && <span className="text-[0.62rem] font-bold uppercase tracking-[1px] px-2 py-[0.1rem] rounded-full border border-lime/60 text-lime">{trick.label}</span>}
+              </div>
+              <p className="m-0 text-[0.95rem] font-bold leading-snug text-white/90 group-hover:text-lime transition-colors">{v.title}</p>
+              <span className="mt-auto inline-flex items-center gap-2 text-[0.72rem] font-bold text-lime opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 group-focus:opacity-100 group-focus:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0 transition-all">
+                <i className="fas fa-play" /> Play video on YouTube
+              </span>
+            </a>
+          )
+        })}
       </div>
     </div>
   )
 }
+
 
 /* ─── Latest Videos (YouTube) ─── */
 function LatestVideos({ videos }: { videos: ChannelVideo[] }) {
@@ -633,10 +627,9 @@ function LatestVideos({ videos }: { videos: ChannelVideo[] }) {
 /* ─── Roadmap Stack Card (sticky stacked, mirrors about page pattern) ─── */
 function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: number; total: number }) {
   const stickyTop = 80 + index * 20
-  const isActive = quarter.q === CURRENT_Q
-  const isPast = quarter.q < CURRENT_Q
-  const status = isPast ? 'completed' : isActive ? 'active' : 'upcoming'
-  const statusLabel = isPast ? 'Completed' : isActive ? 'Currently Learning' : 'Upcoming'
+  const isActive = !!quarter.status.active
+  const isPast = !!quarter.status.dim
+  const statusLabel = quarter.status.label
   const [videosOpen, setVideosOpen] = useState(false)
 
   return (
@@ -918,7 +911,7 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
 export default function BMX({ videos }: { videos: ChannelVideo[] }) {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null)
   const [activePlayer, setActivePlayer] = useState<string | null>(null)
-  const feed = videos.length ? videos : fallbackVideos
+  const feed = useMemo(() => mergeVideos(videos, CHANNEL_ARCHIVE), [videos])
   const quarters = useMemo(() => withLiveClips(quarters2026, feed), [feed])
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
@@ -993,13 +986,13 @@ export default function BMX({ videos }: { videos: ChannelVideo[] }) {
       {/* ── 2026 Quarterly Goals ── */}
       <div className="mb-16">
         <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <span className="text-lime mr-2">—</span> 2026 Trick Roadmap
+          <span className="text-lime mr-2">—</span> Trick Roadmap
         </m.div>
         <m.p
           className="text-[0.88rem] text-white mb-6"
           variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
         >
-          Quarter by quarter. One main trick, supporting tricks, and clips as I go
+          The 2026 plan, adjusted as I go. Barspins and 180s slide into 2027 if they need more time. Clips are matched to each trick from my YouTube titles
         </m.p>
         <div className="flex flex-col pb-[40vh] overflow-visible">
           {quarters.map((q, i) => (
