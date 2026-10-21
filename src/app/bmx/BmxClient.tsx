@@ -59,8 +59,8 @@ const progression = [
     period: 'Sep 2025 – Now',
     phase: 'Getting Technical',
     color: '#ff8c42',
-    tricks: ['Bunny hops ✓', 'Backwards riding ✓', 'Peg stands in motion ✓', 'Reading street spots'],
-    note: 'The foundation started paying off. Bunny hops felt impossible for weeks, then one day it just clicked. Backwards riding and peg stands in motion followed. Still a beginner, and owning it.',
+    tricks: ['Bunny hops ✓', 'Backwards riding ✓', 'Peg stands in motion ✓', 'Manuals', 'Fakies', 'Half cabs (day 1)'],
+    note: 'The foundation started paying off. Bunny hops felt impossible for weeks, then one day it just clicked. Backwards riding and peg stands in motion followed. Now on a new bike, grinding manuals and fakies and taking first swings at half cabs. Still a beginner, and owning it.',
   },
 ]
 
@@ -113,7 +113,7 @@ const quarters2026: Quarter[] = [
     videos: [
       { youtubeId: 'ndzq0-ooRzE', label: 'Trying fakies' },
       { youtubeId: 'AB_rQSClML8', label: 'Riding backwards, fakie foundation' },
-      { label: 'Footplant spot hunt' },
+      { youtubeId: 'wyxGPM5dDeY', label: 'Fakies in the rain' },
     ],
   },
   {
@@ -124,11 +124,44 @@ const quarters2026: Quarter[] = [
     mainNote: 'The first real spin. Half a rotation, commit to it, spot the landing, roll out clean. Starting on flat ground, then curb drops.',
     otherTricks: ['Fakie 180', '180 to Manual', 'Nose Manual'],
     videos: [
+      { youtubeId: '66zpMRlnmco', label: 'Day 1 trying half cabs' },
+      { youtubeId: 'dvSzNrbBW2k', label: 'Manuals on the new bike' },
       { label: '180 flat ground attempts' },
-      { label: 'Fakie 180 entry drills' },
-      { label: '180 to manual combos' },
     ],
   },
+]
+
+/* Where each trick stands (last self-assessment 15-09-2026, updated from the log) */
+const trickStatus = [
+  { label: 'Dialed in', color: '#b1db00', tricks: ['Bunny hops'] },
+  { label: 'Getting there', color: '#00ddd7', tricks: ['Manuals', 'Chicken barspins', 'Footjams', 'Backwards riding'] },
+  { label: 'Learning', color: '#ff8c42', tricks: ['Fakies', 'X-ups', 'Footplants', '180s', 'Half cabs'] },
+  { label: 'First attempts', color: '#f472b6', tricks: ['Tailwhips', 'Crankflips', 'Pickup barspins'] },
+]
+
+/* Latest progress, newest first. Dates DD-MM-YYYY */
+const latestUpdates = [
+  { date: '21-10-2026', title: 'Manuals on the new bike', note: 'Manual practice on the new Radio Darko build.', youtubeId: 'dvSzNrbBW2k' },
+  { date: '20-10-2026', title: 'Manuals into bunny hops', note: 'Manuals and bunny hops, getting better.', youtubeId: 'a2DIaueou_Q' },
+  { date: '18-10-2026', title: 'Day 1 on half cabs', note: 'First day trying half cabs.', youtubeId: '66zpMRlnmco' },
+  { date: '17-10-2026', title: 'Fakies in the rain', note: 'Rain stopped the 100 fakies challenge at 43, so I kept practising in it.', youtubeId: 'wyxGPM5dDeY' },
+  { date: '11-10-2026', title: 'First tailwhip attempts', note: 'Tailwhip practice. The sticking point is staying over the front wheel as the bike comes around.', youtubeId: 'lF50SDIzwgw' },
+]
+
+type LatestVideo = { id: string; title: string; date: string; short: boolean }
+
+/* Pulled from the YouTube channel on 21-10-2026 */
+const latestShorts: LatestVideo[] = [
+  { id: 'dvSzNrbBW2k', title: 'Manuals practice on my new bike', date: '21-10-2026', short: true },
+  { id: 'FzPWdDTsBWM', title: 'Unable to do good fakies at this first spot', date: '19-10-2026', short: true },
+  { id: '66zpMRlnmco', title: 'Day 1 trying half cabs', date: '18-10-2026', short: true },
+  { id: 'HISQFe-Wi9s', title: '100 Fakies for 100 Subscribers... until it rained', date: '14-10-2026', short: true },
+]
+
+const latestLongForm: LatestVideo[] = [
+  { id: 'a2DIaueou_Q', title: 'Manuals to bunnyhops getting better', date: '20-10-2026', short: false },
+  { id: 'pssuexEj-_w', title: 'Practice session: manuals, footjams, tailwhips, bunnyhops', date: '16-10-2026', short: false },
+  { id: 'KNxqW12cEQU', title: 'How I fixed my dancing BMX back wheel (bent rear axle swap)', date: '10-10-2026', short: false },
 ]
 
 const photos = [
@@ -365,9 +398,10 @@ function GearSetup() {
 
 /* ─── Video Snippet Slot ─── */
 function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
+  const [playing, setPlaying] = useState(false)
   return (
     <m.div
-      className="w-full md:w-[calc(33%-0.4rem)] md:min-w-[120px] lg:w-[140px] shrink-0 border border-white/[0.08] rounded-lg overflow-hidden flex flex-col gap-[0.3rem] transition-all"
+      className="w-full min-w-0 lg:w-[140px] shrink-0 border border-white/[0.08] rounded-lg overflow-hidden flex flex-col gap-[0.3rem] transition-all"
       style={{ borderColor: `${color}44` }}
       variants={fadeUp}
       whileHover={{ borderColor: color, scale: 1.02 }}
@@ -375,13 +409,24 @@ function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
     >
       {clip.youtubeId ? (
         <div className="relative w-full aspect-[9/16] bg-black">
-          <iframe
-            src={`https://www.youtube.com/embed/${clip.youtubeId}`}
-            title={clip.label}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="absolute inset-0 w-full h-full border-0 block"
-          />
+          {playing ? (
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${clip.youtubeId}?autoplay=1&rel=0`}
+              title={clip.label}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full border-0 block"
+            />
+          ) : (
+            <button type="button" className="group absolute inset-0 w-full h-full p-0 border-0 bg-transparent cursor-pointer" onClick={() => setPlaying(true)} aria-label={`Play ${clip.label}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`https://i.ytimg.com/vi/${clip.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" className="w-full h-full object-cover block" />
+              <span className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+              <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center text-[0.8rem] text-[#0a0a0a] pl-[2px]" style={{ background: color }}>
+                <i className="fas fa-play" />
+              </span>
+            </button>
+          )}
         </div>
       ) : clip.src ? (
         <video src={clip.src} controls playsInline className="w-full aspect-[9/16] object-cover bg-black block" />
@@ -393,6 +438,130 @@ function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
       )}
       <p className="text-[0.62rem] px-[0.4rem] py-[0.25rem] leading-[1.4] m-0 font-semibold" style={{ color }}>{clip.label}</p>
     </m.div>
+  )
+}
+
+/* ─── YouTube click-to-play card (thumbnail first, iframe only on click) ─── */
+function YtCard({ video, color }: { video: LatestVideo; color: string }) {
+  const [playing, setPlaying] = useState(false)
+  const watchUrl = video.short ? `https://www.youtube.com/shorts/${video.id}` : `https://www.youtube.com/watch?v=${video.id}`
+
+  return (
+    <m.div
+      className="flex flex-col rounded-xl overflow-hidden border bg-white/[0.03] min-w-0"
+      style={{ borderColor: `${color}44` }}
+      variants={fadeUp}
+      whileHover={{ borderColor: color }}
+    >
+      <div className={`relative w-full bg-black ${video.short ? 'aspect-[9/16]' : 'aspect-video'}`}>
+        {playing ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`}
+            title={video.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full border-0 block"
+          />
+        ) : (
+          <button
+            type="button"
+            className="group absolute inset-0 w-full h-full p-0 border-0 bg-transparent cursor-pointer"
+            onClick={() => setPlaying(true)}
+            aria-label={`Play ${video.title}`}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" className="w-full h-full object-cover block transition-transform duration-500 group-hover:scale-[1.04]" />
+            <span className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+            <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full flex items-center justify-center text-[1.2rem] text-[#0a0a0a] pl-1" style={{ background: color }}>
+              <i className="fas fa-play" />
+            </span>
+          </button>
+        )}
+      </div>
+      <div className="flex flex-col gap-2 p-3">
+        <p className="m-0 text-[0.82rem] font-semibold leading-snug text-white/90">{video.title}</p>
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <span className="text-[0.68rem] tracking-[1.5px] text-white/35 font-mono">{video.date}</span>
+          <a href={watchUrl} target="_blank" rel="noopener noreferrer" className="text-[0.72rem] font-bold no-underline hover:underline" style={{ color }}>
+            <i className="fab fa-youtube mr-1" /> Open on YouTube
+          </a>
+        </div>
+      </div>
+    </m.div>
+  )
+}
+
+/* ─── Latest Updates (trick status board + progress feed) ─── */
+function LatestUpdates() {
+  return (
+    <div className="mb-16">
+      <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-3" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        <span className="text-lime mr-2">—</span> Latest Updates
+      </m.div>
+      <m.p className="text-[0.88rem] text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        Where each trick stands right now, and what I have been working on this month
+      </m.p>
+
+      <m.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10" variants={stagger(0.08)} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        {trickStatus.map(s => (
+          <m.div key={s.label} variants={fadeUp} className="rounded-xl border border-white/[0.08] border-t-[3px] bg-white/[0.03] p-4" style={{ borderTopColor: s.color }}>
+            <p className="m-0 mb-3 text-[0.72rem] font-extrabold tracking-[2px] uppercase" style={{ color: s.color }}>{s.label}</p>
+            <div className="flex flex-wrap gap-[0.4rem]">
+              {s.tricks.map(t => (
+                <span key={t} className="border rounded-full px-[0.65rem] py-[0.2rem] text-[0.75rem] font-semibold" style={{ borderColor: `${s.color}88`, color: `${s.color}dd` }}>{t}</span>
+              ))}
+            </div>
+          </m.div>
+        ))}
+      </m.div>
+
+      <div className="flex flex-col border-l border-white/10 ml-2">
+        {latestUpdates.map(u => (
+          <m.a
+            key={u.youtubeId}
+            href={`https://www.youtube.com/watch?v=${u.youtubeId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative pl-6 pb-6 last:pb-0 no-underline group"
+            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
+          >
+            <span className="absolute -left-[5px] top-[0.35rem] w-[9px] h-[9px] rounded-full bg-lime" />
+            <span className="block text-[0.7rem] tracking-[2px] text-white/35 font-mono mb-1">{u.date}</span>
+            <span className="block text-[1rem] font-bold text-white/90 group-hover:text-lime transition-colors">{u.title} <i className="fab fa-youtube text-[0.8rem] ml-1 opacity-60" /></span>
+            <span className="block text-[0.85rem] leading-[1.7] text-white/55 max-w-[560px]">{u.note}</span>
+          </m.a>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* ─── Latest Videos (YouTube) ─── */
+function LatestVideos() {
+  return (
+    <div className="mb-16">
+      <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-3" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        <span className="text-lime mr-2">—</span> Latest Videos
+      </m.div>
+      <m.p className="text-[0.88rem] text-white mb-6" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        Tap to play right here, or open it on YouTube
+      </m.p>
+
+      <p className="text-[0.7rem] text-white/35 uppercase tracking-[2px] mb-3">Shorts</p>
+      <m.div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8" variants={stagger(0.08)} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        {latestShorts.map(v => <YtCard key={v.id} video={v} color="#ff8c42" />)}
+      </m.div>
+
+      <p className="text-[0.7rem] text-white/35 uppercase tracking-[2px] mb-3">Sessions &amp; repairs</p>
+      <m.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-8" variants={stagger(0.08)} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        {latestLongForm.map(v => <YtCard key={v.id} video={v} color="#00ddd7" />)}
+      </m.div>
+
+      <a href="https://youtube.com/@bryanaim/videos" target="_blank" rel="noopener noreferrer"
+        className="inline-flex items-center gap-[0.5rem] px-[1.4rem] py-[0.6rem] border border-[#ff0000] text-[#ff0000] rounded-[6px] font-bold text-[0.85rem] no-underline transition-colors hover:bg-[#ff0000]/15">
+        <i className="fab fa-youtube" /> See all videos on YouTube
+      </a>
+    </div>
   )
 }
 
@@ -466,7 +635,7 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
         </div>
 
         {/* Right column — video clips (always visible on desktop, toggle on mobile) */}
-        <div className={`${videosOpen ? 'flex' : 'hidden'} lg:flex flex-col md:flex-row flex-wrap lg:flex-nowrap gap-[0.6rem] shrink-0 items-stretch w-full lg:w-auto`}>
+        <div className={`${videosOpen ? 'grid' : 'hidden'} grid-cols-3 lg:flex lg:flex-nowrap gap-[0.6rem] shrink-0 items-stretch w-full lg:w-auto`}>
           {quarter.videos.map((v, i) => (
             <VideoSlot key={i} clip={v} color={quarter.color} />
           ))}
@@ -688,7 +857,7 @@ export default function BMX() {
   const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0])
 
   return (
-    <main id="bmx">
+    <main id="bmx" className="overflow-x-clip">
       {/* ── Hero heading ── */}
       <m.h1
         className="text-[clamp(3rem,10vw,7rem)] mb-[0.2rem] text-center font-semibold max-sm:leading-none max-sm:mb-4"
@@ -746,6 +915,10 @@ export default function BMX() {
 
       {/* ── Skills Progression ── */}
       <SkillsTimeline />
+
+      {/* ── Latest Updates + Videos ── */}
+      <LatestUpdates />
+      <LatestVideos />
 
       {/* ── 2026 Quarterly Goals ── */}
       <div className="mb-16">

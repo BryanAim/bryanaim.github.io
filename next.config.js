@@ -21,13 +21,13 @@ const securityHeaders = [
       // Fonts
       "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
       // Images: self + data URIs (design previews) + known external hosts
-      "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com https://i.imgur.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://raw.githubusercontent.com",
+      "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com https://i.imgur.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://raw.githubusercontent.com https://i.ytimg.com",
       // API calls: self + M-Pesa + Neon DB (server-side only, but listed for completeness)
       "connect-src 'self' https://va.vercel-scripts.com https://vitals.vercel-insights.com",
       // Media
       "media-src 'self' blob:",
-      // Frames: nothing external
-      "frame-src 'none'",
+      // Frames: YouTube embeds only
+      "frame-src https://www.youtube-nocookie.com https://www.youtube.com",
       // Objects: nothing
       "object-src 'none'",
       // Base URI locked to self
