@@ -4,6 +4,7 @@ import { createContext, useContext, useId, useMemo, useRef, useState, useEffect 
 import { createPortal } from 'react-dom'
 import { type ChannelVideo, cleanTitle, detectTrick, mergeVideos } from './youtube'
 import { CHANNEL_ARCHIVE } from './archive'
+import { milestones } from './milestones'
 
 /* Only one YouTube player plays at a time: each card claims the slot when played */
 const PlayerCtx = createContext<{ active: string | null; setActive: (k: string | null) => void }>({ active: null, setActive: () => {} })
@@ -511,17 +512,6 @@ function YtCard({ video, color }: { video: ChannelVideo; color: string }) {
     </m.div>
   )
 }
-
-/* Major milestones, newest first. Hand-written; add a youtubeId to link the video. Dates DD-MM-YYYY */
-const milestones: { date: string; title: string; note: string; youtubeId?: string; short?: boolean }[] = [
-  { date: '20-10-2026', title: 'Manuals into bunny hops', note: 'Linking manuals straight into bunny hops, and it is getting better.', youtubeId: 'a2DIaueou_Q' },
-  { date: '18-10-2026', title: 'Day 1 on half cabs', note: 'First day trying half cabs, building on the fakies.', youtubeId: '66zpMRlnmco', short: true },
-  { date: '14-10-2026', title: '100 fakies for 100 subs', note: 'Landed 43 fakies before the rain ended the challenge.', youtubeId: 'HISQFe-Wi9s', short: true },
-  { date: '11-10-2026', title: 'First tailwhip attempts', note: 'The sticking point is staying over the front tyre as the bike comes around.', youtubeId: 'lF50SDIzwgw', short: true },
-  { date: '10-10-2026', title: 'Fixed the dancing back wheel', note: 'Swapped out a bent rear axle myself to stop the back wheel wobbling.', youtubeId: 'KNxqW12cEQU' },
-  { date: '04-10-2026', title: 'Got my first custom BMX', note: 'Picked up a used Radio Darko custom build, checked it over for play and cracks, and retired the Redline.', youtubeId: 'PdB14iTXT-s', short: true },
-  { date: '20-09-2026', title: 'Found a better fakie spot', note: 'A slope with an edge to tap made the backward roll and the carve far easier than the flat spot.' },
-]
 
 /* ─── Latest Updates (text milestones). Entries with a video show a play hint on hover and on touch ─── */
 function LatestUpdates() {
