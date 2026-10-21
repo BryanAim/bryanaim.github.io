@@ -512,20 +512,21 @@ function YtCard({ video, color }: { video: ChannelVideo; color: string }) {
   )
 }
 
-/* Moments that aren't a trick video title but belong in the feed */
-const milestones: ChannelVideo[] = [
-  { id: 'PdB14iTXT-s', title: 'Got my first custom BMX', date: '04-10-2026', short: true },
+/* Major milestones, newest first. Hand-written; add a youtubeId to link the video. Dates DD-MM-YYYY */
+const milestones: { date: string; title: string; note: string; youtubeId?: string; short?: boolean }[] = [
+  { date: '20-10-2026', title: 'Manuals into bunny hops', note: 'Linking manuals straight into bunny hops, and it is getting better.', youtubeId: 'a2DIaueou_Q' },
+  { date: '18-10-2026', title: 'Day 1 on half cabs', note: 'First day trying half cabs, building on the fakies.', youtubeId: '66zpMRlnmco', short: true },
+  { date: '14-10-2026', title: '100 fakies for 100 subs', note: 'Landed 43 fakies before the rain ended the challenge.', youtubeId: 'HISQFe-Wi9s', short: true },
+  { date: '11-10-2026', title: 'First tailwhip attempts', note: 'The sticking point is staying over the front tyre as the bike comes around.', youtubeId: 'lF50SDIzwgw', short: true },
+  { date: '10-10-2026', title: 'Fixed the dancing back wheel', note: 'Swapped out a bent rear axle myself to stop the back wheel wobbling.', youtubeId: 'KNxqW12cEQU' },
+  { date: '04-10-2026', title: 'Got my first custom BMX', note: 'Picked up a used Radio Darko custom build, checked it over for play and cracks, and retired the Redline.', youtubeId: 'PdB14iTXT-s', short: true },
+  { date: '20-09-2026', title: 'Found a better fakie spot', note: 'A slope with an edge to tap made the backward roll and the carve far easier than the flat spot.' },
 ]
 
-const dateKey = (d: string) => d.split('-').reverse().join('')
-
-/* ─── Latest Updates (progress feed) ─── */
-function LatestUpdates({ videos }: { videos: ChannelVideo[] }) {
-  const updates = useMemo(() => {
-    const dated = videos.some(v => v.date) ? videos.filter(v => v.date) : videos
-    const ids = new Set(dated.map(v => v.id))
-    return [...dated, ...milestones.filter(x => !ids.has(x.id))].sort((a, b) => dateKey(b.date).localeCompare(dateKey(a.date)))
-  }, [videos])
+/* ─── Latest Updates (text milestones). Entries with a video show a play hint on hover and on touch ─── */
+function LatestUpdates() {
+  const railRef = useRef<HTMLDivElement>(null)
+  const scrollBy = (dir: number) => railRef.current?.scrollBy({ left: dir * 340, behavior: 'smooth' })
 
   return (
     <div className="mb-16">
@@ -533,57 +534,50 @@ function LatestUpdates({ videos }: { videos: ChannelVideo[] }) {
         <span className="text-lime mr-2">—</span> Latest Updates
       </m.div>
       <m.p className="text-[0.88rem] text-white mb-6" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-        What I have been working on lately
+        The big moments lately. Tap one with a play icon to watch it
       </m.p>
 
-      <UpdatesRail videos={updates} />
-    </div>
-  )
-}
-
-/* ─── Horizontal text feed, newest first. Each entry is a video: the play hint shows on hover, focus and touch ─── */
-function UpdatesRail({ videos }: { videos: ChannelVideo[] }) {
-  const railRef = useRef<HTMLDivElement>(null)
-  const scrollBy = (dir: number) => railRef.current?.scrollBy({ left: dir * 340, behavior: 'smooth' })
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-3">
-        <p className="m-0 text-[0.7rem] text-white/35 uppercase tracking-[2px]">Newest first. Each update is a video</p>
-        <div className="hidden md:flex gap-2">
-          <button type="button" aria-label="Scroll left" onClick={() => scrollBy(-1)} className="w-8 h-8 rounded-full border border-white/20 bg-white/[0.05] text-white cursor-pointer hover:bg-white/15">‹</button>
-          <button type="button" aria-label="Scroll right" onClick={() => scrollBy(1)} className="w-8 h-8 rounded-full border border-white/20 bg-white/[0.05] text-white cursor-pointer hover:bg-white/15">›</button>
-        </div>
+      <div className="flex justify-end mb-3 gap-2 max-md:hidden">
+        <button type="button" aria-label="Scroll left" onClick={() => scrollBy(-1)} className="w-8 h-8 rounded-full border border-white/20 bg-white/[0.05] text-white cursor-pointer hover:bg-white/15">‹</button>
+        <button type="button" aria-label="Scroll right" onClick={() => scrollBy(1)} className="w-8 h-8 rounded-full border border-white/20 bg-white/[0.05] text-white cursor-pointer hover:bg-white/15">›</button>
       </div>
       <div ref={railRef} className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent]">
-        {videos.map(v => {
-          const trick = detectTrick(v.title)
-          const watchUrl = v.short ? `https://www.youtube.com/shorts/${v.id}` : `https://www.youtube.com/watch?v=${v.id}`
-          return (
+        {milestones.map(u => {
+          const cardClass = 'group relative shrink-0 snap-start w-[250px] sm:w-[280px] flex flex-col gap-2 rounded-xl border border-white/[0.1] bg-white/[0.03] p-4 no-underline transition-colors'
+          const body = (
+            <>
+              <span className="flex items-center justify-between gap-2">
+                <span className="text-[0.68rem] tracking-[2px] text-white/40 font-mono">{u.date}</span>
+                {u.youtubeId && <i className="fab fa-youtube text-[0.95rem] text-white/45 group-hover:text-lime transition-colors" />}
+              </span>
+              <span className="block text-[1rem] font-bold leading-snug text-white/90 group-hover:text-lime transition-colors">{u.title}</span>
+              <span className="block text-[0.82rem] leading-[1.6] text-white/55">{u.note}</span>
+              {u.youtubeId && (
+                <span className="mt-auto pt-1 inline-flex items-center gap-2 text-[0.72rem] font-bold text-lime opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 group-focus:opacity-100 group-focus:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0 transition-all">
+                  <i className="fas fa-play" /> Play video on YouTube
+                </span>
+              )}
+            </>
+          )
+          return u.youtubeId ? (
             <a
-              key={v.id}
-              href={watchUrl}
+              key={u.date + u.title}
+              href={u.short ? `https://www.youtube.com/shorts/${u.youtubeId}` : `https://www.youtube.com/watch?v=${u.youtubeId}`}
               target="_blank"
               rel="noopener noreferrer"
               title="Play video on YouTube"
-              className="group relative shrink-0 snap-start w-[230px] sm:w-[260px] flex flex-col gap-2 rounded-xl border border-white/[0.1] bg-white/[0.03] p-4 no-underline transition-colors hover:border-lime hover:bg-white/[0.07] focus-visible:border-lime"
+              className={`${cardClass} hover:border-lime hover:bg-white/[0.07] focus-visible:border-lime`}
             >
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-[0.68rem] tracking-[2px] text-white/40 font-mono">{v.date}</span>
-                {trick && <span className="text-[0.62rem] font-bold uppercase tracking-[1px] px-2 py-[0.1rem] rounded-full border border-lime/60 text-lime">{trick.label}</span>}
-              </div>
-              <p className="m-0 text-[0.95rem] font-bold leading-snug text-white/90 group-hover:text-lime transition-colors">{v.title}</p>
-              <span className="mt-auto inline-flex items-center gap-2 text-[0.72rem] font-bold text-lime opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 group-focus:opacity-100 group-focus:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0 transition-all">
-                <i className="fas fa-play" /> Play video on YouTube
-              </span>
+              {body}
             </a>
+          ) : (
+            <div key={u.date + u.title} className={cardClass}>{body}</div>
           )
         })}
       </div>
     </div>
   )
 }
-
 
 /* ─── Latest Videos (YouTube) ─── */
 function LatestVideos({ videos }: { videos: ChannelVideo[] }) {
@@ -972,7 +966,7 @@ export default function BMX({ videos }: { videos: ChannelVideo[] }) {
       <SkillsTimeline />
 
       {/* ── Latest Updates + Videos ── */}
-      <LatestUpdates videos={feed} />
+      <LatestUpdates />
       <LatestVideos videos={feed} />
 
       {/* ── 2026 Quarterly Goals ── */}
