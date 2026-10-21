@@ -1,7 +1,11 @@
 ﻿'use client'
 import { AnimatePresence, m, useMotionValue, useTransform, useInView, useScroll, useSpring } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
+import { createContext, useContext, useId, useMemo, useRef, useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import { type ChannelVideo, cleanTitle, detectTrick } from './youtube'
+
+/* Only one YouTube player plays at a time: each card claims the slot when played */
+const PlayerCtx = createContext<{ active: string | null; setActive: (k: string | null) => void }>({ active: null, setActive: () => {} })
 
 /* ─── Animation variants ─── */
 const springEase = [0.16, 1, 0.3, 1] as const
@@ -124,45 +128,53 @@ const quarters2026: Quarter[] = [
     mainNote: 'The first real spin. Half a rotation, commit to it, spot the landing, roll out clean. Starting on flat ground, then curb drops.',
     otherTricks: ['Fakie 180', '180 to Manual', 'Nose Manual'],
     videos: [
-      { youtubeId: '66zpMRlnmco', label: 'Day 1 trying half cabs' },
-      { youtubeId: 'dvSzNrbBW2k', label: 'Manuals on the new bike' },
       { label: '180 flat ground attempts' },
+      { label: 'Fakie 180 entry drills' },
+      { label: '180 to manual combos' },
     ],
   },
 ]
 
 /* Where each trick stands (last self-assessment 15-09-2026, updated from the log) */
 const trickStatus = [
-  { label: 'Dialed in', color: '#b1db00', tricks: ['Bunny hops'] },
-  { label: 'Getting there', color: '#00ddd7', tricks: ['Manuals', 'Chicken barspins', 'Footjams', 'Backwards riding'] },
-  { label: 'Learning', color: '#ff8c42', tricks: ['Fakies', 'X-ups', 'Footplants', '180s', 'Half cabs'] },
+  { label: 'Dialed in', color: '#b1db00', tricks: ['Bunny hops', 'Backwards riding', 'Chicken barspins'] },
+  { label: 'Getting there', color: '#00ddd7', tricks: ['Manuals', 'Fakies', 'X-ups', 'Footjams'] },
+  { label: 'Learning', color: '#ff8c42', tricks: ['180s', 'Half cabs', 'Footplants'] },
   { label: 'First attempts', color: '#f472b6', tricks: ['Tailwhips', 'Crankflips', 'Pickup barspins'] },
 ]
 
-/* Latest progress, newest first. Dates DD-MM-YYYY */
-const latestUpdates = [
-  { date: '21-10-2026', title: 'Manuals on the new bike', note: 'Manual practice on the new Radio Darko build.', youtubeId: 'dvSzNrbBW2k' },
-  { date: '20-10-2026', title: 'Manuals into bunny hops', note: 'Manuals and bunny hops, getting better.', youtubeId: 'a2DIaueou_Q' },
-  { date: '18-10-2026', title: 'Day 1 on half cabs', note: 'First day trying half cabs.', youtubeId: '66zpMRlnmco' },
-  { date: '17-10-2026', title: 'Fakies in the rain', note: 'Rain stopped the 100 fakies challenge at 43, so I kept practising in it.', youtubeId: 'wyxGPM5dDeY' },
-  { date: '11-10-2026', title: 'First tailwhip attempts', note: 'Tailwhip practice. The sticking point is staying over the front wheel as the bike comes around.', youtubeId: 'lF50SDIzwgw' },
-]
-
-type LatestVideo = { id: string; title: string; date: string; short: boolean }
-
-/* Pulled from the YouTube channel on 21-10-2026 */
-const latestShorts: LatestVideo[] = [
+/* Snapshot of the channel (21-10-2026), used only if the live YouTube feed can't be reached */
+const fallbackVideos: ChannelVideo[] = [
   { id: 'dvSzNrbBW2k', title: 'Manuals practice on my new bike', date: '21-10-2026', short: true },
+  { id: 'a2DIaueou_Q', title: 'Manuals to bunnyhops getting better', date: '20-10-2026', short: false },
   { id: 'FzPWdDTsBWM', title: 'Unable to do good fakies at this first spot', date: '19-10-2026', short: true },
   { id: '66zpMRlnmco', title: 'Day 1 trying half cabs', date: '18-10-2026', short: true },
-  { id: 'HISQFe-Wi9s', title: '100 Fakies for 100 Subscribers... until it rained', date: '14-10-2026', short: true },
+  { id: 'wyxGPM5dDeY', title: 'Fakies in the rain', date: '17-10-2026', short: true },
+  { id: 'pssuexEj-_w', title: '06-10-2026 Practice Session - Manuals, Footjams, Tailwhips, Bunnyhops', date: '16-10-2026', short: false },
+  { id: 's17o5aCw-2s', title: 'Sundays are for fun', date: '16-10-2026', short: true },
+  { id: 'Qd4Dp9pQ6LU', title: 'The things I think of before every fakie', date: '15-10-2026', short: true },
+  { id: 'rYJ4IqoSthQ', title: 'Practicing tailwhips, any tips for staying over the front wheel?', date: '15-10-2026', short: false },
+  { id: 'HISQFe-Wi9s', title: '100 Fakies for 100 Subscribers... Until it rained (I landed 43)', date: '14-10-2026', short: true },
+  { id: 'lF50SDIzwgw', title: 'Tailwhip practice', date: '11-10-2026', short: true },
+  { id: 'KNxqW12cEQU', title: 'How I Fixed My "Dancing" BMX Back Wheel (Bent Rear Axle Swap)', date: '10-10-2026', short: false },
 ]
 
-const latestLongForm: LatestVideo[] = [
-  { id: 'a2DIaueou_Q', title: 'Manuals to bunnyhops getting better', date: '20-10-2026', short: false },
-  { id: 'pssuexEj-_w', title: 'Practice session: manuals, footjams, tailwhips, bunnyhops', date: '16-10-2026', short: false },
-  { id: 'KNxqW12cEQU', title: 'How I fixed my dancing BMX back wheel (bent rear axle swap)', date: '10-10-2026', short: false },
-]
+/* Quarter cards get the newest matching Shorts (matched by title), then fall back to the curated clips */
+function withLiveClips(quarters: Quarter[], videos: ChannelVideo[]): Quarter[] {
+  const byQuarter = new Map<number, VideoClip[]>()
+  for (const v of videos) {
+    if (!v.short) continue
+    const q = detectTrick(v.title)?.quarter
+    if (!q) continue
+    byQuarter.set(q, [...(byQuarter.get(q) ?? []), { youtubeId: v.id, label: cleanTitle(v.title) }])
+  }
+  return quarters.map(q => {
+    const live = (byQuarter.get(q.q) ?? []).slice(0, 3)
+    const liveIds = new Set(live.map(c => c.youtubeId))
+    const curated = q.videos.filter(c => !c.youtubeId || !liveIds.has(c.youtubeId))
+    return { ...q, videos: [...live, ...curated].slice(0, 3) }
+  })
+}
 
 const photos = [
   { src: '/img/bmx/bmx1.jpg', caption: 'The weapon of choice', span: 'wide' },
@@ -397,8 +409,14 @@ function GearSetup() {
 }
 
 /* ─── Video Snippet Slot ─── */
+function usePlayer() {
+  const uid = useId()
+  const { active, setActive } = useContext(PlayerCtx)
+  return { playing: active === uid, play: () => setActive(uid) }
+}
+
 function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
-  const [playing, setPlaying] = useState(false)
+  const { playing, play } = usePlayer()
   return (
     <m.div
       className="w-full min-w-0 lg:w-[140px] shrink-0 border border-white/[0.08] rounded-lg overflow-hidden flex flex-col gap-[0.3rem] transition-all"
@@ -418,7 +436,7 @@ function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
               className="absolute inset-0 w-full h-full border-0 block"
             />
           ) : (
-            <button type="button" className="group absolute inset-0 w-full h-full p-0 border-0 bg-transparent cursor-pointer" onClick={() => setPlaying(true)} aria-label={`Play ${clip.label}`}>
+            <button type="button" className="group absolute inset-0 w-full h-full p-0 border-0 bg-transparent cursor-pointer" onClick={play} aria-label={`Play ${clip.label}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`https://i.ytimg.com/vi/${clip.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" className="w-full h-full object-cover block" />
               <span className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
@@ -442,8 +460,8 @@ function VideoSlot({ clip, color }: { clip: VideoClip; color: string }) {
 }
 
 /* ─── YouTube click-to-play card (thumbnail first, iframe only on click) ─── */
-function YtCard({ video, color }: { video: LatestVideo; color: string }) {
-  const [playing, setPlaying] = useState(false)
+function YtCard({ video, color }: { video: ChannelVideo; color: string }) {
+  const { playing, play } = usePlayer()
   const watchUrl = video.short ? `https://www.youtube.com/shorts/${video.id}` : `https://www.youtube.com/watch?v=${video.id}`
 
   return (
@@ -466,7 +484,7 @@ function YtCard({ video, color }: { video: LatestVideo; color: string }) {
           <button
             type="button"
             className="group absolute inset-0 w-full h-full p-0 border-0 bg-transparent cursor-pointer"
-            onClick={() => setPlaying(true)}
+            onClick={play}
             aria-label={`Play ${video.title}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -492,7 +510,7 @@ function YtCard({ video, color }: { video: LatestVideo; color: string }) {
 }
 
 /* ─── Latest Updates (trick status board + progress feed) ─── */
-function LatestUpdates() {
+function LatestUpdates({ videos }: { videos: ChannelVideo[] }) {
   return (
     <div className="mb-16">
       <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-3" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
@@ -515,29 +533,76 @@ function LatestUpdates() {
         ))}
       </m.div>
 
-      <div className="flex flex-col border-l border-white/10 ml-2">
-        {latestUpdates.map(u => (
-          <m.a
-            key={u.youtubeId}
-            href={`https://www.youtube.com/watch?v=${u.youtubeId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative pl-6 pb-6 last:pb-0 no-underline group"
-            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-          >
-            <span className="absolute -left-[5px] top-[0.35rem] w-[9px] h-[9px] rounded-full bg-lime" />
-            <span className="block text-[0.7rem] tracking-[2px] text-white/35 font-mono mb-1">{u.date}</span>
-            <span className="block text-[1rem] font-bold text-white/90 group-hover:text-lime transition-colors">{u.title} <i className="fab fa-youtube text-[0.8rem] ml-1 opacity-60" /></span>
-            <span className="block text-[0.85rem] leading-[1.7] text-white/55 max-w-[560px]">{u.note}</span>
-          </m.a>
-        ))}
+      <UpdatesRail videos={videos.slice(0, 10)} />
+    </div>
+  )
+}
+
+/* ─── Horizontal feed: newest first, hover (or tap on touch) reveals title + actions ─── */
+function RailCard({ video }: { video: ChannelVideo }) {
+  const { playing, play } = usePlayer()
+  const trick = detectTrick(video.title)
+  const watchUrl = video.short ? `https://www.youtube.com/shorts/${video.id}` : `https://www.youtube.com/watch?v=${video.id}`
+
+  return (
+    <div className="group relative shrink-0 snap-start w-[170px] sm:w-[200px] h-[290px] rounded-xl overflow-hidden border border-white/[0.1] bg-black focus-within:border-lime hover:border-lime transition-colors">
+      {playing ? (
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`}
+          title={video.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full border-0 block"
+        />
+      ) : (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" className={`absolute inset-0 w-full h-full object-cover block transition-transform duration-500 ${video.short ? 'group-hover:scale-[1.06]' : 'scale-[1.34] group-hover:scale-[1.42]'}`} />
+          <div className="absolute inset-x-0 top-0 flex items-center justify-between gap-2 p-2 bg-gradient-to-b from-black/80 to-transparent">
+            <span className="text-[0.66rem] tracking-[1.5px] text-white/80 font-mono">{video.date}</span>
+            {trick && <span className="text-[0.62rem] font-bold uppercase tracking-[1px] px-2 py-[0.1rem] rounded-full bg-lime text-[#0a0a0a]">{trick.label}</span>}
+          </div>
+          <div className="absolute inset-0 flex flex-col justify-end gap-2 p-3 bg-gradient-to-t from-black/95 via-black/70 to-black/10 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity">
+            <p className="m-0 text-[0.82rem] font-bold leading-snug text-white">{video.title}</p>
+            <div className="flex flex-col gap-[0.35rem]">
+              <button type="button" onClick={play} className="inline-flex items-center justify-center gap-2 px-3 py-[0.35rem] rounded-md border-0 bg-lime text-[#0a0a0a] text-[0.72rem] font-bold cursor-pointer">
+                <i className="fas fa-play" /> Play here
+              </button>
+              <a href={watchUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-3 py-[0.35rem] rounded-md border border-white/30 text-white text-[0.72rem] font-bold no-underline hover:bg-white/10">
+                <i className="fab fa-youtube" /> Open on YouTube
+              </a>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+function UpdatesRail({ videos }: { videos: ChannelVideo[] }) {
+  const railRef = useRef<HTMLDivElement>(null)
+  const scrollBy = (dir: number) => railRef.current?.scrollBy({ left: dir * 420, behavior: 'smooth' })
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-3">
+        <p className="m-0 text-[0.7rem] text-white/35 uppercase tracking-[2px]">Newest first</p>
+        <div className="hidden md:flex gap-2">
+          <button type="button" aria-label="Scroll left" onClick={() => scrollBy(-1)} className="w-8 h-8 rounded-full border border-white/20 bg-white/[0.05] text-white cursor-pointer hover:bg-white/15">‹</button>
+          <button type="button" aria-label="Scroll right" onClick={() => scrollBy(1)} className="w-8 h-8 rounded-full border border-white/20 bg-white/[0.05] text-white cursor-pointer hover:bg-white/15">›</button>
+        </div>
+      </div>
+      <div ref={railRef} className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent]">
+        {videos.map(v => <RailCard key={v.id} video={v} />)}
       </div>
     </div>
   )
 }
 
 /* ─── Latest Videos (YouTube) ─── */
-function LatestVideos() {
+function LatestVideos({ videos }: { videos: ChannelVideo[] }) {
+  const shorts = videos.filter(v => v.short).slice(0, 4)
+  const longForm = videos.filter(v => !v.short).slice(0, 3)
   return (
     <div className="mb-16">
       <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-3" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
@@ -549,12 +614,12 @@ function LatestVideos() {
 
       <p className="text-[0.7rem] text-white/35 uppercase tracking-[2px] mb-3">Shorts</p>
       <m.div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8" variants={stagger(0.08)} initial="hidden" whileInView="show" viewport={{ once: true }}>
-        {latestShorts.map(v => <YtCard key={v.id} video={v} color="#ff8c42" />)}
+        {shorts.map(v => <YtCard key={v.id} video={v} color="#ff8c42" />)}
       </m.div>
 
       <p className="text-[0.7rem] text-white/35 uppercase tracking-[2px] mb-3">Sessions &amp; repairs</p>
       <m.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-8" variants={stagger(0.08)} initial="hidden" whileInView="show" viewport={{ once: true }}>
-        {latestLongForm.map(v => <YtCard key={v.id} video={v} color="#00ddd7" />)}
+        {longForm.map(v => <YtCard key={v.id} video={v} color="#00ddd7" />)}
       </m.div>
 
       <a href="https://youtube.com/@bryanaim/videos" target="_blank" rel="noopener noreferrer"
@@ -576,10 +641,11 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
 
   return (
     <m.div
-      className={`sticky h-auto lg:h-[calc(100vh-120px)] min-h-[60vh] md:min-h-[70vh] rounded-[14px] overflow-hidden border-t-[3px] shadow-[0_8px_32px_rgba(0,0,0,0.4)] mb-6 will-change-transform bg-[#0c0c0c]${isPast ? ' opacity-75' : ''}`}
+      className={`sticky h-auto lg:h-[calc(100vh-120px)] min-h-[60vh] md:min-h-[70vh] rounded-[14px] overflow-hidden border-t-[3px] shadow-[0_8px_32px_rgba(0,0,0,0.4)] mb-6 will-change-transform bg-[#0c0c0c]${isPast ? ' brightness-[0.8]' : ''}`}
       style={{
         top: stickyTop,
         zIndex: index + 1,
+        backgroundColor: '#0c0c0c',
         '--rs-color': quarter.color,
         borderTopColor: quarter.color,
       } as React.CSSProperties}
@@ -849,14 +915,18 @@ function PhotoLightbox({ photo, index, total, onClose, onPrev, onNext }: {
 }
 
 /* ─── Page ─── */
-export default function BMX() {
+export default function BMX({ videos }: { videos: ChannelVideo[] }) {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null)
+  const [activePlayer, setActivePlayer] = useState<string | null>(null)
+  const feed = videos.length ? videos : fallbackVideos
+  const quarters = useMemo(() => withLiveClips(quarters2026, feed), [feed])
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const heroImgY = useTransform(heroScroll, [0, 1], ['0%', '25%'])
   const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0])
 
   return (
+    <PlayerCtx.Provider value={{ active: activePlayer, setActive: setActivePlayer }}>
     <main id="bmx" className="overflow-x-clip">
       {/* ── Hero heading ── */}
       <m.h1
@@ -917,8 +987,8 @@ export default function BMX() {
       <SkillsTimeline />
 
       {/* ── Latest Updates + Videos ── */}
-      <LatestUpdates />
-      <LatestVideos />
+      <LatestUpdates videos={feed} />
+      <LatestVideos videos={feed} />
 
       {/* ── 2026 Quarterly Goals ── */}
       <div className="mb-16">
@@ -932,8 +1002,8 @@ export default function BMX() {
           Quarter by quarter. One main trick, supporting tricks, and clips as I go
         </m.p>
         <div className="flex flex-col pb-[40vh] overflow-visible">
-          {quarters2026.map((q, i) => (
-            <RoadmapStackCard key={q.q} quarter={q} index={i} total={quarters2026.length} />
+          {quarters.map((q, i) => (
+            <RoadmapStackCard key={q.q} quarter={q} index={i} total={quarters.length} />
           ))}
         </div>
       </div>
@@ -983,5 +1053,6 @@ export default function BMX() {
         </div>
       </m.div>
     </main>
+    </PlayerCtx.Provider>
   )
 }

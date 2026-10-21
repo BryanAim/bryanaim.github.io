@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import BmxClient from './BmxClient'
+import { fetchChannelVideos } from './youtube'
 
 const BASE = 'https://isalebryan.dev'
 
@@ -16,6 +17,9 @@ export const metadata: Metadata = {
   },
 }
 
-export default function BmxPage() {
-  return <BmxClient />
+export const revalidate = 3600
+
+export default async function BmxPage() {
+  const videos = await fetchChannelVideos()
+  return <BmxClient videos={videos} />
 }
