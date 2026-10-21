@@ -115,14 +115,6 @@ const quarters2026: Quarter[] = [
   },
 ]
 
-/* Where each trick stands (last self-assessment 15-09-2026, updated from the log) */
-const trickStatus = [
-  { label: 'Dialed in', color: '#b1db00', tricks: ['Bunny hops', 'Backwards riding', 'Chicken barspins'] },
-  { label: 'Getting there', color: '#00ddd7', tricks: ['Manuals', 'Fakies', 'X-ups', 'Footjams'] },
-  { label: 'Learning', color: '#ff8c42', tricks: ['180s', 'Half cabs', 'Footplants'] },
-  { label: 'First attempts', color: '#f472b6', tricks: ['Tailwhips', 'Crankflips', 'Pickup barspins'] },
-]
-
 /* Each quarter card gets the newest videos whose titles match its tricks, then placeholders */
 function withLiveClips(quarters: Quarter[], videos: ChannelVideo[]): Quarter[] {
   const byQuarter = new Map<number, VideoClip[]>()
@@ -520,31 +512,31 @@ function YtCard({ video, color }: { video: ChannelVideo; color: string }) {
   )
 }
 
-/* ─── Latest Updates (trick status board + progress feed) ─── */
+/* Moments that aren't a trick video title but belong in the feed */
+const milestones: ChannelVideo[] = [
+  { id: 'PdB14iTXT-s', title: 'Got my first custom BMX', date: '04-10-2026', short: true },
+]
+
+const dateKey = (d: string) => d.split('-').reverse().join('')
+
+/* ─── Latest Updates (progress feed) ─── */
 function LatestUpdates({ videos }: { videos: ChannelVideo[] }) {
+  const updates = useMemo(() => {
+    const dated = videos.some(v => v.date) ? videos.filter(v => v.date) : videos
+    const ids = new Set(dated.map(v => v.id))
+    return [...dated, ...milestones.filter(x => !ids.has(x.id))].sort((a, b) => dateKey(b.date).localeCompare(dateKey(a.date)))
+  }, [videos])
+
   return (
     <div className="mb-16">
       <m.div className="text-xl font-bold tracking-[3px] uppercase text-white mb-3" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
         <span className="text-lime mr-2">—</span> Latest Updates
       </m.div>
-      <m.p className="text-[0.88rem] text-white mb-8" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-        Where each trick stands right now, and what I have been working on this month
+      <m.p className="text-[0.88rem] text-white mb-6" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+        What I have been working on lately
       </m.p>
 
-      <m.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10" variants={stagger(0.08)} initial="hidden" whileInView="show" viewport={{ once: true }}>
-        {trickStatus.map(s => (
-          <m.div key={s.label} variants={fadeUp} className="rounded-xl border border-white/[0.08] border-t-[3px] bg-white/[0.03] p-4" style={{ borderTopColor: s.color }}>
-            <p className="m-0 mb-3 text-[0.72rem] font-extrabold tracking-[2px] uppercase" style={{ color: s.color }}>{s.label}</p>
-            <div className="flex flex-wrap gap-[0.4rem]">
-              {s.tricks.map(t => (
-                <span key={t} className="border rounded-full px-[0.65rem] py-[0.2rem] text-[0.75rem] font-semibold" style={{ borderColor: `${s.color}88`, color: `${s.color}dd` }}>{t}</span>
-              ))}
-            </div>
-          </m.div>
-        ))}
-      </m.div>
-
-      <UpdatesRail videos={(videos.some(v => v.date) ? videos.filter(v => v.date) : videos).slice(0, 10)} />
+      <UpdatesRail videos={updates} />
     </div>
   )
 }
@@ -648,15 +640,14 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
       }}
     >
       {/* Ghost Q number background texture */}
-      <div className="absolute -right-[0.05em] -bottom-[0.15em] text-[22rem] font-black font-mono leading-none opacity-[0.04] pointer-events-none select-none tracking-[-4px]" style={{ color: quarter.color }}>Q{quarter.q}</div>
+      <div className="absolute -right-[0.05em] -bottom-[0.15em] text-[22rem] font-black font-mono leading-none opacity-[0.04] pointer-events-none select-none tracking-[-4px]" style={{ color: quarter.color }}>{String(index + 1).padStart(2, '0')}</div>
       {/* Overlay */}
       <div className="absolute inset-0" style={{ background: `linear-gradient(115deg, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.85) 55%, ${quarter.color}12 100%)` }} />
 
       <div className="absolute inset-0 flex flex-col lg:flex-row items-start lg:items-center p-[1.4rem_1.2rem_1.2rem] md:p-[2rem_2rem_1.6rem] lg:p-[3rem_4rem] gap-[0.8rem] lg:gap-[3rem] overflow-y-auto lg:overflow-hidden">
         {/* Left column — Q number + period */}
         <div className="flex flex-row lg:flex-col items-center gap-[0.8rem] lg:gap-[1.2rem] shrink-0">
-          <span className="text-[0.7rem] text-white/20 font-mono tracking-[2px] [writing-mode:horizontal-tb] lg:[writing-mode:vertical-rl]">{String(index + 1).padStart(2, '0')}</span>
-          <span className="text-[2.2rem] md:text-[2.6rem] lg:text-[3.8rem] font-black font-mono leading-none [text-shadow:0_0_40px_var(--rs-color)]" style={{ color: quarter.color }}>Q{quarter.q}</span>
+          <span className="text-[2.2rem] md:text-[2.6rem] lg:text-[3.8rem] font-black font-mono leading-none [text-shadow:0_0_40px_var(--rs-color)]" style={{ color: quarter.color }}>{String(index + 1).padStart(2, '0')}</span>
           <span className="text-[0.65rem] text-white/25 uppercase tracking-[1.5px] [writing-mode:horizontal-tb] lg:[writing-mode:vertical-rl]">{quarter.range}</span>
         </div>
 
@@ -912,7 +903,8 @@ export default function BMX({ videos }: { videos: ChannelVideo[] }) {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null)
   const [activePlayer, setActivePlayer] = useState<string | null>(null)
   const feed = useMemo(() => mergeVideos(videos, CHANNEL_ARCHIVE), [videos])
-  const quarters = useMemo(() => withLiveClips(quarters2026, feed), [feed])
+  // What I'm learning right now goes first, the rest keep their planned order
+  const quarters = useMemo(() => withLiveClips(quarters2026, feed).sort((a, b) => Number(!!b.status.active) - Number(!!a.status.active)), [feed])
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const heroImgY = useTransform(heroScroll, [0, 1], ['0%', '25%'])
@@ -992,7 +984,7 @@ export default function BMX({ videos }: { videos: ChannelVideo[] }) {
           className="text-[0.88rem] text-white mb-6"
           variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
         >
-          The 2026 plan, adjusted as I go. Barspins and 180s slide into 2027 if they need more time. Clips are matched to each trick from my YouTube titles
+          What I am learning now, then the tricks lined up after it
         </m.p>
         <div className="flex flex-col pb-[40vh] overflow-visible">
           {quarters.map((q, i) => (

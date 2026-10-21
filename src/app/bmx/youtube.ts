@@ -23,6 +23,7 @@ const TRICK_RULES: { re: RegExp; label: string; quarter?: number }[] = [
   { re: /foot[\s-]?jams?/i, label: 'Footjams', quarter: 1 },
   { re: /tail[\s-]?whips?/i, label: 'Tailwhips' },
   { re: /bunny[\s-]?hops?/i, label: 'Bunny hops' },
+  { re: /custom (bmx|bike|build)|first custom/i, label: 'New bike' },
   { re: /axle|bottom bracket|headset|repair|fix/i, label: 'Bike work' },
 ]
 
