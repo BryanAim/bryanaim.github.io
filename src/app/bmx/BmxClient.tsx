@@ -80,7 +80,7 @@ const quarters2026: Quarter[] = [
     color: '#b1db00',
     mainTrick: 'Manuals',
     mainNote: 'Balance point is everything. Front end up, find the sweet spot, hold it. Working this daily on flat ground before adding distance.',
-    otherTricks: ['Chicken Barspins', 'Footjams'],
+    otherTricks: ['Manual to Bunny Hop', 'Nose Manuals', 'Footjams'],
     videos: [],
     status: { label: 'Almost there' },
   },
@@ -90,7 +90,7 @@ const quarters2026: Quarter[] = [
     color: '#f472b6',
     mainTrick: 'Barspins',
     mainNote: 'The scary one. Building up off low hops first, hands learning to trust letting go. Flat-ground and curb setups only.',
-    otherTricks: ['Crankflips', 'X-Up', 'Pick Up Barspins'],
+    otherTricks: ['Chicken Barspins', 'Pickup Barspins', 'X-Ups', 'Crankflips'],
     videos: [],
     status: { label: 'Maybe 2027', dim: true },
   },
@@ -100,7 +100,7 @@ const quarters2026: Quarter[] = [
     color: '#00ddd7',
     mainTrick: 'Fakies',
     mainNote: 'Getting comfortable rolling backwards into and out of them. Already ride backwards, so this is about controlled entries and clean exits.',
-    otherTricks: ['Footplants'],
+    otherTricks: ['Footjam Fakies', 'Half Cabs', 'Footplants'],
     videos: [],
     status: { label: 'Currently learning', active: true },
   },
@@ -110,7 +110,7 @@ const quarters2026: Quarter[] = [
     color: '#fbbf24',
     mainTrick: '180',
     mainNote: 'The first real spin. Half a rotation, commit to it, spot the landing, roll out clean. Starting on flat ground, then curb drops.',
-    otherTricks: ['Fakie 180', '180 to Manual', 'Nose Manual', 'Half Cabs'],
+    otherTricks: ['Carved 180s', 'Hopped 180s', 'Fakie 180', '180 to Manual'],
     videos: [],
     status: { label: 'Maybe 2027', dim: true },
   },
@@ -650,7 +650,7 @@ function RoadmapStackCard({ quarter, index, total }: { quarter: Quarter; index: 
           <h3 className="text-[2rem] md:text-[2.4rem] lg:text-[3.2rem] font-black uppercase tracking-[3px] leading-none mb-[0.8rem]" style={{ color: quarter.color }}>{quarter.mainTrick}</h3>
           <p className="text-[0.82rem] md:text-[0.85rem] lg:text-[0.9rem] leading-[1.78] text-white/55 mb-[0.8rem] lg:mb-[1.2rem] max-w-[420px]">{quarter.mainNote}</p>
 
-          <p className="text-[0.7rem] text-white/30 uppercase tracking-[2px] mb-2">Also working on</p>
+          <p className="text-[0.7rem] text-white/30 uppercase tracking-[2px] mb-2">Related tricks</p>
           <div className="flex flex-wrap gap-[0.4rem]">
             {quarter.otherTricks.map(t => (
               <span key={t} className="border rounded-full px-[0.65rem] py-[0.2rem] text-[0.75rem] font-semibold tracking-[0.3px]" style={{ borderColor: `${quarter.color}88`, color: `${quarter.color}cc` }}>{t}</span>

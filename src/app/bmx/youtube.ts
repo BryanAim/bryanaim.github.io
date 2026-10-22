@@ -13,7 +13,9 @@ const CHANNEL_ID = 'UCiGJdxB42CSX9Ul6M7Mnybw'
 /* Order matters: first match wins, so "Fakie 180" lands on 180 and "Footjam fakies" on Fakies.
    quarter = which 2026 roadmap card the clip belongs on (undefined = feed only). */
 const TRICK_RULES: { re: RegExp; label: string; quarter?: number }[] = [
-  { re: /\b180s?\b|nose manual|half[\s-]?cabs?/i, label: '180s', quarter: 4 },
+  { re: /nose manual/i, label: 'Nose manuals', quarter: 1 },
+  { re: /half[\s-]?cabs?/i, label: 'Half cabs', quarter: 3 },
+  { re: /\b180s?\b/i, label: '180s', quarter: 4 },
   { re: /foot[\s-]?plants?/i, label: 'Footplants', quarter: 3 },
   { re: /fakies|fakie/i, label: 'Fakies', quarter: 3 },
   { re: /bar[\s-]?spins?|barspins?/i, label: 'Barspins', quarter: 2 },
