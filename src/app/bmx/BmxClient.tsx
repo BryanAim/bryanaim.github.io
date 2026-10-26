@@ -192,7 +192,7 @@ const clips = [
   },
 ]
 
-/* Drop a photo of the bike at public/img/bmx/bike.jpg and it appears beside the specs */
+/* Photo of the bike beside the specs (web-sized copy of the original); a placeholder shows if the file is missing */
 const BIKE_IMAGE = '/img/bmx/bike.jpg'
 
 const gearGroups = [
@@ -262,7 +262,7 @@ function GearSetup() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-6 items-start">
         <m.div
-          className="relative rounded-[14px] overflow-hidden border border-white/[0.1] bg-white/[0.03] aspect-[4/5] lg:sticky lg:top-24"
+          className="relative rounded-[14px] overflow-hidden border border-white/[0.1] bg-white/[0.03] aspect-[4/3] lg:sticky lg:top-24"
           variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}
         >
           {bikeImg === 'ok' ? (
