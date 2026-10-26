@@ -211,7 +211,7 @@ const gearGroups = [
     color: '#00ddd7',
     rows: [
       ['Bars', 'Wethepeople'],
-      ['Stem', 'Salt'],
+      ['Stem', 'Salt Zion, forged alloy, 50mm reach, 31mm rise, 306g'],
       ['Brakes', 'None'],
     ],
   },
@@ -220,11 +220,12 @@ const gearGroups = [
     icon: 'fas fa-circle-notch',
     color: '#f472b6',
     rows: [
-      ['Front rim', 'Salt Valon, 36 hole, ~446g'],
-      ['Rear rim', 'Saltplus Summit, 36mm wide, 36 hole'],
-      ['Front tyre', 'Eastern Curb Monkey 20x2.40'],
-      ['Rear tyre', 'Demolition Momentum 20x2.35, ~538g'],
-      ['Hubs', 'Salt sealed front, Salt cassette rear'],
+      ['Front wheel', 'Salt EX: Valon rim (single wall, 36mm, 36 hole) on a sealed EX hub, 1040g'],
+      ['Rear rim', 'Saltplus Summit, 36mm wide, 36 hole, 493g'],
+      ['Front tyre', 'Eastern Curb Monkey II 20x2.40, 100 PSI max'],
+      ['Rear tyre', 'Demolition Momentum 20x2.35, 538g'],
+      ['Front hub', 'Salt EX low flange, sealed, 3/8" axle, 299g'],
+      ['Rear hub', 'Salt EX cassette, sealed, 14mm CrMo axle, 9T driver, 548g'],
     ],
   },
   {
@@ -232,7 +233,7 @@ const gearGroups = [
     icon: 'fas fa-gears',
     color: '#ff8c42',
     rows: [
-      ['Sprocket', '28T Premium'],
+      ['Sprocket', '28T Premium, 9T driver'],
       ['Pedals', 'Rant plastic'],
       ['Pegs', '2x plastic'],
       ['Bearings', 'Sealed everything: BB, headset, hubs'],
