@@ -10,6 +10,7 @@ export type Milestone = {
 }
 
 export const milestones: Milestone[] = [
+  { date: '05-11-2026', title: 'First crankflip on camera', note: 'Landed my first crankflip on camera on the first try. It was not perfect, and the next tries failed.' },
   { date: '20-10-2026', title: 'Manuals into bunny hops', note: 'Linking manuals straight into bunny hops, and it is getting better.', youtubeId: 'a2DIaueou_Q' },
   { date: '18-10-2026', title: 'Day 1 on half cabs', note: 'First day trying half cabs, building on the fakies.', youtubeId: '66zpMRlnmco', short: true },
   { date: '14-10-2026', title: '100 fakies for 100 subs', note: 'Landed 43 fakies before the rain ended the challenge.', youtubeId: 'HISQFe-Wi9s', short: true },
